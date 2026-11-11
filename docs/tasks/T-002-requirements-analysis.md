@@ -30,8 +30,8 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-1 | A-01 requirements baseline | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md` | awaiting_review | `docs/checkpoints/T-002-CP-1.md` |
-| CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-002-CP-F.md` |
+| CP-1 | A-01 requirements baseline | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md` | approved | `docs/checkpoints/T-002-CP-1.md` |
+| CP-F | final acceptance | all task artifacts | awaiting_review | `docs/checkpoints/T-002-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -43,3 +43,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-11: T-002 started (A-01 Requirements analysis). Created card from `harness/templates/task-card-feature.md` (stage A-01, role analyst, `in_progress`, depends_on T-001). Inputs: source requirements + T-001 planning scope + feature workflow. Artifacts to produce (analyst zone): `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`. Checkpoints CP-1 (requirements baseline) and CP-F. e2e/ux recorded `not applicable` for A-01 with reason (delivered at A-02 / U-01 / U-02). Board row T-002 -> `in_progress`; activity diagram T-002 -> yellow `#FFE082`; SVG re-rendered. Orchestrator only sets up the card; analyst performs the FR/NFR work up to CP-1.
 - 2026-11-11: analyst reported **CHECKPOINT CP-1 reached**. Artifacts in `docs/analysis/`: `requirements-ai-task-tracker.md` (FR R-001..R-013, NFR R-020..R-030 — 24 атомарных R-NNN с источниками ИТ и акцептанс-критериями; constraints C-1..C-3; assumptions A-1..A-3; traceability раздел 5), `questions-ai-task-tracker.md` (Q-001..Q-008: 3 blocking — Q-001/Q-002/Q-008 — и 5 non-blocking, каждый с вариантами и recommended default), `glossary.md` (продуктовые и harness-термины). Orchestrator created `docs/checkpoints/T-002-CP-1.md` (status `awaiting_review`), set T-002 -> `awaiting_review` on board/card, activity T-002 -> blue `#87CEFA`, SVG re-rendered. No issues raised; issues index unchanged.
+- 2026-11-11: **CP-1 approved** (user: `decision: approved` in `docs/checkpoints/T-002-CP-1.md`; «Делаем default» за Q-001..Q-008 в `docs/analysis/questions-ai-task-tracker.md`). Orchestrator: CP-1 status -> `approved`, reviewed_at 2026-11-11, acceptance checklist CP-1 снят `[x]`, User edits + Role response записаны (defaults зафиксированы как решения, blocking Q-001/Q-002/Q-008 сняты), next action `continue`; строка-статус в сводке `questions-ai-task-tracker.md`. T-002 -> `in_progress` (resume после промежуточного CP-1).
+- 2026-11-11: **CHECKPOINT CP-F reached** (A-01 final acceptance). Orchestrator created `docs/checkpoints/T-002-CP-F.md` (status `awaiting_review`): финальная верификация FR/NFR, traceability, stack constraint, Q-NNN решены (defaults), glossary, readiness к T-003. T-002 -> `awaiting_review` on board/card, activity T-002 -> blue `#87CEFA`, SVG re-rendered.
