@@ -15,7 +15,7 @@ decision: approved
 | e2e | required — feature with user-facing UI and backend service; e2e scope confirmed at planning (A-02 / I-02 / Q-01 / Q-02 in graph) |
 | ux | required — the feature has a user-facing web interface (calendar view, AI search, token dashboard); UX scope confirmed at planning (U-01 / U-02 in graph) |
 | issues | - |
-| commit | - |
+| commit | 2552702 |
 
 ## Acceptance
 
