@@ -9,7 +9,10 @@ start
 partition "T-001 P-00 feature planning (DONE)" {
   #90EE90:Done (CP-1 + CP-F approved);
 }
-:T-002..T-012 pending (see docs/plan.md);
+partition "T-002 A-01 requirements analysis (IN PROGRESS)" {
+  #FFE082:FR/NFR R-NNN, questions, glossary;
+}
+:T-003..T-012 pending (see docs/plan.md);
 stop
 
 legend right
