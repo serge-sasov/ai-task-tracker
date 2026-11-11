@@ -9,11 +9,11 @@
 | role | analyst |
 | stage | A-01 final acceptance |
 | artifacts | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/checkpoints/T-002-CP-1.md` |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-11T18:00:12 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-11 |
 | reviewer | user |
-| decision | - (approved / changes_requested) |
+| decision | approved |
 | snapshot_commit | 4829d1b |
 
 ## Review scope
@@ -29,12 +29,12 @@
 
 ### Acceptance points for this checkpoint
 
-- [ ] Артефакты A-01 полные: `requirements-ai-task-tracker.md`, `questions-ai-task-tracker.md`, `glossary.md`.
-- [ ] FR/NFR атомарные, с ID `R-NNN`, источниками и акцептанс-критериями; traceability полная.
-- [ ] Стек зафиксирован как constraint (R-020/R-021/R-022).
-- [ ] Q-001..Q-008 решены (defaults приняты); blocking сняты.
-- [ ] CP-1 approved (`docs/checkpoints/T-002-CP-1.md`, `decision: approved`, 2026-11-11).
-- [ ] Готовность к старту T-003 (A-02 E2E use cases + YAML dataset).
+- [x] Артефакты A-01 полные: `requirements-ai-task-tracker.md`, `questions-ai-task-tracker.md`, `glossary.md`.
+- [x] FR/NFR атомарные, с ID `R-NNN`, источниками и акцептанс-критериями; traceability полная.
+- [x] Стек зафиксирован как constraint (R-020/R-021/R-022).
+- [x] Q-001..Q-008 решены (defaults приняты); blocking сняты.
+- [x] CP-1 approved (`docs/checkpoints/T-002-CP-1.md`, `decision: approved`, 2026-11-11).
+- [x] Готовность к старту T-003 (A-02 E2E use cases + YAML dataset).
 
 ## How to review / edit
 
@@ -55,12 +55,13 @@
 
 ## User edits
 
-- (orchestrator records: path + summary of the user's change)
+- `docs/checkpoints/T-002-CP-F.md` — `decision: approved` (authoritative user decision for CP-F; зафиксирована коммитом закрытия T-002).
 
 ## Role response
 
-- (orchestrator records from the role report: how remarks were addressed, conflicts, remaining issues)
+- Замечаний нет (User remarks пуст). Defaults Q-001..Q-008 остаются зафиксированными решениями; потребляются на R-01 (T-006) при контрактах и модели данных.
+- Конфликтов нет; acceptance-точки CP-F верифицированы lead'ом по артефактам.
 
 ## Next action
 
-- continue / return to this checkpoint / accept task
+- accept task — T-002 closed as done (2026-11-11); T-003 (A-02) unblocked, activation only by command.
