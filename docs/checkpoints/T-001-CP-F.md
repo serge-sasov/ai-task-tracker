@@ -9,12 +9,12 @@
 | role | orchestrator |
 | stage | F-01 / P-00 final acceptance |
 | artifacts | `docs/plan.md`, `docs/tasks/T-001-ai-task-tracker-feature-planning.md`, `docs/checkpoints/T-001-CP-1.md`, `docs/activity.puml`, `docs/activity.svg` |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-11 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-11 |
 | reviewer | user |
-| decision | - (approved / changes_requested) |
-| snapshot_commit | - |
+| decision | approved |
+| snapshot_commit | aec95630 |
 
 ## Review scope
 
@@ -53,12 +53,12 @@
 
 ## User edits
 
-- (orchestrator records: path + summary of the user's change)
+- `docs/checkpoints/T-001-CP-F.md` — set `decision: approved` (line 16). Authoritative user decision for CP-F.
 
 ## Role response
 
-- (orchestrator records how remarks were addressed, conflicts, remaining issues)
+- Accepted, no conflicts. Final acceptance verified: card acceptance items all satisfied; board shows T-002..T-012 `pending` (no successor cards created); tech stack recorded; single active task was T-001.
 
 ## Next action
 
-- accept task (after `approved`: set `done`, final commit, ready to start T-002) / return to this checkpoint (after `changes_requested`)
+- accept task — T-001 set to `done` (2026-11-11): final commit `T-001: feature planning (P-00) accepted`; T-002 (A-01) is now startable (not auto-activated).

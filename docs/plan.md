@@ -25,7 +25,7 @@ Task graph (feature workflow): `P-00 → A-01 → A-02 → U-01 → U-02 → R-0
 
 | ID | Workflow | Task | Role | Dependencies | Status | Bug | Artifacts | Commit |
 |---|---|---|---|---|---|---|---|---|
-| T-001 | feature | P-00 Feature planning: scope, e2e/ux, task graph | orchestrator | - | awaiting_review | - | docs/tasks/T-001-ai-task-tracker-feature-planning.md, docs/plan.md, docs/checkpoints/T-001-CP-1.md, docs/checkpoints/T-001-CP-F.md | - |
+| T-001 | feature | P-00 Feature planning: scope, e2e/ux, task graph | orchestrator | - | done | - | docs/tasks/T-001-ai-task-tracker-feature-planning.md, docs/plan.md, docs/checkpoints/T-001-CP-1.md, docs/checkpoints/T-001-CP-F.md, docs/activity.puml, docs/activity.svg | - |
 | T-002 | feature | A-01 Requirements analysis (FR/NFR, R-NNN) | analyst | T-001 | pending | - | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/glossary.md | - |
 | T-003 | feature | A-02 E2E use cases and YAML dataset | analyst | T-002 | pending | - | docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml | - |
 | T-004 | feature | U-01 UX flows and screens | ux-designer | T-002, T-003 | pending | - | docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md | - |
