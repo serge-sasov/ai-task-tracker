@@ -27,7 +27,7 @@ Task graph (feature workflow): `P-00 → A-01 → A-02 → U-01 → U-02 → R-0
 |---|---|---|---|---|---|---|---|---|
 | T-001 | feature | P-00 Feature planning: scope, e2e/ux, task graph | orchestrator | - | done | - | docs/tasks/T-001-ai-task-tracker-feature-planning.md, docs/plan.md, docs/checkpoints/T-001-CP-1.md, docs/checkpoints/T-001-CP-F.md, docs/activity.puml, docs/activity.svg | 2552702 |
 | T-002 | feature | A-01 Requirements analysis (FR/NFR, R-NNN) | analyst | T-001 | done | - | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/glossary.md, docs/checkpoints/T-002-CP-1.md, docs/checkpoints/T-002-CP-F.md | bca5cf2 |
-| T-003 | feature | A-02 E2E use cases and YAML dataset | analyst | T-002 | in_progress | - | docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml | - |
+| T-003 | feature | A-02 E2E use cases and YAML dataset | analyst | T-002 | awaiting_review | - | docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml | - |
 | T-004 | feature | U-01 UX flows and screens | ux-designer | T-002, T-003 | pending | - | docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md | - |
 | T-005 | feature | U-02 Wireframes, prototype, UI spec | ux-designer | T-004 | pending | - | docs/ux/wireframes-ai-task-tracker.puml, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/prototype/ai-task-tracker/index.html | - |
 | T-006 | feature | R-01 Architecture and contracts (ADR) | architect | T-002, T-003, T-005 | pending | - | docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md | - |

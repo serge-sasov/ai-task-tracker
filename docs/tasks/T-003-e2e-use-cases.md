@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-02 |
 | role | analyst |
-| status | in_progress |
+| status | awaiting_review |
 | depends_on | T-002 (done) |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` |
@@ -27,7 +27,7 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-2 | A-02 e2e use cases and dataset | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` | pending | `docs/checkpoints/T-003-CP-2.md` |
+| CP-2 | A-02 e2e use cases and dataset | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` | awaiting_review | `docs/checkpoints/T-003-CP-2.md` |
 | CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-003-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -39,3 +39,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-11: T-003 started (A-02 e2e use cases and dataset); card created; T-003 -> in_progress; board and diagram updated.
+- 2026-11-11: CP-2 reached: analyst artifacts produced (e2e use cases + YAML dataset, verified complete by lead; role session cut by client SSE timeouts across 3 attempts — per process.md §11 resumable, not a failure). T-003 -> awaiting_review; checkpoint file `docs/checkpoints/T-003-CP-2.md` created; board and diagram updated; snapshot committed.

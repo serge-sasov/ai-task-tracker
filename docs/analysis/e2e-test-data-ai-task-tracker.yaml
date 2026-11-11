@@ -1,0 +1,645 @@
+# =============================================================================
+# E2E test data contract — ai-task-tracker
+# Source use cases: docs/analysis/e2e-use-cases-ai-task-tracker.md (T-003, A-02)
+# No secrets: only environment placeholders (${E2E_*}).
+# Данные детерминированы: все ожидаемые значения рассчитаны заранее.
+# =============================================================================
+schema: harness-e2e/1
+version: 1
+scope: "ai-task-tracker"
+language: "ru"                      # тексты UI и seed-данных — русский (Q-006, R-030)
+
+# Описание полей контракта
+field_descriptions:
+  environment: "Окружение e2e: плейсхолдеры, таймауты, seed-профиль. Секретов нет."
+  fixtures: "Детерминированные тестовые данные: seed-сессии opencode, суммы токенов, календарь, AI-поиск."
+  use_cases: "Машин-читаемые сценарии UC-E2E-NNN: id/title/source_requirements/actor/priority/preconditions/steps/test_data/expected_postcondition/cleanup/traceability."
+  steps: "Нумерованные шаги (S1..Sn): action (API/UI/окружение), data (входные данные), expected (наблюдаемое ожидание)."
+
+# -----------------------------------------------------------------------------
+# Environment
+# -----------------------------------------------------------------------------
+environment:
+  base_url: "${E2E_BASE_URL}"                # http://localhost:8080 (по умолчанию)
+  api_health_path: "/api/health"
+  ui_path: "/"
+  oppencode_data_dir: "${E2E_OPPENCODE_DATA_DIR}"   # каталог seed-файлов сессий opencode (локальный)
+  ollama_url: "${E2E_OLLAMA_URL}"            # http://localhost:11434 (по умолчанию, R-027: только localhost)
+  timeout_seconds: 30                         # таймаут отдельного шага/ответа
+  sync_wait_seconds_max: 300                  # ожидание одного polling-цикла (R-026: <= 5 минут)
+  performance_targets:                        # R-023 (ориентиры, to be decided)
+    task_list_load_max_seconds: 3
+    ai_search_answer_max_seconds: 15
+  seed_profile: "default"                     # default | large (R-024: >= 12 мес. данных)
+
+# -----------------------------------------------------------------------------
+# Fixtures (детерминированные данные)
+# -----------------------------------------------------------------------------
+fixtures:
+
+  # 5 сессий opencode = 5 задач (Q-002: 1 задача = 1 сессия)
+  sessions:
+    - session_id: "SES-A"
+      task_id: "TASK-001"
+      title: "Настройка CI для репозитория ai-task-tracker"
+      started_at: "2026-11-10T09:00:00"
+      finished_at: "2026-11-10T11:30:00"
+      duration: "2ч 30мин"
+      final_status: "Завершена"
+      actions:
+        - at: "2026-11-10T09:05:00"
+          text: "Анализ структуры репозитория и требований к CI"
+        - at: "2026-11-10T09:20:00"
+          text: "Предложены варианты конфигурации CI: GitLab CI, GitHub Actions"
+        - at: "2026-11-10T10:05:00"
+          text: "Пользователь выбрал вариант GitLab CI"
+        - at: "2026-11-10T10:40:00"
+          text: "Сгенерирован .gitlab-ci.yml (stages: lint, test, build)"
+        - at: "2026-11-10T11:10:00"
+          text: "Локальная проверка пайплайна"
+        - at: "2026-11-10T11:25:00"
+          text: "Задача завершена"
+      solutions:
+        proposed:
+          - "GitLab CI"
+          - "GitHub Actions"
+        chosen: "GitLab CI"
+      usage:
+        - model: "qwen3.8:27b"
+          input_tokens: 7200
+          output_tokens: 3000
+        - model: "llama3.1:8b"
+          input_tokens: 1400
+          output_tokens: 550
+
+    - session_id: "SES-B"
+      task_id: "TASK-002"
+      title: "Выбор способа авторизации локального API"
+      started_at: "2026-11-10T13:00:00"
+      finished_at: "2026-11-10T15:00:00"
+      duration: "2ч 00мин"
+      final_status: "Завершена"
+      actions:
+        - at: "2026-11-10T13:05:00"
+          text: "Описаны требования к авторизации локального API"
+        - at: "2026-11-10T13:30:00"
+          text: "Предложены варианты: JWT с ротацией, сессии в Redis"
+        - at: "2026-11-10T14:10:00"
+          text: "Пользователь выбрал JWT с ротацией"
+        - at: "2026-11-10T14:50:00"
+          text: "Задача завершена"
+      solutions:
+        proposed:
+          - "JWT с ротацией"
+          - "Сессии в Redis"
+        chosen: "JWT с ротацией"
+      usage: null                             # сессия без usage-данных (покрывает error flow E2 UC-E2E-006)
+
+    - session_id: "SES-C"
+      task_id: "TASK-003"
+      title: "Исследование зависания backend под нагрузкой"
+      started_at: "2026-11-11T08:30:00"
+      finished_at: "2026-11-11T10:45:00"
+      duration: "2ч 15мин"
+      final_status: "Прервана"
+      actions:
+        - at: "2026-11-11T08:35:00"
+          text: "Воспроизведено зависание backend под нагрузкой"
+        - at: "2026-11-11T08:50:00"
+          text: "Определена причина: безограниченная очередь задач"
+        - at: "2026-11-11T09:30:00"
+          text: "Предложены варианты: ограничение очереди задач, пул соединений"
+        - at: "2026-11-11T10:10:00"
+          text: "Выбрано ограничение очереди задач, начата реализация"
+        - at: "2026-11-11T10:45:00"
+          text: "Сессия прервана (пользователь отошёл)"
+      solutions:
+        proposed:
+          - "Ограничение очереди задач"
+          - "Пул соединений"
+        chosen: "Ограничение очереди задач"
+      usage:
+        - model: "qwen3.8:27b"
+          input_tokens: 2000
+          output_tokens: 900
+        - model: "llama3.1:8b"
+          input_tokens: 400
+          output_tokens: 150
+
+    - session_id: "SES-D"
+      task_id: "TASK-004"
+      title: "Реализация векторного индекса для AI-поиска"
+      started_at: "2026-11-11T11:00:00"
+      finished_at: "2026-11-11T12:10:00"
+      duration: "1ч 10мин"
+      final_status: "Не завершена"
+      actions:
+        - at: "2026-11-11T11:05:00"
+          text: "Начата реализация векторного индекса"
+        - at: "2026-11-11T11:40:00"
+          text: "Протестированы семантические запросы"
+        - at: "2026-11-11T12:00:00"
+          text: "Обнаружено деградирование генерации сниппетов"
+        - at: "2026-11-11T12:10:00"
+          text: "Работа остановлена, задача не завершена"
+      solutions:
+        proposed: []
+        chosen: null
+      usage:
+        - model: "qwen3.8:27b"
+          input_tokens: 1000
+          output_tokens: 400
+        - model: "llama3.1:8b"
+          input_tokens: 200
+          output_tokens: 70
+
+    - session_id: "SES-E"
+      task_id: "TASK-005"
+      title: "Добавление виджета токенов на экран статистики"
+      started_at: "2026-11-11T09:00:00"
+      finished_at: "2026-11-11T09:40:00"
+      duration: "40мин"
+      final_status: "Завершена"
+      actions:
+        - at: "2026-11-11T09:05:00"
+          text: "Добавлен виджет «Токены» на экран статистики"
+        - at: "2026-11-11T09:25:00"
+          text: "Проверена агрегация по моделям"
+        - at: "2026-11-11T09:40:00"
+          text: "Задача завершена"
+      solutions:
+        proposed: []
+        chosen: null
+      usage:
+        - model: "qwen3.8:27b"
+          input_tokens: 550
+          output_tokens: 290
+        - model: "llama3.1:8b"
+          input_tokens: 100
+          output_tokens: 50
+
+  # Ожидаемые суммы токенов (сумма usage seed-сессий; расчёт детерминирован)
+  token_totals:
+    all_time:
+      by_model:
+        - model: "qwen3.8:27b"
+          input_tokens: 10750    # 7200 + 0 + 2000 + 1000 + 550
+          output_tokens: 4590   # 3000 + 0 + 900 + 400 + 290
+          total_tokens: 15340
+        - model: "llama3.1:8b"
+          input_tokens: 2100    # 1400 + 0 + 400 + 200 + 100
+          output_tokens: 820    # 550 + 0 + 150 + 70 + 50
+          total_tokens: 2920
+      grand_total:
+        input_tokens: 12850
+        output_tokens: 5410
+        total_tokens: 18260
+    period_2026-11-10:          # TASK-001, TASK-002 (SES-B без usage)
+      by_model:
+        - model: "qwen3.8:27b"
+          input_tokens: 7200
+          output_tokens: 3000
+          total_tokens: 10200
+        - model: "llama3.1:8b"
+          input_tokens: 1400
+          output_tokens: 550
+          total_tokens: 1950
+    period_2026-11-11:          # TASK-003, TASK-004, TASK-005
+      by_model:
+        - model: "qwen3.8:27b"
+          input_tokens: 3550    # 2000 + 1000 + 550
+          output_tokens: 1590   # 900 + 400 + 290
+          total_tokens: 5140
+        - model: "llama3.1:8b"
+          input_tokens: 700     # 400 + 200 + 100
+          output_tokens: 270    # 150 + 70 + 50
+          total_tokens: 970
+    range_2026-11-10_2026-11-11:
+      equals: "all_time"        # все 5 задач в диапазоне
+
+  # Календарные ожидания (R-008, R-009)
+  calendar:
+    week_2026-11-09_2026-11-15:
+      "2026-11-10":
+        tasks: ["TASK-001", "TASK-002"]
+      "2026-11-11":
+        tasks: ["TASK-003", "TASK-004", "TASK-005"]
+      empty_days: ["2026-11-09", "2026-11-12", "2026-11-13", "2026-11-14", "2026-11-15"]
+    day_2026-11-11:
+      tasks:
+        - task: "TASK-003"
+          start: "08:30"
+          duration: "2ч 15мин"
+        - task: "TASK-004"
+          start: "11:00"
+          duration: "1ч 10мин"
+        - task: "TASK-005"
+          start: "09:00"
+          duration: "40мин"
+    month_2026-11:
+      "2026-11-10": 2           # количество задач
+      "2026-11-11": 3
+
+  # AI-поиск (R-010, R-011)
+  ai_search:
+    semantic_queries:
+      - query: "настройка CI для репозитория"
+        must_be_in_top_k: ["TASK-001"]
+        rationale: "решение TASK-001 — GitLab CI; сниппет должен упоминать CI/пайплайн"
+      - query: "авторизация и токены доступа"
+        must_be_in_top_k: ["TASK-002"]
+        rationale: "решение TASK-002 — JWT с ротацией"
+      - query: "зависание сервера под нагрузкой"
+        must_be_in_top_k: ["TASK-003"]
+        rationale: "содержимое TASK-003 — нагрузочный сбой, очередь задач"
+    top_k_default: 5
+    unrelated_query:
+      query: "рецепт борща"
+      expect_empty: true        # честная пустая выдача, без выдуманных совпадений
+    empty_query:
+      expect: "client_validation"  # кнопка неактивна или сообщение «Введите запрос»
+
+  # Профиль «large» (R-024): генерируется раннером, не хранится в этом файле
+  seed_profiles:
+    default:
+      description: "5 seed-сессий (fixtures.sessions)"
+      sessions_count: 5
+    large:
+      description: ">= 12 месяцев данных, десятки тысяч событий; генерируется e2e-раннером по детерминированному сиду"
+      min_months: 12
+      min_events: 50000
+      seed_value: 20261111     # детерминированность генератора
+      expected: "списки/поиск в пределах performance_targets (R-023/R-024)"
+
+use_cases:
+
+  - id: "UC-E2E-001"
+    title: "Подъём стека и стартовое состояние сервиса"
+    source_requirements: ["R-020", "R-021", "R-022", "R-027", "R-028", "R-030"]
+    actor: "QA-инженер (e2e-раннер)"
+    priority: "P0"
+    preconditions:
+      - "Docker Desktop запущен, стек не поднят"
+      - "seed-файлы подготовлены в ${E2E_OPPENCODE_DATA_DIR} (fixtures.sessions)"
+      - "E2E_BASE_URL, E2E_OPPENCODE_DATA_DIR, E2E_OLLAMA_URL заданы"
+    steps:
+      - id: "S1"
+        action: "docker compose up -d"
+        expected:
+          containers: ["backend", "postgres", "redis", "frontend"]
+          status: "Up/healthy"
+          timeout_seconds: 300
+      - id: "S2"
+        action: "GET ${E2E_BASE_URL}/api/health"
+        expected:
+          status: 200
+          json_paths:
+            - "$.status == \"ok\""
+            - "$.checks.postgres == \"ok\""
+            - "$.checks.redis == \"ok\""
+      - id: "S3"
+        action: "UI: открыть ${E2E_BASE_URL} в браузере (e2e-драйвер)"
+        expected:
+          page_loads: true
+          vue_root_mounted: true
+          no_console_error: true
+      - id: "S4"
+        action: "UI: открыть список задач (пустое состояние)"
+        expected:
+          empty_state_visible: true
+          empty_state_text_is_russian: true
+          not_white_page: true
+      - id: "S5"
+        action: "проверить сетевые вызовы backend (логи/pcap)"
+        expected:
+          external_endpoints_forbidden: true
+          allowed_targets: ["localhost", "127.0.0.1"]
+    expected_postcondition: "стек работает локально, UI доступен, БД пуста, готово для UC-E2E-002"
+    cleanup:
+      - "docker compose down -v (только в конце батчи)"
+    traceability:
+      test_ids: ["e2e/test_stack_boot.py::test_stack_boots_and_empty_state"]
+
+  - id: "UC-E2E-002"
+    title: "Сбор данных об активностях opencode (инжест)"
+    source_requirements: ["R-001", "R-002", "R-006", "R-024", "R-026"]
+    actor: "сервис (polling-синхронизатор)"
+    priority: "P0"
+    preconditions:
+      - "стек поднят (UC-E2E-001)"
+      - "база сервиса пуста"
+    test_data:
+      seed_files: "fixtures.sessions (SES-A..SES-E)"
+      seed_profile: "default"
+    steps:
+      - id: "S1"
+        action: "разместить seed-файлы в ${E2E_OPPENCODE_DATA_DIR}"
+        data:
+          sessions: ["SES-A", "SES-B", "SES-C", "SES-D", "SES-E"]
+        expected:
+          files_visible_to_sync: true
+      - id: "S2"
+        action: "ожидать один polling-цикл"
+        expected:
+          latency_max_seconds: 300
+          sync_log_status: "ok"
+      - id: "S3"
+        action: "GET списка задач"
+        expected:
+          task_count: 5
+          task_ids: ["TASK-001", "TASK-002", "TASK-003", "TASK-004", "TASK-005"]
+          each_has_unique_id: true
+          each_has_title_from_seed: true
+      - id: "S4"
+        action: "проверить финальные статусы"
+        expected:
+          TASK-001: "Завершена"
+          TASK-002: "Завершена"
+          TASK-003: "Прервана"
+          TASK-004: "Не завершена"
+          TASK-005: "Завершена"
+      - id: "S5"
+        action: "(опционально) seed_profile=large"
+        expected:
+          sync_succeeds: true
+          list_stays_usable_within: "performance_targets.task_list_load_max_seconds"
+    expected_postcondition: "в БД 5 задач TASK-001..TASK-005 со ссылкой на исходные сессии; UI показывает список из 5 задач"
+    cleanup:
+      - "удалить задачи сервиса (API) или docker compose down -v"
+      - "seed-файлы остаются (источник opencode не модифицируется)"
+    traceability:
+      test_ids: ["e2e/test_ingestion.py::test_sessions_are_ingested"]
+
+  - id: "UC-E2E-003"
+    title: "Просмотр списка задач и деталей задачи"
+    source_requirements: ["R-002", "R-003", "R-004", "R-005", "R-006", "R-007", "R-009", "R-023", "R-030"]
+    actor: "пользователь-разработчик"
+    priority: "P0"
+    preconditions:
+      - "стек поднят, импортированы 5 seed-сессий (UC-E2E-002)"
+    test_data:
+      sessions: "fixtures.sessions"
+    steps:
+      - id: "S1"
+        action: "UI: открыть список задач"
+        expected:
+          load_max_seconds: 3
+          task_count: 5
+          titles_match_seed: true
+          ui_text_language: "ru"
+      - id: "S2"
+        action: "UI: проверить продолжительности в списке"
+        expected:
+          TASK-001: "2ч 30мин"
+          TASK-002: "2ч 00мин"
+          TASK-003: "2ч 15мин"
+          TASK-004: "1ч 10мин"
+          TASK-005: "40мин"
+      - id: "S3"
+        action: "UI: открыть детали TASK-001 -> раздел «Действия»"
+        expected:
+          action_count: 6
+          chronological_order: true
+          first_action_at: "2026-11-10T09:05:00"
+          last_action_at: "2026-11-10T11:25:00"
+      - id: "S4"
+        action: "UI: детали TASK-001 -> раздел «Решения»"
+        expected:
+          proposed: ["GitLab CI", "GitHub Actions"]
+          chosen: "GitLab CI"
+          chosen_is_marked: true
+      - id: "S5"
+        action: "UI: детали TASK-002 -> раздел «Решения»"
+        expected:
+          proposed: ["JWT с ротацией", "Сессии в Redis"]
+          chosen: "JWT с ротацией"
+      - id: "S6"
+        action: "UI: детали TASK-003 -> раздел «Решения»"
+        expected:
+          proposed: ["Ограничение очереди задач", "Пул соединений"]
+          chosen: "Ограничение очереди задач"
+      - id: "S7"
+        action: "UI: детали TASK-004 и TASK-005 -> раздел «Решения»"
+        expected:
+          explicit_empty_state: "Решений не зафиксировано"
+    expected_postcondition: "состояние не изменено (read-only); пользователь видит список и детали"
+    cleanup:
+      - "не требуется (read-only)"
+    traceability:
+      test_ids: ["e2e/test_task_list_details.py::test_list_and_details"]
+
+  - id: "UC-E2E-004"
+    title: "AI-поиск задач свободным текстом"
+    source_requirements: ["R-010", "R-011", "R-023", "R-027", "R-028"]
+    actor: "пользователь-разработчик"
+    priority: "P1"
+    preconditions:
+      - "стек поднят, импортированы 5 seed-сессий"
+      - "Ollama доступна по ${E2E_OLLAMA_URL} (localhost)"
+    test_data:
+      queries: "fixtures.ai_search"
+    steps:
+      - id: "S1"
+        action: "UI: AI-поиск «настройка CI для репозитория»"
+        expected:
+          answer_max_seconds: 15
+          TASK-001_in_top_5: true
+          snippet_present: true
+      - id: "S2"
+        action: "UI: AI-поиск «авторизация и токены доступа»"
+        expected:
+          TASK-002_in_top_5: true
+          snippet_present: true
+      - id: "S3"
+        action: "UI: AI-поиск «зависание сервера под нагрузкой»"
+        expected:
+          TASK-003_in_top_5: true
+      - id: "S4"
+        action: "UI: AI-поиск «рецепт борща» (unrelated)"
+        expected:
+          empty_result_message_visible: true
+          no_fabricated_matches: true
+      - id: "S5"
+        action: "проверить, что LLM-вызовы только к localhost"
+        expected:
+          external_llm_calls: 0
+      - id: "S6"
+        action: "sub-test: остановить Ollama, выполнить AI-поиск"
+        expected:
+          explicit_error_message_visible: true
+          app_does_not_crash: true
+    expected_postcondition: "состояние не изменено (read-only)"
+    cleanup:
+      - "не требуется; при необходимости перезапустить Ollama"
+    traceability:
+      test_ids: ["e2e/test_ai_search.py::test_semantic_search", "e2e/test_ai_search.py::test_ollama_unavailable"]
+
+  - id: "UC-E2E-005"
+    title: "Календарный вид задач с продолжительностью"
+    source_requirements: ["R-008", "R-009", "R-023", "R-030"]
+    actor: "пользователь-разработчик"
+    priority: "P1"
+    preconditions:
+      - "стек поднят, импортированы 5 seed-сессий (UC-E2E-002)"
+    test_data:
+      calendar: "fixtures.calendar"
+    steps:
+      - id: "S1"
+        action: "UI: открыть календарь, режим «Неделя» (09–15.11.2026)"
+        expected:
+          "2026-11-10": ["TASK-001", "TASK-002"]
+          "2026-11-11": ["TASK-003", "TASK-004", "TASK-005"]
+          empty_days: ["2026-11-09", "2026-11-12", "2026-11-13", "2026-11-14", "2026-11-15"]
+      - id: "S2"
+        action: "UI: режим «День» на 11.11.2026"
+        expected:
+          tasks:
+            - {task: "TASK-003", start: "08:30", duration: "2ч 15мин"}
+            - {task: "TASK-004", start: "11:00", duration: "1ч 10мин"}
+            - {task: "TASK-005", start: "09:00", duration: "40мин"}
+      - id: "S3"
+        action: "UI: навигация назад/вперёд на неделю"
+        expected:
+          prev_week_empty_state_visible: true
+          back_to_original_week_restored: true
+      - id: "S4"
+        action: "UI: режим «Месяц» (ноябрь 2026)"
+        expected:
+          "2026-11-10": 2
+          "2026-11-11": 3
+      - id: "S5"
+        action: "UI: клик по задаче в календаре"
+        expected:
+          navigates_to_task_details: true
+    expected_postcondition: "состояние не изменено (read-only)"
+    cleanup:
+      - "не требуется (read-only)"
+    traceability:
+      test_ids: ["e2e/test_calendar.py::test_calendar_views"]
+
+  - id: "UC-E2E-006"
+    title: "Статистика потреблённых токенов по моделям"
+    source_requirements: ["R-012", "R-013", "R-023", "R-030"]
+    actor: "пользователь-разработчик"
+    priority: "P1"
+    preconditions:
+      - "стек поднят, импортированы 5 seed-сессий (UC-E2E-002)"
+    test_data:
+      totals: "fixtures.token_totals"
+    steps:
+      - id: "S1"
+        action: "UI: открыть статистику токенов, период «Всё время»"
+        expected:
+          by_model:
+            - {model: "qwen3.8:27b", input: 10750, output: 4590, total: 15340}
+            - {model: "llama3.1:8b", input: 2100, output: 820, total: 2920}
+          grand_total: {input: 12850, output: 5410, total: 18260}
+          matches_fixtures: true
+      - id: "S2"
+        action: "UI: период 10.11.2026"
+        expected:
+          by_model:
+            - {model: "qwen3.8:27b", input: 7200, output: 3000}
+            - {model: "llama3.1:8b", input: 1400, output: 550}
+      - id: "S3"
+        action: "UI: период 11.11.2026"
+        expected:
+          by_model:
+            - {model: "qwen3.8:27b", input: 3550, output: 1590}
+            - {model: "llama3.1:8b", input: 700, output: 270}
+      - id: "S4"
+        action: "UI: диапазон 10.11–11.11.2026"
+        expected:
+          equals: "fixtures.token_totals.all_time"
+      - id: "S5"
+        action: "UI: детали задачи -> блок «Токены»"
+        expected:
+          per_task_breakdown_matches_seed_usage: true
+    expected_postcondition: "состояние не изменено (read-only)"
+    cleanup:
+      - "не требуется (read-only)"
+    traceability:
+      test_ids: ["e2e/test_token_stats.py::test_token_breakdown"]
+
+  - id: "UC-E2E-007"
+    title: "Надёжность: перезапуск сервиса и идемпотентная синхронизация"
+    source_requirements: ["R-025", "R-026", "R-028"]
+    actor: "QA-инженер (e2e-раннер)"
+    priority: "P1"
+    preconditions:
+      - "стек поднят; импортированы 5 seed-сессий (UC-E2E-002)"
+      - "базовые значения: 5 задач; токены всего 18260 (12850 in / 5410 out)"
+    steps:
+      - id: "S1"
+        action: "docker compose restart"
+        expected:
+          containers_healthy_again: true
+          health_api: 200
+      - id: "S2"
+        action: "UI: список задач после рестарта"
+        expected:
+          task_count: 5
+          task_ids_unchanged: true
+          statuses_unchanged: true
+      - id: "S3"
+        action: "UI: статистика токенов после рестарта"
+        expected:
+          grand_total: {input: 12850, output: 5410, total: 18260}
+      - id: "S4"
+        action: "повторно разместить те же seed-файлы (повторная синхронизация)"
+        expected:
+          task_count_after: 5
+          no_duplicate_ids: true
+          TASK-001_action_count_still: 6
+      - id: "S5"
+        action: "UI: токены после повторного импорта"
+        expected:
+          grand_total_unchanged: {total: 18260}
+          no_double_counting: true
+    expected_postcondition: "данные полностью сохранены и неизменны; дубликатов нет"
+    cleanup:
+      - "seed-файлы в исходном состоянии; полный сброс — docker compose down -v (конец батчи)"
+    traceability:
+      test_ids: ["e2e/test_reliability.py::test_restart_and_idempotency"]
+
+  - id: "UC-E2E-008"
+    title: "Ручное удаление истории"
+    source_requirements: ["R-029", "R-028", "R-030"]
+    actor: "пользователь-разработчик"
+    priority: "P2"
+    preconditions:
+      - "стек поднят; импортированы 5 seed-сессий (UC-E2E-002)"
+    steps:
+      - id: "S1"
+        action: "UI: открыть раздел управления данными"
+        expected:
+          delete_action_visible: true
+          irreversible_warning_visible: true
+          text_language: "ru"
+      - id: "S2"
+        action: "UI: нажать «Удалить», отменить подтверждение (sub-test A2)"
+        expected:
+          data_not_deleted: true
+          task_count_still: 5
+      - id: "S3"
+        action: "UI: подтвердить удаление"
+        expected:
+          success_message_visible: true
+      - id: "S4"
+        action: "UI: проверить все разделы после удаления"
+        expected:
+          task_list: "пустое состояние «нет данных»"
+          token_stats: "нулевые/пустые значения"
+          calendar: "пустые периоды"
+          ai_search: "«ничего не найдено»"
+          no_broken_screens: true
+      - id: "S5"
+        action: "проверить каталог opencode (C-3)"
+        expected:
+          seed_files_still_present: true
+          oppencode_not_modified: true
+    expected_postcondition: "данные сервиса удалены; источник opencode не изменён; UI в корректном пустом состоянии"
+    cleanup:
+      - "восстановление: повторная синхронизация из seed-файлов либо docker compose down -v + повторный импорт"
+    traceability:
+      test_ids: ["e2e/test_deletion.py::test_manual_history_deletion"]
