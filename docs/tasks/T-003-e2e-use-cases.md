@@ -14,7 +14,7 @@
 | e2e | required — this stage produces the e2e contract (use cases + YAML dataset) |
 | ux | not applicable — A-02 is an analysis stage with no UI design; UX is owned by U-01/U-02 stages |
 | issues | - |
-| commit | - |
+| commit | d9ca867 |
 
 ## Acceptance
 
