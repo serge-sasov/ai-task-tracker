@@ -1,0 +1,29 @@
+# --- Build output ---
+# Java
+target/
+*.class
+*.jar
+*.war
+
+# Frontend / Node
+node_modules/
+dist/
+build/
+*.local
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- IDE / editor ---
+.idea/
+*.iml
+.vscode/
+.vs/
+.DS_Store
+*.swp
+
+# --- Logs / runtime ---
+logs/
+*.log
