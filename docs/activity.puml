@@ -3,19 +3,22 @@ skinparam defaultFontName Segoe UI
 skinparam ActivityBackgroundColor #FFFFFF
 skinparam ActivityBorderColor #555555
 skinparam ArrowColor #555555
-title Local harness - task plan
+title Local harness - task plan (ai-task-tracker)
 
 start
-:No tasks;
+partition "T-001 P-00 feature planning" {
+  #87CEFA:Awaiting review (CP-1);
+}
+:T-002..T-012 pending (see docs/plan.md);
 stop
 
 legend right
-|= Color |= Status |
-|<#90EE90>| done |
-|<#FFE082>| in_progress |
-|<#87CEFA>| awaiting_review |
-|<#D3D3D3>| pending |
-|<#FF9090>| failed |
-|<#FFB347>| blocked |
+ |= Color |= Status |
+ |<#90EE90>| done |
+ |<#FFE082>| in_progress |
+ |<#87CEFA>| awaiting_review |
+ |<#D3D3D3>| pending |
+ |<#FF9090>| failed |
+ |<#FFB347>| blocked |
 endlegend
 @enduml
