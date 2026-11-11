@@ -1,4 +1,5 @@
 # T-001: Feature planning — «Сервис мониторинга активностей пользователя в opencode»
+decision: approved
 
 | Field | Value |
 |---|---|
@@ -10,7 +11,7 @@
 | status | awaiting_review |
 | depends_on | - |
 | inputs | `requirements/исходные требования.txt`, `harness/workflows/feature.md`, `harness/process.md` |
-| artifacts | `docs/plan.md`, `docs/tasks/T-001-ai-task-tracker-feature-planning.md`, `docs/activity.puml`, `docs/activity.svg` |
+| artifacts | `docs/plan.md`, `docs/tasks/T-001-ai-task-tracker-feature-planning.md`, `docs/checkpoints/T-001-CP-1.md`, `docs/checkpoints/T-001-CP-F.md`, `docs/activity.puml`, `docs/activity.svg` |
 | e2e | required — feature with user-facing UI and backend service; e2e scope confirmed at planning (A-02 / I-02 / Q-01 / Q-02 in graph) |
 | ux | required — the feature has a user-facing web interface (calendar view, AI search, token dashboard); UX scope confirmed at planning (U-01 / U-02 in graph) |
 | issues | - |
@@ -31,8 +32,8 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-1 | P-00 plan and task graph | `docs/plan.md`, this card, `docs/activity.puml/.svg` | awaiting_review | `docs/checkpoints/T-001-CP-1.md` |
-| CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-001-CP-F.md` |
+| CP-1 | P-00 plan and task graph | `docs/plan.md`, this card, `docs/activity.puml/.svg` | approved | `docs/checkpoints/T-001-CP-1.md` |
+| CP-F | final acceptance | all task artifacts | awaiting_review | `docs/checkpoints/T-001-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -75,4 +76,5 @@ Chain: `T-001 -> T-002 -> T-003 -> T-004 -> T-005 -> T-006 -> T-007 -> T-008 -> 
 
 ## Log
 
-- 2026-11-11: P-00 started. Read `harness/process.md`, `harness/workflows/feature.md`, source requirements. Initialized git repository (`master`), created `.gitignore`, baseline commit `1227337e` (harness + requirements + docs skeleton). Registered T-001 as `in_progress` and T-002..T-012 as `pending` in `docs/plan.md`. Created this card with fixed scope, e2e/ux applicability (both `required` with reasons), and the task graph. Updated `docs/activity.puml`, rendered `docs/activity.svg`. Created checkpoint file `docs/checkpoints/T-001-CP-1.md`, status `awaiting_review`.
+- 2026-11-11: P-00 started. Read `harness/process.md`, `harness/workflows/feature.md`, source requirements. Initialized git repository (`master`), created `.gitignore`, baseline commit `1227337e` (harness + requirements + docs skeleton). Registered T-001 as `in_progress` and T-002..T-012 as `pending` in `docs/plan.md`. Created this card with fixed scope, e2e/ux applicability (both `required` with reasons), and the task graph. Updated `docs/activity.puml`, rendered `docs/activity.svg`. Created checkpoint file `docs/checkpoints/T-001-CP-1.md`, status `awaiting_review`. Snapshot commit `7ed5367`.
+- 2026-11-11: CP-1 approved by user (decision line added to card). Verified acceptance: board (T-002..T-012 all pending, only T-001 active), card (scope, e2e/ux required with reasons, CP-1+CP-F declared), git diff (only user's `decision: approved` line). Resumed as `in_progress`, then prepared CP-F final acceptance checkpoint (`docs/checkpoints/T-001-CP-F.md`), set T-001 to `awaiting_review`.
