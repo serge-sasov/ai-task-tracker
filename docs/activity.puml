@@ -12,7 +12,9 @@ partition "T-001 P-00 feature planning (DONE)" {
 partition "T-002 A-01 requirements analysis (DONE)" {
   #90EE90:FR/NFR R-NNN, questions resolved (defaults), glossary;
 }
-:T-003..T-012 pending (see docs/plan.md);
+partition "T-003 A-02 e2e use cases and dataset (IN PROGRESS)" {
+  #FFE082:use cases UC-E2E-NNN + YAML dataset (T-004..T-012 pending, see docs/plan.md);
+}
 stop
 
 legend right
