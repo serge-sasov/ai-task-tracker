@@ -1,0 +1,45 @@
+# T-005: UX wireframes, prototype, UI spec (U-02)
+
+| Field | Value |
+|---|---|
+| id | T-005 |
+| title | UX wireframes, prototype, UI spec (U-02) |
+| workflow | feature |
+| stage | U-02 |
+| role | ux-designer |
+| status | in_progress |
+| depends_on | T-004 (done) |
+| inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
+| artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
+| e2e | required — 1:1 mapping of UC-E2E-001..008 to prototype scenario pages (consumed by Q-01 coverage matrix) |
+| ux | required — U-02 is the UX stage: wireframes, UI spec, static offline HTML prototype |
+| chunks | 4 — (1) wireframes: `wireframes-*.puml` covering S-01..S-06 + layout-affecting states, then `check_syntax` + SVG render; (2) UI spec: 2-3 sections per write per `harness/templates/ux-spec.md` (skeleton first, then one section per edit); (3) prototype `index.html` + shared `assets/*` (one scenario page or shared asset per write); (4) scenario pages `uc-e2e-001.html`..`uc-e2e-008.html`, one page per chunk; harness-coder delegation for page implementation allowed under process §0/§1 exception (depth 2, sequential, one child at a time, coder writes only `docs/ux/prototype/ai-task-tracker/**`, UX designer validates and remains accountable at CP-2) |
+| budget | Markdown: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60; HTML/CSS/JS and PlantUML: max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
+| issues | - |
+| commit | - |
+
+## Acceptance
+
+- [ ] (a) Salt wireframes for every screen S-01..S-06 and every layout-affecting loading/empty/success/error state; `docs/ux/wireframes-ai-task-tracker.puml` passes MCP `plantuml-render check_syntax` and `docs/ux/wireframes-ai-task-tracker.svg` is rendered next to it.
+- [ ] (b) UI spec `docs/ux/ui-spec-ai-task-tracker.md` per `harness/templates/ux-spec.md` incl. §3.1 scenario page coverage mapping every in-scope UC-E2E-001..008 to a page or an explicit waiver; sections: components/validation/errors, accessibility, UI copy, design tokens, responsive rules, traceability, open questions.
+- [ ] (c) `index.html` catalog links all scenario pages and every scenario page links back to index (relative links).
+- [ ] (d) One offline page per in-scope UC-E2E-NNN with the relevant empty/loading/success/error states; local assets only under `assets/`; no CDN, no network APIs, no secrets, no real data, no tracking.
+- [ ] (e) Traceability UC-E2E <-> screens (S-01..S-06) <-> R-NNN <-> prototype page consistent with U-01 artifacts and `docs/analysis/e2e-use-cases-ai-task-tracker.md`.
+- [ ] (f) Russian UI copy (canonical texts from `docs/ux/screens-ai-task-tracker.md` §4) and single-user scope per Q-006/Q-004; no contradictions with resolved Q-NNN/R-NNN.
+
+## Checkpoints
+
+| ID | Stage | Artifacts | Status | Review file |
+|---|---|---|---|---|
+| CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | pending | `docs/checkpoints/T-005-CP-2.md` |
+| CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-005-CP-F.md` |
+
+Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
+
+## Blockers
+
+- none
+
+## Log
+
+- 2026-11-12: T-005 started (U-02 UX wireframes, prototype, UI spec); card created; T-004 done (36f52cd) unblocks T-005; board T-005 -> in_progress (yellow #FFE082); diagram re-rendered.
