@@ -16,7 +16,7 @@
 | chunks | 4 — (1) wireframes: `wireframes-*.puml` covering S-01..S-06 + layout-affecting states, then `check_syntax` + SVG render; (2) UI spec: 2-3 sections per write per `harness/templates/ux-spec.md` (skeleton first, then one section per edit); (3) prototype `index.html` + shared `assets/*` (one scenario page or shared asset per write); (4) scenario pages `uc-e2e-001.html`..`uc-e2e-008.html`, one page per chunk; harness-coder delegation for page implementation allowed under process §0/§1 exception (depth 2, sequential, one child at a time, coder writes only `docs/ux/prototype/ai-task-tracker/**`, UX designer validates and remains accountable at CP-2) |
 | budget | Markdown: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60; HTML/CSS/JS and PlantUML: max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | - |
+| commit | 9ecf877 (CP-2 snapshot) |
 
 ## Acceptance
 
@@ -45,3 +45,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-12: T-005 started (U-02 UX wireframes, prototype, UI spec); card created; T-004 done (36f52cd) unblocks T-005; board T-005 -> in_progress (yellow #FFE082); diagram re-rendered.
 - 2026-11-12: CP-2 reached (2026-11-12T18:11:08); checkpoint file `docs/checkpoints/T-005-CP-2.md` created; board/card T-005 -> awaiting_review (blue #87CEFA); diagram re-rendered.
 - 2026-11-12: user-reported wireframe fix: `docs/ux/wireframes-ai-task-tracker.puml` had PlantUML errors (old SVG was a crash image); lead rewrote it as valid Salt, MCP `check_syntax` valid, SVG re-rendered (62.5 KB, no crash text). Prototype verification fixes: uc-e2e-006 token table JS keys (model/input/output instead of undefined), «Всё время» typos, sidebar label «UC-E2E-003 · Список и детали задачи», canonical S-05 error «Не удалось построить сводку по токенам», detail totals TASK-004=1670 / TASK-005=990; verified no external URLs/network/storage. All included in the CP-2 snapshot.
+- 2026-11-12: CP-2 snapshot committed as 9ecf877; hash recorded in card and board.
