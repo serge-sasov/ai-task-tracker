@@ -16,7 +16,7 @@
 | chunks | 3 — UX Markdown docs: 2-3 sections per chunk; write a skeleton first, then fill one section per edit; do not create a large artifact in one write |
 | budget | max_write_kb: 8 / max_session_kb: 20 / context_stop_pct: 60 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | - |
+| commit | 58a3534 |
 
 ## Acceptance
 
