@@ -14,7 +14,7 @@
 | reviewed_at | - |
 | reviewer | user |
 | decision | - |
-| snapshot_commit | `b139595` (deliverables) · `aa13165` (CP-2 rev-2 approval) |
+| snapshot_commit | `b139595` (deliverables) · `aa13165` (CP-2 rev-2 approval) · `90028a2` (CP-F revision 2) |
 
 ## Revision 2 — final acceptance
 
@@ -85,8 +85,8 @@ otherwise request changes and the task returns to the last checkpoint (CP-2 revi
 - 2026-11-12T19:19:47: CP-F revision 1 **changes_requested** (user) — calendar month/year views;
   task returned to `in_progress`.
 - 2026-11-12T23:10:47: CP-2 **revision 2 approved** (user); recorded in `aa13165`.
-- 2026-11-13: CP-F **revision 2** created (`awaiting_review`). T-005 is NOT `done` until the user
-  explicitly approves CP-F revision 2.
+- 2026-11-13: CP-F **revision 2** created (`awaiting_review`); snapshot committed as `90028a2`.
+  T-005 is NOT `done` until the user explicitly approves CP-F revision 2.
 
 ## History — Revision 1 (changes_requested)
 
