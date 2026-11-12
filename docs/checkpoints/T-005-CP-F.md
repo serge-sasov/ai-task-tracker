@@ -9,11 +9,11 @@
 | role | ux-designer |
 | stage | U-02 |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/app.css`, `docs/ux/prototype/ai-task-tracker/assets/app.js` |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-13T00:02:57 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-13T00:14:04 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | `b139595` (deliverables) · `aa13165` (CP-2 rev-2 approval) · `90028a2` (CP-F revision 2) |
 
 ## Revision 2 — final acceptance
@@ -55,6 +55,7 @@ otherwise request changes and the task returns to the last checkpoint (CP-2 revi
 
 ## User remarks
 
+- 2026-11-13 (user, explicit chat approval) — CP-F revision 2 **approved**; T-005 closed as `done`.
 - 2026-11-12T23:10:47 (user, chat) — CP-2 revision 2 **approved** (calendar month/year revision
   accepted).
 - See History — Revision 1 for the original change request.
@@ -76,8 +77,8 @@ otherwise request changes and the task returns to the last checkpoint (CP-2 revi
 
 ## Next action
 
-- on `approved` -> set T-005 to `done`; record final commit; unblock T-006 (R-01).
-- on `changes_requested` -> return to CP-2 (new revision cycle) and address the requested changes.
+- **`approved` (executed):** T-005 set to `done`; final commit recorded; T-006 (R-01) unblocked
+  (pending, activation only by command).
 
 ## Orchestrator note
 
@@ -86,7 +87,8 @@ otherwise request changes and the task returns to the last checkpoint (CP-2 revi
   task returned to `in_progress`.
 - 2026-11-12T23:10:47: CP-2 **revision 2 approved** (user); recorded in `aa13165`.
 - 2026-11-13: CP-F **revision 2** created (`awaiting_review`); snapshot committed as `90028a2`.
-  T-005 is NOT `done` until the user explicitly approves CP-F revision 2.
+- 2026-11-13T00:14:04: CP-F **revision 2 approved** (user, explicit chat approval). T-005 closed
+  as `done`; T-006 (R-01) unblocked (pending).
 
 ## History — Revision 1 (changes_requested)
 

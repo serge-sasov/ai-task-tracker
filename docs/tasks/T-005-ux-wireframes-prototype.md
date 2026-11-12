@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | awaiting_review (CP-F revision 2) |
+| status | done |
 | depends_on | T-004 (done) |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
@@ -20,19 +20,19 @@
 
 ## Acceptance
 
-- [ ] (a) Salt wireframes for every screen S-01..S-06 and every layout-affecting loading/empty/success/error state; `docs/ux/wireframes-ai-task-tracker.puml` passes MCP `plantuml-render check_syntax` and `docs/ux/wireframes-ai-task-tracker.svg` is rendered next to it.
-- [ ] (b) UI spec `docs/ux/ui-spec-ai-task-tracker.md` per `harness/templates/ux-spec.md` incl. §3.1 scenario page coverage mapping every in-scope UC-E2E-001..008 to a page or an explicit waiver; sections: components/validation/errors, accessibility, UI copy, design tokens, responsive rules, traceability, open questions.
-- [ ] (c) `index.html` catalog links all scenario pages and every scenario page links back to index (relative links).
-- [ ] (d) One offline page per in-scope UC-E2E-NNN with the relevant empty/loading/success/error states; local assets only under `assets/`; no CDN, no network APIs, no secrets, no real data, no tracking.
-- [ ] (e) Traceability UC-E2E <-> screens (S-01..S-06) <-> R-NNN <-> prototype page consistent with U-01 artifacts and `docs/analysis/e2e-use-cases-ai-task-tracker.md`.
-- [ ] (f) Russian UI copy (canonical texts from `docs/ux/screens-ai-task-tracker.md` §4) and single-user scope per Q-006/Q-004; no contradictions with resolved Q-NNN/R-NNN.
+- [x] (a) Salt wireframes for every screen S-01..S-06 and every layout-affecting loading/empty/success/error state; `docs/ux/wireframes-ai-task-tracker.puml` passes MCP `plantuml-render check_syntax` and `docs/ux/wireframes-ai-task-tracker.svg` is rendered next to it.
+- [x] (b) UI spec `docs/ux/ui-spec-ai-task-tracker.md` per `harness/templates/ux-spec.md` incl. §3.1 scenario page coverage mapping every in-scope UC-E2E-001..008 to a page or an explicit waiver; sections: components/validation/errors, accessibility, UI copy, design tokens, responsive rules, traceability, open questions.
+- [x] (c) `index.html` catalog links all scenario pages and every scenario page links back to index (relative links).
+- [x] (d) One offline page per in-scope UC-E2E-NNN with the relevant empty/loading/success/error states; local assets only under `assets/`; no CDN, no network APIs, no secrets, no real data, no tracking.
+- [x] (e) Traceability UC-E2E <-> screens (S-01..S-06) <-> R-NNN <-> prototype page consistent with U-01 artifacts and `docs/analysis/e2e-use-cases-ai-task-tracker.md`.
+- [x] (f) Russian UI copy (canonical texts from `docs/ux/screens-ai-task-tracker.md` §4) and single-user scope per Q-006/Q-004; no contradictions with resolved Q-NNN/R-NNN.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
 | CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | approved (revision 2, 2026-11-12T23:10:47; snapshot b139595) | `docs/checkpoints/T-005-CP-2.md` |
-| CP-F | final acceptance | all task artifacts | awaiting_review (revision 2, requested 2026-11-13T00:02:57; snapshot b139595) | `docs/checkpoints/T-005-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | approved (revision 2, reviewed 2026-11-13T00:14:04; snapshot b139595) | `docs/checkpoints/T-005-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -55,3 +55,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-12T23:10:47: **CP-2 revision 2 approved** by user; recorded in `docs/checkpoints/T-005-CP-2.md` and commit `aa13165` (card/board/diagram: T-005 in_progress, final acceptance started).
 - 2026-11-13: **CP-F revision 2 created** (`docs/checkpoints/T-005-CP-F.md`, `awaiting_review`, requested 2026-11-13T00:02:57, snapshot `b139595`); revision-1 history preserved. Card/board T-005 -> awaiting_review (blue #87CEFA); diagram re-rendered. Task NOT `done` until the user approves CP-F revision 2.
 - 2026-11-13: CP-F revision 2 snapshot committed as `90028a2`; hash recorded in card and checkpoint.
+- 2026-11-13T00:14:04: **CP-F revision 2 approved** by user (explicit chat approval); acceptance (a)–(f) marked `[x]`; CP-F row -> approved. Recorded in `docs/checkpoints/T-005-CP-F.md`.
+- 2026-11-13: **T-005 closed as `done`**; card/board T-005 -> done (green #90EE90); diagram re-rendered. T-006 (R-01) unblocked (pending; activation only by command). Final commit recorded in this log.
