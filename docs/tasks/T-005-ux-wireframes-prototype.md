@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | in_progress (CP-2 revision 2 approved; final acceptance pending) |
+| status | awaiting_review (CP-F revision 2) |
 | depends_on | T-004 (done) |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
@@ -16,7 +16,7 @@
 | chunks | 4 — (1) wireframes: `wireframes-*.puml` covering S-01..S-06 + layout-affecting states, then `check_syntax` + SVG render; (2) UI spec: 2-3 sections per write per `harness/templates/ux-spec.md` (skeleton first, then one section per edit); (3) prototype `index.html` + shared `assets/*` (one scenario page or shared asset per write); (4) scenario pages `uc-e2e-001.html`..`uc-e2e-008.html`, one page per chunk; harness-coder delegation for page implementation allowed under process §0/§1 exception (depth 2, sequential, one child at a time, coder writes only `docs/ux/prototype/ai-task-tracker/**`, UX designer validates and remains accountable at CP-2) |
 | budget | Markdown: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60; HTML/CSS/JS and PlantUML: max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | b139595 (CP-2 revision 2 snapshot) — artifacts at 9ecf877 (CP-2 rev 1) |
+| commit | b139595 (CP-2 revision 2 snapshot) · aa13165 (CP-2 rev-2 approval; CP-F rev-2 start) — artifacts at 9ecf877 (CP-2 rev 1) |
 
 ## Acceptance
 
@@ -32,7 +32,7 @@
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
 | CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | approved (revision 2, 2026-11-12T23:10:47; snapshot b139595) | `docs/checkpoints/T-005-CP-2.md` |
-| CP-F | final acceptance | all task artifacts | pending (re-review after CP-2 revision) | `docs/checkpoints/T-005-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | awaiting_review (revision 2, requested 2026-11-13T00:02:57; snapshot b139595) | `docs/checkpoints/T-005-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -52,3 +52,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-12: artifacts to be revised under T-005 per the change request: `docs/ux/screens-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`/`.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` (+ `assets/app.js`, `index.html` if needed).
 - 2026-11-12: **Revision delivered** (ux-designer) for the CP-F change request — calendar S-04: month view = full week grid (Monday-first, all days, 6×7); year view = 12 months with per-month aggregates (tasks count / total duration / total tokens; empty «Нет данных»); plus review fixes (S-04 loading skeleton reachable, functional November year-cell → month view, UI spec §3.1 loading). Revised files: `screens`, `user-flows`, `wireframes .puml`/`.svg`, `ui-spec`, `uc-e2e-005.html`, `index.html`, `assets/app.css`. Card/board T-005 -> awaiting_review (CP-2 revision 2); CP-F row -> pending (re-review after CP-2 revision).
 - 2026-11-12: **Verification (lead)**: month grid 42 cells (30 in-month + 12 adjacent), 6 rows × 7 (Пн–Вс), task chips on 10.11 & 11.11 with durations; year 12 cells, November «5 задач · 8ч 35мин · 18 260 токенов», 11 months «Нет данных», November → month view works, loading skeleton reachable; wireframe `check_syntax` valid, SVG 62,800 B no crash; 9 pages `lang="ru"`, index links all 8, all back-links, 0 network/storage strings; UI spec §3.1 UC-E2E-005 includes loading; screens/flows/wireframe/ui-spec consistent; open questions Q-UX-001..005. Awaiting user review at CP-2 (revision 2).
+- 2026-11-12T23:10:47: **CP-2 revision 2 approved** by user; recorded in `docs/checkpoints/T-005-CP-2.md` and commit `aa13165` (card/board/diagram: T-005 in_progress, final acceptance started).
+- 2026-11-13: **CP-F revision 2 created** (`docs/checkpoints/T-005-CP-F.md`, `awaiting_review`, requested 2026-11-13T00:02:57, snapshot `b139595`); revision-1 history preserved. Card/board T-005 -> awaiting_review (blue #87CEFA); diagram re-rendered. Task NOT `done` until the user approves CP-F revision 2.
