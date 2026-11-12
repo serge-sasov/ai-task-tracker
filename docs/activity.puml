@@ -7,13 +7,16 @@ title Local harness - task plan (ai-task-tracker)
 
 start
 partition "T-001 P-00 feature planning (DONE)" {
-  #90EE90:Done (CP-1 + CP-F approved);
+  :Done (CP-1 + CP-F approved); <<#90EE90>>
 }
 partition "T-002 A-01 requirements analysis (DONE)" {
-  #90EE90:FR/NFR R-NNN, questions resolved (defaults), glossary;
+  :FR/NFR R-NNN, questions resolved (defaults), glossary; <<#90EE90>>
 }
 partition "T-003 A-02 e2e use cases and dataset (DONE)" {
-  #90EE90:use cases UC-E2E-NNN + YAML dataset (T-004..T-012 pending, see docs/plan.md);
+  :use cases UC-E2E-NNN + YAML dataset; <<#90EE90>>
+}
+partition "T-004 U-01 UX flows and screens (IN PROGRESS)" {
+  :personas, journeys, IA, screen inventory, screen states (T-005..T-012 pending, see docs/plan.md); <<#FFE082>>
 }
 stop
 
