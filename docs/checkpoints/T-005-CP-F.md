@@ -14,7 +14,7 @@
 | reviewed_at | - |
 | reviewer | user |
 | decision | - (approved / changes_requested) |
-| snapshot_commit | - |
+| snapshot_commit | 17126cc |
 
 ## Review scope
 
