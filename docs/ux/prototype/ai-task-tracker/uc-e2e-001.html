@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-001 · Пустые состояния — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html" aria-current="page">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-001 · Пустые состояния</h1>
+      <span class="updated" aria-live="polite">обновлено —</span>
+    </div>
+    <p class="proto-note">Новый запуск: каталог opencode пуст, задач пока нет. Раздел «Список задач», «Календарь» и «Статистика токенов» честно отображают пустые состояния без ошибок и выдуманных данных. Состояния: загрузка, каталог пуст, обновление (данных нет).</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn" type="button" data-state="loading" aria-pressed="false">Загрузка</button>
+      <button class="btn primary" type="button" data-state="empty" aria-pressed="true">Каталог пуст</button>
+      <button class="btn" type="button" data-state="updated" aria-pressed="false">Обновлено</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- loading -->
+      <div class="state-panel" data-state="loading" hidden aria-busy="true">
+        <div class="panel">
+          <div class="skel" style="width:45%"></div>
+          <div class="skel"></div><div class="skel"></div><div class="skel" style="width:70%"></div>
+          <p class="kv">Загружаем данные из каталога opencode…</p>
+        </div>
+      </div>
+
+      <!-- empty (default) -->
+      <div class="state-panel" data-state="empty">
+        <div class="banner info">Каталог опечатался: данных пока нет. Это штатное состояние, ошибка отсутствует.</div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— задач нет</span></h2>
+          <div class="empty">Пока нет задач. Запустите сессию opencode — задачи появятся здесь автоматически.</div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Календарь <span class="kv">— расписания нет</span></h2>
+          <div class="empty">Нет задач в выбранном периоде.</div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Статистика токенов <span class="kv">— статистики нет</span></h2>
+          <div class="empty">Нет данных за выбранный период.</div>
+        </div>
+      </div>
+
+      <!-- updated: same empty sections, polling yields no new data -->
+      <div class="state-panel" data-state="updated" hidden>
+        <div class="banner info">Данные обновлены. Новых задач нет.</div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— задач нет</span></h2>
+          <div class="empty">Пока нет задач. Запустите сессию opencode — задачи появятся здесь автоматически.</div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Календарь <span class="kv">— расписания нет</span></h2>
+          <div class="empty">Нет задач в выбранном периоде.</div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Статистика токенов <span class="kv">— статистики нет</span></h2>
+          <div class="empty">Нет данных за выбранный период.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  // Initial loading skeleton visible; no network, fixtures unused until load completes.
+</script>
+</body>
+</html>

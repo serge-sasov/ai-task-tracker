@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-003 · Список и детали задачи — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html" aria-current="page">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-003 · Задачи в списке и карточка деталей</h1>
+      <span class="updated" aria-live="polite">обновлено 11:25:00</span>
+    </div>
+    <p class="proto-note">Экраны S-01 (список) и S-02 (детали). Состояния: загрузка, успех, «решений не зафиксировано», ошибка. Данные — фикстуры TASK-001…TASK-005.</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn" type="button" data-state="loading" aria-pressed="false">Загрузка</button>
+      <button class="btn" type="button" data-state="success" aria-pressed="true">Успех</button>
+      <button class="btn" type="button" data-state="no-solution" aria-pressed="false">Решений нет</button>
+      <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- S-01 loading -->
+      <div class="state-panel" data-state="loading" hidden aria-busy="true">
+        <div class="panel">
+          <div class="skel" style="width:60%"></div>
+          <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+          <p class="kv">Загружаем список задач…</p>
+        </div>
+      </div>
+
+      <!-- S-01 + S-02 success (TASK-001, решения зафиксированы) -->
+      <div class="state-panel" data-state="success">
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— 5 задач</span></h2>
+          <div id="task-table" aria-live="polite"></div>
+        </div>
+
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 4px">Детали задачи · TASK-001</h2>
+          <p class="kv" style="margin:0 0 12px">Настройка CI для репозитория ai-task-tracker · 10.11.2026, 09:00–11:30 · 2ч 30мин · <span class="status done"><span class="dot" aria-hidden="true"></span>Завершена</span></p>
+
+          <h3 style="font-size:15px">Действия</h3>
+          <ul class="timeline">
+            <li><span class="t">09:05</span>Анализ структуры репозитория и требований к CI</li>
+            <li><span class="t">09:20</span>Предложены варианты конфигурации CI: GitLab CI, GitHub Actions</li>
+            <li><span class="t">10:05</span>Пользователь выбрал вариант GitLab CI</li>
+            <li><span class="t">10:40</span>Сгенерирован .gitlab-ci.yml (stages: lint, test, build)</li>
+            <li><span class="t">11:10</span>Локальная проверка пайплайна</li>
+            <li><span class="t">11:25</span>Задача завершена</li>
+          </ul>
+
+          <h3 style="font-size:15px">Решения</h3>
+          <p class="kv" style="margin:4px 0 8px">Предложены:</p>
+          <p style="margin:0 0 8px"><span class="chip chosen">GitLab CI — выбрано</span><span class="chip">GitHub Actions</span></p>
+
+          <h3 style="font-size:15px">Токены</h3>
+          <table class="table" aria-label="Токены задачи TASK-001">
+            <thead><tr><th scope="col">Модель</th><th scope="col">Вход</th><th scope="col">Выход</th><th scope="col">Всего</th></tr></thead>
+            <tbody>
+              <tr><td>qwen3.8:27b</td><td>7200</td><td>3000</td><td>10200</td></tr>
+              <tr><td>llama3.1:8b</td><td>1400</td><td>550</td><td>1950</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- S-02: решений не зафиксировано (TASK-004) -->
+      <div class="state-panel" data-state="no-solution" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 4px">Детали задачи · TASK-004</h2>
+          <p class="kv" style="margin:0 0 12px">Реализация векторного индекса для AI-поиска · 11.11.2026, 11:00–12:10 · 1ч 10мин · <span class="status open"><span class="dot" aria-hidden="true"></span>Не завершена</span></p>
+          <h3 style="font-size:15px">Решения</h3>
+          <p class="empty" style="padding:20px">Решений не зафиксировано</p>
+          <h3 style="font-size:15px">Токены</h3>
+          <table class="table" aria-label="Токены задачи TASK-004">
+            <thead><tr><th scope="col">Модель</th><th scope="col">Вход</th><th scope="col">Выход</th><th scope="col">Всего</th></tr></thead>
+            <tbody>
+              <tr><td>qwen3.8:27b</td><td>1000</td><td>400</td><td>1400</td></tr>
+              <tr><td>llama3.1:8b</td><td>200</td><td>70</td><td>270</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- error -->
+      <div class="state-panel" data-state="error" hidden>
+        <div class="errorbox" role="alert">
+          Не удалось загрузить задачи. Проверьте доступ к каталогу opencode и попробуйте снова.
+        </div>
+        <button class="btn primary" type="button" onclick="document.querySelector('.state-panel[data-state=success]').hidden=false;document.querySelector('.state-panel[data-state=error]').hidden=true;">Повторить</button>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  APP.renderTaskTable(document.getElementById("task-table"), APP.TASKS);
+</script>
+</body>
+</html>

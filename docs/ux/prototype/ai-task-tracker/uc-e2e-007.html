@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-007 · Обновление — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html" aria-current="page">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-007 · Обновление данных без дублей</h1>
+      <span class="updated" aria-live="polite" id="u-head">обновлено —</span>
+    </div>
+    <p class="proto-note">S-01 + S-05. Пользователь вернулся — данные синхронизированы заново (polling ≤ 5 мин, Q-001). Список задач обновляется на месте без дублей: идентификаторы TASK-001…TASK-005 уникальны. Показатель «обновлено HH:MM:SS» (aria-live) обновляется, статистика токенов остаётся согласованной (R-006/R-007).</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn primary" type="button" data-state="before" aria-pressed="true">До</button>
+      <button class="btn" type="button" data-state="refreshing" aria-pressed="false">Обновление</button>
+      <button class="btn" type="button" data-state="after" aria-pressed="false">Без дублей</button>
+      <button class="btn" type="button" data-state="with-new" aria-pressed="false">Появилась задача</button>
+      <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- before -->
+      <div class="state-panel" data-state="before">
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— 5 задач</span></h2>
+          <div id="task-table" aria-live="polite"></div>
+        </div>
+        <div class="updated" aria-live="polite" id="u-before">обновлено 09:00:00</div>
+        <div class="banner info">Данные синхронизированы 09:00:00. 5 задач.</div>
+      </div>
+
+      <!-- refreshing -->
+      <div class="state-panel" data-state="refreshing" hidden aria-busy="true">
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— обновление</span></h2>
+          <p><span class="spinner" aria-hidden="true"></span><span class="kv" aria-live="polite">Обновляем данные…</span></p>
+          <div class="skel" style="width:60%"></div>
+          <div class="skel"></div><div class="skel"></div><div class="skel" style="width:70%"></div>
+        </div>
+        <div class="updated" aria-live="polite" id="u-refreshing">обновлено 09:00:00</div>
+      </div>
+
+      <!-- after -->
+      <div class="state-panel" data-state="after" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 4px">Список задач <span class="kv">— 5 задач</span></h2>
+          <p class="proto-note" style="margin:0 0 10px">Дублей нет: идентификаторы TASK-001…TASK-005 уникальны, задачи перерисованы в том же порядке.</p>
+          <div id="task-table-after" aria-live="polite"></div>
+        </div>
+        <div class="updated" aria-live="polite" id="u-after">обновлено 14:05:30</div>
+        <div class="banner info">Данные обновлены без дублей. Новых задач нет.</div>
+        <div class="panel">
+          <p class="kv">Токены (Всё время): всего 18260 — без изменений.</p>
+        </div>
+      </div>
+
+      <!-- with-new -->
+      <div class="state-panel" data-state="with-new" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 4px">Список задач <span class="kv">— 6 задач (демо)</span></h2>
+          <p class="proto-note" style="margin:0 0 10px">Демо: легитимно новая задача появляется ровно ОДИН раз, без дублей существующих идентификаторов.</p>
+          <table class="table" aria-label="Список задач (демо)">
+            <thead><tr><th scope="col">ID</th><th scope="col">Название</th><th scope="col">Дата</th><th scope="col">Продолжительность</th><th scope="col">Статус</th></tr></thead>
+            <tbody>
+              <tr><td>TASK-001</td><td><a href="uc-e2e-003.html">Настройка CI для репозитория ai-task-tracker</a></td><td>2026-11-10</td><td>2ч 30мин</td><td><span class="status done"><span class="dot" aria-hidden="true"></span>Завершена</span></td></tr>
+              <tr><td>TASK-002</td><td><a href="uc-e2e-003.html">Выбор способа авторизации локального API</a></td><td>2026-11-10</td><td>2ч 00мин</td><td><span class="status done"><span class="dot" aria-hidden="true"></span>Завершена</span></td></tr>
+              <tr><td>TASK-003</td><td><a href="uc-e2e-003.html">Исследование зависания backend под нагрузкой</a></td><td>2026-11-11</td><td>2ч 15мин</td><td><span class="status interrupted"><span class="dot" aria-hidden="true"></span>Прервана</span></td></tr>
+              <tr><td>TASK-004</td><td><a href="uc-e2e-003.html">Реализация векторного индекса для AI-поиска</a></td><td>2026-11-11</td><td>1ч 10мин</td><td><span class="status open"><span class="dot" aria-hidden="true"></span>Не завершена</span></td></tr>
+              <tr><td>TASK-005</td><td><a href="uc-e2e-003.html">Добавление виджета токенов на экран статистики</a></td><td>2026-11-11</td><td>40мин</td><td><span class="status done"><span class="dot" aria-hidden="true"></span>Завершена</span></td></tr>
+              <tr><td>TASK-006</td><td><a href="uc-e2e-003.html">Новая задача (демо)</a> <span class="chip chosen">новая</span></td><td>2026-11-12</td><td>—</td><td><span class="status done"><span class="dot" aria-hidden="true"></span>Завершена</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="updated" aria-live="polite" id="u-new">обновлено 14:05:30</div>
+        <div class="banner info">Появилась 1 новая задача (демо). Существующие задачи продублированы не были.</div>
+      </div>
+
+      <!-- error -->
+      <div class="state-panel" data-state="error" hidden>
+        <div class="errorbox" role="alert">Не удалось обновить данные. Показаны последние загруженные.</div>
+        <button class="btn primary" id="retry-btn" type="button">Повторить</button>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function () {
+    var scene = document.getElementById("scene");
+    function show(state) {
+      scene.querySelectorAll(".state-panel").forEach(function (p) {
+        p.hidden = p.getAttribute("data-state") !== state;
+      });
+      document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
+      });
+    }
+    // render task table into the "before" container (5 fixtures, stable order)
+    var t0 = document.getElementById("task-table");
+    if (t0) APP.renderTaskTable(t0, APP.TASKS);
+    var t1 = document.getElementById("task-table-after");
+    if (t1) APP.renderTaskTable(t1, APP.TASKS);
+    // retry: refreshing -> after (inline, no network)
+    var retry = document.getElementById("retry-btn");
+    if (retry) retry.addEventListener("click", function () { show("refreshing"); });
+  })();
+</script>
+</body>
+</html>

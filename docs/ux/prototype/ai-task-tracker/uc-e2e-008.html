@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-008 · Удаление истории — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html" aria-current="page">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-008 · Удаление истории</h1>
+      <span class="updated" aria-live="polite">обновлено —</span>
+    </div>
+    <p class="proto-note">S-06 (Управление данными). Удаление истории с подтверждением: модал диалог с предупреждением о необратимости, управление фокусом (фокус на «Отмена» при открытии, возврат на кнопку закрытия), Escape/клик по подложке = «Отмена», ловушка фокуса, no-op при повторном удалении (R-016/R-017).</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn primary" type="button" data-state="ready" aria-pressed="true">Готово</button>
+      <button class="btn" type="button" data-state="dialog" aria-pressed="false">Диалог</button>
+      <button class="btn" type="button" data-state="deleting" aria-pressed="false">Удаление</button>
+      <button class="btn" type="button" data-state="deleted" aria-pressed="false">Удалено</button>
+      <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
+      <button class="btn" type="button" data-state="noop" aria-pressed="false">No-op</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- ready (default) -->
+      <div class="state-panel" data-state="ready">
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Управление данными</h2>
+          <p class="kv">История содержит 5 задач, 22 действия и 18260 токенов.</p>
+          <button class="btn danger" id="del-btn" type="button">Удалить историю</button>
+        </div>
+
+        <!-- real modal dialog -->
+        <dialog id="del-dialog" aria-modal="true">
+          <div class="dlg-body">
+            <h2>Удалить историю?</h2>
+            <div class="banner warn">Это действие необратимо: будут удалены все задачи, действия и токены.</div>
+          </div>
+          <div class="dlg-actions">
+            <button class="btn" type="button" id="dlg-cancel">Отмена</button>
+            <button class="btn danger" type="button" id="dlg-confirm">Подтвердить</button>
+          </div>
+        </dialog>
+      </div>
+
+      <!-- dialog (layout mock) -->
+      <div class="state-panel" data-state="dialog" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Управление данными</h2>
+          <p class="kv">История содержит 5 задач, 22 действия и 18260 токенов.</p>
+        </div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="dlg-mock-title">
+          <h2 id="dlg-mock-title" style="font-size:18px;margin:0 0 8px">Удалить историю?</h2>
+          <div class="banner warn">Это действие необратимо: будут удалены все задачи, действия и токены.</div>
+          <div class="dlg-actions">
+            <button class="btn" type="button" disabled>Отмена</button>
+            <button class="btn danger" type="button" disabled>Подтвердить</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- deleting -->
+      <div class="state-panel" data-state="deleting" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Управление данными</h2>
+          <p class="kv">История содержит 5 задач, 22 действия и 18260 токенов.</p>
+          <button class="btn danger" type="button" aria-busy="true" disabled><span class="spinner" aria-hidden="true"></span>Удаляем…</button>
+        </div>
+      </div>
+
+      <!-- deleted -->
+      <div class="state-panel" data-state="deleted" hidden>
+        <div class="banner info">История удалена.</div>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Список задач <span class="kv">— пустой</span></h2>
+          <div class="empty">Пока нет задач.</div>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Статистика токенов <span class="kv">— пустая</span></h2>
+          <div class="empty">Нет данных за выбранный период.</div>
+        </div>
+        <button class="btn danger" id="del-btn-2" type="button" disabled>Удалить историю</button>
+        <p class="kv">История уже удалена.</p>
+      </div>
+
+      <!-- error -->
+      <div class="state-panel" data-state="error" hidden>
+        <div class="errorbox" role="alert">Не удалось удалить историю. Повторите попытку.</div>
+        <button class="btn danger" id="retry-btn" type="button">Повторить</button>
+      </div>
+
+      <!-- noop -->
+      <div class="state-panel" data-state="noop" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Управление данными</h2>
+          <button class="btn danger" type="button" disabled>Удалить историю</button>
+          <p class="kv">Удаление уже выполнено — повторное действие не выполняется.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<noscript>
+  <p class="errorbox">Для работы диалога подтверждения удаления нужен JavaScript. Повторное удаление отключено (no-op).</p>
+</noscript>
+<script>
+  (function () {
+    var scene = document.getElementById("scene");
+    var dlg = document.getElementById("del-dialog");
+    var delBtn = document.getElementById("del-btn");
+    var dlgCancel = document.getElementById("dlg-cancel");
+    var dlgConfirm = document.getElementById("dlg-confirm");
+    function show(state) {
+      scene.querySelectorAll(".state-panel").forEach(function (p) {
+        p.hidden = p.getAttribute("data-state") !== state;
+      });
+      document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
+      });
+    }
+    function trap(e) {
+      if (e.key !== "Tab") return;
+      var f = dlg.querySelectorAll("button");
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    function closeAndReset() {
+      if (typeof dlg.close === "function") dlg.close();
+      if (delBtn) delBtn.focus();
+    }
+    if (delBtn) delBtn.addEventListener("click", function () {
+      dlg.addEventListener("keydown", trap);
+      dlg.showModal();
+      if (dlgCancel) dlgCancel.focus();
+    });
+    if (dlgConfirm) dlgConfirm.addEventListener("click", function () {
+      closeAndReset();
+      show("deleting");
+      setTimeout(function () { show("deleted"); delBtn.disabled = true; }, 500);
+    });
+    if (dlgCancel) dlgCancel.addEventListener("click", closeAndReset);
+    if (dlg) {
+      dlg.addEventListener("cancel", function () { closeAndReset(); });
+      dlg.addEventListener("keydown", function (e) { if (e.key === "Escape") { e.preventDefault(); closeAndReset(); } });
+    }
+    // toolbar buttons control demo states (mock dialog buttons are visual only)
+    document.querySelectorAll(".proto-toolbar button[data-state]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (typeof dlg.close === "function" && dlg.open) dlg.close();
+        show(b.getAttribute("data-state"));
+      });
+    });
+    var retry = document.getElementById("retry-btn");
+    if (retry) retry.addEventListener("click", function () { show("deleting"); });
+  })();
+</script>
+</body>
+</html>

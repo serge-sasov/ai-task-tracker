@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-005 · Календарь — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html" aria-current="page">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-005 · Календарь задач</h1>
+      <span class="updated" aria-live="polite">обновлено —</span>
+    </div>
+    <p class="proto-note">S-04 (Календарь). Режимы День / Неделя / Месяц. Неделя 09–15.11.2026: 10.11 — 2 задачи, 11.11 — 3 задачи, остальные дни пустые. Пустой период — не ошибка. Навигация ‹ › по периодам (R-008/R-009).</p>
+
+    <fieldset class="seg" role="radiogroup" aria-label="Режим календаря">
+      <label><input type="radio" name="mode" value="week" checked><span>Неделя</span></label>
+      <label><input type="radio" name="mode" value="day"><span>День</span></label>
+      <label><input type="radio" name="mode" value="month"><span>Месяц</span></label>
+    </fieldset>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn primary" type="button" data-state="week" aria-pressed="true">Неделя</button>
+      <button class="btn" type="button" data-state="day" aria-pressed="false">День</button>
+      <button class="btn" type="button" data-state="month" aria-pressed="false">Месяц</button>
+      <button class="btn" type="button" data-state="empty-period" aria-pressed="false">Пустой период</button>
+      <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- empty-period -->
+      <div class="state-panel" data-state="empty-period" hidden>
+        <div class="panel">
+          <div class="empty">Нет задач в выбранном периоде (Неделя 16–22.11.2026).</div>
+        </div>
+      </div>
+
+      <!-- week (default) -->
+      <div class="state-panel" data-state="week">
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий период" style="padding:4px 10px">‹</button> Неделя 09–15.11.2026 <button class="btn" type="button" aria-label="Следующий период" style="padding:4px 10px">›</button></h2>
+          </div>
+          <div class="cal-week">
+            <div class="cal-day"><h3>Пн 09.11</h3><div class="emptyday" style="min-height:auto;padding:6px">нет задач</div></div>
+            <div class="cal-day"><h3>Вт 10.11</h3><a class="cal-item" href="uc-e2e-003.html">TASK-001 · 2ч 30мин</a><a class="cal-item" href="uc-e2e-003.html">TASK-002 · 2ч 00мин</a></div>
+            <div class="cal-day"><h3>Ср 11.11</h3><a class="cal-item" href="uc-e2e-003.html">TASK-003 · 2ч 15мин</a><a class="cal-item" href="uc-e2e-003.html">TASK-004 · 1ч 10мин</a><a class="cal-item" href="uc-e2e-003.html">TASK-005 · 40мин</a></div>
+            <div class="cal-day"><h3>Чт 12.11</h3><div class="emptyday" style="min-height:auto;padding:6px">нет задач</div></div>
+            <div class="cal-day"><h3>Пт 13.11</h3><div class="emptyday" style="min-height:auto;padding:6px">нет задач</div></div>
+            <div class="cal-day"><h3>Сб 14.11</h3><div class="emptyday" style="min-height:auto;padding:6px">нет задач</div></div>
+            <div class="cal-day"><h3>Вс 15.11</h3><div class="emptyday" style="min-height:auto;padding:6px">нет задач</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- day -->
+      <div class="state-panel" data-state="day" hidden>
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий период" style="padding:4px 10px">‹</button> 11.11.2026 <button class="btn" type="button" aria-label="Следующий период" style="padding:4px 10px">›</button></h2>
+          </div>
+          <ul class="timeline">
+            <li><span class="t">08:30</span><a href="uc-e2e-003.html">TASK-003 · Исследование зависания backend под нагрузкой · 2ч 15мин</a></li>
+            <li><span class="t">09:00</span><a href="uc-e2e-003.html">TASK-005 · Добавление виджета токенов на экран статистики · 40мин</a></li>
+            <li><span class="t">11:00</span><a href="uc-e2e-003.html">TASK-004 · Реализация векторного индекса для AI-поиска · 1ч 10мин</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- month -->
+      <div class="state-panel" data-state="month" hidden>
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий период" style="padding:4px 10px">‹</button> Ноябрь 2026 <button class="btn" type="button" aria-label="Следующий период" style="padding:4px 10px">›</button></h2>
+          </div>
+          <ul class="timeline">
+            <li><span class="t">10.11</span>2 задачи</li>
+            <li><span class="t">11.11</span>3 задачи</li>
+            <li><span class="t">прочие дни</span>—</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- error -->
+      <div class="state-panel" data-state="error" hidden>
+        <div class="errorbox" role="alert">Не удалось загрузить календарь</div>
+        <button class="btn primary" id="cal-retry" type="button">Повторить</button>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function () {
+    var scene = document.getElementById("scene");
+    function show(state) {
+      scene.querySelectorAll(".state-panel").forEach(function (p) {
+        p.hidden = p.getAttribute("data-state") !== state;
+      });
+      document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
+      });
+    }
+    // segmented control wires the proto-toolbar state
+    document.querySelectorAll('input[name="mode"]').forEach(function (r) {
+      r.addEventListener("change", function () { show(r.value); });
+    });
+    // LLM/calendar retry: back to week, then demo of stable error toggle
+    var retry = document.getElementById("cal-retry");
+    if (retry) retry.addEventListener("click", function () { show("week"); });
+  })();
+</script>
+</body>
+</html>

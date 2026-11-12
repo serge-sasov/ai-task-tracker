@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | in_progress |
+| status | awaiting_review |
 | depends_on | T-004 (done) |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
@@ -31,7 +31,7 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | pending | `docs/checkpoints/T-005-CP-2.md` |
+| CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | awaiting_review | `docs/checkpoints/T-005-CP-2.md` |
 | CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-005-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -43,3 +43,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-12: T-005 started (U-02 UX wireframes, prototype, UI spec); card created; T-004 done (36f52cd) unblocks T-005; board T-005 -> in_progress (yellow #FFE082); diagram re-rendered.
+- 2026-11-12: CP-2 reached (2026-11-12T18:11:08); checkpoint file `docs/checkpoints/T-005-CP-2.md` created; board/card T-005 -> awaiting_review (blue #87CEFA); diagram re-rendered.
+- 2026-11-12: user-reported wireframe fix: `docs/ux/wireframes-ai-task-tracker.puml` had PlantUML errors (old SVG was a crash image); lead rewrote it as valid Salt, MCP `check_syntax` valid, SVG re-rendered (62.5 KB, no crash text). Prototype verification fixes: uc-e2e-006 token table JS keys (model/input/output instead of undefined), «Всё время» typos, sidebar label «UC-E2E-003 · Список и детали задачи», canonical S-05 error «Не удалось построить сводку по токенам», detail totals TASK-004=1670 / TASK-005=990; verified no external URLs/network/storage. All included in the CP-2 snapshot.

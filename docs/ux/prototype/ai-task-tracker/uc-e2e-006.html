@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-006 · Токены — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html" aria-current="page">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-006 · Статистика по токенам</h1>
+      <span class="updated" aria-live="polite">обновлено —</span>
+    </div>
+    <p class="proto-note">S-05 (Токены). Выбор периода: «Всё время», «10.11.2026», «11.11.2026», «Диапазон 10–11.11.2026». Агрегаты по моделям (qwen3.8:27b, llama3.1:8b) + итоговая строка. Переход: TASK-002 (10.11) без usage-данных → «нет данных» в детализации (R-012/R-013/R-026).</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn primary" type="button" data-state="all-time" aria-pressed="true">Всё время</button>
+      <button class="btn" type="button" data-state="day-10" aria-pressed="false">10.11</button>
+      <button class="btn" type="button" data-state="day-11" aria-pressed="false">11.11</button>
+      <button class="btn" type="button" data-state="empty" aria-pressed="false">Пустой период</button>
+      <button class="btn" type="button" data-state="session-no-usage" aria-pressed="false">Задача без usage</button>
+      <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- empty -->
+      <div class="state-panel" data-state="empty" hidden>
+        <div class="panel">
+          <div class="empty">Нет данных за выбранный период (12.11.2026 — задачи отсутствуют).</div>
+        </div>
+      </div>
+
+      <!-- all-time (default) -->
+      <div class="state-panel" data-state="all-time">
+        <div class="field">
+          <label for="period">Период</label>
+          <select id="period">
+            <option value="all" selected>Всё время</option>
+            <option value="2026-11-10">10.11.2026</option>
+            <option value="2026-11-11">11.11.2026</option>
+            <option value="range">Диапазон 10–11.11.2026</option>
+          </select>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Токены по моделям</h2>
+          <table class="table" id="token-table" aria-label="Статистика токенов">
+            <thead><tr><th scope="col">Модель</th><th scope="col">Вход</th><th scope="col">Вывод</th><th scope="col">Всего</th></tr></thead>
+          </table>
+        </div>
+        <p class="proto-note">TASK-002 (10.11): сессия без usage-данных — учтена как 0 в агрегатах.</p>
+      </div>
+
+      <!-- day-10 -->
+      <div class="state-panel" data-state="day-10" hidden>
+        <div class="field">
+          <label for="period-10">Период</label>
+          <select id="period-10">
+            <option value="all">Всё время</option>
+            <option value="2026-11-10" selected>10.11.2026</option>
+            <option value="2026-11-11">11.11.2026</option>
+            <option value="range">Диапазон 10–11.11.2026</option>
+          </select>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Токены по моделям · 10.11.2026</h2>
+          <table class="table" aria-label="Токены 10.11.2026">
+            <thead><tr><th scope="col">Модель</th><th scope="col">Вход</th><th scope="col">Вывод</th><th scope="col">Всего</th></tr></thead>
+            <tbody>
+              <tr><td>qwen3.8:27b</td><td>7200</td><td>3000</td><td>10200</td></tr>
+              <tr><td>llama3.1:8b</td><td>1400</td><td>550</td><td>1950</td></tr>
+              <tr class="total-row"><th scope="row">Всего токенов</th><td>8600</td><td>3550</td><td>12150</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- day-11 -->
+      <div class="state-panel" data-state="day-11" hidden>
+        <div class="field">
+          <label for="period-11">Период</label>
+          <select id="period-11">
+            <option value="all">Всё время</option>
+            <option value="2026-11-10">10.11.2026</option>
+            <option value="2026-11-11" selected>11.11.2026</option>
+            <option value="range">Диапазон 10–11.11.2026</option>
+          </select>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Токены по моделям · 11.11.2026</h2>
+          <table class="table" aria-label="Токены 11.11.2026">
+            <thead><tr><th scope="col">Модель</th><th scope="col">Вход</th><th scope="col">Вывод</th><th scope="col">Всего</th></tr></thead>
+            <tbody>
+              <tr><td>qwen3.8:27b</td><td>3550</td><td>1590</td><td>5140</td></tr>
+              <tr><td>llama3.1:8b</td><td>700</td><td>270</td><td>970</td></tr>
+              <tr class="total-row"><th scope="row">Всего токенов</th><td>4250</td><td>1860</td><td>6110</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- session-no-usage -->
+      <div class="state-panel" data-state="session-no-usage" hidden>
+        <div class="panel">
+          <h2 style="font-size:17px;margin:0 0 10px">Детализация по задачам · 10–11.11.2026</h2>
+          <table class="table" aria-label="Токены по задачам 10.11.2026">
+            <thead><tr><th scope="col">Задача</th><th scope="col">Всего</th></tr></thead>
+            <tbody>
+              <tr><td>TASK-001 · Настройка CI для репозитория ai-task-tracker</td><td>10200</td></tr>
+              <tr><td>TASK-002 · Выбор способа авторизации локального API</td><td class="kv">нет данных</td></tr>
+              <tr><td>TASK-004 · Реализация векторного индекса для AI-поиска</td><td>1670</td></tr>
+              <tr><td>TASK-005 · Добавление виджета токенов на экран статистики</td><td>990</td></tr>
+            </tbody>
+          </table>
+          <p class="proto-note">TASK-002 (10.11) запущен без отправки usage-данных — учтён как «нет данных» в детализации, 0 в агрегатах.</p>
+        </div>
+      </div>
+
+      <!-- error -->
+      <div class="state-panel" data-state="error" hidden>
+        <div class="errorbox" role="alert">Не удалось построить сводку по токенам</div>
+        <button class="btn primary" id="retry-btn" type="button">Повторить</button>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function () {
+    var data = { all: APP.TOKENS.all_time, "2026-11-10": APP.TOKENS["2026-11-10"], "2026-11-11": APP.TOKENS["2026-11-11"], range: APP.TOKENS.all_time };
+    var scene = document.getElementById("scene");
+    var table = document.getElementById("token-table");
+
+    function tableHTML(rows) {
+      var body = rows.map(function (r) {
+        return "<tr><td>" + r.model + "</td><td>" + r.input + "</td><td>" + r.output + "</td><td>" + (r.input + r.output) + "</td></tr>";
+      }).join("");
+      var ti = rows.reduce(function (s, r) { return s + r.input; }, 0);
+      var to = rows.reduce(function (s, r) { return s + r.output; }, 0);
+      return "<thead><tr><th scope=\"col\">Модель</th><th scope=\"col\">Вход</th><th scope=\"col\">Вывод</th><th scope=\"col\">Всего</th></tr></thead>" +
+        "<tbody>" + body +
+        "<tr class=\"total-row\"><th scope=\"row\">Всего токенов</th><td>" + ti + "</td><td>" + to + "</td><td>" + (ti + to) + "</td></tr></tbody>";
+    }
+
+    function show(state) {
+      scene.querySelectorAll(".state-panel").forEach(function (p) { p.hidden = p.getAttribute("data-state") !== state; });
+      document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
+      });
+    }
+
+    var sel = document.getElementById("period");
+    if (sel) {
+      table.innerHTML = tableHTML(data[sel.value]);
+      sel.addEventListener("change", function () { table.innerHTML = tableHTML(data[sel.value]); });
+    }
+    document.getElementById("period-10").addEventListener("change", function () { show("all-time"); });
+    document.getElementById("period-11").addEventListener("change", function () { show("all-time"); });
+
+    var retry = document.getElementById("retry-btn");
+    if (retry) retry.addEventListener("click", function () { show("all-time"); });
+  })();
+</script>
+</body>
+</html>

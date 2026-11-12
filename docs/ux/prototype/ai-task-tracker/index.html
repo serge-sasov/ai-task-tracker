@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Task Tracker — каталог сценариев (UX-прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker — UX-прототип</div>
+    <a href="index.html" aria-current="page">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: только локальные ассеты, фикстуры из e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <div class="page-head"><h1>Каталог сценариев</h1></div>
+    <p class="proto-note">Статический UX-прототип T-005 / U-02 (AI Task Tracker). Каждый сценарий — отдельная страница со всеми состояниями (загрузка / пусто / успех / ошибка). Данные — фикстуры, без сети и хранения.</p>
+
+    <section class="panel" aria-labelledby="s01-h">
+      <h2 id="s01-h" style="font-size:17px;margin:0 0 6px">UC-E2E-001 · Приложение с пустым каталогом</h2>
+      <p>Новый запуск: все разделы показывают честные пустые состояния, без ошибок и «выдуманных» данных.</p>
+      <p><a class="btn primary" href="uc-e2e-001.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s02-h">
+      <h2 id="s02-h" style="font-size:17px;margin:0 0 6px">UC-E2E-002 · Каталог opencode недоступен</h2>
+      <p>Ошибочное состояние списка: баннер «Источник данных (opencode) недоступен» и кнопка «Повторить».</p>
+      <p><a class="btn primary" href="uc-e2e-002.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s03-h">
+      <h2 id="s03-h" style="font-size:17px;margin:0 0 6px">UC-E2E-003 · Задачи в списке и карточка деталей</h2>
+      <p>Таблица задач (5 фикстур), карточка задачи: действия, решения, токены. Включая «Решений не зафиксировано».</p>
+      <p><a class="btn primary" href="uc-e2e-003.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s04-h">
+      <h2 id="s04-h" style="font-size:17px;margin:0 0 6px">UC-E2E-004 · AI-поиск по задачам</h2>
+      <p>Поиск с валидацией пустого запроса, «Ищем по задачам…», top-K = 5, честная пустая выдача, ошибка LLM.</p>
+      <p><a class="btn primary" href="uc-e2e-004.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s05-h">
+      <h2 id="s05-h" style="font-size:17px;margin:0 0 6px">UC-E2E-005 · Календарь задач</h2>
+      <p>Режимы День/Неделя/Месяц, навигация периода, полосы задач с продолжительностью, пустой период.</p>
+      <p><a class="btn primary" href="uc-e2e-005.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s06-h">
+      <h2 id="s06-h" style="font-size:17px;margin:0 0 6px">UC-E2E-006 · Статистика по токенам</h2>
+      <p>Таблица по моделям (qwen3.8:27b, llama3.1:8b), «Всего токенов», периоды: всё время / 10.11 / 11.11.</p>
+      <p><a class="btn primary" href="uc-e2e-006.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s07-h">
+      <h2 id="s07-h" style="font-size:17px;margin:0 0 6px">UC-E2E-007 · Обновление данных без дублей</h2>
+      <p>Повторная синхронизация: данные обновляются, дублей нет, индикатор «обновлено HH:MM:SS».</p>
+      <p><a class="btn primary" href="uc-e2e-007.html">Открыть сценарий</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="s08-h">
+      <h2 id="s08-h" style="font-size:17px;margin:0 0 6px">UC-E2E-008 · Удаление истории</h2>
+      <p>Кнопка «Удалить историю», диалог подтверждения с предупреждением, «История удалена.», повторное удаление — no-op.</p>
+      <p><a class="btn primary" href="uc-e2e-008.html">Открыть сценарий</a></p>
+    </section>
+
+    <p class="proto-note">Трассировка сценариев → экранов → требований: <code>docs/ux/ui-spec-ai-task-tracker.md</code> §3.1 и §8. Канонический RU-копирайтинг: <code>docs/ux/screens-ai-task-tracker.md</code> §4.</p>
+  </main>
+</div>
+</body>
+</html>

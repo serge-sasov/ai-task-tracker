@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UC-E2E-004 · AI-поиск — AI Task Tracker (прототип)</title>
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="side" aria-label="Навигация прототипа">
+    <div class="brand">AI Task Tracker</div>
+    <a href="index.html">Каталог сценариев</a>
+    <a href="uc-e2e-001.html">UC-E2E-001 · Пустые состояния</a>
+    <a href="uc-e2e-002.html">UC-E2E-002 · Ошибка источника данных</a>
+    <a href="uc-e2e-003.html">UC-E2E-003 · Список и детали задачи</a>
+    <a href="uc-e2e-004.html" aria-current="page">UC-E2E-004 · AI-поиск</a>
+    <a href="uc-e2e-005.html">UC-E2E-005 · Календарь задач</a>
+    <a href="uc-e2e-006.html">UC-E2E-006 · Статистика токенов</a>
+    <a href="uc-e2e-007.html">UC-E2E-007 · Обновление данных</a>
+    <a href="uc-e2e-008.html">UC-E2E-008 · Удаление истории</a>
+    <div class="side-note">Офлайн-прототип: локальные ассеты, фикстуры e2e-test-data.</div>
+  </nav>
+  <main class="main">
+    <a class="backlink" href="index.html">← Каталог сценариев</a>
+    <div class="page-head">
+      <h1>UC-E2E-004 · AI-поиск по задачам</h1>
+      <span class="updated" aria-live="polite">обновлено —</span>
+    </div>
+    <p class="proto-note">S-03 (Результаты AI-поиска). Экран поиска: ввод запроса, превью-подсказки, индикатор «Ищем по задачам…», ранжированный список, пустая выдача, ошибка LLM. Клиентская валидация пустого запроса (R-010/R-011, таймаут 15 с — R-023).</p>
+
+    <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
+      <span class="tb-label">Состояние:</span>
+      <button class="btn" type="button" data-state="idle" aria-pressed="true">Ввод</button>
+      <button class="btn" type="button" data-state="empty-query" aria-pressed="false">Пустой запрос</button>
+      <button class="btn" type="button" data-state="searching" aria-pressed="false">Ищем…</button>
+      <button class="btn" type="button" data-state="results" aria-pressed="false">Результаты</button>
+      <button class="btn" type="button" data-state="not-found" aria-pressed="false">Ничего нет</button>
+      <button class="btn" type="button" data-state="llm-error" aria-pressed="false">Ошибка LLM</button>
+    </div>
+
+    <section id="scene" aria-label="Контент сценария">
+      <!-- validation (empty query) -->
+      <div class="state-panel" data-state="empty-query" hidden>
+        <div class="field">
+          <label for="q">Поиск по задачам</label>
+          <input id="q" type="text" placeholder="Например: настройка CI для репозитория" value="" disabled>
+          <span class="err" id="q-err">Введите запрос</span>
+        </div>
+        <button class="btn primary" type="button" disabled>Найти</button>
+      </div>
+
+      <!-- idle (default) -->
+      <div class="state-panel" data-state="idle">
+        <div class="field">
+          <label for="q2">Поиск по задачам</label>
+          <input id="q2" type="text" placeholder="Например: настройка CI для репозитория" value="">
+          <span class="hint">Например: «настройка CI для репозитория» или «зависание сервера под нагрузкой»</span>
+        </div>
+        <button class="btn primary" id="find-btn" type="button">Найти</button>
+        <div style="margin-top:12px">
+          <span class="chip" style="cursor:pointer" data-q="настройка CI для репозитория">настройка CI для репозитория</span>
+          <span class="chip" style="cursor:pointer" data-q="авторизация и токены доступа">авторизация и токеты доступа</span>
+          <span class="chip" style="cursor:pointer" data-q="зависание сервера под нагрузкой">зависание сервера под нагрузкой</span>
+          <span class="chip" style="cursor:pointer" data-q="рецепт борща">рецепт борща</span>
+        </div>
+      </div>
+
+      <!-- searching -->
+      <div class="state-panel" data-state="searching" hidden aria-busy="true">
+        <div class="panel">
+          <p><span class="spinner" aria-hidden="true"></span><span class="kv" aria-live="polite">Ищем по задачам…</span></p>
+          <div class="skel" style="width:50%"></div>
+          <div class="skel"></div><div class="skel"></div>
+        </div>
+      </div>
+
+      <!-- results -->
+      <div class="state-panel" data-state="results" hidden>
+        <div class="banner info">Найдено: 2 из top-K = 5. Запрос «настройка CI для репозитория».</div>
+        <div class="result">
+          <div class="rt"><a href="uc-e2e-003.html">TASK-001 · Настройка CI для репозитория ai-task-tracker</a></div>
+          <div class="rq">решение — GitLab CI; .gitlab-ci.yml (stages: lint, test, build)</div>
+        </div>
+        <div class="result">
+          <div class="rt"><a href="uc-e2e-003.html">TASK-004 · Реализация векторного индекса для AI-поиска</a></div>
+          <div class="rq">семантические запросы, генерация сниппетов</div>
+        </div>
+      </div>
+
+      <!-- not-found -->
+      <div class="state-panel" data-state="not-found" hidden>
+        <div class="banner info">Запрос «рецепт борща».</div>
+        <div class="panel">
+          <div class="empty">Ничего не найдено. Попробуйте изменить запрос.</div>
+        </div>
+      </div>
+
+      <!-- llm-error -->
+      <div class="state-panel" data-state="llm-error" hidden>
+        <div class="errorbox" role="alert">AI-поиск недоступен: LLM не отвечает. Попробуйте позже.</div>
+        <button class="btn primary" id="llm-retry" type="button">Повторить</button>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function () {
+    var scene = document.getElementById("scene");
+    function show(state) {
+      scene.querySelectorAll(".state-panel").forEach(function (p) {
+        p.hidden = p.getAttribute("data-state") !== state;
+      });
+      document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
+      });
+    }
+    // preset chips: queries that are in fixtures -> results, unrelated -> not-found
+    scene.querySelectorAll(".chip[data-q]").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        var q = chip.getAttribute("data-q");
+        if (q.indexOf("борща") !== -1) show("not-found");
+        else show("results");
+      });
+    });
+    var find = document.getElementById("find-btn");
+    if (find) find.addEventListener("click", function () { show("results"); });
+    // LLM retry: back to searching then same error again (failed retry)
+    var lr = document.getElementById("llm-retry");
+    if (lr) lr.addEventListener("click", function () {
+      lr.disabled = true; show("searching");
+      setTimeout(function () { show("llm-error"); lr.disabled = false; }, 500);
+    });
+  })();
+</script>
+</body>
+</html>
