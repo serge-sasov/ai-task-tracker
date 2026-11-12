@@ -16,7 +16,7 @@
 | chunks | 4 — (1) wireframes: `wireframes-*.puml` covering S-01..S-06 + layout-affecting states, then `check_syntax` + SVG render; (2) UI spec: 2-3 sections per write per `harness/templates/ux-spec.md` (skeleton first, then one section per edit); (3) prototype `index.html` + shared `assets/*` (one scenario page or shared asset per write); (4) scenario pages `uc-e2e-001.html`..`uc-e2e-008.html`, one page per chunk; harness-coder delegation for page implementation allowed under process §0/§1 exception (depth 2, sequential, one child at a time, coder writes only `docs/ux/prototype/ai-task-tracker/**`, UX designer validates and remains accountable at CP-2) |
 | budget | Markdown: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60; HTML/CSS/JS and PlantUML: max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | b139595 (CP-2 revision 2 snapshot) · aa13165 (CP-2 rev-2 approval; CP-F rev-2 start) · 90028a2 (CP-F revision 2 snapshot) — artifacts at 9ecf877 (CP-2 rev 1) |
+| commit | **2409d2f (final, accepted)** · 90028a2 (CP-F revision 2 snapshot) · b139595 (CP-2 revision 2 snapshot) · aa13165 (CP-2 rev-2 approval; CP-F rev-2 start) — artifacts at 9ecf877 (CP-2 rev 1) |
 
 ## Acceptance
 
@@ -56,4 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: **CP-F revision 2 created** (`docs/checkpoints/T-005-CP-F.md`, `awaiting_review`, requested 2026-11-13T00:02:57, snapshot `b139595`); revision-1 history preserved. Card/board T-005 -> awaiting_review (blue #87CEFA); diagram re-rendered. Task NOT `done` until the user approves CP-F revision 2.
 - 2026-11-13: CP-F revision 2 snapshot committed as `90028a2`; hash recorded in card and checkpoint.
 - 2026-11-13T00:14:04: **CP-F revision 2 approved** by user (explicit chat approval); acceptance (a)–(f) marked `[x]`; CP-F row -> approved. Recorded in `docs/checkpoints/T-005-CP-F.md`.
-- 2026-11-13: **T-005 closed as `done`**; card/board T-005 -> done (green #90EE90); diagram re-rendered. T-006 (R-01) unblocked (pending; activation only by command). Final commit recorded in this log.
+- 2026-11-13: **T-005 closed as `done`**; card/board T-005 -> done (green #90EE90); diagram re-rendered. T-006 (R-01) unblocked (pending; activation only by command). Closure commit `2409d2f`; hash recorded in card and board.

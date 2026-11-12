@@ -14,7 +14,7 @@
 | reviewed_at | 2026-11-13T00:14:04 |
 | reviewer | user |
 | decision | approved |
-| snapshot_commit | `b139595` (deliverables) · `aa13165` (CP-2 rev-2 approval) · `90028a2` (CP-F revision 2) |
+| snapshot_commit | `b139595` (deliverables) · `aa13165` (CP-2 rev-2 approval) · `90028a2` (CP-F revision 2) · `2409d2f` (final, accepted) |
 
 ## Revision 2 — final acceptance
 
@@ -88,7 +88,7 @@ otherwise request changes and the task returns to the last checkpoint (CP-2 revi
 - 2026-11-12T23:10:47: CP-2 **revision 2 approved** (user); recorded in `aa13165`.
 - 2026-11-13: CP-F **revision 2** created (`awaiting_review`); snapshot committed as `90028a2`.
 - 2026-11-13T00:14:04: CP-F **revision 2 approved** (user, explicit chat approval). T-005 closed
-  as `done`; T-006 (R-01) unblocked (pending).
+  as `done`; T-006 (R-01) unblocked (pending). Closure commit `2409d2f`.
 
 ## History — Revision 1 (changes_requested)
 
