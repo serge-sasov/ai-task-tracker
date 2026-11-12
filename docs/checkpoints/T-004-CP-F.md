@@ -14,7 +14,7 @@
 | reviewed_at | 2026-11-12T15:44:11 |
 | reviewer | user |
 | decision | approved |
-| snapshot_commit | - (recorded on the board/card at closure) |
+| snapshot_commit | 36f52cd (closure commit) |
 
 ## Review scope
 

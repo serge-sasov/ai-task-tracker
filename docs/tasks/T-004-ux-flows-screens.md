@@ -16,7 +16,7 @@
 | chunks | 3 — UX Markdown docs: 2-3 sections per chunk; write a skeleton first, then fill one section per edit; do not create a large artifact in one write |
 | budget | max_write_kb: 8 / max_session_kb: 20 / context_stop_pct: 60 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | - (recorded after closure commit) |
+| commit | 36f52cd |
 
 ## Acceptance
 
@@ -46,3 +46,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-12: U-01 artifacts delivered: `docs/ux/user-flows-ai-task-tracker.md` (personas P-1/P-2, IA, flows F-1..F-8 + background BF-1..BF-2, traceability to UC-E2E-001..008, assumptions/open questions), `docs/ux/screens-ai-task-tracker.md` (registry S-01..S-06, states loading/empty/success/error, a11y, RU copy, traceability, no contradictions with Q-NNN/R-NNN). CP-1 -> awaiting_review; stopped at checkpoint per process.md (no checkpoint file, no further stages).
 - 2026-11-12: orchestrator finalized CP-1: `docs/checkpoints/T-004-CP-1.md` created; card status -> awaiting_review; board and diagram (blue #87CEFA) updated; snapshot committed.
 - 2026-11-12: user decision recorded (explicit chat decision of 2026-11-12, relayed by the lead): «consider T-004 CP-1 and CP-F approved» — CP-1 -> approved; `docs/checkpoints/T-004-CP-F.md` created with decision approved; all six acceptance items verified against `docs/ux/user-flows-ai-task-tracker.md` and `docs/ux/screens-ai-task-tracker.md` and marked [x]; card status -> done; board -> done (green #90EE90); open non-blocking Q-UX-1/Q-UX-2 carried to T-006/T-005.
+- 2026-11-12: T-004 closure committed (36f52cd); final commit hash recorded on board and card.
