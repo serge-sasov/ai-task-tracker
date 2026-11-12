@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-01 |
 | role | ux-designer |
-| status | in_progress |
+| status | awaiting_review |
 | depends_on | T-002 (done), T-003 (done) |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` |
@@ -31,7 +31,7 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-1 | U-01 flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | pending | `docs/checkpoints/T-004-CP-1.md` |
+| CP-1 | U-01 flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | awaiting_review | `docs/checkpoints/T-004-CP-1.md` |
 | CP-F | final acceptance | all task artifacts | pending | `docs/checkpoints/T-004-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -43,3 +43,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-12: T-004 started (U-01 UX flows and screens); card created; T-004 -> in_progress; board and diagram updated; inputs T-002/T-003 done.
+- 2026-11-12: U-01 artifacts delivered: `docs/ux/user-flows-ai-task-tracker.md` (personas P-1/P-2, IA, flows F-1..F-8 + background BF-1..BF-2, traceability to UC-E2E-001..008, assumptions/open questions), `docs/ux/screens-ai-task-tracker.md` (registry S-01..S-06, states loading/empty/success/error, a11y, RU copy, traceability, no contradictions with Q-NNN/R-NNN). CP-1 -> awaiting_review; stopped at checkpoint per process.md (no checkpoint file, no further stages).
+- 2026-11-12: orchestrator finalized CP-1: `docs/checkpoints/T-004-CP-1.md` created; card status -> awaiting_review; board and diagram (blue #87CEFA) updated; snapshot committed.
