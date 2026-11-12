@@ -18,8 +18,8 @@ partition "T-003 A-02 e2e use cases and dataset (DONE)" {
 partition "T-004 U-01 UX flows and screens (DONE)" {
   :personas, journeys, IA, screen inventory, screen states; <<#90EE90>>
 }
-partition "T-005 U-02 wireframes, prototype, UI spec (IN PROGRESS — calendar revision)" {
-  :Salt wireframes S-01..S-06, offline HTML prototype (UC-E2E-001..008), UI spec; calendar month/year views being added; <<#FFE082>>
+partition "T-005 U-02 wireframes, prototype, UI spec (AWAITING REVIEW — CP-2 revision 2)" {
+  :Salt wireframes S-01..S-06, offline HTML prototype (UC-E2E-001..008), UI spec; calendar month grid + year view delivered; <<#87CEFA>>
 }
 partition "T-006..T-012 pending (see docs/plan.md)" {
   :R-01, R-02, I-01, I-02, Q-01, Q-02, D-01; <<#D3D3D3>>

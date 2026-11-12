@@ -28,24 +28,41 @@
       <h1>UC-E2E-005 · Календарь задач</h1>
       <span class="updated" aria-live="polite">обновлено —</span>
     </div>
-    <p class="proto-note">S-04 (Календарь). Режимы День / Неделя / Месяц. Неделя 09–15.11.2026: 10.11 — 2 задачи, 11.11 — 3 задачи, остальные дни пустые. Пустой период — не ошибка. Навигация ‹ › по периодам (R-008/R-009).</p>
+    <p class="proto-note">S-04 (Календарь). Режимы «Неделя» / «День» / «Месяц» / «Год». Неделя 09–15.11.2026: 10.11 — 2 задачи, 11.11 — 3 задачи. «Месяц» — полная сетка по неделям (Пн–Вс). «Год» — 12 месяцев; у ноября статистика, у остальных «Нет данных». Пустой период — не ошибка. Навигация ‹ › по периодам (R-008/R-009).</p>
 
     <fieldset class="seg" role="radiogroup" aria-label="Режим календаря">
       <label><input type="radio" name="mode" value="week" checked><span>Неделя</span></label>
       <label><input type="radio" name="mode" value="day"><span>День</span></label>
       <label><input type="radio" name="mode" value="month"><span>Месяц</span></label>
+      <label><input type="radio" name="mode" value="year"><span>Год</span></label>
     </fieldset>
 
     <div class="proto-toolbar" data-target="#scene" role="group" aria-label="Состояния сценария">
       <span class="tb-label">Состояние:</span>
+      <button class="btn" type="button" data-state="loading" aria-pressed="false">Загрузка</button>
       <button class="btn primary" type="button" data-state="week" aria-pressed="true">Неделя</button>
       <button class="btn" type="button" data-state="day" aria-pressed="false">День</button>
       <button class="btn" type="button" data-state="month" aria-pressed="false">Месяц</button>
+      <button class="btn" type="button" data-state="year" aria-pressed="false">Год</button>
       <button class="btn" type="button" data-state="empty-period" aria-pressed="false">Пустой период</button>
       <button class="btn" type="button" data-state="error" aria-pressed="false">Ошибка</button>
     </div>
 
     <section id="scene" aria-label="Контент сценария">
+      <!-- loading -->
+      <div class="state-panel" data-state="loading" hidden>
+        <div class="panel" aria-busy="true">
+          <div class="skeleton" style="width:46%;height:20px;margin-top:0" role="presentation" aria-hidden="true"></div>
+          <div class="cal-month" aria-hidden="true">
+            <span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span><span class="skeleton" style="height:18px;margin:2px 0"></span>
+            <span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span>
+            <span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span>
+            <span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span><span class="skeleton" style="height:48px"></span>
+          </div>
+          <p class="proto-note" role="status" aria-live="polite">Загружаем календарь…</p>
+        </div>
+      </div>
+
       <!-- empty-period -->
       <div class="state-panel" data-state="empty-period" hidden>
         <div class="panel">
@@ -85,17 +102,44 @@
         </div>
       </div>
 
-      <!-- month -->
+      <!-- month: full grid, Monday-first -->
       <div class="state-panel" data-state="month" hidden>
         <div class="panel">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий период" style="padding:4px 10px">‹</button> Ноябрь 2026 <button class="btn" type="button" aria-label="Следующий период" style="padding:4px 10px">›</button></h2>
+            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий месяц" style="padding:4px 10px">‹</button> Ноябрь 2026 <button class="btn" type="button" aria-label="Следующий месяц" style="padding:4px 10px">›</button></h2>
           </div>
-          <ul class="timeline">
-            <li><span class="t">10.11</span>2 задачи</li>
-            <li><span class="t">11.11</span>3 задачи</li>
-            <li><span class="t">прочие дни</span>—</li>
-          </ul>
+          <div class="cal-month" role="grid" aria-label="Календарь на Ноябрь 2026">
+            <div class="dow">Пн</div><div class="dow">Вт</div><div class="dow">Ср</div><div class="dow">Чт</div><div class="dow">Пт</div><div class="dow">Сб</div><div class="dow">Вс</div>
+            <div class="cd adj"><span class="dn">26.10</span></div><div class="cd adj"><span class="dn">27.10</span></div><div class="cd adj"><span class="dn">28.10</span></div><div class="cd adj"><span class="dn">29.10</span></div><div class="cd adj"><span class="dn">30.10</span></div><div class="cd adj"><span class="dn">31.10</span></div><div class="cd"><span class="dn">1</span></div>
+            <div class="cd"><span class="dn">2</span></div><div class="cd"><span class="dn">3</span></div><div class="cd"><span class="dn">4</span></div><div class="cd"><span class="dn">5</span></div><div class="cd"><span class="dn">6</span></div><div class="cd"><span class="dn">7</span></div><div class="cd"><span class="dn">8</span></div>
+            <div class="cd"><span class="dn">9</span></div><div class="cd"><span class="dn">10</span><a class="ci" href="uc-e2e-003.html">TASK-001 · 2ч 30мин</a><a class="ci" href="uc-e2e-003.html">TASK-002 · 2ч 00мин</a></div><div class="cd"><span class="dn">11</span><a class="ci" href="uc-e2e-003.html">TASK-003 · 2ч 15мин</a><a class="ci" href="uc-e2e-003.html">TASK-004 · 1ч 10мин</a><a class="ci" href="uc-e2e-003.html">TASK-005 · 40мин</a></div><div class="cd"><span class="dn">12</span></div><div class="cd"><span class="dn">13</span></div><div class="cd"><span class="dn">14</span></div><div class="cd"><span class="dn">15</span></div>
+            <div class="cd"><span class="dn">16</span></div><div class="cd"><span class="dn">17</span></div><div class="cd"><span class="dn">18</span></div><div class="cd"><span class="dn">19</span></div><div class="cd"><span class="dn">20</span></div><div class="cd"><span class="dn">21</span></div><div class="cd"><span class="dn">22</span></div>
+            <div class="cd"><span class="dn">23</span></div><div class="cd"><span class="dn">24</span></div><div class="cd"><span class="dn">25</span></div><div class="cd"><span class="dn">26</span></div><div class="cd"><span class="dn">27</span></div><div class="cd"><span class="dn">28</span></div><div class="cd"><span class="dn">29</span></div>
+            <div class="cd"><span class="dn">30</span></div><div class="cd adj"><span class="dn">1.12</span></div><div class="cd adj"><span class="dn">2.12</span></div><div class="cd adj"><span class="dn">3.12</span></div><div class="cd adj"><span class="dn">4.12</span></div><div class="cd adj"><span class="dn">5.12</span></div><div class="cd adj"><span class="dn">6.12</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- year: 12 months -->
+      <div class="state-panel" data-state="year" hidden>
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h2 style="font-size:17px;margin:0"><button class="btn" type="button" aria-label="Предыдущий год" style="padding:4px 10px">‹</button> 2026 <button class="btn" type="button" aria-label="Следующий год" style="padding:4px 10px">›</button></h2>
+          </div>
+          <div class="cal-year" role="list" aria-label="Месяцы 2026 года">
+            <div class="yr-cell empty" role="listitem"><span class="ym">Январь</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Февраль</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Март</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Апрель</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Май</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Июнь</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Июль</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Август</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Сентябрь</span><span class="yst">Нет данных</span></div>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Октябрь</span><span class="yst">Нет данных</span></div>
+            <button type="button" class="yr-cell" role="listitem" data-open-month="2026-11" aria-label="Открыть Ноябрь 2026 в режиме «Месяц»"><span class="ym">Ноябрь</span><span class="yst">5 задач · 8ч 35мин · 18 260 токенов</span></button>
+            <div class="yr-cell empty" role="listitem"><span class="ym">Декабрь</span><span class="yst">Нет данных</span></div>
+          </div>
         </div>
       </div>
 
@@ -117,14 +161,17 @@
       document.querySelector(".proto-toolbar").querySelectorAll("button[data-state]").forEach(function (b) {
         b.setAttribute("aria-pressed", String(b.getAttribute("data-state") === state));
       });
+      var radio = document.querySelector('input[name="mode"][value="' + state + '"]');
+      if (radio) radio.checked = true;
     }
-    // segmented control wires the proto-toolbar state
     document.querySelectorAll('input[name="mode"]').forEach(function (r) {
       r.addEventListener("change", function () { show(r.value); });
     });
-    // LLM/calendar retry: back to week, then demo of stable error toggle
     var retry = document.getElementById("cal-retry");
     if (retry) retry.addEventListener("click", function () { show("week"); });
+    document.querySelectorAll("button.yr-cell[data-open-month]").forEach(function (b) {
+      b.addEventListener("click", function () { show("month"); });
+    });
   })();
 </script>
 </body>

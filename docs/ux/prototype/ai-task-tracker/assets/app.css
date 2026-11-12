@@ -38,6 +38,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,di
 .state-panel[aria-busy="true"]{opacity:.85}
 .skel{height:16px;border-radius:4px;background:linear-gradient(90deg,#e8ebef 25%,#f4f6f8 50%,#e8ebef 75%);background-size:200% 100%;animation:sk 1.2s infinite;margin:10px 0}
 @keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* — Скелетон (S-04 загрузка, T-005 CP-F ревизия) — */
+.skeleton{display:block;border-radius:4px;background:linear-gradient(90deg,#e8ebef 25%,#f4f6f8 50%,#e8ebef 75%);background-size:200% 100%;animation:sk 1.2s infinite;margin:10px 0}
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--muted);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .btn{display:inline-block;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:7px 14px;border-radius:var(--radius);font:inherit;cursor:pointer;text-decoration:none}
@@ -63,6 +65,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,di
 .cal-day h3{margin:0 0 6px;font-size:13px;color:var(--muted)}
 .cal-item{display:block;background:var(--info-bg);border-radius:4px;padding:4px 6px;font-size:13px;margin-bottom:4px;color:var(--text);text-decoration:none}
 .cal-day.emptyday{color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:12px}
+/* — Календарь «Месяц»: полная сетка Пн–Вс (T-005 CP-F ревизия) — */
+.cal-month{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-month .dow{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:4px 2px}
+.cd{border:1px solid var(--border);border-radius:4px;min-height:72px;padding:4px;background:var(--surface);display:flex;flex-direction:column;gap:3px}
+.cd .dn{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.cd.adj{background:transparent;border-style:dashed;color:var(--muted);opacity:.7}
+.cd.adj .dn{color:var(--muted)}
+.ci{display:block;background:var(--info-bg);border-radius:3px;padding:2px 5px;font-size:12px;margin-bottom:2px;color:var(--text);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* — Календарь «Год»: 12 месяцев со статистикой (T-005 CP-F ревизия) — */
+.cal-year{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.yr-cell{border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;background:var(--surface);display:block;text-decoration:none;color:var(--text);font:inherit;text-align:left;width:100%}
+.yr-cell .ym{font-weight:600;font-size:14px;margin-bottom:4px}
+.yr-cell .yst{font-size:13px;color:var(--text)}
+.yr-cell.empty{background:transparent;border-style:dashed}
+.yr-cell.empty .ym{color:var(--muted)}
+.yr-cell.empty .yst{color:var(--muted)}
+/* Месяц с данными в «Год» — кнопка, открывает «Месяц» (Q-UX-004) */
+button.yr-cell{appearance:none;-webkit-appearance:none;cursor:pointer}
+button.yr-cell:hover,button.yr-cell:focus{background:var(--info-bg);border-color:var(--primary)}
 .timeline{list-style:none;margin:0;padding:0}
 .timeline li{padding:6px 0 6px 18px;border-left:2px solid var(--border);margin-left:6px;position:relative}
 .timeline li::before{content:"";position:absolute;left:-6px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--primary)}
@@ -92,4 +113,14 @@ dialog::backdrop{background:rgba(20,28,38,.45)}
   .brand{width:100%}
   .side-note{display:none}
   .cal-week{grid-template-columns:repeat(2,1fr)}
+  .cal-month{grid-template-columns:repeat(7,1fr)}
+  .cd{min-height:52px}
+  .ci{white-space:normal}
+  .cal-year{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){
+  .cal-year{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  .skeleton,.skel,.spinner{animation:none}
 }
