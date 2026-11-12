@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | awaiting_review (CP-2 revision 2) |
+| status | in_progress (CP-2 revision 2 approved; final acceptance pending) |
 | depends_on | T-004 (done) |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
@@ -31,7 +31,7 @@
 
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
-| CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | awaiting_review (revision 2 — CP-F change request) | `docs/checkpoints/T-005-CP-2.md` |
+| CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | approved (revision 2, 2026-11-12T23:10:47; snapshot b139595) | `docs/checkpoints/T-005-CP-2.md` |
 | CP-F | final acceptance | all task artifacts | pending (re-review after CP-2 revision) | `docs/checkpoints/T-005-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
