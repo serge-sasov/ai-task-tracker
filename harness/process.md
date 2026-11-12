@@ -256,8 +256,11 @@ here; workflow-specific stages and task graphs live in
 3. Task card: status, log, blockers, checkpoint results.
 4. Bug card and `docs/bugs/README.md`: status, task links, root cause, fix,
    verification; only the orchestrator edits them.
-5. `docs/activity.puml`: color `done` green `#90EE90`, `pending` gray
-   `#D3D3D3`, `in_progress` yellow `#FFE082`, `awaiting_review` blue `#87CEFA`,
+5. `docs/activity.puml`: node status color is a suffix stereotype after `;`:
+   `:task text; <<#90EE90>>`. Never use the deprecated prefix form
+   `#90EE90:task text;` — PlantUML 1.2026.6 renders a deprecation banner in
+   the SVG. Colors: `done` green `#90EE90`, `pending` gray `#D3D3D3`,
+   `in_progress` yellow `#FFE082`, `awaiting_review` blue `#87CEFA`,
    `failed` red `#FF9090`, `blocked` orange `#FFB347`.
 6. Re-render `docs/activity.svg` via MCP `plantuml-render`.
 7. `git commit` (section 10).
