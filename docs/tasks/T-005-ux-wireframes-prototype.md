@@ -16,7 +16,7 @@
 | chunks | 4 — (1) wireframes: `wireframes-*.puml` covering S-01..S-06 + layout-affecting states, then `check_syntax` + SVG render; (2) UI spec: 2-3 sections per write per `harness/templates/ux-spec.md` (skeleton first, then one section per edit); (3) prototype `index.html` + shared `assets/*` (one scenario page or shared asset per write); (4) scenario pages `uc-e2e-001.html`..`uc-e2e-008.html`, one page per chunk; harness-coder delegation for page implementation allowed under process §0/§1 exception (depth 2, sequential, one child at a time, coder writes only `docs/ux/prototype/ai-task-tracker/**`, UX designer validates and remains accountable at CP-2) |
 | budget | Markdown: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60; HTML/CSS/JS and PlantUML: max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
 | issues | - |
-| commit | 9ecf877 (CP-2 snapshot) |
+| commit | 17126cc (CP-F snapshot) — artifacts at 9ecf877 (CP-2) |
 
 ## Acceptance
 
