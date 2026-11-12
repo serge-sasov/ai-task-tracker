@@ -9,11 +9,11 @@
 | role | ux-designer |
 | stage | U-02 |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/app.css`, `docs/ux/prototype/ai-task-tracker/assets/app.js` |
-| status | awaiting_review |
+| status | changes_requested |
 | requested_at | 2026-11-12T18:53:47 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-12T19:19:47 |
 | reviewer | user |
-| decision | - (approved / changes_requested) |
+| decision | changes_requested |
 | snapshot_commit | 17126cc |
 
 ## Review scope
@@ -46,7 +46,10 @@ otherwise request changes and the task returns to the last checkpoint.
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- 2026-11-12 (user, explicit chat decision) — calendar GUI revision, scope T-005; update the affected UX artifacts and the prototype:
+  1. **Month view** must show **all days of the month grouped by weeks** (full month grid with week rows — Monday-first week columns), not just the days that have tasks.
+  2. Add a **year view** showing **12 months**; each month cell carries **aggregate statistics for that month** — tasks count, total duration, total tokens. Empty months show «Нет данных».
+  - Affected artifacts to revise under T-005: `docs/ux/screens-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`/`.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` (+ `assets/app.js`, `index.html` if needed).
 
 ## User edits
 
@@ -71,3 +74,7 @@ otherwise request changes and the task returns to the last checkpoint.
 
 - 2026-11-12: CP-F created after CP-2 was approved (2026-11-12). Task set to `awaiting_review` for
   final acceptance. T-005 is NOT `done` until the user explicitly approves CP-F.
+- 2026-11-12: CP-F **changes_requested** (user, 19:19:47) — calendar month/year views. Task returned
+  to `in_progress` for the UX revision. CP-2 stays `approved` (prior acceptance of the delivered
+  set); a new CP-2 revision review will be created after the role finishes the calendar changes.
+  T-005 is NOT `done`.

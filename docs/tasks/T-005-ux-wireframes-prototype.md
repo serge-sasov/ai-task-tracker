@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | awaiting_review (CP-F) |
+| status | in_progress (calendar revision per CP-F changes_requested) |
 | depends_on | T-004 (done) |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/analysis/glossary.md`, `requirements/исходные требования.txt` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-001.html`..`uc-e2e-008.html`, `docs/ux/prototype/ai-task-tracker/assets/*` |
@@ -32,7 +32,7 @@
 | ID | Stage | Artifacts | Status | Review file |
 |---|---|---|---|---|
 | CP-2 | U-02 wireframes/prototype/UI spec | all task artifacts | approved | `docs/checkpoints/T-005-CP-2.md` |
-| CP-F | final acceptance | all task artifacts | awaiting_review | `docs/checkpoints/T-005-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | changes_requested (2026-11-12, calendar month/year views) | `docs/checkpoints/T-005-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -48,3 +48,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-12: CP-2 snapshot committed as 9ecf877; hash recorded in card and board.
 - 2026-11-12: CP-2 approved by user (2026-11-12); approval recorded in `docs/checkpoints/T-005-CP-2.md`. Proceeding to final acceptance.
 - 2026-11-12: CP-F created (`docs/checkpoints/T-005-CP-F.md`) with acceptance (a)–(f) evidence; CP-2 row -> approved, CP-F row -> awaiting_review; board T-005 stays awaiting_review (now for CP-F); diagram unchanged (blue #87CEFA). Task NOT done until user approves CP-F.
+- 2026-11-12: CP-F **changes_requested** by user (2026-11-12T19:19:47): calendar GUI revision — (1) month view shows all days of the month grouped by weeks; (2) add a year view with 12 months, each month cell with aggregate stats (tasks count, total duration, total tokens; empty months «Нет данных»). Scope: T-005. Card/board T-005 -> in_progress (yellow #FFE082), diagram re-rendered; CP-2 row stays approved; a new CP-2 revision review will be created after the role finishes.
+- 2026-11-12: artifacts to be revised under T-005 per the change request: `docs/ux/screens-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`/`.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` (+ `assets/app.js`, `index.html` if needed).
