@@ -21,8 +21,11 @@ partition "T-004 U-01 UX flows and screens (DONE)" {
 partition "T-005 U-02 wireframes, prototype, UI spec (DONE)" {
   :Salt wireframes S-01..S-06, offline HTML prototype (UC-E2E-001..008), UI spec; calendar month grid + year view; CP-F rev 2 approved; <<#90EE90>>
 }
-partition "T-006..T-012 pending (see docs/plan.md)" {
-  :R-01, R-02, I-01, I-02, Q-01, Q-02, D-01; <<#D3D3D3>>
+partition "T-006 R-01 architecture and contracts (IN PROGRESS)" {
+  :ADR + contracts (data model, ingestion, API, AI search, errors); <<#FFE082>>
+}
+partition "T-007..T-012 pending (see docs/plan.md)" {
+  :R-02, I-01, I-02, Q-01, Q-02, D-01; <<#D3D3D3>>
 }
 stop
 
