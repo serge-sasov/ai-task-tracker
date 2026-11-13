@@ -19,7 +19,7 @@
 | base_commit | 1799a8e |
 | usage | in=331179 out=122364 cr=3071626 ratio=9.3x min=141 |
 | issues | ISSUE-20261113-115617 |
-| commit | - |
+| commit | 6608194 |
 
 ## Acceptance
 
@@ -47,3 +47,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: card created; R-01 started; harness upgraded to 2.5.0 (chore commit 1799a8e).
 - ISSUE-20261113-115617: architect contracts chunk exceeded 20 KB session budget (minor, resolved)
 - 2026-11-13: CP-1 approved (R-01); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=331179 out=122364 cr=3071626 ratio=9.3x min=141; reviewer auto (P2)
+- 6608194: CP-1 snapshot
