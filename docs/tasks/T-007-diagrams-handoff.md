@@ -19,7 +19,7 @@
 | base_commit | 955f9f9 |
 | usage | in=570819 out=160155 cr=3311589 ratio=5.8x min=182 |
 | issues | - |
-| commit | e4565c7 |
+| commit | f27a665 |
 
 ## Acceptance
 
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: CP-2 approved (R-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=530279 out=148856 cr=2930772 ratio=5.5x min=169; reviewer auto (P2)
 - e4565c7: CP-2 snapshot
 - 2026-11-13: CP-F awaiting_review (R-02); checks 11 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=570819 out=160155 cr=3311589 ratio=5.8x min=182; reviewer user
+- f27a665: CP-F snapshot
