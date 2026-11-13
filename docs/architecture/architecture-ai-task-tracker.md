@@ -112,7 +112,14 @@ R-012/R-013 (tokens), R-028 (health), R-029 (deletion), R-023 (timings), R-024
 | Diagram | Stage | File |
 |---|---|---|
 | component | R-02 (T-007) | component-ai-task-tracker.puml |
-| sequence per SCN-001..SCN-008 | R-02 (T-007) | sequence-scn-NNN-ai-task-tracker.puml |
+| sequence SCN-001 | R-02 (T-007) | sequence-scn-001-ai-task-tracker.puml |
+| sequence SCN-002 | R-02 (T-007) | sequence-scn-002-ai-task-tracker.puml |
+| sequence SCN-003 | R-02 (T-007) | sequence-scn-003-ai-task-tracker.puml |
+| sequence SCN-004 | R-02 (T-007) | sequence-scn-004-ai-task-tracker.puml |
+| sequence SCN-005 | R-02 (T-007) | sequence-scn-005-ai-task-tracker.puml |
+| sequence SCN-006 | R-02 (T-007) | sequence-scn-006-ai-task-tracker.puml |
+| sequence SCN-007 | R-02 (T-007) | sequence-scn-007-ai-task-tracker.puml |
+| sequence SCN-008 | R-02 (T-007) | sequence-scn-008-ai-task-tracker.puml |
 | data model | R-02 (T-007) | data-model-ai-task-tracker.puml |
 | class | R-02 (T-007) | class-ai-task-tracker.puml |
 | OpenAPI API-001..API-004 | R-01 (this stage) | openapi-api-001-ai-task-tracker.yaml, openapi-api-002-ai-task-tracker.yaml, openapi-api-003-ai-task-tracker.yaml, openapi-api-004-ai-task-tracker.yaml |
