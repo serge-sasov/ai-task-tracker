@@ -27,3 +27,4 @@ build/
 # --- Logs / runtime ---
 logs/
 *.log
+.harness-backup-*/
