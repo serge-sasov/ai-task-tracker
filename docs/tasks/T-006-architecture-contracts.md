@@ -19,7 +19,7 @@
 | base_commit | 1799a8e |
 | usage | in=452356 out=182070 cr=4372564 ratio=9.7x min=211 |
 | issues | ISSUE-20261113-115617, ISSUE-20261113-124639 |
-| commit | 2b6c829 |
+| commit | 411881b |
 
 ## Acceptance
 
@@ -57,3 +57,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: task package rebuilt for 2.6.0 — chunks extended to R-01a..R-01d, acceptance now requires the 11-section architecture description + valid/linked OpenAPI 3.x specs; ready for `harness-architect` via `/harness-run T-006` (verify-stage: 3 FAIL until R-01c/R-01d deliverables exist).
 - 2026-11-13 (R-01c/R-01d complete): created `architecture-ai-task-tracker.md` (11 sections, SCN-001..008, API-001..004, 24 R-NNN + 8 UC-E2E traced, explicit "No microservices") and 4 OpenAPI 3.x specs `openapi-api-001..004-ai-task-tracker.yaml` (each `x-harness-api-id`, RU error envelope, year-view month cells kept to satisfy contracts §4.5). `verify-stage.ps1 -Stage R-01` → 17 PASS / 0 FAIL / 0 UNCHECKED; all 4 specs pass `validate-openapi.py`. ADR+contracts untouched (hash-locked). Ready for CP-F re-review.
 - 2026-11-13: CP-F awaiting_review (R-01); checks 17 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=452356 out=182070 cr=4372564 ratio=9.7x min=211; reviewer user
+- 411881b: CP-F snapshot
