@@ -9,11 +9,11 @@
 | role | architect |
 | stage | R-02 |
 | artifacts | docs/architecture/component-*.puml, docs/architecture/sequence-scn-*.puml, docs/architecture/data-model-*.puml, docs/architecture/class-*.puml, docs/architecture/*.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-13T21:48:12 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-13T21:50:05 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | f27a665 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-007-CP-F.checks.json |
@@ -92,6 +92,7 @@ docs/activity.puml                                 |   2 +-
 
 ## User remarks
 
+- 2026-11-13: user approved CP-F in chat; machine result 11 PASS / 0 FAIL / 0 MANUAL / 2 N/A / 0 UNCHECKED (user quoted "10 PASS"; `artifact-hashes` flipped N/A→PASS vs CP-2 once the ledger existed); diagram set (component, data-model, class, 8 sequences, 11 SVGs) accepted; No-microservices swimlane waiver honored.
 - (user fills; may be empty if artifacts were edited directly)
 
 ## User edits

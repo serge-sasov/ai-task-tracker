@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | awaiting_review |
+| status | done |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-006 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` |
@@ -23,17 +23,17 @@
 
 ## Acceptance
 
-- [ ] Component diagram (`component-*.puml`), data model diagram (`data-model-*.puml`), and class diagram (`class-*.puml`) are present and reflect the architecture description, contracts, and `ADR` decisions.
-- [ ] One sequence diagram per in-scope `SCN-NNN` (`sequence-scn-*.puml`) covering UC-E2E-001..UC-E2E-008, and one swimlane per `SVC-NNN` (`swimlane-svc-*.puml`) — or an explicit `No microservices` waiver honored from the architecture description's `Scope and applicability` section (silence is not a waiver).
-- [ ] Every `.puml` passes MCP `plantuml-render check_syntax` and is rendered to a fresh `.svg` next to it.
-- [ ] Every R-02 artifact is linked/referenced in `docs/architecture/architecture-ai-task-tracker.md` (diagram index / traceability).
+- [x] Component diagram (`component-*.puml`), data model diagram (`data-model-*.puml`), and class diagram (`class-*.puml`) are present and reflect the architecture description, contracts, and `ADR` decisions.
+- [x] One sequence diagram per in-scope `SCN-NNN` (`sequence-scn-*.puml`) covering UC-E2E-001..UC-E2E-008, and one swimlane per `SVC-NNN` (`swimlane-svc-*.puml`) — or an explicit `No microservices` waiver honored from the architecture description's `Scope and applicability` section (silence is not a waiver).
+- [x] Every `.puml` passes MCP `plantuml-render check_syntax` and is rendered to a fresh `.svg` next to it.
+- [x] Every R-02 artifact is linked/referenced in `docs/architecture/architecture-ai-task-tracker.md` (diagram index / traceability).
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | R-02 diagrams and handoff | `docs/architecture/component-*.puml`, `docs/architecture/sequence-scn-*.puml`, `docs/architecture/data-model-*.puml`, `docs/architecture/class-*.puml`, `docs/architecture/*.svg` | 10P/0F/0M | approved | docs/checkpoints/T-007-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 11P/0F/0M | awaiting_review | docs/checkpoints/T-007-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 11P/0F/0M | approved | docs/checkpoints/T-007-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - e4565c7: CP-2 snapshot
 - 2026-11-13: CP-F awaiting_review (R-02); checks 11 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=570819 out=160155 cr=3311589 ratio=5.8x min=182; reviewer user
 - f27a665: CP-F snapshot
+- 2026-11-13: CP-F approved by user (machine result 11 PASS/0 FAIL/0 MANUAL/2 N/A/0 UNCHECKED; `artifact-hashes` flipped N/A→PASS vs CP-2 once the ledger existed); T-007 done.
