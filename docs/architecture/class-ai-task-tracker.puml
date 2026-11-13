@@ -1,0 +1,175 @@
+@startuml class-ai-task-tracker
+' T-007 R-02 — class model (architecture-ai-task-tracker.md §Class model)
+skinparam classAttributeIconSize 0
+title ai-task-tracker — class model (Spring Boot 3 backend + Vue 3 SPA)
+
+package "backend (one JVM)" {
+  package "api module (Spring REST, API-001 through API-004)" {
+    class TaskService {
+      listTasks(from, to, status, page, size) : TaskListResponse
+      getTask(taskId) : TaskDetailResponse
+      deleteHistory(confirm) : Boolean
+    }
+    class SolutionService {
+      proposedFor(taskId) : List
+      chosenFor(taskId) : Solution
+    }
+    class CalendarService {
+      calendar(view, date) : CalendarResponse
+    }
+    class TokenStatsService {
+      tokens(period) : TokenStatsResponse
+    }
+    class SearchService {
+      search(req) : SearchResult
+    }
+    class HealthService {
+      health() : HealthResponse
+      source_status : available | unavailable | stale
+    }
+    class ErrorEnvelope {
+      code : String
+      message : String «RU»
+    }
+  }
+
+  package "ingestion module" {
+    class IngestionPoller {
+      + pollCycle() : void «60 s»
+      - acquireLock() : boolean
+      - upsertSession(json) : void «idempotent, 1 tx»
+      - recordWatermark() : void
+    }
+    class OllamaClient {
+      + embed(text) : float[] «1024-dim, 15 s bound»
+      + chat(messages) : String «15 s bound»
+      - baseUrl = http://localhost:11434
+    }
+  }
+
+  package "store module (JPA repositories)" {
+    interface TaskRepository {
+      findBySessionId(id)
+      upsert(task)
+    }
+    interface StepRepository {
+      findByTaskId(id)
+      upsert(step)
+    }
+    interface SolutionRepository {
+      findByTaskId(id)
+      upsert(solution)
+    }
+    interface TokenUsageRepository {
+      findByTaskId(id)
+      upsert(usage)
+    }
+    interface IngestStateRepository {
+      get(key)
+      put(key, value)
+    }
+  }
+
+  package "search module (AI)" {
+    class SearchIndex {
+      + recall(queryVector, topK) : List
+      + reembed(task) : void
+    }
+  }
+}
+
+package "DTO (JSON contracts)" {
+  class TaskListResponse {
+    total : int
+    items : List
+  }
+  class TaskDetailResponse {
+    task : TaskDto
+    steps : List
+    solutions : SolutionsDto
+    tokens : TokensDto
+  }
+  class SearchRequest {
+    query : String
+    limit : int
+  }
+  class SearchResult {
+    query : String
+    results : List
+  }
+  class CalendarResponse {
+    view : String
+    date : String
+    days : List
+  }
+  class TokenStatsResponse {
+    period : String
+    by_model : List
+    total : TotalsDto
+    has_data : boolean
+  }
+  class HealthResponse {
+    status : String
+    checks : ChecksDto
+    source_status : String
+    ollama_status : String
+    last_ingest_at : String
+  }
+}
+
+package "frontend (Vue 3 SPA)" {
+  class PiniaStore {
+    tasks : List
+    calendar : CalendarDto
+    tokens : TokenStatsDto
+    uiState : UiState
+  }
+  class ApiClient {
+    get(url) : Promise
+    post(url, body) : Promise
+    delete_(url, body) : Promise
+  }
+  class Screens {
+    S-01 list
+    S-02 detail
+    S-03 search
+    S-04 calendar
+    S-05 tokens
+    S-06 manage
+  }
+}
+
+TaskService ..> TaskRepository
+TaskService ..> StepRepository
+TaskService ..> SolutionRepository
+TaskService ..> TokenUsageRepository
+SolutionService ..> SolutionRepository
+CalendarService ..> TaskRepository
+TokenStatsService ..> TokenUsageRepository
+HealthService ..> IngestStateRepository
+SearchService ..> SearchIndex
+SearchIndex ..> OllamaClient
+IngestionPoller ..> OllamaClient : extraction + re-embed (optional)
+IngestionPoller ..> TaskRepository
+IngestionPoller ..> StepRepository
+IngestionPoller ..> SolutionRepository
+IngestionPoller ..> TokenUsageRepository
+IngestionPoller ..> IngestStateRepository
+TaskService ..> TaskListResponse
+TaskService ..> TaskDetailResponse
+SearchService ..> SearchRequest
+SearchService ..> SearchResult
+CalendarService ..> CalendarResponse
+TokenStatsService ..> TokenStatsResponse
+HealthService ..> HealthResponse
+Screens --> PiniaStore
+Screens --> ApiClient
+ApiClient ..> TaskService : API-001
+ApiClient ..> CalendarService : API-002
+ApiClient ..> TokenStatsService : API-002
+ApiClient ..> SearchService : API-003
+ApiClient ..> HealthService : API-004
+ErrorEnvelope <.. TaskService : 4xx/5xx (RU message)
+ErrorEnvelope <.. SearchService
+ErrorEnvelope <.. HealthService
+@enduml

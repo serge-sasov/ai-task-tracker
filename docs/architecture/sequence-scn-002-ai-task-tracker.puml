@@ -1,0 +1,26 @@
+@startuml sequence-scn-002-ai-task-tracker
+' T-007 R-02 — SCN-002: source unavailable state
+' Trace: SCN-002 ↔ UC-E2E-002 | API: API-004
+' Source: contracts §3 source_status, §4.1, §5 (S-01 banner)
+autonumber
+title SCN-002 — source unavailable state (UC-E2E-002)
+
+participant "ingestion (IngestionPoller)" as poller
+participant "OPENCODE_DATA_DIR (read-only)" as src
+participant "cache (Redis)" as redis
+participant "store (JPA / PG16)" as pg
+participant "api (HealthService)" as api
+participant "Vue SPA (S-01)" as spa
+
+poller -> redis : acquire poll lock
+redis --> poller : acquired
+poller -> src : read session JSON files
+src --> poller : ERROR — dir missing/unreadable
+poller -> pg : ingest_state.last_sync_at, parse_errors (diagnostics)
+poller -> redis : release lock
+note over poller : source_status = unavailable\n(no fatal error, ADR-0001 risks)
+spa -> api : GET /api/health (API-004)
+api -> pg : readiness ok
+api --> spa : 200 {status:ok, source_status:"unavailable", last_ingest_at:…}
+note over spa : S-01 banner «Источник данных (opencode) недоступен»\n(list/calendar/tokens keep working — R-028)
+@enduml

@@ -1,0 +1,73 @@
+@startuml data-model-ai-task-tracker
+' T-007 R-02 — data model (contracts-ai-task-tracker.md §2)
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+title ai-task-tracker — data model (PostgreSQL 16, pgvector)
+
+entity "tasks" as tasks {
+  * task_id : TEXT <<PK>>
+  --
+  * session_id : TEXT <<UNIQUE>>
+  * name : TEXT <<NOT NULL>>
+  * started_at : TIMESTAMPTZ <<NOT NULL>>
+  - finished_at : TIMESTAMPTZ <<NULL>>
+  * status : TEXT <<CHECK: Завершена | Прервана | Не завершена>>
+  - source_path : TEXT
+  - embedding : vector(1024) <<NULL>> ' R-010 AI search
+  - created_at : TIMESTAMPTZ
+  - updated_at : TIMESTAMPTZ
+}
+
+entity "steps" as steps {
+  * step_id : BIGSERIAL <<PK>>
+  * task_id : TEXT <<FK→tasks ON DELETE CASCADE>>
+  * message_id : TEXT <<NOT NULL>>
+  - at : TIMESTAMPTZ
+  - text : TEXT
+  --
+  <<UNIQUE>> (task_id, message_id)
+}
+
+entity "solutions" as solutions {
+  * solution_id : BIGSERIAL <<PK>>
+  * task_id : TEXT <<FK ON DELETE CASCADE>>
+  * kind : TEXT <<CHECK: proposed | chosen>>
+  * text : TEXT <<NOT NULL>>
+  - source_message_id : TEXT <<NULL>>
+  - extracted_by : TEXT <<NULL>>
+  --
+  <<UNIQUE>> (task_id, kind, text, source_message_id)
+}
+
+entity "token_usage" as tokens {
+  * usage_id : BIGSERIAL <<PK>>
+  * task_id : TEXT <<FK ON DELETE CASCADE>>
+  - message_id : TEXT <<NULL>>
+  * model : TEXT <<NOT NULL>>
+  * input_tokens : BIGINT <<DEFAULT 0>>
+  * output_tokens : BIGINT <<DEFAULT 0>>
+  * cache_tokens : BIGINT <<DEFAULT 0>>
+  * scope : TEXT <<CHECK: message | session>>
+  --
+  <<UNIQUE>> (task_id, message_id, model, scope)
+}
+
+entity "ingest_state" as state {
+  * key : TEXT <<PK>> ' last_file_mtime | last_sync_at | last_file_count | parse_errors
+  --
+  * value : TEXT
+}
+
+tasks ||--o{ steps : "1 session = N steps (R-003)"
+tasks ||--o{ solutions : "≤1 chosen per task (R-005)"
+tasks ||--o{ tokens : "per message / session (R-012)"
+
+note right of tasks
+  Invariants (contracts §2):
+  finished_at NULL ⇒ status='Не завершена'
+  status='Завершена' ⇒ finished_at NOT NULL
+  duration_s = COALESCE(finished_at,last_step_at) − started_at (R-009)
+  DELETE /api/history: all 4 data tables
+  atomic single transaction (R-029)
+end note
+@enduml

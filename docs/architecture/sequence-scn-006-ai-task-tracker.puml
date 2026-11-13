@@ -1,0 +1,34 @@
+@startuml sequence-scn-006-ai-task-tracker
+' T-007 R-02 — SCN-006: token statistics
+' Trace: SCN-006 ↔ UC-E2E-006 | API: API-002
+' Source: contracts §4.6, fixtures.token_totals (18260)
+autonumber
+title SCN-006 — token statistics (UC-E2E-006)
+
+actor "User" as user
+participant "Vue SPA (S-05)" as spa
+participant "api (TokenStatsService)" as api
+participant "store (JPA / PG16)" as pg
+
+user -> spa : open S-05 «Токены» (default «Всё время»)
+spa -> api : GET /api/tokens?period=all (API-002)
+api -> pg : sum token_usage by model
+pg --> api : qwen3.8:27b 10750/4590; llama3.1:8b 2100/820
+api --> spa : 200 {by_model:[…], total:{input:12850, output:5410, total:18260}, has_data:true}
+note over spa : S-05 totals 18260 (exact sum of seed usage — R-012/R-013)
+user -> spa : period = 10.11
+spa -> api : GET /api/tokens?date=2026-11-10
+api --> spa : 200 {total: 10200 (qwen) / 1950 (llama) — TASK-001..002}
+user -> spa : period = 11.11
+spa -> api : GET /api/tokens?date=2026-11-11
+api --> spa : 200 {total: 5140 / 970 — TASK-003..005}
+user -> spa : range 10.11–11.11
+spa -> api : GET /api/tokens?from=2026-11-10&to=2026-11-11
+api --> spa : 200 (equals period=all)
+user -> spa : task with no usage (TASK-002)
+note over spa : detail tokens: {by_model:[], has_data:false} →\ntask shown without token block (A1)
+user -> spa : invalid range (to < from)
+spa -> api : GET /api/tokens?from=2026-11-11&to=2026-11-10
+api --> spa : 400 {code:INVALID_PERIOD, message:«Некорректный период. Проверьте даты.»}
+note over spa : S-05 error + «Повторить»; empty period → «Нет данных за выбранный период.»
+@enduml

@@ -1,0 +1,36 @@
+@startuml sequence-scn-004-ai-task-tracker
+' T-007 R-02 — SCN-004: AI search
+' Trace: SCN-004 ↔ UC-E2E-004 | API: API-003
+' Source: contracts §4.4, §6 (Ollama), §5 AI_SEARCH_UNAVAILABLE
+autonumber
+title SCN-004 — AI search (UC-E2E-004)
+
+actor "User" as user
+participant "Vue SPA (S-03)" as spa
+participant "api (SearchService)" as api
+participant "store (pgvector)" as pg
+participant "llm (Ollama localhost:11434)" as llm
+
+user -> spa : type «настройка CI для репозитория»
+spa -> spa : validate (blank → «Введите запрос», request not sent)
+spa -> api : POST /api/search {query, limit:5} (API-003)
+api -> llm : POST /api/embed (query → 1024-dim)
+llm --> api : embeddings
+api -> pg : vector(1024) recall top-K
+pg --> api : candidate tasks
+api -> llm : POST /api/chat (re-rank + RU snippets, 15 s bound)
+llm --> api : ranked task_id list + snippets
+api --> spa : 200 {results:[{task_id:TASK-001, score:0.91, snippet:«…GitLab CI…»}]}
+note over spa : S-03 top-K results; TASK-001 in top; answer < 15 s (R-023)
+user -> spa : unrelated query «рецепт борща»
+spa -> api : POST /api/search
+api --> spa : 200 {results:[]}
+note over spa : S-03 «Ничего не найдено. Попробуйте изменить запрос.» (no fabricated matches)
+== Ollama down / timeout (E case) ==
+user -> spa : query while Ollama stopped
+spa -> api : POST /api/search
+api -> llm : POST /api/embed (timeout > 15 s)
+llm --> api : connection error
+api --> spa : 503 {code:AI_SEARCH_UNAVAILABLE, message:«AI-поиск недоступен: LLM не отвечает. Попробуйте позже.»}
+note over spa : S-03 error state + «Повторить»;\nlist/calendar/tokens keep working (R-028)
+@enduml

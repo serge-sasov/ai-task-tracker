@@ -1,0 +1,35 @@
+@startuml sequence-scn-005-ai-task-tracker
+' T-007 R-02 — SCN-005: calendar views
+' Trace: SCN-005 ↔ UC-E2E-005 | API: API-002
+' Source: contracts §4.5, fixtures.calendar, A1 interval task
+autonumber
+title SCN-005 — calendar views (UC-E2E-005)
+
+actor "User" as user
+participant "Vue SPA (S-04)" as spa
+participant "api (CalendarService)" as api
+participant "store (JPA / PG16)" as pg
+
+user -> spa : open S-04 «Календарь» (default «Неделя»)
+spa -> api : GET /api/calendar?view=week&date=2026-11-11 (API-002)
+api -> pg : tasks in Mon–Sun window
+pg --> api : 10.11 TASK-001, TASK-002; 11.11 TASK-003..005
+api --> spa : 200 {view:week, days:[7 cells, outside:true dimmed]}
+note over spa : S-04 week grid Пн–Вс; empty days «Нет задач»
+user -> spa : switch to «День» 11.11
+spa -> api : GET /api/calendar?view=day&date=2026-11-11
+api --> spa : 200 {days:[{date:2026-11-11, tasks:[TASK-003, TASK-004, TASK-005]}]}
+note over spa : day view — 3 tasks with duration bars
+user -> spa : open «Год»
+spa -> api : GET /api/calendar?view=year&date=2026-11-11
+api --> spa : 200 {12 month cells {task_count, total_duration_s, tokens_total} or null}
+note over spa : «5 задач · 8ч 35мин · 18 260 токенов»; click month → view=month (Q-UX-004)
+user -> spa : empty period
+spa -> api : GET /api/calendar?view=day&date=2026-11-13
+api --> spa : 200 {days: empty}
+note over spa : «Нет задач в выбранном периоде.»
+user -> spa : invalid date
+spa -> api : GET /api/calendar?date=2026-13-40
+api --> spa : 400 {code:INVALID_PERIOD, message:«Некорректная дата.»}
+note over spa : error state + «Повторить»
+@enduml

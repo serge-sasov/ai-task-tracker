@@ -1,0 +1,44 @@
+@startuml sequence-scn-008-ai-task-tracker
+' T-007 R-02 — SCN-008: delete history
+' Trace: SCN-008 ↔ UC-E2E-008 | API: API-001 (DELETE /api/history)
+' Source: contracts §4.7, A1 re-import (C-3), E2 no-op
+autonumber
+title SCN-008 — delete history (UC-E2E-008)
+
+actor "User" as user
+participant "Vue SPA (S-06)" as spa
+participant "api (Spring REST)" as api
+participant "store (JPA / PG16)" as pg
+participant "ingestion (IngestionPoller)" as poller
+participant "OPENCODE_DATA_DIR (read-only)" as src
+
+user -> spa : S-06 «Управление данными» → delete
+spa -> spa : warning + confirmation dialog (R-029)
+user -> spa : confirm
+spa -> api : DELETE /api/history {confirm:true} (API-001)
+api -> pg : BEGIN; delete token_usage, solutions, steps, tasks (+embedding) — atomic
+pg --> api : COMMIT — no partial state (E1)
+api --> spa : 200 {deleted:true}
+note over spa : S-06 «История удалена.»\nS-01 «Нет данных», S-05 zeros, S-04 empty, S-03 «Ничего не найдено»
+note over src : source files NOT touched (C-3)
+
+== E case: cancel ==
+user -> spa : cancel confirmation (A2)
+note over spa : no request sent — data unchanged
+
+== E2: empty DB ==
+spa -> api : DELETE /api/history {confirm:true}
+api -> pg : count = 0
+api --> spa : 200 {deleted:false} «Данных для удаления нет» (no-op, not an error)
+
+== error path ==
+spa -> api : DELETE /api/history (no body)
+api --> spa : 400 {code:CONFIRMATION_REQUIRED, message:«Требуется подтверждение удаления.»}
+note over spa : «Повторить» action
+api --> spa : 500 {code:INTERNAL_ERROR, message:«Не удалось удалить историю. Повторите попытку.»} (only on DB failure)
+
+== A1: next poll re-imports ==
+poller -> src : poll (60 s) — files unchanged
+poller -> pg : upsert 5 tasks again (idempotent)
+note over spa : history visible again after next cycle (A1)
+@enduml

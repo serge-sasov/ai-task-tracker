@@ -1,0 +1,45 @@
+@startuml sequence-scn-007-ai-task-tracker
+' T-007 R-02 — SCN-007: restart + idempotent re-sync
+' Trace: SCN-007 ↔ UC-E2E-007 | APIs: API-001, API-004
+' Source: contracts §3 idempotency, §4.1, §2 invariants
+autonumber
+title SCN-007 — restart + idempotent re-sync (UC-E2E-007)
+
+participant "Vue SPA" as spa
+participant "api (Spring REST)" as api
+participant "ingestion (IngestionPoller)" as poller
+participant "OPENCODE_DATA_DIR (read-only, unchanged)" as src
+participant "cache (Redis)" as redis
+participant "store (JPA / PG16)" as pg
+participant "llm (Ollama)" as llm
+
+== initial import (before restart) ==
+poller -> src : poll (60 s)
+src --> poller : 5 session files (SES-A..E)
+poller -> pg : upsert tasks/steps/solutions/token_usage (1 tx per session)
+poller -> llm : re-embed changed tasks (skip if down)
+spa -> api : GET /api/tasks (API-001)
+api --> spa : 200 {total:5, …}
+spa -> api : GET /api/tokens (API-002)
+api --> spa : 200 {total:18260}
+
+== backend restart ==
+note over api,redis : docker compose restart backend\n(Redis lock released, watermark persisted)
+api --> spa : 503 briefly (SERVICE_UNAVAILABLE «Сервис недоступен»)
+spa -> api : GET /api/health (API-004)
+api --> spa : 200 {status:ok, last_ingest_at:…}
+
+== idempotent re-sync ==
+poller -> redis : acquire lock
+redis --> poller : acquired
+poller -> src : poll — same 5 files, unchanged mtimes
+poller -> pg : upsert by natural keys\n(tasks.session_id, steps.message_id,\ntoken_usage.(message_id,model), solutions.(session_id,source_ref))
+note over pg : updates only, never duplicates (R-025);\nfailed batch rolls back — no half-records (E3)
+poller -> redis : release lock
+
+== verification ==
+spa -> api : GET /api/tasks (API-001)
+api --> spa : 200 {total:5} — counts unchanged, no duplicates
+spa -> api : GET /api/tokens (API-002)
+api --> spa : 200 {total:18260} — values survive restart + re-sync
+@enduml

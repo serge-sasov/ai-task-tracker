@@ -1,0 +1,98 @@
+{
+    "task":  "T-007",
+    "workflow":  "feature",
+    "stage":  "R-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "955f9f9",
+    "generated_at":  "2026-11-13T21:15:40",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "22 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-007.md"
+                    },
+                    {
+                        "id":  "diagram-syntax",
+                        "check":  "puml-syntax",
+                        "result":  "PASS",
+                        "detail":  "11 diagram(s)"
+                    },
+                    {
+                        "id":  "diagram-svg",
+                        "check":  "svg-fresh",
+                        "result":  "PASS",
+                        "detail":  "11 SVG(s)"
+                    },
+                    {
+                        "id":  "component-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "data-model-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "class-diagram-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "sequence-count",
+                        "check":  "count-match",
+                        "result":  "PASS",
+                        "detail":  "8 = 8"
+                    },
+                    {
+                        "id":  "sequence-ids",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 8 file(s)"
+                    },
+                    {
+                        "id":  "sequence-uc-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 8 file(s)"
+                    },
+                    {
+                        "id":  "swimlane-count",
+                        "check":  "count-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no source ids"
+                    },
+                    {
+                        "id":  "swimlane-ids",
+                        "check":  "id-coverage",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "source=1, target=0"
+                    },
+                    {
+                        "id":  "architecture-links",
+                        "check":  "reference-coverage",
+                        "result":  "PASS",
+                        "detail":  "15 file(s) referenced by 1 target(s)"
+                    }
+                ],
+    "summary":  {
+                    "pass":  10,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  3,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
