@@ -28,3 +28,4 @@ build/
 logs/
 *.log
 .harness-backup-*/
+__pycache__/

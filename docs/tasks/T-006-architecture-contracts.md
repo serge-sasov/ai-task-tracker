@@ -7,11 +7,11 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | awaiting_review |
+| status | in_progress |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-002, T-003, T-005 |
 | inputs | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml, docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/wireframes-ai-task-tracker.puml, docs/tasks/T-001-ai-task-tracker-feature-planning.md |
-| artifacts | docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md |
+| artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-*.yaml |
 | e2e | required — contracts must cover UC-E2E-001..UC-E2E-008 and the YAML dataset |
 | ux | required — screens S-01..S-06 and ui-spec must be reflected in the API/UI contract |
 | chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors) |
@@ -33,7 +33,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | 5P/0F/0M | approved | docs/checkpoints/T-006-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 6P/0F/0M | awaiting_review | docs/checkpoints/T-006-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 6P/0F/0M | changes_requested | docs/checkpoints/T-006-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: CP-F awaiting_review (R-01); checks 6 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=335491 out=132909 cr=3268191 ratio=9.7x min=155; reviewer user
 - 2b6c829: CP-F snapshot
 - ISSUE-20261113-124639: stage-done record step failed on git LF/CRLF warning; CP-1/CP-F record commits completed manually (workaround).
+- 2026-11-13: harness upgraded to 2.6.0 (chore commit in project); CP-F changes_requested (extended R-01 scope: architecture description + OpenAPI); task reopened to in_progress for missing artifacts.

@@ -126,7 +126,8 @@ elseif (-not $hold -and $autoOk) {
     $reviewer = 'auto (P2)'
 }
 $decision = if ($approved) { 'approved' } else { '-' }
-$reviewedAt = if ($approved) { (Get-Date).ToString('yyyy-MM-ddTHH:mm:ss') } else { '-' }
+$now = Get-Date
+$reviewedAt = if ($approved) { $now.ToString('yyyy-MM-ddTHH:mm:ss') } else { '-' }
 $cpStatus = if ($approved) { 'approved' } else { 'awaiting_review' }
 $nextAction = if ($approved -and $isFinal) { 'accept task' } elseif ($approved) { 'continue' } else { 'return to this checkpoint' }
 $newCardStatus = Get-CardStatusForCheckpoint -Approved $approved -IsFinal $isFinal
@@ -170,7 +171,7 @@ $lines.Add('| role | ' + $role + ' |')
 $lines.Add('| stage | ' + $stage + ' |')
 $lines.Add('| artifacts | ' + $cardRels + ' |')
 $lines.Add('| status | ' + $cpStatus + ' |')
-$lines.Add('| requested_at | ' + (Get-Date).ToString('yyyy-MM-ddTHH:mm:ss') + ' |')
+$lines.Add('| requested_at | ' + $now.ToString('yyyy-MM-ddTHH:mm:ss') + ' |')
 $lines.Add('| reviewed_at | ' + $reviewedAt + ' |')
 $lines.Add('| reviewer | ' + $reviewer + ' |')
 $lines.Add('| decision | ' + $decision + ' |')

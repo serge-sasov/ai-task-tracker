@@ -11,9 +11,9 @@
 | artifacts | docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md |
 | status | awaiting_review |
 | requested_at | 2026-11-13T12:39:24 |
-| reviewed_at | - |
-| reviewer | user |
-| decision | - |
+| reviewed_at | 2026-11-13T14:15:56 |
+| reviewer | user (via /harness plan) |
+| decision | changes_requested |
 | snapshot_commit | 2b6c829 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-006-CP-F.checks.json |
@@ -65,6 +65,7 @@ docs/activity.puml                                 |  49 ++-
 ## User remarks
 
 - (user fills; may be empty if artifacts were edited directly)
+- 2026-11-13: harness upgraded to 2.6.0 (architecture design package); R-01 stage now additionally requires docs/architecture/architecture-*.md and OpenAPI 3.x specs per API-NNN (verify-stage: 2 FAIL). Task reopened to in_progress to produce the missing artifacts, then CP-1 -> CP-F again.
 
 ## User edits
 

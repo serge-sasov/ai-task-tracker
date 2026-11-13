@@ -338,8 +338,15 @@ function Invoke-Git {
         [string[]]$Arguments = @(),
         [switch]$AllowFail
     )
-    $output = & git -C $Root @Arguments 2>&1
-    $code = $LASTEXITCODE
+    $previousEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & git -C $Root @Arguments 2>&1
+        $code = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousEap
+    }
     if ($code -ne 0 -and -not $AllowFail) {
         throw "git $($Arguments -join ' ') failed ($code): $($output -join ' ')"
     }
