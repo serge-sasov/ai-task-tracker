@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | awaiting_review |
+| status | done |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-002, T-003, T-005 |
 | inputs | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml, docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/wireframes-ai-task-tracker.puml, docs/tasks/T-001-ai-task-tracker-feature-planning.md |
@@ -23,19 +23,19 @@
 
 ## Acceptance
 
-- [ ] ADR contains Context, Decision, Alternatives, Consequences and covers Q-001, Q-002, Q-003, Q-007, Q-008 decisions (opencode session files + polling; 1 task = 1 opencode session; duration = end - start; token usage from session usage fields; local Ollama AI search; LLM extraction of proposed/chosen solutions).
-- [ ] Contracts define the PostgreSQL data model, ingestion file format and polling contract, REST API for tasks list/details/calendar/tokens/search/data deletion, AI search contract (local Ollama), error model, and health endpoint.
-- [ ] Every requirement ID R-001..R-013 and R-020..R-030 is referenced in the ADR or contracts; screens S-01..S-06 and UC-E2E-001..008 are traceable.
-- [ ] `docs/architecture/architecture-ai-task-tracker.md` is present with all 11 required sections (`## Scope and applicability`, `## Context and constraints`, `## Decisions`, `## Components`, `## Services`, `## Scenarios`, `## Data model`, `## Class model`, `## REST API`, `## Diagram index`, `## Traceability`), defines `SCN-NNN`/`SVC-NNN`/`API-NNN` ids, traces every `R-NNN` and `UC-E2E-NNN`, and carries explicit `No microservices` / `No REST API` statements for any conditional set it omits (silence is not a waiver).
-- [ ] One valid OpenAPI 3.x spec per `API-NNN` (`docs/architecture/openapi-api-*.yaml`) passes `harness/scripts/validate-openapi.py`, each spec references its `API-NNN`, and the specs are linked into the architecture description (diagram index / REST API section) and vice versa.
-- [ ] CP-1 and CP-F checkpoints recorded.
+- [x] ADR contains Context, Decision, Alternatives, Consequences and covers Q-001, Q-002, Q-003, Q-007, Q-008 decisions (opencode session files + polling; 1 task = 1 opencode session; duration = end - start; token usage from session usage fields; local Ollama AI search; LLM extraction of proposed/chosen solutions).
+- [x] Contracts define the PostgreSQL data model, ingestion file format and polling contract, REST API for tasks list/details/calendar/tokens/search/data deletion, AI search contract (local Ollama), error model, and health endpoint.
+- [x] Every requirement ID R-001..R-013 and R-020..R-030 is referenced in the ADR or contracts; screens S-01..S-06 and UC-E2E-001..008 are traceable.
+- [x] `docs/architecture/architecture-ai-task-tracker.md` is present with all 11 required sections (`## Scope and applicability`, `## Context and constraints`, `## Decisions`, `## Components`, `## Services`, `## Scenarios`, `## Data model`, `## Class model`, `## REST API`, `## Diagram index`, `## Traceability`), defines `SCN-NNN`/`SVC-NNN`/`API-NNN` ids, traces every `R-NNN` and `UC-E2E-NNN`, and carries explicit `No microservices` / `No REST API` statements for any conditional set it omits (silence is not a waiver).
+- [x] One valid OpenAPI 3.x spec per `API-NNN` (`docs/architecture/openapi-api-*.yaml`) passes `harness/scripts/validate-openapi.py`, each spec references its `API-NNN`, and the specs are linked into the architecture description (diagram index / REST API section) and vice versa.
+- [x] CP-1 and CP-F checkpoints recorded.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | 5P/0F/0M | approved | docs/checkpoints/T-006-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 17P/0F/0M | awaiting_review | docs/checkpoints/T-006-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 17P/0F/0M | approved | docs/checkpoints/T-006-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -58,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13 (R-01c/R-01d complete): created `architecture-ai-task-tracker.md` (11 sections, SCN-001..008, API-001..004, 24 R-NNN + 8 UC-E2E traced, explicit "No microservices") and 4 OpenAPI 3.x specs `openapi-api-001..004-ai-task-tracker.yaml` (each `x-harness-api-id`, RU error envelope, year-view month cells kept to satisfy contracts §4.5). `verify-stage.ps1 -Stage R-01` → 17 PASS / 0 FAIL / 0 UNCHECKED; all 4 specs pass `validate-openapi.py`. ADR+contracts untouched (hash-locked). Ready for CP-F re-review.
 - 2026-11-13: CP-F awaiting_review (R-01); checks 17 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=452356 out=182070 cr=4372564 ratio=9.7x min=211; reviewer user
 - 411881b: CP-F snapshot
+- 2026-11-13: CP-F approved by user (17 PASS/0 FAIL/0 UNCHECKED, harness 2.6.0); T-006 done.

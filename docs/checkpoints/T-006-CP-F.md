@@ -13,7 +13,7 @@
 | requested_at | 2026-11-13T17:10:41 |
 | reviewed_at | - |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 411881b |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-006-CP-F.checks.json |
@@ -108,6 +108,7 @@ Summary: 17 PASS, 0 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
 
 ## User remarks
 
+- 2026-11-13: user approved CP-F after harness 2.6.0 re-run; 17/17 checks PASS; architecture description + 4 OpenAPI specs accepted.
 - (user fills; may be empty if artifacts were edited directly)
 
 ## User edits
