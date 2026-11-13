@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-006 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` |
@@ -17,7 +17,7 @@
 | chunks | 6 — one diagram per chunk: (1) `component-*.puml`; (2) `data-model-*.puml`; (3) `class-*.puml`; (4) `sequence-scn-*.puml` (one per `SCN-NNN`); (5) `swimlane-svc-*.puml` (one per `SVC-NNN`, or explicit `No microservices` waiver honored); (6) `check_syntax` + `.svg` render for every `.puml` and link every artifact in `architecture-ai-task-tracker.md` |
 | budget | PlantUML: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60 (per `harness/process.md` §11.1) |
 | base_commit | 955f9f9 |
-| usage | in=530279 out=148856 cr=2930772 ratio=5.5x min=169 |
+| usage | in=570819 out=160155 cr=3311589 ratio=5.8x min=182 |
 | issues | - |
 | commit | e4565c7 |
 
@@ -33,7 +33,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | R-02 diagrams and handoff | `docs/architecture/component-*.puml`, `docs/architecture/sequence-scn-*.puml`, `docs/architecture/data-model-*.puml`, `docs/architecture/class-*.puml`, `docs/architecture/*.svg` | 10P/0F/0M | approved | docs/checkpoints/T-007-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-007-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 11P/0F/0M | awaiting_review | docs/checkpoints/T-007-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -50,3 +50,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: card L14 artifacts fixed — conditional swimlane glob removed (ISSUE-20261113-205922, No microservices waiver).
 - 2026-11-13: CP-2 approved (R-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=530279 out=148856 cr=2930772 ratio=5.5x min=169; reviewer auto (P2)
 - e4565c7: CP-2 snapshot
+- 2026-11-13: CP-F awaiting_review (R-02); checks 11 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=570819 out=160155 cr=3311589 ratio=5.8x min=182; reviewer user
