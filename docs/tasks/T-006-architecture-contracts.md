@@ -14,7 +14,7 @@
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-*.yaml |
 | e2e | required — contracts must cover UC-E2E-001..UC-E2E-008 and the YAML dataset |
 | ux | required — screens S-01..S-06 and ui-spec must be reflected in the API/UI contract |
-| chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors) |
+| chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors); R-01c: architecture description (11 required sections, SCN/SVC/API ids, requirement/UC traceability, diagram index, explicit No microservices / No REST API waivers where a conditional set is omitted); R-01d: OpenAPI 3.x spec per API-NNN (validated by harness/scripts/validate-openapi.py), linked to the architecture description and vice versa |
 | budget | 8 / 20 / 60 (max_write_kb / max_session_kb / context_stop_pct) |
 | base_commit | 1799a8e |
 | usage | in=335491 out=132909 cr=3268191 ratio=9.7x min=155 |
@@ -26,6 +26,8 @@
 - [ ] ADR contains Context, Decision, Alternatives, Consequences and covers Q-001, Q-002, Q-003, Q-007, Q-008 decisions (opencode session files + polling; 1 task = 1 opencode session; duration = end - start; token usage from session usage fields; local Ollama AI search; LLM extraction of proposed/chosen solutions).
 - [ ] Contracts define the PostgreSQL data model, ingestion file format and polling contract, REST API for tasks list/details/calendar/tokens/search/data deletion, AI search contract (local Ollama), error model, and health endpoint.
 - [ ] Every requirement ID R-001..R-013 and R-020..R-030 is referenced in the ADR or contracts; screens S-01..S-06 and UC-E2E-001..008 are traceable.
+- [ ] `docs/architecture/architecture-ai-task-tracker.md` is present with all 11 required sections (`## Scope and applicability`, `## Context and constraints`, `## Decisions`, `## Components`, `## Services`, `## Scenarios`, `## Data model`, `## Class model`, `## REST API`, `## Diagram index`, `## Traceability`), defines `SCN-NNN`/`SVC-NNN`/`API-NNN` ids, traces every `R-NNN` and `UC-E2E-NNN`, and carries explicit `No microservices` / `No REST API` statements for any conditional set it omits (silence is not a waiver).
+- [ ] One valid OpenAPI 3.x spec per `API-NNN` (`docs/architecture/openapi-api-*.yaml`) passes `harness/scripts/validate-openapi.py`, each spec references its `API-NNN`, and the specs are linked into the architecture description (diagram index / REST API section) and vice versa.
 - [ ] CP-1 and CP-F checkpoints recorded.
 
 ## Checkpoints
@@ -52,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2b6c829: CP-F snapshot
 - ISSUE-20261113-124639: stage-done record step failed on git LF/CRLF warning; CP-1/CP-F record commits completed manually (workaround).
 - 2026-11-13: harness upgraded to 2.6.0 (chore commit in project); CP-F changes_requested (extended R-01 scope: architecture description + OpenAPI); task reopened to in_progress for missing artifacts.
+- 2026-11-13: task package rebuilt for 2.6.0 — chunks extended to R-01a..R-01d, acceptance now requires the 11-section architecture description + valid/linked OpenAPI 3.x specs; ready for `harness-architect` via `/harness-run T-006` (verify-stage: 3 FAIL until R-01c/R-01d deliverables exist).
