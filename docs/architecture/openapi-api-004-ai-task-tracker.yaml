@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: "ai-task-tracker — Health (API-004)"
+  version: 0.1.0
+  description: >-
+    Liveness/readiness probe used by the e2e suite
+    (e2e-test-data: api_health_path = /api/health). Base URL
+    http://localhost:8080. Reports backend, PostgreSQL and Ollama state;
+    search degrades to 503 when Ollama is down (R-022, R-027, UC-E2E-007).
+x-harness-api-id: API-004
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/health:
+    get:
+      operationId: getHealth
+      summary: "Service health (R-027, UC-E2E-007)"
+      responses:
+        "200":
+          description: "Service is up (Ollama optional; see components)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, backend, database]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+          example: ok
+        backend: { type: string, enum: [up, down], example: up }
+        database: { type: string, enum: [up, down], example: up }
+        ollama:
+          type: string
+          enum: [up, down]
+          description: "down => status: degraded, /api/search returns 503 (R-022)"
+          example: up

@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: "ai-task-tracker — Analytics (API-002)"
+  version: 0.1.0
+  description: "Calendar + token stats. Base http://localhost:8080. Error envelope {code,message} RU (R-028,R-030). Empty period = 200 empty (S-04,S-05)."
+x-harness-api-id: API-002
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/calendar:
+    get:
+      operationId: getCalendar
+      summary: "Calendar day/week/month/year (S-04, R-008, R-009, UC-E2E-005)"
+      parameters:
+        - name: view
+          in: query
+          schema: { type: string, enum: [day, week, month, year], default: week }
+        - name: date
+          in: query
+          description: "Anchor YYYY-MM-DD (week = Monday of that week, Q-UX-004)"
+          schema: { type: string, format: date }
+      responses:
+        "200":
+          description: "Calendar cells for the anchor period; empty = empty days"
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CalendarResponse" }
+        "400":
+          description: "INVALID_PERIOD — Некорректная дата."
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /api/tokens:
+    get:
+      operationId: getTokens
+      summary: "Token stats by model (S-05, R-012, R-013, R-023, UC-E2E-006)"
+      parameters:
+        - { name: period, in: query, schema: { type: string, default: all } }
+        - { name: date, in: query, schema: { type: string, format: date } }
+        - { name: from, in: query, schema: { type: string, format: date } }
+        - { name: to, in: query, schema: { type: string, format: date } }
+      responses:
+        "200":
+          description: "Totals for the period; empty = has_data: false"
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TokenStatsResponse" }
+        "400":
+          description: "INVALID_PERIOD — Некорректный период. Проверьте даты. (to >= from)"
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+components:
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+    CalendarTask:
+      type: object
+      required: [task_id, started_at, duration_s]
+      properties:
+        task_id: { type: string }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: string, format: date-time, nullable: true }
+        duration_s: { type: integer }
+    CalendarDay:
+      type: object
+      required: [date, tasks]
+      properties:
+        date: { type: string, format: date }
+        outside: { type: boolean, default: false }
+        tasks:
+          type: array
+          items: { $ref: "#/components/schemas/CalendarTask" }
+    CalendarResponse:
+      type: object
+      required: [view, date, days]
+      properties:
+        view:
+          type: string
+          enum: [day, week, month, year]
+        date: { type: string, format: date }
+        days:
+          type: array
+          description: "grid cells (week = 7 Mon..Sun, outside: true on adjacent days)"
+          items: { $ref: "#/components/schemas/CalendarDay" }
+        months:
+          type: array
+          description: "view=year: 12 cells; null values = «Нет данных» for that month (contracts §4.5, Q-UX-004)"
+          items: { $ref: "#/components/schemas/MonthCell" }
+    MonthCell:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        task_count: { type: integer, nullable: true }
+        total_duration_s: { type: integer, nullable: true }
+        tokens_total: { type: integer, nullable: true }
+    TokenByModel:
+      type: object
+      required: [model, input_tokens, output_tokens, total_tokens]
+      properties:
+        model: { type: string }
+        input_tokens: { type: integer }
+        output_tokens: { type: integer }
+        total_tokens: { type: integer }
+    TokenStatsResponse:
+      type: object
+      required: [by_model, total, has_data]
+      properties:
+        period: { type: string }
+        by_model:
+          type: array
+          items: { $ref: "#/components/schemas/TokenByModel" }
+        total:
+          type: object
+          properties:
+            input_tokens: { type: integer }
+            output_tokens: { type: integer }
+            total_tokens: { type: integer }
+        has_data: { type: boolean }

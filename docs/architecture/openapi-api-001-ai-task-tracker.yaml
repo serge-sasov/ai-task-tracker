@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: "ai-task-tracker — Tasks and history (API-001)"
+  version: 0.1.0
+  description: "Task list, detail, history deletion. Base http://localhost:8080. Error envelope {code,message} RU (R-028,R-030). Empty = 200 empty collection (contracts §1)."
+x-harness-api-id: API-001
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/tasks:
+    get:
+      operationId: listTasks
+      summary: "Paginated task list (S-01, R-007, R-023, R-024, UC-E2E-003)"
+      parameters:
+        - { name: from, in: query, schema: { type: string, format: date } }
+        - { name: to, in: query, schema: { type: string, format: date } }
+        - name: status
+          in: query
+          schema: { type: string, enum: [Завершена, Прервана, Не завершена] }
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: size, in: query, schema: { type: integer, minimum: 1, maximum: 500, default: 50 } }
+      responses:
+        "200":
+          description: "Task list; empty = { total: 0, items: [] } (S-01)"
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TaskListResponse" }
+        "400":
+          description: "INVALID_PERIOD — Некорректный период. Проверьте даты."
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /api/tasks/{task_id}:
+    get:
+      operationId: getTask
+      summary: "Task detail (S-02, R-003..R-006, R-009)"
+      parameters:
+        - { name: task_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: "Task with steps, solutions, tokens"
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TaskDetailResponse" }
+        "404":
+          description: "NOT_FOUND — Задача не найдена."
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /api/history:
+    delete:
+      operationId: deleteHistory
+      summary: "Delete all history (S-06, R-029, UC-E2E-008); confirm: true"
+      description: "Atomic; sources untouched, next poll may re-import (contracts §4.7). Empty DB = 200 { deleted: false }."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirm: { type: boolean }
+      responses:
+        "200":
+          description: "История удалена / no-op «Данных для удаления нет»"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted: { type: boolean }
+        "400":
+          description: "CONFIRMATION_REQUIRED — Требуется подтверждение удаления."
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "500":
+          description: "INTERNAL_ERROR — Не удалось удалить историю. Повторите попытку."
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+components:
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+    TaskListItem:
+      type: object
+      required: [task_id, name, started_at, status]
+      properties:
+        task_id: { type: string }
+        name: { type: string }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: string, format: date-time, nullable: true }
+        status:
+          type: string
+          enum: [Завершена, Прервана, Не завершена]
+        duration_s: { type: integer }
+        tokens_total: { type: integer, nullable: true }
+    TaskListResponse:
+      type: object
+      required: [total, items]
+      properties:
+        total: { type: integer }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/TaskListItem" }
+    Step:
+      type: object
+      required: [message_id, at, text]
+      properties:
+        message_id: { type: string }
+        at: { type: string, format: date-time }
+        text: { type: string }
+    Solution:
+      type: object
+      required: [text]
+      properties:
+        text: { type: string }
+        source_message_id: { type: string, nullable: true }
+    TokenByModel:
+      type: object
+      required: [model, input_tokens, output_tokens, total_tokens]
+      properties:
+        model: { type: string }
+        input_tokens: { type: integer }
+        output_tokens: { type: integer }
+        total_tokens: { type: integer }
+    TaskDetailResponse:
+      type: object
+      required: [task_id, name, started_at, status, steps, solutions, tokens]
+      properties:
+        task_id: { type: string }
+        name: { type: string }
+        started_at: { type: string, format: date-time }
+        finished_at: { type: string, format: date-time, nullable: true }
+        status:
+          type: string
+          enum: [Завершена, Прервана, Не завершена]
+        duration_s: { type: integer }
+        steps:
+          type: array
+          items: { $ref: "#/components/schemas/Step" }
+        solutions:
+          type: object
+          required: [proposed, chosen]
+          properties:
+            proposed:
+              type: array
+              items: { $ref: "#/components/schemas/Solution" }
+            chosen: { nullable: true }
+        tokens:
+          type: object
+          properties:
+            by_model:
+              type: array
+              items: { $ref: "#/components/schemas/TokenByModel" }
+            total:
+              type: object
+              properties:
+                input_tokens: { type: integer }
+                output_tokens: { type: integer }
+                total_tokens: { type: integer }

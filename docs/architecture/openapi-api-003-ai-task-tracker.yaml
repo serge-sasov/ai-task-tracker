@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: "ai-task-tracker — AI semantic search (API-003)"
+  version: 0.1.0
+  description: >-
+    Semantic search over task steps and solutions via local Ollama
+    (embeddings + pgvector, ADR-0001, R-010, R-011). Base URL
+    http://localhost:8080. When Ollama is unreachable the API degrades:
+    503 SERVICE_UNAVAILABLE with «Поиск временно недоступен. Повторите
+    попытку.» (contracts §4.5, UC-E2E-004, R-022).
+x-harness-api-id: API-003
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/search:
+    post:
+      operationId: aiSearch
+      summary: "Semantic search over steps and solutions (S-03, R-010, R-011, UC-E2E-004)"
+      description: >-
+        The query is embedded by Ollama and compared with stored embeddings
+        in pgvector. Results are task steps/solutions with a relevance score.
+        Empty history = 200 with empty results.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  example: "Как настроен CI?"
+                limit:
+                  type: integer
+                  minimum: 1
+                  maximum: 50
+                  default: 10
+                task_id:
+                  type: string
+                  nullable: true
+                  description: "Optional: restrict to one task"
+                  example: TASK-001
+      responses:
+        "200":
+          description: "Ranked results; empty history = { total: 0, results: [] }"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+        "400":
+          description: "INVALID_QUERY — Запрос не может быть пустым."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "503":
+          description: >-
+            SERVICE_UNAVAILABLE — Поиск временно недоступен.
+            Повторите попытку. (Ollama down, contracts §4.5, R-022)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string, example: SERVICE_UNAVAILABLE }
+        message: { type: string, example: "Поиск временно недоступен. Повторите попытку." }
+    SearchHit:
+      type: object
+      required: [task_id, kind, text, score]
+      properties:
+        task_id: { type: string, example: TASK-001 }
+        kind:
+          type: string
+          enum: [step, solution]
+        text: { type: string, example: "Анализ структуры репозитория и требований к CI" }
+        score: { type: number, format: float, example: 0.87 }
+    SearchResponse:
+      type: object
+      required: [total, results]
+      properties:
+        total: { type: integer, example: 3 }
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchHit"

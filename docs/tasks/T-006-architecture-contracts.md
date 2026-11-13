@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-002, T-003, T-005 |
 | inputs | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml, docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/wireframes-ai-task-tracker.puml, docs/tasks/T-001-ai-task-tracker-feature-planning.md |
@@ -17,7 +17,7 @@
 | chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors); R-01c: architecture description (11 required sections, SCN/SVC/API ids, requirement/UC traceability, diagram index, explicit No microservices / No REST API waivers where a conditional set is omitted); R-01d: OpenAPI 3.x spec per API-NNN (validated by harness/scripts/validate-openapi.py), linked to the architecture description and vice versa |
 | budget | 8 / 20 / 60 (max_write_kb / max_session_kb / context_stop_pct) |
 | base_commit | 1799a8e |
-| usage | in=335491 out=132909 cr=3268191 ratio=9.7x min=155 |
+| usage | in=452356 out=182070 cr=4372564 ratio=9.7x min=211 |
 | issues | ISSUE-20261113-115617, ISSUE-20261113-124639 |
 | commit | 2b6c829 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | 5P/0F/0M | approved | docs/checkpoints/T-006-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 6P/0F/0M | changes_requested | docs/checkpoints/T-006-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 17P/0F/0M | awaiting_review | docs/checkpoints/T-006-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -55,3 +55,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - ISSUE-20261113-124639: stage-done record step failed on git LF/CRLF warning; CP-1/CP-F record commits completed manually (workaround).
 - 2026-11-13: harness upgraded to 2.6.0 (chore commit in project); CP-F changes_requested (extended R-01 scope: architecture description + OpenAPI); task reopened to in_progress for missing artifacts.
 - 2026-11-13: task package rebuilt for 2.6.0 — chunks extended to R-01a..R-01d, acceptance now requires the 11-section architecture description + valid/linked OpenAPI 3.x specs; ready for `harness-architect` via `/harness-run T-006` (verify-stage: 3 FAIL until R-01c/R-01d deliverables exist).
+- 2026-11-13 (R-01c/R-01d complete): created `architecture-ai-task-tracker.md` (11 sections, SCN-001..008, API-001..004, 24 R-NNN + 8 UC-E2E traced, explicit "No microservices") and 4 OpenAPI 3.x specs `openapi-api-001..004-ai-task-tracker.yaml` (each `x-harness-api-id`, RU error envelope, year-view month cells kept to satisfy contracts §4.5). `verify-stage.ps1 -Stage R-01` → 17 PASS / 0 FAIL / 0 UNCHECKED; all 4 specs pass `validate-openapi.py`. ADR+contracts untouched (hash-locked). Ready for CP-F re-review.
+- 2026-11-13: CP-F awaiting_review (R-01); checks 17 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=452356 out=182070 cr=4372564 ratio=9.7x min=211; reviewer user

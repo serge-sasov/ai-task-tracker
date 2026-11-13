@@ -4,19 +4,19 @@
     "stage":  "R-01",
     "root":  "C:\\study\\ai\\research\\ai-task-tracker",
     "base_commit":  "1799a8e",
-    "generated_at":  "2026-11-13T12:39:23",
+    "generated_at":  "2026-11-13T17:10:41",
     "results":  [
                     {
                         "id":  "artifacts-exist",
                         "check":  "file-exists",
                         "result":  "PASS",
-                        "detail":  "2 file(s)"
+                        "detail":  "7 file(s)"
                     },
                     {
                         "id":  "artifact-hashes",
                         "check":  "hash-match",
                         "result":  "PASS",
-                        "detail":  "0 artifact(s) match ledger"
+                        "detail":  "2 artifact(s) match ledger"
                     },
                     {
                         "id":  "adr-exist",
@@ -37,14 +37,80 @@
                         "detail":  "1 file(s)"
                     },
                     {
+                        "id":  "architecture-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-sections",
+                        "check":  "headings-required",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
                         "id":  "architecture-requirement-trace",
                         "check":  "id-coverage",
                         "result":  "PASS",
-                        "detail":  "24 id(s) covered by 2 file(s)"
+                        "detail":  "24 id(s) covered by 3 file(s)"
+                    },
+                    {
+                        "id":  "architecture-description-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "24 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "scenario-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "8 unique id(s)"
+                    },
+                    {
+                        "id":  "service-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "0 unique id(s)"
+                    },
+                    {
+                        "id":  "api-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "4 unique id(s)"
+                    },
+                    {
+                        "id":  "scenario-uc-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "openapi-count",
+                        "check":  "count-match",
+                        "result":  "PASS",
+                        "detail":  "4 = 4"
+                    },
+                    {
+                        "id":  "openapi-ids",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "4 id(s) covered by 4 file(s)"
+                    },
+                    {
+                        "id":  "openapi-valid",
+                        "check":  "python-validator",
+                        "result":  "PASS",
+                        "detail":  "4 file(s)"
+                    },
+                    {
+                        "id":  "architecture-openapi-links",
+                        "check":  "reference-coverage",
+                        "result":  "PASS",
+                        "detail":  "4 file(s) referenced by 1 target(s)"
                     }
                 ],
     "summary":  {
-                    "pass":  6,
+                    "pass":  17,
                     "fail":  0,
                     "manual":  0,
                     "not_applicable":  0,
