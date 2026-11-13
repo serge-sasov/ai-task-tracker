@@ -18,7 +18,7 @@
 | budget | 8 / 20 / 60 (max_write_kb / max_session_kb / context_stop_pct) |
 | base_commit | 1799a8e |
 | usage | in=335491 out=132909 cr=3268191 ratio=9.7x min=155 |
-| issues | ISSUE-20261113-115617 |
+| issues | ISSUE-20261113-115617, ISSUE-20261113-124639 |
 | commit | 2b6c829 |
 
 ## Acceptance
@@ -50,3 +50,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 6608194: CP-1 snapshot
 - 2026-11-13: CP-F awaiting_review (R-01); checks 6 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=335491 out=132909 cr=3268191 ratio=9.7x min=155; reviewer user
 - 2b6c829: CP-F snapshot
+- ISSUE-20261113-124639: stage-done record step failed on git LF/CRLF warning; CP-1/CP-F record commits completed manually (workaround).
