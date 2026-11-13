@@ -9,9 +9,9 @@
 | role | architect |
 | stage | R-01 |
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-*.yaml |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-13T17:10:41 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-13T17:35:00 |
 | reviewer | user |
 | decision | approved |
 | snapshot_commit | 411881b |
