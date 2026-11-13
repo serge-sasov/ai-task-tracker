@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-002, T-003, T-005 |
 | inputs | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml, docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/wireframes-ai-task-tracker.puml, docs/tasks/T-001-ai-task-tracker-feature-planning.md |
@@ -17,7 +17,7 @@
 | chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors) |
 | budget | 8 / 20 / 60 (max_write_kb / max_session_kb / context_stop_pct) |
 | base_commit | 1799a8e |
-| usage | in=331179 out=122364 cr=3071626 ratio=9.3x min=141 |
+| usage | in=335491 out=132909 cr=3268191 ratio=9.7x min=155 |
 | issues | ISSUE-20261113-115617 |
 | commit | 6608194 |
 
@@ -33,7 +33,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | 5P/0F/0M | approved | docs/checkpoints/T-006-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-006-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 6P/0F/0M | awaiting_review | docs/checkpoints/T-006-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -48,3 +48,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - ISSUE-20261113-115617: architect contracts chunk exceeded 20 KB session budget (minor, resolved)
 - 2026-11-13: CP-1 approved (R-01); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=331179 out=122364 cr=3071626 ratio=9.3x min=141; reviewer auto (P2)
 - 6608194: CP-1 snapshot
+- 2026-11-13: CP-F awaiting_review (R-01); checks 6 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=335491 out=132909 cr=3268191 ratio=9.7x min=155; reviewer user
