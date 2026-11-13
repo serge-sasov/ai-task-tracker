@@ -3,3 +3,4 @@
 | ID | Summary | Severity | Status | Location | Source | Updated |
 |---|---|---|---|---|---|---|
 | [ISSUE-20261113-115617](ISSUE-20261113-115617-r-01-contracts-file-exceeded-role-session-budget.md) | R-01 contracts file exceeded role session budget | minor | resolved | docs/architecture/contracts-ai-task-tracker.md (22.9 KB) | harness-architect | 2026-11-13T11:56:17.7039321+03:00 |
+| [ISSUE-20261113-124639](ISSUE-20261113-124639-stage-done-record-step-fails-on-git-lf-crlf-warning.md) | stage-done record step fails on git LF/CRLF warning | major | workaround | C:\study\ai\research\ai-task-tracker\harness\scripts\stage-done.ps1 (record step, Invoke-Git at harness/scripts/harness-lib.ps1:341) | stage-done.ps1 | 2026-11-13T12:46:39.5721565+03:00 |
