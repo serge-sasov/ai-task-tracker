@@ -47,3 +47,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-13: card created for I-01; T-008 started (in_progress); base_commit 2f8fc39 (HEAD at start).
+- 2026-11-13: chunk 1 attempt 1 FAILED — harness-coder returned empty result, 0 artifacts written (tree clean). Recorded per process §11; chunk 1 will be retried as a smaller chunk (1a backend skeleton / 1b stack wiring).
