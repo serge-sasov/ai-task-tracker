@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | pending |
+| status | in_progress |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-006 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` |
@@ -16,7 +16,7 @@
 | ux | required — component diagram reflects screens S-01..S-06 serving flow |
 | chunks | 6 — one diagram per chunk: (1) `component-*.puml`; (2) `data-model-*.puml`; (3) `class-*.puml`; (4) `sequence-scn-*.puml` (one per `SCN-NNN`); (5) `swimlane-svc-*.puml` (one per `SVC-NNN`, or explicit `No microservices` waiver honored); (6) `check_syntax` + `.svg` render for every `.puml` and link every artifact in `architecture-ai-task-tracker.md` |
 | budget | PlantUML: max_write_kb 8 / max_session_kb 20 / context_stop_pct 60 (per `harness/process.md` §11.1) |
-| base_commit | 72d681f |
+| base_commit | 955f9f9 |
 | usage | - |
 | issues | - |
 | commit | - |
@@ -45,3 +45,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-13: card created for R-02 (Diagrams and handoff); status pending; depends on T-006 (R-01, reopened in_progress after harness 2.6.0 upgrade extended R-01 scope).
+- 2026-11-13: T-006 done; T-007 started (R-02 diagrams, 6 chunks). base_commit set to 955f9f9 (HEAD at start).
