@@ -11,14 +11,14 @@
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-002, T-003, T-005 |
 | inputs | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml, docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/wireframes-ai-task-tracker.puml, docs/tasks/T-001-ai-task-tracker-feature-planning.md |
-| artifacts | docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/checkpoints/T-006-CP-1.md, docs/checkpoints/T-006-CP-F.md |
+| artifacts | docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md |
 | e2e | required — contracts must cover UC-E2E-001..UC-E2E-008 and the YAML dataset |
 | ux | required — screens S-01..S-06 and ui-spec must be reflected in the API/UI contract |
 | chunks | R-01a: ADR decision and alternatives; R-01b: contracts (data model, ingestion, API, AI search, errors) |
 | budget | 8 / 20 / 60 (max_write_kb / max_session_kb / context_stop_pct) |
 | base_commit | 1799a8e |
-| usage | - |
-| issues | - |
+| usage | in=331179 out=122364 cr=3071626 ratio=9.3x min=141 |
+| issues | ISSUE-20261113-115617 |
 | commit | - |
 
 ## Acceptance
@@ -32,7 +32,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | - | pending | `docs/checkpoints/T-006-CP-1.md` |
+| CP-1 | R-01 | `docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md` | 5P/0F/0M | approved | docs/checkpoints/T-006-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-006-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -45,3 +45,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-13: card created; R-01 started; harness upgraded to 2.5.0 (chore commit 1799a8e).
+- ISSUE-20261113-115617: architect contracts chunk exceeded 20 KB session budget (minor, resolved)
+- 2026-11-13: CP-1 approved (R-01); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=331179 out=122364 cr=3071626 ratio=9.3x min=141; reviewer auto (P2)

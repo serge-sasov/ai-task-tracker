@@ -1,0 +1,56 @@
+{
+    "task":  "T-006",
+    "workflow":  "feature",
+    "stage":  "R-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "1799a8e",
+    "generated_at":  "2026-11-13T12:23:37",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-006.md"
+                    },
+                    {
+                        "id":  "adr-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "adr-sections",
+                        "check":  "headings-required",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "contracts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-requirement-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "24 id(s) covered by 2 file(s)"
+                    }
+                ],
+    "summary":  {
+                    "pass":  5,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

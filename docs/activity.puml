@@ -3,39 +3,31 @@ skinparam defaultFontName Segoe UI
 skinparam ActivityBackgroundColor #FFFFFF
 skinparam ActivityBorderColor #555555
 skinparam ArrowColor #555555
-title Local harness - task plan (ai-task-tracker)
+title Local harness - task plan T-001..T-012
 
 start
-partition "T-001 P-00 feature planning (DONE)" {
-  :Done (CP-1 + CP-F approved); <<#90EE90>>
-}
-partition "T-002 A-01 requirements analysis (DONE)" {
-  :FR/NFR R-NNN, questions resolved (defaults), glossary; <<#90EE90>>
-}
-partition "T-003 A-02 e2e use cases and dataset (DONE)" {
-  :use cases UC-E2E-NNN + YAML dataset; <<#90EE90>>
-}
-partition "T-004 U-01 UX flows and screens (DONE)" {
-  :personas, journeys, IA, screen inventory, screen states; <<#90EE90>>
-}
-partition "T-005 U-02 wireframes, prototype, UI spec (DONE)" {
-  :Salt wireframes S-01..S-06, offline HTML prototype (UC-E2E-001..008), UI spec; calendar month grid + year view; CP-F rev 2 approved; <<#90EE90>>
-}
-partition "T-006 R-01 architecture and contracts (IN PROGRESS)" {
-  :ADR + contracts (data model, ingestion, API, AI search, errors); <<#FFE082>>
-}
-partition "T-007..T-012 pending (see docs/plan.md)" {
-  :R-02, I-01, I-02, Q-01, Q-02, D-01; <<#D3D3D3>>
-}
+:T-001 P-00 Feature planning: scope, e2e/ux, task graph; <<#90EE90>>
+:T-002 A-01 Requirements analysis (FR/NFR, R-NNN); <<#90EE90>>
+:T-003 A-02 E2E use cases and YAML dataset; <<#90EE90>>
+:T-004 U-01 UX flows and screens; <<#90EE90>>
+:T-005 U-02 Wireframes, prototype, UI spec; <<#90EE90>>
+:T-006 R-01 Architecture and contracts (ADR); <<#FFE082>>
+:T-007 R-02 Diagrams and module handoff; <<#D3D3D3>>
+:T-008 I-01 Implementation + unit/integration tests; <<#D3D3D3>>
+:T-009 I-02 E2E automation and runner; <<#D3D3D3>>
+:T-010 Q-01 E2E plan and coverage matrix; <<#D3D3D3>>
+:T-011 Q-02 QA, acceptance and verdict; <<#D3D3D3>>
+:T-012 D-01 Documentation, runbook, ADR finalization; <<#D3D3D3>>
 stop
 
 legend right
- |= Color |= Status |
- |<#90EE90>| done |
- |<#FFE082>| in_progress |
- |<#87CEFA>| awaiting_review |
- |<#D3D3D3>| pending |
- |<#FF9090>| failed |
- |<#FFB347>| blocked |
+|= Color |= Status |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#87CEFA>| awaiting_review |
+|<#D3D3D3>| pending |
+|<#FF9090>| failed |
+|<#FFB347>| blocked |
+| (derived) | Informational only; board/card is authoritative |
 endlegend
 @enduml
