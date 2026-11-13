@@ -19,7 +19,7 @@
 | base_commit | 955f9f9 |
 | usage | in=530279 out=148856 cr=2930772 ratio=5.5x min=169 |
 | issues | - |
-| commit | - |
+| commit | e4565c7 |
 
 ## Acceptance
 
@@ -49,3 +49,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-13: R-02 diagram deliverables complete — 11 `.puml` (component, data-model, class, 8× sequence-scn-001..008) + 11 fresh `.svg` in `docs/architecture/`; all pass MCP `plantuml-render check_syntax`; Diagram index in `architecture-ai-task-tracker.md` updated. `verify-stage.ps1 -Task T-007 -Stage R-02`: **9 PASS, 1 FAIL, 0 MANUAL, 3 N/A, 0 UNCHECKED**. All R-02 diagram checks PASS (diagram-syntax, diagram-svg, component-exist, data-model-exist, class-diagram-exist, sequence-count 8=8, sequence-ids, sequence-uc-trace, architecture-links). Sole FAIL = universal `artifacts-exist`: card L14 lists conditional `swimlane-svc-*.puml` glob — waived by `architecture-ai-task-tracker.md` L57 "No microservices" and forbidden in `card.artifacts` by `feature.md` L59–64. Filed `docs/issues/ISSUE-20261113-205922`; needs orchestrator fix (remove glob from card L14), then re-verify → expect 10 PASS / 0 FAIL. Status remains in_progress until orchestrator resolves; CP-2 pending.
 - 2026-11-13: card L14 artifacts fixed — conditional swimlane glob removed (ISSUE-20261113-205922, No microservices waiver).
 - 2026-11-13: CP-2 approved (R-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=530279 out=148856 cr=2930772 ratio=5.5x min=169; reviewer auto (P2)
+- e4565c7: CP-2 snapshot
