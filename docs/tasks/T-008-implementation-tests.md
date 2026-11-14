@@ -19,7 +19,7 @@
 | base_commit | 2f8fc39 |
 | usage | in=2071945 out=223621 cr=6476228 ratio=3.1x min=1066 |
 | issues | - |
-| commit | - |
+| commit | 017fd1e |
 
 ## Acceptance
 
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-14: CHUNK 1 of 6 (project skeleton) implemented: `backend/pom.xml` (Maven, Java 21, Spring Boot 3.3.5 parent, package root `ru.aitasktracker`, custom source/test dirs), `AiTaskTrackerApplication` (@EnableScheduling), `TrackerProperties` (@ConfigurationProperties prefix `tracker`), `application.yml` (env-driven datasource/redis, server.port 8080, Flyway enabled, open-in-view false, Jackson ISO dates). `Dockerfile` (multi-stage), `docker-compose.yml` (backend/postgres pg16+pgvector/redis7/frontend, ports on 127.0.0.1, OPENCODE_DATA_DIR read-only bind). `Makefile` (up/down/test/build/logs), `.env.example` (placeholders only), `.gitignore` extended (backend/target, src/web/node_modules, src/web/dist, data). One trivial unit test `TrackerPropertiesTest` (no DB). Frontend build stage and frontend service declared but stubbed (chunk 6).
 - 2026-11-14: CHUNK 1 attempt 3 (fix): deleted stray `ru.aitrack.Application.java`, fixed Makefile compose targets, cleaned application.yml invalid keys, fixed Dockerfile ENTRYPOINT, added `tracker:` env-var wiring. Gate green: `mvn clean test` 2/2, `mvn clean package` BUILD SUCCESS (single jar), no TODO/secrets, stray file confirmed deleted.
 - 2026-11-14: CP-1 approved (I-01); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2071945 out=223621 cr=6476228 ratio=3.1x min=1066; reviewer auto (P2)
+- 017fd1e: CP-1 snapshot
