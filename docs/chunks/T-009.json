@@ -1,0 +1,286 @@
+{
+    "task":  "T-009",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Runner skeleton and result schema",
+                       "state":  "pending",
+                       "owns":  [
+                                    "scripts/e2e.ps1",
+                                    "tests/e2e/conftest.py",
+                                    "tests/e2e/README.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "runner starts the stack, loads YAML, writes JSON results"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Dataset validator",
+                       "state":  "pending",
+                       "owns":  [
+                                    "scripts/validate-e2e-data.py"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "validates the analyst YAML with clear errors"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Use cases UC-E2E-001..003",
+                       "state":  "pending",
+                       "owns":  [
+                                    "tests/e2e/uc_e2e_001_003/**"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "tests for the three use cases"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C4",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Use cases UC-E2E-004..006",
+                       "state":  "pending",
+                       "owns":  [
+                                    "tests/e2e/uc_e2e_004_006/**"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "tests for the three use cases"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C5",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Use cases UC-E2E-007..008",
+                       "state":  "pending",
+                       "owns":  [
+                                    "tests/e2e/uc_e2e_007_008/**"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "tests for the two use cases"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C6",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Fixtures, isolation, cleanup",
+                       "state":  "pending",
+                       "owns":  [
+                                    "tests/e2e/fixtures/**"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "seed and cleanup are idempotent; no production endpoints"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C7",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Full run and result capture",
+                       "state":  "pending",
+                       "owns":  [
+                                    "tests/e2e/results/**"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-009-e2e-automation.md"
+                                  ],
+                       "brief":  "docs/tasks/T-009-e2e-automation.md",
+                       "acceptance":  [
+                                          "full suite green on the local stack, results recorded"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-14T21:57:49"
+}

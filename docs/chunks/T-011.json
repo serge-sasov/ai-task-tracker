@@ -1,0 +1,172 @@
+{
+    "task":  "T-011",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Code and artifact review",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/review-T-011.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-011-qa-acceptance.md"
+                                  ],
+                       "brief":  "docs/tasks/T-011-qa-acceptance.md",
+                       "acceptance":  [
+                                          "acceptance, contracts, and module boundaries checked with targeted reads"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "E2E evidence: tasks, search, history",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/e2e-report-tasks.md",
+                                    "docs/qa/e2e-report-search.md",
+                                    "docs/qa/e2e-report-history.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-011-qa-acceptance.md"
+                                  ],
+                       "brief":  "docs/tasks/T-011-qa-acceptance.md",
+                       "acceptance":  [
+                                          "pass/fail per UC with runner evidence"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Findings and verdict",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/e2e-report-verdict.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-011-qa-acceptance.md"
+                                  ],
+                       "brief":  "docs/tasks/T-011-qa-acceptance.md",
+                       "acceptance":  [
+                                          "verdict with numbered findings by severity"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C4",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Vision review of screens",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/vision-review-T-011.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-011-qa-acceptance.md"
+                                  ],
+                       "brief":  "docs/tasks/T-011-qa-acceptance.md",
+                       "acceptance":  [
+                                          "layout, clipping, RU copy per screen"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-14T21:57:49"
+}

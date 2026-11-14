@@ -1,0 +1,132 @@
+{
+    "task":  "T-010",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "Q-01",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Coverage matrix: tasks and calendar",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/e2e-plan-tasks-calendar.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-010-e2e-plan.md"
+                                  ],
+                       "brief":  "docs/tasks/T-010-e2e-plan.md",
+                       "acceptance":  [
+                                          "R-\u003eUC-\u003etest matrix for the tasks and calendar areas"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "Q-01",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Coverage matrix: search, tokens, history",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/e2e-plan-search-tokens-history.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-010-e2e-plan.md"
+                                  ],
+                       "brief":  "docs/tasks/T-010-e2e-plan.md",
+                       "acceptance":  [
+                                          "matrix for the remaining areas"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "Q-01",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Execution approach and data validation",
+                       "state":  "pending",
+                       "owns":  [
+                                    "docs/qa/e2e-plan-execution.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-010-e2e-plan.md"
+                                  ],
+                       "brief":  "docs/tasks/T-010-e2e-plan.md",
+                       "acceptance":  [
+                                          "environment, order, cleanup, dataset validation"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d79f4dd",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-14T21:57:49"
+}
