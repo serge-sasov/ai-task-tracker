@@ -1154,7 +1154,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Fix API defects A/B/C and add context wiring test",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "src/main/java/ru/aitasktracker/api/controller/ApiErrorAdapter.java",
                                     "src/main/java/ru/aitasktracker/api/web/ApiConfiguration.java",
@@ -1177,15 +1177,46 @@
                                           "mvn clean test green (98+) and mvn clean package BUILD SUCCESS"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/controller/ApiErrorAdapter.java",
+                                            "sha256":  "67217915b4c327888e54365270fa934749665de091a734c9673b77ccba169def"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/web/ApiConfiguration.java",
+                                            "sha256":  "01854042a47982a74d045d0d44ee5df780e3eb26dd0bfcac6146bde81a23ceac"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
+                                            "sha256":  "f48ad029e6106eabacc6f9ba40fd889c534d2df3279451110aa30478a087aff1"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/exception/NotFound.java",
+                                            "sha256":  "41124086927363c707d8bdd4de55141b779f13ff58e382333dfe0eeee673f0a0"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/config/IngestAutoConfiguration.java",
+                                            "sha256":  "02a3d151355d514ff1ad4b4e55ff76eb6078ba15a88b173d096f3f0025272061"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/ingestion/lock/InMemoryTaskLock.java",
+                                            "sha256":  "1797d48ef160c10089a741aa21dc0b109875da86dd6e5528d114eec595f11624"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/ingestion/lock/RedisTaskLock.java",
+                                            "sha256":  "05699524847d03af4724950e35aa94d7ee39f7e37d8218de47ac3cc404122a69"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/ApiContextWiringTest.java",
+                                            "sha256":  "2479201e3f3fe258ae8b7ebc34c3ed4afabbdadce81ad907646a82862e41a61c"
+                                        }
                                     ],
                        "base_commit":  "4589a7d",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
-                                     "in":  0,
-                                     "out":  0,
-                                     "cr":  0,
-                                     "min":  0
+                                     "in":  184650,
+                                     "out":  49964,
+                                     "cr":  6596097,
+                                     "min":  26
                                  },
                        "issues":  [
 
@@ -1193,8 +1224,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-14T19:37:12",
+                       "finished":  "2026-11-14T20:04:20"
                    },
                    {
                        "id":  "C5a",
@@ -1203,7 +1234,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "API-002 calendar and tokens",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "src/main/java/ru/aitasktracker/api/calendar/**",
                                     "src/main/java/ru/aitasktracker/api/tokens/**",
@@ -1221,15 +1252,66 @@
                                           "integration tests for both endpoints green"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/controller/CalendarController.java",
+                                            "sha256":  "5642fc1626ef9823b5c7128210a89cfb811a38a169f149537c7d76f8df1bb52d"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/dto/CalendarDay.java",
+                                            "sha256":  "844952d059b72dfda0163675160e53c48e0900ca3b845add2964870920bdb4d1"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/dto/CalendarResponse.java",
+                                            "sha256":  "5895163a1aa0c9bc881571d9a03bc4330fc3988a770b1260f513e38ae0f93762"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/dto/CalendarTask.java",
+                                            "sha256":  "e762d5bb64fd308ba9ad64226581435d34b76763d18cb0dabee5608005784a91"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/dto/MonthCell.java",
+                                            "sha256":  "3e6a080509a492af5ba9241d5b1b4aa675c1c99e589c8254e0844922c5045149"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/calendar/service/CalendarService.java",
+                                            "sha256":  "bb0f2d98c7a4a2aaccdf68286f3a2d1371af7c11a9b9205a921ee018e7fc8bdd"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/controller/TokensController.java",
+                                            "sha256":  "84c3cff9ddbf5ac807a501dc6da611585e0c495794cc9a82d3b2cf179ce0f8a2"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/dto/TokenByModel.java",
+                                            "sha256":  "5d7fdc0a3858c52ff6833e0020c3c9748a8f438744394bc927de5b5f3ee7c2e2"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/dto/TokenStatsResponse.java",
+                                            "sha256":  "37713bfefd920f6c7d9e711c4733a1e009974a8e441f55d5c6bb9526604b4802"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/dto/TokenTotals.java",
+                                            "sha256":  "b1928ae9ae624ca0018956e9ae9d5e1f41427b8e323c376067df1ebf6f82afeb"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/service/TokenService.java",
+                                            "sha256":  "b3d273fd7ec9ebe2c65a45eb7b16a9afdbf0577cdcd08415c902e3f30f7f07d8"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/calendar/CalendarServiceTest.java",
+                                            "sha256":  "4a97b1bd75997e138de55e464ec6ecb7e8c15266d67a1371c677498d41899da1"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/tokens/TokenServiceTest.java",
+                                            "sha256":  "aceddc8476321f2235dc9ab1087990286f95865f941742fcc191570d9a3edf58"
+                                        }
                                     ],
                        "base_commit":  "4589a7d",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
-                                     "in":  0,
-                                     "out":  0,
-                                     "cr":  0,
-                                     "min":  0
+                                     "in":  81527,
+                                     "out":  47715,
+                                     "cr":  3992331,
+                                     "min":  21
                                  },
                        "issues":  [
 
@@ -1237,8 +1319,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-14T20:06:56",
+                       "finished":  "2026-11-14T20:28:54"
                    },
                    {
                        "id":  "C5b",
@@ -1476,5 +1558,5 @@
                        "finished":  null
                    }
                ],
-    "updated":  "2026-11-14T19:36:14"
+    "updated":  "2026-11-14T20:30:07"
 }

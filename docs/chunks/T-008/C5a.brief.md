@@ -16,10 +16,9 @@ in new subpackages so no existing file changes.
 
 ## Inputs
 
-- `docs/architecture/openapi-api-002-ai-task-tracker.yaml` (paths, params,
-  schemas, examples).
-- `docs/architecture/contracts-ai-task-tracker.md` section 4 (timings R-023/R-024)
-  and section 5 (RU error envelope).
+- `docs/architecture/openapi-api-002-ai-task-tracker.yaml` (whole file, 4.5 KB).
+- `docs/architecture/contracts-ai-task-tracker.md` lines 86-270 (section 4 REST
+  API and section 5 error model only; do not read the rest of the file).
 
 ## Work
 

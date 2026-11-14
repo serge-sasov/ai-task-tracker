@@ -48,6 +48,8 @@ param(
     [string]$Note = '',
     [string]$Issue = '',
     [string]$File = '',
+    [string]$Session = '',
+    [switch]$AllProjects,
     [int]$In = 0,
     [int]$Out = 0,
     [int]$CacheRead = 0,
@@ -331,13 +333,20 @@ switch ($Action) {
     }
     'usage' {
         $data = Read-Ledger
-        $rows = @(Get-ChunkUsage -Task $Task -ProjectPath $Root)
+        if ($Session -and -not $Id) { throw "-Session requires -Id (which chunk it belongs to)" }
+        $projectForUsage = $Root
+        if ($AllProjects -or $Session) { $projectForUsage = '' }
+        $rows = @(Get-ChunkUsage -Task $(if ($Session) { '' } else { $Task }) -ProjectPath $projectForUsage -SessionRoot $Session)
         if ($null -eq $rows) {
             Write-Host "[warn] opencode CLI or session database is unavailable; usage not collected" -ForegroundColor Yellow
             exit 0
         }
-        foreach ($c in $data.chunks) {
-            $match = @($rows | Where-Object { $_.chunk -eq $c.id }) | Select-Object -First 1
+        $targets = if ($Id) { @($data.chunks | Where-Object { $_.id -eq $Id }) } else { @($data.chunks) }
+        if ($Id -and $targets.Count -eq 0) { throw "chunk '$Id' not found" }
+        foreach ($c in $targets) {
+            $match = $null
+            if (-not $Session) { $match = @($rows | Where-Object { $_.chunk -eq $c.id }) | Select-Object -First 1 }
+            else { $match = @($rows) | Select-Object -First 1 }
             $inV = 0; $outV = 0; $crV = 0; $minV = 0
             if ($match) {
                 $inV = [int]$match.input

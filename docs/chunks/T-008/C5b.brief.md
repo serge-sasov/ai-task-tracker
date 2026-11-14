@@ -1,4 +1,4 @@
-# C5b: API-003 search and Ollama client
+﻿# C5b: API-003 search and Ollama client
 
 | Field | Value |
 |---|---|
@@ -16,9 +16,9 @@ and the `AI_SEARCH_UNAVAILABLE` 503 path.
 
 ## Inputs
 
-- `docs/architecture/openapi-api-003-ai-task-tracker.yaml`.
-- `docs/architecture/contracts-ai-task-tracker.md` section 4 (R-023/R-024) and
-  section 5 (RU envelope).
+- `docs/architecture/openapi-api-003-ai-task-tracker.yaml` (whole file, 3.3 KB).
+- `docs/architecture/contracts-ai-task-tracker.md` lines 86-291 (sections 4, 5,
+  and 6 only; do not read the rest of the file).
 
 ## Work
 
