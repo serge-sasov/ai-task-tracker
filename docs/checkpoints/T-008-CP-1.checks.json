@@ -1,0 +1,56 @@
+{
+    "task":  "T-008",
+    "workflow":  "feature",
+    "stage":  "I-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "2f8fc39",
+    "generated_at":  "2026-11-14T10:13:57",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "8 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-008.md"
+                    },
+                    {
+                        "id":  "src-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "4 file(s)"
+                    },
+                    {
+                        "id":  "tests-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "no-todo",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "3 pattern(s) absent in 8 file(s)"
+                    },
+                    {
+                        "id":  "no-secrets",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "3 pattern(s) absent in 8 file(s)"
+                    }
+                ],
+    "summary":  {
+                    "pass":  5,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
