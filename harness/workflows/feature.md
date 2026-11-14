@@ -18,13 +18,13 @@ Use `workflow: feature` for:
 
 | ID | Stage | Content | Role | Artifacts | Checks (`harness/checks/feature.json`) | Depends on | Applicability | Checkpoint |
 |---|---|---|---|---|---|---|---|---|
-| P-00 | Feature planning | Fix scope, inputs, e2e/UX applicability, checkpoint list; create the task graph and cards | orchestrator | `docs/plan.md`, `docs/tasks/T-XXX-*.md` | plan-board, cards-exist, card-fields, deps-acyclic | Predecessor tasks | Always | CP-1 plan, CP-F |
+| P-00 | Feature planning | Fix scope, inputs, e2e/UX applicability, checkpoint list; create the task graph and cards; record the per-stage chunk granularity and budget | orchestrator | `docs/plan.md`, `docs/tasks/T-XXX-*.md` | plan-board, cards-exist, card-fields, deps-acyclic | Predecessor tasks | Always | CP-1 plan, CP-F |
 | A-01 | Requirements analysis | Collect/refine FR/NFR, constraints, questions, glossary; atomic `R-NNN` | analyst | `docs/analysis/requirements-*.md`, `questions-*.md`, `glossary.md` | requirements-exist, requirements-ids, requirements-atomic, open-questions | P-00 | Always | CP-1 |
 | A-02 | E2E use cases and data | Derive e2e scenarios, assign `UC-E2E-NNN`, describe steps/data/expectations and traceability; produce YAML dataset in 2-3 UC chunks; one CP-2 after all chunks validate | analyst | `docs/analysis/e2e-use-cases-*.md`, `e2e-test-data-*.yaml` | e2e-use-cases-exist, e2e-yaml-exist, e2e-yaml-valid, uc-ids, requirement-coverage | A-01 | If e2e in scope; otherwise waiver | CP-2 |
 | U-01 | UX flows and screens | Personas, journeys, information architecture, screen inventory, screen states | ux-designer | `docs/ux/user-flows-*.md`, `screens-*.md` (+ optional `.puml/.svg`) | user-flows-exist, screens-exist, screen-ids, flows-requirements, screens-states | A-01, A-02 | If UI in scope; otherwise waiver | CP-1 |
 | U-02 | UX wireframes, prototype, UI spec | Salt wireframes, static HTML prototype with one page per `UC-E2E`, interaction/accessibility/UI copy, design tokens; coder may implement prototype pages | ux-designer (+ harness-coder) | `docs/ux/wireframes-*.puml/.svg`, `ui-spec-*.md`, `prototype/<slug>/index.html`, `prototype/<slug>/uc-e2e-*.html`, `prototype/<slug>/assets/*` | wireframes-exist, wireframe-syntax, wireframe-svg, wireframe-coverage, ui-spec-exist, ui-spec-uc-coverage, proto-index, proto-page-count, proto-structure, proto-links, proto-local-links, proto-offline, proto-assets, ux-traceability, proto-ru-single-user (manual) | U-01 | If UI in scope | CP-2 |
-| R-01 | Architecture and contracts | ADR with alternatives; overall architecture description (scope, components, `SCN`/`SVC`/`API`, data/class model), API/formats/errors, OpenAPI 3.x specs, module boundaries, decomposition | architect | `docs/architecture/architecture-*.md`, `adr-*.md`, `contracts-*.md`, `openapi-api-*.yaml/.json` | adr-exist, adr-sections, contracts-exist, architecture-exist, architecture-sections, architecture-requirement-trace, architecture-description-trace, scenario-ids, service-ids, api-ids, scenario-uc-coverage, openapi-count, openapi-ids, openapi-valid, architecture-openapi-links | A-01, A-02, U-02 | Always; UX input if UI | CP-1 |
-| R-02 | Diagrams and handoff | Component, per-scenario sequence, data, class, and per-service swimlane diagrams; `check_syntax` + render; link every artifact in the architecture description; module handoff to coder | architect | `docs/architecture/components-*.puml`, `sequence-scn-*.puml`, `data-model-*.puml`, `class-*.puml`, `swimlane-svc-*.puml` and their `.svg` | diagram-syntax, diagram-svg, component-exist, data-model-exist, class-diagram-exist, sequence-count, sequence-ids, sequence-uc-trace, swimlane-count, swimlane-ids, architecture-links | R-01 | Always | CP-2 |
+| R-01 | Solution design | ADR with alternatives; overall architecture description core (scope, context, decisions, components, services, responsibility zones, scenarios, diagram index); component diagram; one sequence diagram per `SCN-NNN`; `SCN`/`SVC`/`MOD` IDs; module decomposition | architect | `docs/architecture/architecture-*.md`, `adr-*.md`, `components-*.puml/.svg`, `sequence-scn-*.puml/.svg` | adr-exist, adr-sections, architecture-exist, architecture-sections, architecture-requirement-trace, architecture-description-trace, scenario-ids, service-ids, scenario-uc-coverage, component-exist, responsibility-zones, module-ids, sequence-count, sequence-ids, sequence-uc-trace, diagram-syntax, diagram-svg, architecture-links, zones-overlap-review (manual) | A-01, A-02, U-02 | Always; UX input if UI | CP-1 |
+| R-02 | Interfaces and data model | Extend the R-01 description (data model, class model, class-level responsibility zones, REST API, traceability); `API-NNN`/`CLS-NNN` IDs; OpenAPI 3.x specs; contracts (API, formats, errors, module boundaries, e2e environment); per-service swimlane diagrams; link every artifact; module handoff to coder | architect | `docs/architecture/architecture-*.md`, `contracts-*.md`, `docs/architecture/*.puml/.svg` | contracts-exist, contracts-requirement-trace, architecture-sections, architecture-requirement-trace, architecture-description-trace, api-ids, openapi-count, openapi-ids, openapi-valid, architecture-openapi-links, data-model-exist, class-diagram-exist, responsibility-zones, class-ids, diagram-syntax, diagram-svg, swimlane-count, swimlane-ids, architecture-links, zones-overlap-review (manual) | R-01 | Always | CP-2 |
 | I-01 | Implementation and unit/integration tests | Code per ADR/contracts, tests, CI/CD, local run | coder | `src/`, `tests/`, `Dockerfile`, `docker-compose*.yml`, `Makefile` | src-exist, tests-exist, no-todo, no-secrets | R-02, U-02 | Always | CP-1 |
 | I-02 | E2E automation | Tests from YAML, runner, data validator, isolated environment and cleanup; split by module/test group per process 11.1 | coder | `tests/e2e/`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py` | e2e-tests-exist, e2e-runner-exist, e2e-validator-exist, e2e-cleanup, e2e-no-production | I-01, A-02, R-02 | If e2e in scope | CP-2 |
 | Q-01 | E2E plan and coverage | Requirement -> UC -> test matrix, test data validation, execution approach | qa | `docs/qa/e2e-plan-*.md` | e2e-plan-exist, e2e-plan-matrix, e2e-plan-uc-coverage | A-02, I-02 | If e2e in scope | CP-1 |
@@ -72,6 +72,13 @@ Rules:
   `harness-coder` under the process exception (depth 2, sequential, coder writes
   only `docs/ux/prototype/<slug>/**`); U-02 remains one UX task and one
   checkpoint.
+- Every artifact-producing stage is executed chunk by chunk: the role writes
+  `docs/chunks/T-XXX.json` before authoring, and `stage-done.ps1 -Chunk` refuses
+  to close the stage checkpoint while a chunk is not `done`. Default granularity
+  is in `harness/process.md` 11.1 and ADR-006.
+- A chunk that cannot fit one session is split by the same role into a `d2`
+  child, and again into a `d3` child if needed; the ceiling is 3. Children are
+  sequential, never parallel, and never cross-role.
 - The orchestrator must not create a second active task.
 
 ## Default checkpoints
@@ -80,10 +87,8 @@ Rules:
 - A-02: CP-2 e2e use cases and dataset.
 - U-01: CP-1 flows and screens.
 - U-02: CP-2 wireframes, prototype, UI spec.
-- R-01: CP-1 ADR, contracts, architecture description with scope/IDs, and
-  OpenAPI specs.
-- R-02: CP-2 component/scenario/data/class/swimlane diagrams, links, and
-  decomposition.
+- R-01: CP-1 ADR, architecture description core (scope/IDs), component and per-scenario sequence diagrams, `SCN`/`SVC`/`MOD` IDs, responsibility zones for components and modules.
+- R-02: CP-2 contracts, OpenAPI specs, data/class models, per-service swimlane diagrams, `API`/`CLS` IDs, class-level responsibility zones, and full traceability.
 - I-01: CP-1 implementation and tests.
 - I-02: CP-2 e2e automation and local run.
 - Q-01: CP-1 e2e plan and coverage.
@@ -101,6 +106,12 @@ Rules:
   swimlane, and every REST API has a valid OpenAPI 3.x specification; all
   diagrams and specs are referenced by `architecture-*.md`. A `No microservices`
   or `No REST API` statement is the only valid waiver for the conditional sets.
+- The architecture description registers the responsibility zones of every
+  component, module, and class in `## Responsibility zones`: each element states
+  what it owns and what it does not own, and no two elements of the same level
+  own the same functions. `MOD-NNN` and `CLS-NNN` are project-global. An
+  optional level is waived only by `No module decomposition (reason)` or
+  `No class model (reason)`.
 - Machine checks must report `FAIL=0` and `UNCHECKED=0`; `MANUAL` items are
   listed for the user and are never auto-approved. Intermediate checkpoints may
   be approved by policy P2 only when `MANUAL=0` and `hold: false`.

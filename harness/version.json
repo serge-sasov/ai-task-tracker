@@ -1,37 +1,39 @@
-{
-  "name": "local-harness",
-  "version": "2.6.0",
-  "format": "opencode-v1",
-  "language": "en",
-  "created_at": "2026-11-07",
-  "source": "C:/study/ai/research/harness",
-  "agents": [
-    "harness",
-    "harness-orchestrator",
-    "harness-analyst",
-    "harness-ux-designer",
-    "harness-architect",
-    "harness-coder",
-    "harness-qa",
-    "harness-qa-vision",
-    "harness-doc-writer"
-  ],
-  "commands": [
-    "harness-init",
-    "harness-feature",
-    "harness-bug",
-    "harness-run",
-    "harness-stage-done",
-    "harness-board-update",
-    "harness-board-report",
-    "harness-doctor"
-  ],
-  "workflows": [
-    "feature",
-    "bugfix"
-  ],
-  "skills": [
-    "harness",
-    "harness-issues"
-  ]
+﻿{
+    "name":  "local-harness",
+    "version":  "3.0.0-dev",
+    "format":  "opencode-v1",
+    "language":  "en",
+    "created_at":  "2026-11-07",
+    "source":  "C:/study/ai/research/harness",
+    "agents":  [
+                   "harness",
+                   "harness-orchestrator",
+                   "harness-analyst",
+                   "harness-ux-designer",
+                   "harness-architect",
+                   "harness-coder",
+                   "harness-qa",
+                   "harness-qa-vision",
+                   "harness-doc-writer"
+               ],
+    "commands":  [
+                     "harness-init",
+                     "harness-feature",
+                     "harness-bug",
+                     "harness-run",
+                     "harness-stage-done",
+                     "harness-board-update",
+                     "harness-board-report",
+                     "harness-doctor"
+                 ],
+    "workflows":  [
+                      "feature",
+                      "bugfix"
+                  ],
+    "skills":  [
+                   "harness",
+                   "harness-issues"
+               ],
+    "initialized_at":  "2026-11-14T19:35:35.4255193+03:00",
+    "project":  "C:\\study\\ai\\research\\ai-task-tracker"
 }

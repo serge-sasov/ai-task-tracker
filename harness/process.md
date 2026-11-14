@@ -27,8 +27,10 @@ here; workflow-specific stages and task graphs live in
   `docs/ux/prototype/<slug>/`. This nested call is depth 2, sequential, one
   child at a time; the UX designer remains the task owner and accepts the
   result. A generator role may spawn a self-sub-session of its own role for a
-  decomposed chunk (depth 2, sequential) when its agent declares `task`
-  self-allow. The primary agent routes all other cross-role work.
+  decomposed chunk when its agent declares `task` self-allow, up to three levels
+  in total (`d1 -> d2 -> d3`, sequential, one child at a time). The primary
+  agent routes all other cross-role work. `subagent_depth` must be 3; the
+  harness never uses a fourth level.
 - Role permissions include relative and `**/...` path variants: edit/write match
   absolute paths, so a blanket deny needs a specific allow for the full path.
 - Harness problems go only to `docs/issues/`; product defects go to `docs/bugs/`.
@@ -80,12 +82,30 @@ here; workflow-specific stages and task graphs live in
 - Feature tasks with architecture scope must produce
   `docs/architecture/architecture-*.md` plus component, data, and class
   diagrams, a sequence diagram for every `SCN-NNN`, a swimlane for every
-  `SVC-NNN`, and an OpenAPI 3.x specification for every `API-NNN`. The
-  architecture description's `Scope and applicability` section is authoritative:
-  no `SVC-`/`API-` definitions means an explicit `No microservices`/`No REST API`
+  `SVC-NNN`, and an OpenAPI 3.x specification for every `API-NNN`. The design
+  is delivered in two architect stages: R-01 (Solution design) produces the ADR,
+  the architecture description core, component and per-`SCN` sequence diagrams,
+  and `SCN`/`SVC` IDs; R-02 (Interfaces and data model) extends that same
+  description with the data/class models, REST API, `API-NNN` IDs, OpenAPI
+  specs, contracts, and per-`SVC-NNN` swimlanes, and never rewrites or deletes
+  the R-01 work.   The architecture description's `Scope and applicability` section
+  is authoritative: no `SVC-`/`API-` definitions means an explicit `No microservices`/`No REST API`
   statement and disables those conditional checks; silence is not a waiver.
   `SCN`/`SVC`/`API` identifiers are project-global; never reuse them across
   architecture descriptions.
+- The decomposition hierarchy is `component -> module (optional) -> class`. Every
+  component, module, and class declares a responsibility zone in the
+  `## Responsibility zones` section of the architecture description: what it
+  owns (`Owns`) and what it explicitly does not own (`Does not own`). Zones on
+  the same level must not duplicate or overlap: two components must not own the
+  same functions, two modules of the same component (or application) must not
+  own the same functions, and two classes of the same module (or application)
+  must not own the same functions. Overlap is resolved by merging, splitting,
+  or moving the shared function to the owning level, and the decision is
+  recorded in the ADR. Modules are optional (`No module decomposition
+  (reason)`), classes are optional (`No class model (reason)`); silence is not a
+  waiver. `MOD-NNN` (modules) and `CLS-NNN` (classes) are project-global and
+  never reused.
 - Bugfix tasks use reproduction evidence and regression tests instead of a new
   e2e dataset by default; e2e/UX/architecture are add-ons when the fix changes a
   contract, crosses modules, or affects a UI flow.
@@ -248,10 +268,7 @@ here; workflow-specific stages and task graphs live in
     CP-1 impact/acceptance (bugfix escalation);
   - ux-designer: CP-1 flows and screens, CP-2 wireframes/prototype/UI spec
     (feature); CP-1 UI impact/fix spec (bugfix escalation);
-  - architect: CP-1 ADR, contracts, architecture description with scope,
-    `SCN`/`SVC`/`API` IDs, and OpenAPI specs; CP-2 component, scenario sequence,
-    data, class, and per-service swimlane diagrams plus decomposition
-    (feature); CP-1 design/root-cause decision (bugfix escalation);
+  - architect: CP-1 design (ADR, architecture description core, component and per-`SCN` sequence diagrams, `SCN`/`SVC` IDs, responsibility zones for components and modules); CP-2 interfaces and data model (contracts, OpenAPI, data/class models, per-service swimlanes, `API` IDs, class-level responsibility zones, full traceability) (feature); CP-1 design/root-cause decision (bugfix escalation);
   - coder: CP-1 reproduction/root cause and failing regression (bugfix) or
     implementation and unit/integration tests (feature); CP-2 fix/regression or
     e2e automation and local run;
@@ -438,19 +455,47 @@ stop and request decomposition instead of attempting a larger write.
   after a handoff, do not re-read inputs that are already summarized.
 - The orchestrator estimates the artifact size at planning time and records
   `chunks`, `max_write_kb`, `max_session_kb`, and `context_stop_pct` in the card.
-- A generator role may process chunks in self-sub-sessions: same role only, one
-  child at a time, explicit chunk brief, non-overlapping file or section, and a
-  return of the artifact path plus a summary of at most 10 lines. The parent
-  remains accountable and must not read the full artifact into its own context;
-  it validates with grep, a script, or targeted reads.
+- A chunk is the unit of work. A stage is not executed as one session: the role
+  plans chunks and executes them one at a time. `docs/chunks/T-XXX.json` is the
+  single source of truth for chunk progress; the card and the board carry a
+  summary only. See ADR-006 for the full contract.
+- The role writes the chunk plan before writing the artifact: `chunk.ps1 init`,
+  then `chunk.ps1 add`/`plan` for each chunk with `title`, `owns`, `inputs`,
+  `brief`, and `acceptance`. `owns` is a set of repo-relative paths or globs and
+  must not overlap between chunks that are not ancestor/descendant. The union of
+  the top-level `owns` must cover the card artifacts for the stage.
+- Each chunk has a brief `docs/chunks/T-XXX/<id>.brief.md` that a cold session
+  can execute alone: one-sentence goal, input pointers (path plus line range,
+  not pasted content), `owns`, acceptance bullets, the stop rule, the return
+  format, and the depth. The coder brief is the chunk file list and its tests.
+- Same-role depth: `d1` plans and executes what fits the budget; `d2` is a
+  same-role child for a chunk that does not fit one session; `d3` is a further
+  same-role split. The ceiling is 3. Children are sequential, one at a time,
+  never parallel, never cross-role. The only cross-role child remains
+  `ux-designer -> harness-coder` at depth 2, and that coder may not delegate.
+- Split only on budget overflow: more than `max_session_kb` of new content, more
+  than `max_input_tokens` of inputs, or more than one checkpoint-worthy
+  artifact. Convenience is not a reason to split, and a chunk that fits is never
+  re-split because a deeper level exists.
+- A child returns at most ten lines: produced paths, resulting chunk state, and
+  any issue id. It never returns artifact text. The parent validates with
+  `chunk-validate.py`, a hash check, or a targeted read, and must not read the
+  whole artifact into its own context.
+- Stop only at a chunk boundary: `chunk.ps1 complete` or `chunk.ps1 fail`, then
+  the next chunk resumes the loop. Compaction inside a chunk is a failure
+  signal: stop, mark the chunk `failed` with a note, and let the next session
+  continue. Do not re-read artifacts of chunks already marked `done`.
+- `stage-done.ps1` refuses to close a checkpoint while a chunk of that stage is
+  not `done`. Machine fields (`state`, `attempts`, `produced.sha256`, `usage`,
+  `base_commit`) are written only by `chunk.ps1` and `stage-done.ps1`.
 - The `ux-designer` may delegate prototype pages to one `harness-coder` child at
   a time: explicit page brief, non-overlapping files under
   `docs/ux/prototype/<slug>/`, and a return of paths plus a summary of at most
   10 lines. This is the only cross-role child call.
 - A depth-2 call may be a same-role self-sub-session or the allowed
-  `ux-designer -> harness-coder` prototype call. The child must not spawn
-  another child; depth 3 and all other cross-role calls are forbidden. The
-  global `subagent_depth` must be 2.
+  `ux-designer -> harness-coder` prototype call. A depth-3 call is a same-role
+  escalation only; depth 4 and all other cross-role calls are forbidden. The
+  global `subagent_depth` must be 3.
 
 ### 11.2 Verification and approval policy (P2)
 
@@ -509,7 +554,10 @@ stop and request decomposition instead of attempting a larger write.
 | doc-writer | `docs/guides/`, `README.md`, ADR finalization |
 
 All roles may create `docs/issues/` records; the orchestrator verifies the
-index. The user may edit any artifact and checkpoint file during a checkpoint;
+index. All roles may write the planning fields of `docs/chunks/T-XXX.json`
+(`title`, `owns`, `inputs`, `brief`, `acceptance`) and their own
+`docs/chunks/T-XXX/<id>.brief.md` via `chunk.ps1`; the machine fields of the
+ledger are script-only. The user may edit any artifact and checkpoint file during a checkpoint;
 the role must preserve those edits. Product bug evidence is reported to the
 orchestrator; roles do not edit `docs/bugs/`. The hash ledger
 `docs/evidence/T-XXX.md` and checks JSON are machine evidence: scripts append,
@@ -523,10 +571,15 @@ roles never edit them.
 - Secrets/tokens/keys in code, logs, or commits.
 - Cross-role subagent calls, except the single `ux-designer -> harness-coder`
   prototype delegation: depth 2, sequential, one child at a time, coder writes
-  only `docs/ux/prototype/**`, no children. Self-sub-sessions of the same role
-  are allowed only for decomposed chunks, one at a time, when the agent declares
-  `task` self-allow and `subagent_depth` is 2. `harness` allows only harness
-  roles.
+  only `docs/ux/prototype/**`, no children. Same-role self-sub-sessions are
+  allowed only for decomposed chunks, one at a time, up to depth 3, when the
+  agent declares `task` self-allow and `subagent_depth` is 3; depth 4 and
+  parallel children are forbidden. `harness` allows only harness roles.
+- Skipping the chunk plan: writing an artifact before `chunk.ps1` has recorded
+  the chunk, or closing a checkpoint while a chunk of that stage is not `done`.
+- Hand-editing the chunk ledger's machine fields (`state`, `attempts`,
+  `produced.sha256`, `usage`, `base_commit`); only `chunk.ps1` and
+  `stage-done.ps1` write them.
 - Using `docs/activity.puml`, `docs/activity.svg`, or any derivative as a
   decision input for task/bug status, dependencies, active-task detection,
   acceptance, checkpoint decisions, or role routing. These artifacts are
