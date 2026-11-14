@@ -1,0 +1,43 @@
+@startuml sequence-scn-001-ai-task-tracker
+' T-007 R-02 — SCN-001: stack up + initial empty
+' Trace: SCN-001 ↔ UC-E2E-001 | APIs: API-001, API-002, API-003, API-004
+' Source: contracts §4.1, §4.2/4.5/4.6 empty states, §1 (empty = 200)
+autonumber
+title SCN-001 — stack up + initial empty (UC-E2E-001)
+
+actor "User" as user
+participant "Vue SPA (S-01..S-06)" as spa
+participant "nginx (frontend)" as nginx
+participant "api (Spring REST)" as api
+participant "store (JPA / PG16)" as pg
+participant "cache (Redis)" as redis
+participant "llm (Ollama)" as llm
+
+user -> spa : open http://localhost:8080
+spa -> nginx : GET /
+nginx --> spa : SPA shell
+spa -> nginx : GET /api/health (API-004)
+nginx -> api : proxy /api/*
+api -> pg : readiness check
+pg --> api : ok
+api -> redis : readiness check
+redis --> api : ok
+api --> spa : 200 {status:ok, checks:{postgres:ok, redis:ok}, source_status:available, ollama_status:up, last_ingest_at}
+note over spa : S-01 banner state derived from source_status
+spa -> api : GET /api/tasks (API-001)
+api -> pg : count + page query
+pg --> api : empty
+api --> spa : 200 {total:0, items:[]}
+note over spa : S-01 «Нет данных» (empty state, never 4xx)
+spa -> api : GET /api/calendar?view=week (API-002)
+api --> spa : 200 {days: empty cells}
+note over spa : S-04 «Нет задач в выбранном периоде.»
+spa -> api : GET /api/tokens (API-002)
+api --> spa : 200 {by_model:[], has_data:false}
+note over spa : S-05 «Нет данных за выбранный период.»
+spa -> api : POST /api/search {query} (API-003)
+api -> llm : embed + rank (15 s bound)
+llm --> api : ranked list
+api --> spa : 200 {results:[]}
+note over spa : S-03 «Ничего не найдено. Попробуйте изменить запрос.»
+@enduml

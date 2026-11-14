@@ -1,0 +1,346 @@
+{
+    "task":  "T-006",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  30,
+                   "max_session_kb":  45,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "ADR decision and alternatives",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/adr-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "Context/Decision/Alternatives/Consequences"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/adr-ai-task-tracker.md",
+                                            "sha256":  "6f083ecd17fc54d6a2b6eb3986c5e12fb0e2b220561ed4a53f903c1b9981c99c"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Contracts: data model, ingestion, API, AI search, errors",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/contracts-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "all contract sections present"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/contracts-ai-task-tracker.md",
+                                            "sha256":  "5fcbe3e9f4ee7cce2fbec223e2b871ccb0e19d1c9692607e34b82279c531dd58"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Architecture description core",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/architecture-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "11 sections, ids, waivers"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/architecture-ai-task-tracker.md",
+                                            "sha256":  "8eaec1807f91b9fcf54e41dd7464e3d7c3903577d1c1da4b39ea7cd5c9e1ab79"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C4",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "OpenAPI API-001",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/openapi-api-001-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "valid OpenAPI 3.x"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/openapi-api-001-ai-task-tracker.yaml",
+                                            "sha256":  "50e2fcd23639e9a84ff657e432a55c9e1d95393643a0733825c1eb792608ccd7"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C5",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "OpenAPI API-002",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/openapi-api-002-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "valid OpenAPI 3.x"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/openapi-api-002-ai-task-tracker.yaml",
+                                            "sha256":  "8df91d3f5c71ffae58c4d38792b20d18211ecdc73ba9eccdf64b81cb3674036c"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C6",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "OpenAPI API-003",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/openapi-api-003-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "valid OpenAPI 3.x"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/openapi-api-003-ai-task-tracker.yaml",
+                                            "sha256":  "688484cbadf83ab12838b5ba9a219dc5a2317928d0bc3c0639f80bb90c6e5686"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C7",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "OpenAPI API-004",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/openapi-api-004-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-006-architecture-contracts.md"
+                                  ],
+                       "brief":  "docs/tasks/T-006-architecture-contracts.md",
+                       "acceptance":  [
+                                          "valid OpenAPI 3.x"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/openapi-api-004-ai-task-tracker.yaml",
+                                            "sha256":  "4de14c0b362c26ed69beb99ff919e7783f24662e96442dbf98bcd98134d40091"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "R1",
+                       "parent":  "C7",
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  2,
+                       "title":  "Replay API-004 spec generation",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/replay/**"
+                                ],
+                       "inputs":  [
+                                      "docs/chunks/T-006/R1.brief.md"
+                                  ],
+                       "brief":  "docs/chunks/T-006/R1.brief.md",
+                       "acceptance":  [
+                                          "regenerated spec matches or differences reported"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/replay/replay-api-004.yaml",
+                                            "sha256":  "add94c2dbe1c08bd92a18678895045e74a9de4de268d625723405c05cd53519a"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  29858,
+                                     "out":  26019,
+                                     "cr":  350413,
+                                     "min":  27
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-14T20:43:16",
+                       "finished":  "2026-11-14T21:11:21"
+                   }
+               ],
+    "updated":  "2026-11-14T21:56:07"
+}

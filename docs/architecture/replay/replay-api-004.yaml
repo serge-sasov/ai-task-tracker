@@ -1,0 +1,66 @@
+﻿openapi: 3.0.3
+info:
+  title: "ai-task-tracker — Health (API-004)"
+  version: 0.1.0
+  description: >-
+    Liveness/readiness probe (contracts §4.1, R-028, UC-E2E-001). 200 reports
+    backend checks, data source and Ollama state; 503 SERVICE_UNAVAILABLE
+    when a check is down. Error envelope {code, message} RU (contracts §5,
+    R-028, R-030). Base http://localhost:8080.
+x-harness-api-id: API-004
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/health:
+    get:
+      operationId: getHealth
+      summary: "Service health (R-028, UC-E2E-001, UC-E2E-007)"
+      responses:
+        "200":
+          description: "Service is up; e2e asserts $.status == ok, $.checks.postgres == ok, $.checks.redis == ok (UC-E2E-001 step 2, UC-E2E-007 step 1)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+        "503":
+          description: "SERVICE_UNAVAILABLE — when a check is down"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+    HealthResponse:
+      type: object
+      required: [status, checks, source_status, ollama_status]
+      properties:
+        status:
+          type: string
+          description: "ok on 200 (contracts §4.1; e2e asserts $.status == ok)"
+          example: ok
+        checks:
+          type: object
+          required: [postgres, redis]
+          properties:
+            postgres: { type: string, enum: [ok, down], example: ok }
+            redis: { type: string, enum: [ok, down], example: ok }
+        source_status:
+          type: string
+          enum: [available, unavailable, stale]
+          example: available
+        ollama_status:
+          type: string
+          enum: [up, down]
+          description: "down => POST /api/search returns 503 AI_SEARCH_UNAVAILABLE (R-022, R-028)"
+          example: up
+        last_ingest_at:
+          type: string
+          format: date-time
+          description: "Last successful ingest (contracts §4.1 example)"
+          example: "2026-11-13T10:00:00"

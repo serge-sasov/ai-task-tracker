@@ -1,0 +1,607 @@
+{
+    "task":  "T-007",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  90,
+                   "max_session_kb":  110,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Component diagram",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/component-ai-task-tracker.puml",
+                                    "docs/architecture/component-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/component-ai-task-tracker.puml",
+                                            "sha256":  "b358fedaef82fd5b5f3a41220b4c8f8309e0cbd022c21a16d8c2d0b96c763df4"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/component-ai-task-tracker.svg",
+                                            "sha256":  "292622ecac9f5984e42f72a6b88fb1fb98f82080df87174b7909311b52173d73"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Data model diagram",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/data-model-ai-task-tracker.puml",
+                                    "docs/architecture/data-model-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/data-model-ai-task-tracker.puml",
+                                            "sha256":  "d36f89621c51e96062bb9864c7d6703836c8974301821d7c0bb5b59b6554c6df"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/data-model-ai-task-tracker.svg",
+                                            "sha256":  "0999c46ccebebda81df57fb6bda582d5b3eda9557f7a4df4bd4f2bda02f6a27d"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Class diagram",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/class-ai-task-tracker.puml",
+                                    "docs/architecture/class-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/class-ai-task-tracker.puml",
+                                            "sha256":  "718a1c402d62653d17e8e8b324142273fe945496c11d1c4ae7d7a9632fedba6f"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/class-ai-task-tracker.svg",
+                                            "sha256":  "e9065b7c933a619e7e0f213c5972f57c52751bfb42691afeaa3b1e7a8872a586"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C4",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-001",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-001-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-001-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-001-ai-task-tracker.puml",
+                                            "sha256":  "8b857220028026863676f608b5d944a8a151878394ec8eb5970c05670434091e"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-001-ai-task-tracker.svg",
+                                            "sha256":  "e5401f62f85d4e1d3dede9a9f0890698b9f7fc52df98a053d485371653660c5f"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C5",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-002",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-002-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-002-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-002-ai-task-tracker.puml",
+                                            "sha256":  "76a0b324e1e358a0c924cf051b9095ec271cc2b7141381a35712c8061033c62a"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-002-ai-task-tracker.svg",
+                                            "sha256":  "6cb23877a61970a86f4b7054cb37fc0c10f518becc33aa215c0c4a6efaf27dc0"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C6",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-003",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-003-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-003-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-003-ai-task-tracker.puml",
+                                            "sha256":  "5c06da1608ee906f5037f01450ca0fd5c6513278f0152effbc623b10af7422a1"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-003-ai-task-tracker.svg",
+                                            "sha256":  "18d782160e2863151363397a72ac4a5151a2733ebbc78e81c0129e094ffc4bb5"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C7",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-004",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-004-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-004-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-004-ai-task-tracker.puml",
+                                            "sha256":  "83c32363cb9f755328fc6df782972af801d324ef2cb31644ad2fa1cb85ef9664"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-004-ai-task-tracker.svg",
+                                            "sha256":  "474f498e0845af912a0aaea88fcb3383368725394f288510c8596c3d4ef1f423"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C8",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-005",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-005-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-005-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-005-ai-task-tracker.puml",
+                                            "sha256":  "fd7692e895dedb5950790e3d7f7e4b699d83f39679d469f4bfa11c7a9f6797a4"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-005-ai-task-tracker.svg",
+                                            "sha256":  "08194ba20adfd2d81d68c82cf20baf1d5c4a257bf2bf6d291a1e98231e9501de"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C9",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-006",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-006-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-006-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-006-ai-task-tracker.puml",
+                                            "sha256":  "a2b16e85950a71c43c0043b6a60d29e6b33563a2ae003d60094b7f6c953a5674"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-006-ai-task-tracker.svg",
+                                            "sha256":  "9713cd9325a7e67ecc1f4b12a862fedc61dc42a4a4e4f97bf4d0a5c9eee9a9c2"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C10",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-007",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-007-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-007-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-007-ai-task-tracker.puml",
+                                            "sha256":  "d0e78079774e60c1a2a79ecda2539cdd95b878db64d16c132b0e702efa01bf59"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-007-ai-task-tracker.svg",
+                                            "sha256":  "11c44072fc620fdd71d1ffb149351c1ed90ed06fc480e1c504836d43f7672633"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C11",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Sequence SCN-008",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-008-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-008-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "puml + svg"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-008-ai-task-tracker.puml",
+                                            "sha256":  "2f7baf97212edf83743ea296a578f4d89816b759a2599a1390831162bbda88ed"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-008-ai-task-tracker.svg",
+                                            "sha256":  "50906ea893605e71bf440729f64bc4187c278cc36dbec9aff0670c8bdaead7f6"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "C12",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Render and link verification",
+                       "state":  "done",
+                       "owns":  [
+
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-007-diagrams-handoff.md"
+                                  ],
+                       "brief":  "docs/tasks/T-007-diagrams-handoff.md",
+                       "acceptance":  [
+                                          "all puml rendered and linked"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  "2026-11-14T20:42:51"
+                   },
+                   {
+                       "id":  "R2",
+                       "parent":  "C4",
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  2,
+                       "title":  "Replay SCN-001 sequence generation",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/replay/**"
+                                ],
+                       "inputs":  [
+                                      "docs/chunks/T-007/R2.brief.md"
+                                  ],
+                       "brief":  "docs/chunks/T-007/R2.brief.md",
+                       "acceptance":  [
+                                          "regenerated diagram matches or differences reported"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/replay/replay-scn-001.puml",
+                                            "sha256":  "111577a175f0736aae5d2a0030b5e6832e5bc65746fb5678aa2c1b1794f9a1d0"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/replay/replay-scn-001.svg",
+                                            "sha256":  "e5401f62f85d4e1d3dede9a9f0890698b9f7fc52df98a053d485371653660c5f"
+                                        }
+                                    ],
+                       "base_commit":  "2ef80e2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  100525,
+                                     "out":  38098,
+                                     "cr":  1080010,
+                                     "min":  44
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-14T21:11:21",
+                       "finished":  "2026-11-14T21:56:06"
+                   }
+               ],
+    "updated":  "2026-11-14T21:56:07"
+}
