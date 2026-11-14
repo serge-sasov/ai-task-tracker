@@ -24,6 +24,16 @@ build/
 .DS_Store
 *.swp
 
+# --- Backend (Maven) build output ---
+backend/target/
+
+# --- Frontend (src/web) build output ---
+src/web/node_modules/
+src/web/dist/
+
+# --- Runtime data / ingestion mounts ---
+data/
+
 # --- Logs / runtime ---
 logs/
 *.log
