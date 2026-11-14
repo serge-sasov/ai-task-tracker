@@ -1329,7 +1329,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "API-003 search and Ollama client",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "src/main/java/ru/aitasktracker/api/search/**",
                                     "src/main/java/ru/aitasktracker/search/**",
@@ -1347,10 +1347,49 @@
                                           "AI_SEARCH_UNAVAILABLE returns 503 with the RU envelope; tests green"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/configuration/SearchConfiguration.java",
+                                            "sha256":  "b1903ffbb334c837837473ec8096d74af2d40c3169426d8a51c0bbb13a82d0cc"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/controller/SearchController.java",
+                                            "sha256":  "59ab262a96cdddc5cabc2e16ff8af2845cedc5cb1f1a698e367e8073753e2c80"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/exception/EmptyQueryException.java",
+                                            "sha256":  "c80749c45ee5320d657935f9b10386c5d3b7ef0fe1425cd3e092ae07a426a917"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/exception/SearchUnavailableException.java",
+                                            "sha256":  "09e3cdf99bbc909c4e2303bc0a686f77f836732b3c99d65e6dcc3af8064eeb66"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/service/SearchService.java",
+                                            "sha256":  "de8bca5f55f1a0c42e4b988599a314bf2aa8072bf81c11d902c811aaf7627630"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/search/OllamaClient.java",
+                                            "sha256":  "740715813bae667b1aaa2a2f3bb84f58ce77fd2dc41fff60fc87b0be999c2bf8"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/search/OllamaException.java",
+                                            "sha256":  "1c7581ae438501b88ee8396c5694d348f8db27d2d5e39a27500de494aaea08d2"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/search/controller/SearchControllerTest.java",
+                                            "sha256":  "1b8956def3a9aea22006721a4ebf8394aac843d3f06bfded75ee933bee165cf1"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/search/service/SearchServiceTest.java",
+                                            "sha256":  "33aba924ccbb79e7fc76258bd125aa1f9b51619e4f18a6a355a015de914b76d4"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/search/OllamaClientTest.java",
+                                            "sha256":  "e7fd90aa8d1164b7260142aa55f98e31d0086fafa040700e6fe1c0b077edd2de"
+                                        }
                                     ],
                        "base_commit":  "4589a7d",
-                       "attempts":  0,
+                       "attempts":  2,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -1361,10 +1400,10 @@
 
                                   ],
                        "notes":  [
-
+                                     "attempt 1: empty subagent result, no files produced"
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-14T23:22:00",
+                       "finished":  "2026-11-15T02:14:29"
                    },
                    {
                        "id":  "C6a",
@@ -1558,5 +1597,5 @@
                        "finished":  null
                    }
                ],
-    "updated":  "2026-11-14T20:30:07"
+    "updated":  "2026-11-15T02:14:29"
 }
