@@ -4,7 +4,7 @@
     "stage":  "I-01",
     "root":  "C:\\study\\ai\\research\\ai-task-tracker",
     "base_commit":  "2f8fc39",
-    "generated_at":  "2026-11-15T23:46:35",
+    "generated_at":  "2026-11-15T23:47:15",
     "results":  [
                     {
                         "id":  "artifacts-exist",
@@ -15,8 +15,8 @@
                     {
                         "id":  "artifact-hashes",
                         "check":  "hash-match",
-                        "result":  "FAIL",
-                        "detail":  "docker-compose.yml (hash changed); Makefile (hash changed)"
+                        "result":  "PASS",
+                        "detail":  "140 artifact(s) match ledger"
                     },
                     {
                         "id":  "src-exist",
@@ -62,8 +62,8 @@
                     }
                 ],
     "summary":  {
-                    "pass":  8,
-                    "fail":  1,
+                    "pass":  9,
+                    "fail":  0,
                     "manual":  0,
                     "not_applicable":  0,
                     "unchecked":  0

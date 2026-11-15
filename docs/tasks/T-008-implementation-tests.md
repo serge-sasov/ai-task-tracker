@@ -17,7 +17,7 @@
 | chunks | 6 sequential, one module/file group per chunk (non-overlapping): (1) project skeleton — build config (Java 21 + Spring Boot 3), application entry, configuration, `Dockerfile`, `docker-compose*.yml` (backend, postgres16+pgvector, redis7, frontend nginx; ports bound to 127.0.0.1), `Makefile` (up/down/test/logs), `.env.example`; (2) `store` + `domain` modules — JPA entities for `tasks`, `steps`, `solutions`, `token_usage`, `ingest_state` with `vector(1024)`, repositories, status derivation / duration invariants (contracts §2) + unit tests; (3) `ingestion` module — 60 s poller, defensive JSON parser, idempotent upsert, Redis lock/watermark (contracts §3) + unit tests; (4) `api` module — controllers for API-001 (GET /api/tasks, GET /api/tasks/{id}, DELETE /api/history) + API-004 (GET /api/health), RU error envelope (contracts §5) + slice/integration tests; (5) `api` + `search`/`stats` modules — API-002 (GET /api/calendar, GET /api/tokens) + API-003 (POST /api/search) with Ollama client (localhost, bounded 15 s, 503 AI_SEARCH_UNAVAILABLE) + tests; (6) `web` module — Vue 3 SPA screens S-01..S-06 (Pinia store, typed API client, RU copy) + build wiring in compose; final build + full test run green via Makefile |
 | budget | code (coder): max_write_kb 12 / max_session_kb 40 / context_stop_pct 65 (per `harness/process.md` §11.1) |
 | base_commit | 2f8fc39 |
-| usage | in=7552704 out=1760959 cr=72346734 ratio=9.6x min=3315 |
+| usage | in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316 |
 | issues | ISSUE-20261115-230827 |
 | commit | 5090c26 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | I-01 implementation and tests | `src/**`, `tests/**`, `Dockerfile`, `docker-compose*.yml`, `Makefile` | 5P/0F/0M | approved | docs/checkpoints/T-008-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 8P/1F/0M | awaiting_review | docs/checkpoints/T-008-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-008-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-15 (orchestrator, infrastructure): CP-F preview `no-todo` FAIL traced to harness tooling, not to task code: `Get-AllFiles` (harness-lib.ps1:46) exclude regex is dead code — backslash anchors never match the forward-slash-normalized paths of line 49, so `node_modules`/`bin`/`obj` are never excluded, and `target`/`dist` were missing from the list entirely. Recorded as ISSUE-20261115-230827; solution (forward-slash pattern + target/dist) reproduced and pattern-verified live. One-line patch to `harness/scripts/harness-lib.ps1:46` is PENDING: this session has no edit permission on `harness/scripts/**`. Once applied, the CP-F preview `no-todo` (and the `artifact-hashes` re-baseline) should be re-evaluated. See `docs/issues/ISSUE-20261115-230827-get-allfiles-exclude-regex-dead-code-harness-lib-ps1-46.md`.
 - 2026-11-15: CP-F awaiting_review (I-01); checks 8 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=7552704 out=1760959 cr=72346734 ratio=9.6x min=3315; reviewer user
 - 5090c26: CP-F snapshot
+- 2026-11-15: CP-F awaiting_review (I-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316; reviewer user

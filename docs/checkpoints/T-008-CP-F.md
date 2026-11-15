@@ -10,11 +10,11 @@
 | stage | I-01 |
 | artifacts | src/**, tests/**, backend/**, Dockerfile, docker-compose*.yml, Makefile |
 | status | awaiting_review |
-| requested_at | 2026-11-15T23:46:35 |
+| requested_at | 2026-11-15T23:47:15 |
 | reviewed_at | - |
 | reviewer | user |
 | decision | - |
-| snapshot_commit | 5090c26 |
+| snapshot_commit | - |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-008-CP-F.checks.json |
 
@@ -47,7 +47,7 @@ Ledger: `docs/chunks/T-008.json`
 | ID | Check | Result | Detail |
 |---|---|---|---|
 | artifacts-exist | file-exists | PASS | 140 file(s) |
-| artifact-hashes | hash-match | FAIL | docker-compose.yml (hash changed); Makefile (hash changed) |
+| artifact-hashes | hash-match | PASS | 140 artifact(s) match ledger |
 | src-exist | file-exists | PASS | 116 file(s) |
 | tests-exist | file-exists | PASS | 20 file(s) |
 | no-todo | pattern-absent | PASS | 3 pattern(s) absent in 140 file(s) |
@@ -56,13 +56,13 @@ Ledger: `docs/chunks/T-008.json`
 | chunk-coverage | chunk-ledger | PASS | 7 chunk(s), rule coverage |
 | chunk-budget | chunk-ledger | PASS | 7 chunk(s) within 12/40 KB |
 
-Summary: 8 PASS, 1 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
+Summary: 9 PASS, 0 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
 
 ## Usage
 
 | Sessions | Input | Output | Reasoning | Cache read | Cache/Input | Minutes | Cost |
 |---|---|---|---|---|---|---|---|
-| 83 | 7552704 | 1760959 | 14205 | 72346734 | 9.6x | 3315 | 0.06 |
+| 83 | 7553059 | 1761270 | 14205 | 72365374 | 9.6x | 3316 | 0.06 |
 
 ## Diff stat
 
@@ -82,6 +82,8 @@ Summary: 8 PASS, 1 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
  docs/bugs/README.md                                |    1 +
  docs/checkpoints/T-008-CP-1.checks.json            |   56 +
  docs/checkpoints/T-008-CP-1.md                     |   85 +
+ docs/checkpoints/T-008-CP-F.checks.json            |   74 +
+ docs/checkpoints/T-008-CP-F.md                     |  284 ++++
  docs/chunks/T-006.json                             |  346 ++++
  docs/chunks/T-006/R1.brief.md                      |   42 +
  docs/chunks/T-007.json                             |  607 +++++++
@@ -97,12 +99,12 @@ Summary: 8 PASS, 1 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
  docs/chunks/T-009.json                             |  286 ++++
  docs/chunks/T-010.json                             |  132 ++
  docs/chunks/T-011.json                             |  172 ++
- docs/evidence/T-008.md                             |   14 +
+ docs/evidence/T-008.md                             |  154 ++
  ...-203800-chunk-usage-attribution-and-coverage.md |   82 +
  ...s-exclude-regex-dead-code-harness-lib-ps1-46.md |   59 +
  docs/issues/README.md                              |    2 +
  docs/plan.md                                       |    2 +-
- docs/tasks/T-008-implementation-tests.md           |   61 +
+ docs/tasks/T-008-implementation-tests.md           |   63 +
  docs/tasks/T-009-e2e-automation.md                 |   46 +
  docs/tasks/T-010-e2e-plan.md                       |   45 +
  docs/tasks/T-011-qa-acceptance.md                  |   46 +
@@ -263,7 +265,7 @@ Summary: 8 PASS, 1 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
  .../ingestion/lock/InMemoryTaskLockTest.java       |   45 +
  .../ingestion/lock/RedisTaskLockTest.java          |  101 ++
  .../ru/aitasktracker/search/OllamaClientTest.java  |  115 ++
- 196 files changed, 20157 insertions(+), 222 deletions(-)
+ 198 files changed, 20657 insertions(+), 222 deletions(-)
 ```
 
 ## User remarks
@@ -276,8 +278,7 @@ Summary: 8 PASS, 1 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
 
 ## Role response
 
-- Machine checks: 1 FAIL, 0 UNCHECKED, 0 MANUAL.
-- Failed checks: artifact-hashes
+- Machine checks: 0 FAIL, 0 UNCHECKED, 0 MANUAL.
 
 ## Next action
 
