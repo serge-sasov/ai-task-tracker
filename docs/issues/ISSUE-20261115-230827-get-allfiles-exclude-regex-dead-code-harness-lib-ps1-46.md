@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | id | ISSUE-20261115-230827 |
-| status | open |
+| status | resolved |
 | severity | major |
 | type | tool |
 | detected_at | 2026-11-15T23:08:27.5141336+03:00 |
@@ -57,3 +57,4 @@ docs/tasks/T-008-implementation-tests.md; docs/checkpoints/_preview-T-008-CP-F.j
 
 - 2026-11-15T23:08:27.5141336+03:00: detected
 - 2026-11-15 (orchestrator): reproduced dead exclusion, root cause confirmed (backslash anchors vs normalized forward-slash paths), solution defined and pattern-verified; application of the one-line patch is pending — this session has no edit permission on `harness/scripts/**` (permission rule `edit: * deny`, only `docs/**`/`README.md`/`.gitignore` allowed).
+- 2026-11-15 (verification by lead): RESOLVED — patch applied at `harness/scripts/harness-lib.ps1:46`, exact new pattern `(^|/)(\.git|node_modules|bin|obj|__pycache__|target|dist|\.harness-backup[^/]*)(/|$)`; `verify-artifacts.ps1 -SelfTest` → SELF-TEST PASSED (all 33 cases ok); T-008 CP-F now 9/9 PASS (previously failing `no-todo` now PASS, 140 files) — checkpoint `docs/checkpoints/T-008-CP-F.md`, commits 5090c26 (`stage-done.ps1 -Task T-008 -Checkpoint CP-F`, hash ledger refreshed) and e71c4ed (`-Force` re-run); T-008 status `awaiting_review` (CP-F awaiting user approval).
