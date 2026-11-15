@@ -6,7 +6,7 @@
 | stage | I-01 |
 | role | coder |
 | depth | 1 |
-| owns | `src/web/src/views/CalendarView.vue`, `HistoryView.vue`, `SettingsView.vue`, `views/index-c6c.ts`, `src/web/src/components/{calendar,history,settings}/**` |
+| owns | `src/web/src/views/CalendarView.vue`, `HistoryView.vue`, `SettingsView.vue`, `views/index-c6c.ts`, `src/web/src/components/{calendar,history,settings,shared}/**` |
 | budget | 12 KB write, 40 KB session, stop at 65% |
 
 ## Goal

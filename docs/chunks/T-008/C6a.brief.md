@@ -6,7 +6,7 @@
 | stage | I-01 |
 | role | coder |
 | depth | 1 |
-| owns | `src/web/package.json`, `vite.config.ts`, `tsconfig.json`, `index.html`, `src/main.ts`, `src/App.vue`, `src/api/**`, `src/stores/**`, `src/router/**`, `src/assets/**` |
+| owns | `src/web/package.json`, `vite.config.ts`, `tsconfig.json`, `index.html`, `src/main.ts`, `src/App.vue`, `src/api/**`, `src/stores/**`, `src/router/**`, `src/assets/**`, `src/web/src/registry/**`, `src/web/src/components/format.ts` |
 | budget | 12 KB write, 40 KB session, stop at 65% |
 
 ## Goal
