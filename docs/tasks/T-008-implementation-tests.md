@@ -19,7 +19,7 @@
 | base_commit | 2f8fc39 |
 | usage | in=7552704 out=1760959 cr=72346734 ratio=9.6x min=3315 |
 | issues | ISSUE-20261115-230827 |
-| commit | 017fd1e |
+| commit | 5090c26 |
 
 ## Acceptance
 
@@ -60,3 +60,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
   Verified-safe exception call sites re-checked. Resume path (next session after harness update): `/harness-run T-008` → dispatch fix to harness-coder with the plan above (budget max_write_kb 12 / max_session_kb 40 / context_stop_pct 65), require `mvn clean test` all green (98+) and `mvn clean package` BUILD SUCCESS, then proceed to chunk 5 (API-002/API-003 + Ollama search client) and chunk 6 (Vue SPA), then `stage-done.ps1 -Task T-008 -Checkpoint CP-F` (user approval required).
 - 2026-11-15 (orchestrator, infrastructure): CP-F preview `no-todo` FAIL traced to harness tooling, not to task code: `Get-AllFiles` (harness-lib.ps1:46) exclude regex is dead code — backslash anchors never match the forward-slash-normalized paths of line 49, so `node_modules`/`bin`/`obj` are never excluded, and `target`/`dist` were missing from the list entirely. Recorded as ISSUE-20261115-230827; solution (forward-slash pattern + target/dist) reproduced and pattern-verified live. One-line patch to `harness/scripts/harness-lib.ps1:46` is PENDING: this session has no edit permission on `harness/scripts/**`. Once applied, the CP-F preview `no-todo` (and the `artifact-hashes` re-baseline) should be re-evaluated. See `docs/issues/ISSUE-20261115-230827-get-allfiles-exclude-regex-dead-code-harness-lib-ps1-46.md`.
 - 2026-11-15: CP-F awaiting_review (I-01); checks 8 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=7552704 out=1760959 cr=72346734 ratio=9.6x min=3315; reviewer user
+- 5090c26: CP-F snapshot
