@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-02 |
 | role | coder |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-008, T-003, T-007 |
 | inputs | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/architecture/contracts-ai-task-tracker.md` |
@@ -44,3 +44,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-14: card created during the 3.0.0 rollout (T-046) so the board row has a card and a chunk ledger before the task starts.
+- 2026-11-16: T-009 started (I-02); board set in_progress; first chunk C1 dispatched.
