@@ -9,11 +9,11 @@
 | role | coder |
 | stage | I-01 |
 | artifacts | src/**, tests/**, backend/**, Dockerfile, docker-compose*.yml, Makefile |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-15T23:47:15 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-16T00:02:21 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | e71c4ed |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-008-CP-F.checks.json |
@@ -270,7 +270,7 @@ Summary: 9 PASS, 0 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- 2026-11-15: approved — 9/9 machine checks PASS, no manual edits.
 
 ## User edits
 

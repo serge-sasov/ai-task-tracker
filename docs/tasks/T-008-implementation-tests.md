@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-01 |
 | role | coder |
-| status | awaiting_review |
+| status | done |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-007, T-005 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-001-ai-task-tracker.yaml`, `docs/architecture/openapi-api-002-ai-task-tracker.yaml`, `docs/architecture/openapi-api-003-ai-task-tracker.yaml`, `docs/architecture/openapi-api-004-ai-task-tracker.yaml`, `docs/architecture/class-ai-task-tracker.puml`, `docs/architecture/data-model-ai-task-tracker.puml` |
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | I-01 implementation and tests | `src/**`, `tests/**`, `Dockerfile`, `docker-compose*.yml`, `Makefile` | 5P/0F/0M | approved | docs/checkpoints/T-008-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-008-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-008-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 5090c26: CP-F snapshot
 - 2026-11-15: CP-F awaiting_review (I-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316; reviewer user
 - e71c4ed: CP-F snapshot
+- 2026-11-15 (lead): user approved CP-F (9/9 PASS, commits 5090c26/e71c4ed); task closed as done.
