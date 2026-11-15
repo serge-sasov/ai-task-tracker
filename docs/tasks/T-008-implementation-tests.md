@@ -19,7 +19,7 @@
 | base_commit | 2f8fc39 |
 | usage | in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316 |
 | issues | ISSUE-20261115-230827 |
-| commit | 5090c26 |
+| commit | e71c4ed |
 
 ## Acceptance
 
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-15: CP-F awaiting_review (I-01); checks 8 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=7552704 out=1760959 cr=72346734 ratio=9.6x min=3315; reviewer user
 - 5090c26: CP-F snapshot
 - 2026-11-15: CP-F awaiting_review (I-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316; reviewer user
+- e71c4ed: CP-F snapshot
