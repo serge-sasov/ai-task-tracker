@@ -1330,12 +1330,15 @@
                        "depth":  1,
                        "title":  "API-003 search and Ollama client",
                        "state":  "done",
-                       "owns":  [
-                                    "src/main/java/ru/aitasktracker/api/search/**",
-                                    "src/main/java/ru/aitasktracker/search/**",
-                                    "tests/java/ru/aitasktracker/api/search/**",
-                                    "tests/java/ru/aitasktracker/search/**"
-                                ],
+                        "owns":  [
+                                     "src/main/java/ru/aitasktracker/api/search/**",
+                                     "src/main/java/ru/aitasktracker/search/**",
+                                     "tests/java/ru/aitasktracker/api/search/**",
+                                     "tests/java/ru/aitasktracker/search/**",
+                                     "src/main/java/ru/aitasktracker/api/dto/SearchHit.java",
+                                     "src/main/java/ru/aitasktracker/api/dto/SearchRequest.java",
+                                     "src/main/java/ru/aitasktracker/api/dto/SearchResponse.java"
+                                 ],
                        "inputs":  [
                                       "docs/architecture/openapi-api-003-ai-task-tracker.yaml",
                                       "docs/architecture/contracts-ai-task-tracker.md"
@@ -1412,7 +1415,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Vue shell: build config, API client, store, router",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "src/web/package.json",
                                     "src/web/vite.config.ts",
@@ -1422,9 +1425,14 @@
                                     "src/web/src/App.vue",
                                     "src/web/src/api/**",
                                     "src/web/src/stores/**",
-                                    "src/web/src/router/**",
-                                    "src/web/src/assets/**"
-                                ],
+                                     "src/web/src/router/**",
+                                     "src/web/src/assets/**",
+                                     "src/web/package-lock.json",
+                                     "src/web/tsconfig.node.json",
+                                     "src/web/src/global.d.ts",
+                                     "src/web/src/shims-vue.d.ts",
+                                     "src/web/src/registry/**"
+                                 ],
                        "inputs":  [
                                       "docs/ux/ui-spec-ai-task-tracker.md",
                                       "docs/architecture/openapi-api-001-ai-task-tracker.yaml",
@@ -1439,10 +1447,13 @@
                                           "router exposes S-01..S-06 routes; npm run build succeeds"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/web/package.json",
+                                            "sha256":  "09c80c414bb788ed0b6fe6723303265559259b44e77d6b164d61e9caa7e8aa89"
+                                        }
                                     ],
                        "base_commit":  "4589a7d",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -1455,8 +1466,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-15T10:42:26",
+                       "finished":  "2026-11-15T10:58:05"
                    },
                    {
                        "id":  "C6b",
@@ -1597,5 +1608,5 @@
                        "finished":  null
                    }
                ],
-    "updated":  "2026-11-15T02:14:29"
+    "updated":  "2026-11-15T10:58:05"
 }

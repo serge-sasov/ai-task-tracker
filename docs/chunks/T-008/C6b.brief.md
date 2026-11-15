@@ -30,6 +30,9 @@ screens with RU copy and all specified states.
 - S-03: search field with label, top-K 5 results with score, sources, empty and
   LLM-unavailable states.
 - Use only the C6a store/client; do not modify C6a or C6c files.
+  Exception: you may add one line to `src/web/src/main.ts`
+  (`import './views';`) to trigger side-effect view registration.
+  No other C6a file may change.
 
 ## Acceptance
 
