@@ -1480,8 +1480,9 @@
                        "owns":  [
                                     "src/web/src/views/DashboardView.vue",
                                     "src/web/src/views/TaskView.vue",
-                                    "src/web/src/views/SearchView.vue",
-                                    "src/web/src/components/dashboard/**",
+                                     "src/web/src/views/SearchView.vue",
+                                     "src/web/src/views/index.ts",
+                                     "src/web/src/components/dashboard/**",
                                     "src/web/src/components/task/**",
                                     "src/web/src/components/search/**"
                                 ],
@@ -1526,8 +1527,9 @@
                        "owns":  [
                                     "src/web/src/views/CalendarView.vue",
                                     "src/web/src/views/HistoryView.vue",
-                                    "src/web/src/views/SettingsView.vue",
-                                    "src/web/src/components/calendar/**",
+                                     "src/web/src/views/SettingsView.vue",
+                                     "src/web/src/views/index-c6c.ts",
+                                     "src/web/src/components/calendar/**",
                                     "src/web/src/components/history/**",
                                     "src/web/src/components/settings/**"
                                 ],

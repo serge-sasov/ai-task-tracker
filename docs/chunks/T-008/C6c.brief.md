@@ -6,7 +6,7 @@
 | stage | I-01 |
 | role | coder |
 | depth | 1 |
-| owns | `src/web/src/views/CalendarView.vue`, `HistoryView.vue`, `SettingsView.vue`, `src/web/src/components/{calendar,history,settings}/**` |
+| owns | `src/web/src/views/CalendarView.vue`, `HistoryView.vue`, `SettingsView.vue`, `views/index-c6c.ts`, `src/web/src/components/{calendar,history,settings}/**` |
 | budget | 12 KB write, 40 KB session, stop at 65% |
 
 ## Goal
@@ -28,14 +28,44 @@ with RU copy, accessibility, and dialog semantics.
   confirmation and a progress/result state.
 - S-06: list groups (in queue, in progress, completed), add dialog, edit dialog,
   delete confirmation, token counter, empty state; `role="dialog"`,
-  `aria-modal="true"`, focus trap and focus return.
+   `aria-modal="true"`, focus trap and focus return.
 - Use only the C6a store/client; do not modify C6a or C6b files.
+
+### View registration (required)
+
+The router resolves views at runtime from a registry. No view file imports
+your views, so without registration the routes render an empty placeholder.
+
+Create `src/web/src/views/index-c6c.ts` (this file is in `owns`; use this
+distinct name because C6b owns `views/index.ts`):
+
+```ts
+import { registerView } from '../router';
+registerView('CalendarView', () => import('./CalendarView.vue'));
+registerView('HistoryView', () => import('./HistoryView.vue'));
+registerView('SettingsView', () => import('./SettingsView.vue'));
+```
+
+Note: `registerView` is the one exported by `src/web/src/router/index.ts`.
+Do not import from `src/web/src/registry/views.ts` — that module is not wired
+to the router.
+
+Then add one side-effect import to `src/web/src/main.ts` (C6a-owned file;
+this single line is the only allowed C6a change):
+
+```ts
+import './views/index-c6c';
+```
+
+Place it after `import router from './router';` (after C6b's line).
 
 ## Acceptance
 
 - [ ] Every element and state from the screens/UI spec is present.
 - [ ] RU copy; no English UI strings.
 - [ ] Dialog and table accessibility per the UI spec.
+- [ ] `views/index-c6c.ts` registers CalendarView, HistoryView, SettingsView
+      via `registerView` from `../router`; `main.ts` imports `./views/index-c6c`.
 - [ ] `npm run build` succeeds.
 
 ## Stop rule
