@@ -5,10 +5,12 @@ down:
 	docker compose -f docker-compose.yml down
 
 test:
-	mvn -f backend/pom.xml test
+	mvn -f backend/pom.xml clean test
 
 build:
-	mvn -f backend/pom.xml package
+	mvn -f backend/pom.xml clean package
+	@echo "Backend jar:"
+	@ls -1 backend/target/*.jar
 
 logs:
 	docker compose -f docker-compose.yml logs -f

@@ -1,6 +1,4 @@
-﻿version: "3.9"
-
-services:
+﻿services:
   backend:
     build:
       context: .
@@ -22,7 +20,8 @@ services:
       SEARCH_TOP_K: ${SEARCH_TOP_K:-5}
     volumes:
       # Host opencode data bind-mounted READ-ONLY; never written back.
-      - ${OPENCODE_DATA_DIR:--./data/opencode}:/data/opencode:ro
+      # Default path avoids a leading dash so Compose parses it as a host path.
+      - ${OPENCODE_DATA_DIR:-./data/opencode}:/data/opencode:ro
     depends_on:
       postgres:
         condition: service_healthy
@@ -69,8 +68,9 @@ services:
       dockerfile: Dockerfile
     image: ai-task-tracker-frontend:latest
     container_name: aitasktracker-frontend
+    # Served on http://127.0.0.1:8081 from the browser (nginx listens on :80).
     ports:
-      - "127.0.0.1:80:80"
+      - "127.0.0.1:8081:80"
     depends_on:
       - backend
     networks:

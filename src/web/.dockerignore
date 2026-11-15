@@ -1,0 +1,6 @@
+# Keep the Docker build context minimal and deterministic.
+# Ignore only build artifacts and VCS noise; keep src/, tsconfig*.json,
+# package*.json and index.html — vite/vue-tsc need them in the context.
+node_modules
+dist
+.git

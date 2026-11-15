@@ -1463,7 +1463,7 @@
       "role": "coder",
       "depth": 1,
       "title": "Screens S-01..S-03",
-      "state": "pending",
+      "state": "done",
       "owns": [
         "src/web/src/views/DashboardView.vue",
         "src/web/src/views/TaskView.vue",
@@ -1483,9 +1483,34 @@
         "RU copy and all specified states (loading/empty/error) present",
         "npm run build succeeds without touching C6a-owned files"
       ],
-      "produced": [],
+      "produced": [
+        {
+          "path": "src/web/src/views/DashboardView.vue",
+          "sha256": "8b147571336f226be4244f6be6adb182930d24481c41cc867a367b08de51105c"
+        },
+        {
+          "path": "src/web/src/views/TaskView.vue",
+          "sha256": "bd0743edab1553569a16066999256f36025857546d2c9d162ca7b694a1c97fce"
+        },
+        {
+          "path": "src/web/src/views/SearchView.vue",
+          "sha256": "607d525c6bbffcb54fef2388f56db374ac83e37ff84e3a029f8f4739973fb96d"
+        },
+        {
+          "path": "src/web/src/views/index.ts",
+          "sha256": "097214550662ccd0422bea2c61a375255f3d564b190eceb13067f11ba26e2fe4"
+        },
+        {
+          "path": "src/web/src/components/dashboard/StatCard.vue",
+          "sha256": "57b160a35f4d69aa504161e2a2daa134dce96f3baf9067b3211df1378efd05aa"
+        },
+        {
+          "path": "src/web/src/components/dashboard/StatusBadge.vue",
+          "sha256": "8ab0f5a3eb8dd4075871a5ff5ee336d2167a8f8021954cc95000e25e49ef1a90"
+        }
+      ],
       "base_commit": "4589a7d",
-      "attempts": 0,
+      "attempts": 1,
       "usage": {
         "in": 0,
         "out": 0,
@@ -1494,8 +1519,8 @@
       },
       "issues": [],
       "notes": [],
-      "started": null,
-      "finished": null
+      "started": "2026-11-15T19:58:57",
+      "finished": "2026-11-15T19:59:18"
     },
     {
       "id": "C6c",
@@ -1579,13 +1604,14 @@
       "role": "coder",
       "depth": 1,
       "title": "Frontend build wiring and full verification",
-      "state": "pending",
+      "state": "done",
       "owns": [
         "Dockerfile",
         "docker-compose.yml",
         "Makefile",
         "src/web/Dockerfile",
-        "src/web/nginx.conf"
+        "src/web/nginx.conf",
+        "src/web/.dockerignore"
       ],
       "inputs": [
         "Dockerfile",
@@ -1598,9 +1624,34 @@
         "ports remain bound to 127.0.0.1",
         "make test runs mvn clean test green; docker compose config validates"
       ],
-      "produced": [],
+      "produced": [
+        {
+          "path": "Dockerfile",
+          "sha256": "9863876bce64005d72da1d84bc63d1e90682aa6c1a87e9a4eae044c4bf7fa25f"
+        },
+        {
+          "path": "docker-compose.yml",
+          "sha256": "47555d03e8f9bc9bde62fb5f9e02feaa2b6bcf5ada8e683efe634023f1176b1d"
+        },
+        {
+          "path": "Makefile",
+          "sha256": "962f91310793a285777ee31016ed8bf7c019cc52a0483c4d1b92a5445039b3d0"
+        },
+        {
+          "path": "src/web/Dockerfile",
+          "sha256": "9f735364aee4dda5239680d18ff4d2330b3ec5afcb19af304cc2fb875876fd9e"
+        },
+        {
+          "path": "src/web/nginx.conf",
+          "sha256": "9f9222620e441ca587499da95d6622eff1efe5514a0e88059b344e8a8969b774"
+        },
+        {
+          "path": "src/web/.dockerignore",
+          "sha256": "d995e92d78c347759bd69ab7e11a4cbf6b01571c9aa6209339d72a8571a0717a"
+        }
+      ],
       "base_commit": "4589a7d",
-      "attempts": 0,
+      "attempts": 2,
       "usage": {
         "in": 0,
         "out": 0,
@@ -1608,10 +1659,12 @@
         "min": 0
       },
       "issues": [],
-      "notes": [],
-      "started": null,
-      "finished": null
+      "notes": [
+        "attempt 1 verified by lead: docker compose build frontend FAILS at 'npm run build' (vue-tsc exit 1, tsc help printed) because src/web/.dockerignore excludes src and tsconfig*.json from the build context; file is unowned and not in the C6d produced set. compose config/ports and mvn clean package (129 green) passed. Re-dispatch to fix .dockerignore and green the docker frontend build."
+      ],
+      "started": "2026-11-15T18:47:20",
+      "finished": "2026-11-15T19:58:37"
     }
   ],
-  "updated": "2026-11-15T17:48:05"
+  "updated": "2026-11-15T19:59:18"
 }

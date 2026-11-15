@@ -6,7 +6,7 @@
 | stage | I-01 |
 | role | coder |
 | depth | 1 |
-| owns | `Dockerfile`, `docker-compose.yml`, `Makefile`, `src/web/Dockerfile`, `src/web/nginx.conf` |
+| owns | `Dockerfile`, `docker-compose.yml`, `Makefile`, `src/web/Dockerfile`, `src/web/nginx.conf`, `src/web/.dockerignore` |
 | budget | 12 KB write, 40 KB session, stop at 65% |
 
 ## Goal
