@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=4539299 out=1137324 cr=110482991 ratio=24.3x min=2657 |
 | issues | - |
-| commit | ac0757f |
+| commit | 88acc15 |
 
 ## Acceptance
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: CP-F awaiting_review (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4533741 out=1135839 cr=108249337 ratio=23.9x min=2654; reviewer user
 - ac0757f: CP-F snapshot
 - 2026-11-17: CP-F approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4539299 out=1137324 cr=110482991 ratio=24.3x min=2657; reviewer auto (explicit -AutoApprove)
+- 88acc15: CP-F snapshot
