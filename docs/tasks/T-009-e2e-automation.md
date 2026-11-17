@@ -17,7 +17,7 @@
 | chunks | ledger `docs/chunks/T-009.json` (single source of truth for per-chunk state); runner skeleton, dataset validator, three UC batches, fixtures and cleanup, final full run |
 | budget | `max_write_kb` / `max_session_kb` / `context_stop_pct` / `max_turns` / `max_input_tokens` / `max_wall_min`; effective values in the ledger `budget` object |
 | base_commit | - |
-| usage | in=4531810 out=1135533 cr=106581809 ratio=23.5x min=2654 |
+| usage | in=4532332 out=1135651 cr=107137159 ratio=23.6x min=2654 |
 | issues | - |
 | commit | 2dc17b4 |
 
@@ -32,7 +32,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | runner and validator | `scripts/e2e.ps1`, `scripts/validate-e2e-data.py` | 9P/0F/0M | approved | docs/checkpoints/T-009-CP-1.md |
-| CP-2 | UC batches and full run | `tests/e2e/**` | - | pending | `docs/checkpoints/T-009-CP-2.md` |
+| CP-2 | UC batches and full run | `tests/e2e/**` | 10P/0F/0M | approved | docs/checkpoints/T-009-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-009-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -50,3 +50,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: C7 full run GREEN on the local stack: 49 passed, 4 skipped (Ollama-dependent AI-search), 0 failed, 0 errors; per-UC results in tests/e2e/results/ (summary: 8/8 pass). Chunks 7/7 done.
 - 2026-11-17: CP-1 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4531810 out=1135533 cr=106581809 ratio=23.5x min=2654; reviewer auto (P2)
 - 2dc17b4: CP-1 snapshot
+- 2026-11-17: CP-2 approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4532332 out=1135651 cr=107137159 ratio=23.6x min=2654; reviewer auto (P2)
