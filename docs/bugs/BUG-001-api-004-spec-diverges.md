@@ -66,3 +66,7 @@ then align the backend `HealthResponse` and its tests.
 - `docs/architecture/openapi-api-004-ai-task-tracker.yaml`
 - `docs/architecture/replay/replay-api-004.yaml` (regenerated)
 - `docs/tasks/T-006-architecture-contracts.md`, `docs/tasks/T-008-implementation-tests.md`
+
+## Log
+
+- 2026-11-17: the SPA health types/store were aligned to the contracts shape (status, checks.postgres/redis, source_status, ollama_status, last_ingest_at); the Dashboard no longer reports «Источник данных (opencode) недоступен» when the backend is healthy. The API-004 YAML spec still diverges and remains to be regenerated from the contract.

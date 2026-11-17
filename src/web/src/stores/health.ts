@@ -11,8 +11,11 @@ export const useHealthStore = defineStore('health', {
   }),
 
   getters: {
-    sourceAvailable: (s) => s.available === true,
-    searchAvailable: (s) => s.response?.ollama === 'up',
+    // The source is readable when it is not explicitly unavailable; `stale`
+    // still carries the ingested data (only the file mtime is old).
+    sourceAvailable: (s) => s.response != null && s.response.source_status !== 'unavailable',
+    sourceStale: (s) => s.response?.source_status === 'stale',
+    searchAvailable: (s) => s.response?.ollama_status === 'up',
   },
 
   actions: {
@@ -21,7 +24,9 @@ export const useHealthStore = defineStore('health', {
       this.error = null;
       try {
         this.response = await healthApi.get();
-        this.available = this.response?.backend === 'up';
+        this.available =
+          this.response?.checks?.postgres === 'ok' &&
+          this.response?.checks?.redis === 'ok';
       } catch {
         this.available = false;
         this.response = null;

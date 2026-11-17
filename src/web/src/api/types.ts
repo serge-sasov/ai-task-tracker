@@ -146,10 +146,18 @@ export interface SearchRequest {
 // --- API-004: Health --------------------------------------------------------
 export type HealthStatus = 'ok' | 'degraded';
 export type ServiceState = 'up' | 'down';
+export type CheckState = 'ok' | 'down';
+export type SourceStatus = 'available' | 'stale' | 'unavailable';
+
+export interface HealthChecks {
+  postgres: CheckState;
+  redis: CheckState;
+}
 
 export interface HealthResponse {
   status: HealthStatus;
-  backend: ServiceState;
-  database: ServiceState;
-  ollama: ServiceState;
+  checks: HealthChecks;
+  source_status: SourceStatus;
+  ollama_status: ServiceState;
+  last_ingest_at: string | null;
 }
