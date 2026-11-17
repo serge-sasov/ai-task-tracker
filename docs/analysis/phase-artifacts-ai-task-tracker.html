@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI Task Tracker: таблица фаз, созданных артефактов и граф зависимостей по состоянию на 2026-11-15.">
+<title>AI Task Tracker — фазы и артефакты</title>
+<style>
+:root{
+  --font: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#f8fafb;
+  --border:#d8dde4; --border-strong:#b9c2cd;
+  --text:#1c2530; --muted:#5a6675;
+  --primary:#2f6f4f; --primary-weak:#eef4f1;
+  --done:#1e6b34; --done-bg:#e6f4ea;
+  --progress:#8a5b00; --progress-bg:#fff3cd;
+  --pending:#4b5563; --pending-bg:#eceff3;
+  --danger:#b3261e; --danger-bg:#fdecea;
+  --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.55}
+a{color:var(--primary)}
+a:focus-visible, summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--surface);padding:10px 14px;z-index:10}
+.skip:focus{left:12px;top:12px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+header.hero{background:linear-gradient(135deg,#ffffff 0%,#eef4f1 100%);border:1px solid var(--border);border-radius:14px;padding:28px 30px;box-shadow:var(--shadow);margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);font-weight:700;margin:0 0 8px}
+h1{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.lede{max-width:900px;margin:0;color:var(--muted);font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:650}
+.section{margin-top:26px}
+.section > h2{font-size:21px;margin:0 0 6px;letter-spacing:-.01em}
+.section > .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:30px;font-weight:750;line-height:1.05;letter-spacing:-.03em}
+.kpi .l{font-size:13px;font-weight:650;margin-top:4px}
+.kpi .d{font-size:12.5px;color:var(--muted);margin-top:3px}
+.kpi.done .n{color:var(--done)} .kpi.progress .n{color:var(--progress)} .kpi.pending .n{color:var(--pending)} .kpi.danger .n{color:var(--danger)}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.callout h3{margin:0 0 8px;font-size:15px}
+.callout ul{margin:0;padding-left:20px}
+.callout li{margin:5px 0}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.panel-head h3{margin:0;font-size:15px}
+.panel-head .hint{font-size:12.5px;color:var(--muted)}
+.graph-scroll{overflow:visible;background:#fff;padding:12px;display:flex;justify-content:center}
+.graph-scroll .plantuml-svg{display:block;width:auto;max-width:100%;height:auto}
+.graph-scroll svg{display:block;width:auto;max-width:100%;height:auto;min-width:0}
+figcaption{padding:12px 16px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;background:var(--surface-2)}
+.table-wrap{overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px}
+caption{text-align:left;padding:14px 16px;font-weight:650;border-bottom:1px solid var(--border);background:var(--surface-2)}
+th,td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}
+th{position:sticky;top:0;z-index:1;background:#eef1f4;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:#3f4b59}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+tbody tr:last-child td{border-bottom:none}
+td.phase{min-width:150px}
+.phase-id{font-weight:750;white-space:nowrap}
+.phase-name{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.role{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:650;white-space:nowrap;border:1px solid transparent}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st-done{color:var(--done);background:var(--done-bg);border-color:#c4e3cd}
+.st-progress{color:var(--progress);background:var(--progress-bg);border-color:#f0d99a}
+.st-pending{color:var(--pending);background:var(--pending-bg);border-color:#d5dbe2}
+.st-open{color:var(--danger);background:var(--danger-bg);border-color:#f3c3bf}
+.artifacts{margin:0;padding:0;list-style:none}
+.artifacts li{margin:0 0 6px;padding-left:17px;position:relative}
+.artifacts li::before{content:"•";position:absolute;left:0;color:var(--primary);font-weight:700}
+.artifacts li:last-child{margin-bottom:0}
+code{font-family:var(--mono);font-size:12.5px;background:#f1f4f7;border:1px solid #e2e7ed;border-radius:4px;padding:1px 5px;white-space:nowrap}
+.muted{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.18)}
+.sources{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:4px 0}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){
+  .wrap{padding:16px 12px 40px}
+  header.hero{padding:20px 18px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{max-width:100%}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  header.hero,.panel,.table-wrap,.sources,.callout{box-shadow:none}
+  .graph-scroll{max-height:none;overflow:visible}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{min-width:0;width:100%}
+  th{position:static}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">AI Task Tracker · аналитический отчёт</p>
+  <h1>Фазы и артефакты проекта</h1>
+  <p class="lede">Структура этапов feature-воркфлоу, созданные в каждом этапе артефакты и их краткое назначение. Отчёт построен по борду, карточкам, чекпоинтам, evidence-леджерам и chunk-леджерам проекта.</p>
+  <div class="meta">
+    <span class="chip">Данные на <b>15 ноября 2026</b></span>
+    <span class="chip">Этапов: <b>12</b></span>
+    <span class="chip">Завершено: <b>7</b></span>
+    <span class="chip">В работе: <b>1</b></span>
+    <span class="chip">В ожидании: <b>4</b></span>
+    <span class="chip">Источник: <b>docs/plan.md</b></span>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="section" aria-labelledby="summary-h">
+  <h2 id="summary-h">Сводка</h2>
+  <p class="sub">Состояние этапов и ключевые наблюдения по артефактам.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="n">12</div><div class="l">этапов</div><div class="d">P-00 … D-01</div></div>
+    <div class="kpi done"><div class="n">7</div><div class="l">завершено</div><div class="d">P-00 … R-02, все CP-F approved</div></div>
+    <div class="kpi progress"><div class="n">1</div><div class="l">в работе</div><div class="d">I-01: backend готов, Vue SPA нет</div></div>
+    <div class="kpi pending"><div class="n">4</div><div class="l">в ожидании</div><div class="d">I-02, Q-01, Q-02, D-01</div></div>
+    <div class="kpi danger"><div class="n">1</div><div class="l">открытый баг</div><div class="d">BUG-001: API-004 vs contracts</div></div>
+  </div>
+
+  <div class="callout" style="margin-top:14px">
+    <h3>Ключевые наблюдения</h3>
+    <ul>
+      <li><b>R-01/R-02 фактически разделены иначе, чем в формальной таблице этапов:</b> T-006 (R-01) сделал ADR, contracts, architecture description и OpenAPI; T-007 (R-02) — все 11 диаграмм. Граф и таблица отражают фактическое состояние.</li>
+      <li><b>I-01 — единственный незавершённый этап с продуктовым кодом:</b> 73 Java-файла, 20 тест-классов / 129 <code>@Test</code>, CP-1 approved. Остались Vue SPA (C6a–C6d) и CP-F.</li>
+      <li><b>У pending-этапов продуктовых артефактов нет:</b> для T-009…T-011 заранее созданы карточки и chunk-леджеры (T-046); для T-012 пока есть только строка борда.</li>
+      <li><b>BUG-001 открыт:</b> OpenAPI API-004 расходится с contracts; replay-артефакты добавлены как воспроизводимое доказательство.</li>
+      <li><b>Инфраструктура отчётности не заполнена:</b> <code>docs/metrics/</code>, <code>docs/qa/</code>, <code>docs/guides/</code> пока содержат только <code>.gitkeep</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="graph-h">
+  <h2 id="graph-h">Карта фаз и артефактов</h2>
+  <p class="sub">Граф созданных артефактов по этапам. Цвет узла — статус этапа; сквозные артефакты процесса вынесены в отдельную таблицу ниже. Подписи на графе английские для совместимости PlantUML; расшифровка — в таблице. Диаграмма масштабируется по ширине страницы.</p>
+  <figure class="panel" style="margin:0">
+    <div class="panel-head">
+      <h3>Phase → artifacts</h3>
+      <span class="hint">PlantUML · SVG · offline</span>
+    </div>
+    <div class="graph-scroll" id="graph" role="img" aria-label="Граф фаз и артефактов проекта AI Task Tracker">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" data-diagram-type="DESCRIPTION" style="background:#FFFFFF;" width="799px" height="1404px" viewBox="0 0 799 1404" zoomAndPan="magnify" preserveAspectRatio="xMidYMid meet" contentStyleType="text/css"><?plantuml 1.2026.10?><defs/><g font-family="sans-serif" lengthAdjust="spacing"><!--entity P00--><g class="entity" data-qualified-name="P00" id="ent0001" data-source-line="8"><rect x="179.5" y="7" width="434.324" height="99.805" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="189.5" y="33.187" fill="#000" font-size="15" textLength="182.673" font-family="Segoe UI">P-00 Planning - T-001 done</text><text x="189.5" y="53.138" fill="#000" font-size="15" textLength="414.324" font-family="Segoe UI">- plan.md: board T-001..T-012, task graph, scope and decisions</text><text x="189.5" y="73.089" fill="#000" font-size="15" textLength="328.96" font-family="Segoe UI">- activity.puml/.svg: derived phase-status diagram</text><text x="189.5" y="93.04" fill="#000" font-size="15" textLength="295.679" font-family="Segoe UI">- CP-1/CP-F: checkpoints and approval gates</text></g><!--entity A01--><g class="entity" data-qualified-name="A01" id="ent0002" data-source-line="9"><rect x="63.5" y="131" width="665.923" height="99.805" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="73.5" y="157.187" fill="#000" font-size="15" textLength="217.881" font-family="Segoe UI">A-01 Requirements - T-002 done</text><text x="73.5" y="177.138" fill="#000" font-size="15" textLength="645.923" font-family="Segoe UI">- requirements-*.md: 24 requirements (13 functional + 11 non-functional) with acceptance criteria</text><text x="73.5" y="197.089" fill="#000" font-size="15" textLength="317.205" font-family="Segoe UI">- questions-*.md: Q-001..Q-008 with resolutions</text><text x="73.5" y="217.04" fill="#000" font-size="15" textLength="321.094" font-family="Segoe UI">- glossary.md: business and harness terminology</text></g><!--entity A02--><g class="entity" data-qualified-name="A02" id="ent0003" data-source-line="10"><rect x="91" y="255" width="610.823" height="79.854" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="101" y="281.187" fill="#000" font-size="15" textLength="278.013" font-family="Segoe UI">A-02 E2E use cases and data - T-003 done</text><text x="101" y="301.138" fill="#000" font-size="15" textLength="590.823" font-family="Segoe UI">- e2e-use-cases-*.md: 8 end-to-end use cases with main/alternative flows and traceability</text><text x="101" y="321.089" fill="#000" font-size="15" textLength="441.921" font-family="Segoe UI">- e2e-test-data-*.yaml: harness-e2e/1, fixtures and expected values</text></g><!--entity U01--><g class="entity" data-qualified-name="U01" id="ent0004" data-source-line="11"><rect x="132.5" y="359" width="528.411" height="79.854" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="142.5" y="385.187" fill="#000" font-size="15" textLength="266.785" font-family="Segoe UI">U-01 UX flows and screens - T-004 done</text><text x="142.5" y="405.138" fill="#000" font-size="15" textLength="477.964" font-family="Segoe UI">- user-flows-*.md: 2 personas, flows F-1..F-8 and broken flows BF-1/BF-2</text><text x="142.5" y="425.089" fill="#000" font-size="15" textLength="508.411" font-family="Segoe UI">- screens-*.md: S-01..S-06 with states, accessibility notes and Russian UI copy</text></g><!--entity U02--><g class="entity" data-qualified-name="U02" id="ent0005" data-source-line="12"><rect x="79" y="463" width="635.483" height="99.805" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="89" y="489.187" fill="#000" font-size="15" textLength="331.135" font-family="Segoe UI">U-02 Wireframes, prototype, UI spec - T-005 done</text><text x="89" y="509.138" fill="#000" font-size="15" textLength="615.483" font-family="Segoe UI">- wireframes-*.puml/.svg: Salt wireframes for S-01..S-06, including empty/loading/error states</text><text x="89" y="529.089" fill="#000" font-size="15" textLength="518.774" font-family="Segoe UI">- ui-spec-*.md: 9 sections, design tokens, component behavior and traceability</text><text x="89" y="549.04" fill="#000" font-size="15" textLength="510.139" font-family="Segoe UI">- prototype: index page, 8 use-case pages and offline assets for UX validation</text></g><!--entity R01--><g class="entity" data-qualified-name="R01" id="ent0006" data-source-line="13"><rect x="7" y="587" width="778.562" height="119.756" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="17" y="613.187" fill="#000" font-size="15" textLength="322.31" font-family="Segoe UI">R-01 Solution design and contracts - T-006 done</text><text x="17" y="633.138" fill="#000" font-size="15" textLength="572.666" font-family="Segoe UI">- ADR-0001: modular monolith with PostgreSQL 16 + pgvector, Redis and local Ollama</text><text x="17" y="653.089" fill="#000" font-size="15" textLength="758.562" font-family="Segoe UI">- architecture-*.md: 11 sections covering context, components, data, scenarios SCN-001..008 and APIs API-001..004</text><text x="17" y="673.04" fill="#000" font-size="15" textLength="717.283" font-family="Segoe UI">- contracts-*.md: 8 sections covering data model, ingestion pipeline, REST endpoints, errors and e2e strategy</text><text x="17" y="692.991" fill="#000" font-size="15" textLength="314.619" font-family="Segoe UI">- 4 OpenAPI 3.x specifications: API-001..API-004</text></g><!--entity R02--><g class="entity" data-qualified-name="R02" id="ent0007" data-source-line="14"><rect x="185" y="731" width="423.359" height="79.854" fill="#90EE90" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="195" y="757.187" fill="#000" font-size="15" textLength="273.186" font-family="Segoe UI">R-02 Diagrams and handoff - T-007 done</text><text x="195" y="777.138" fill="#000" font-size="15" textLength="403.359" font-family="Segoe UI">- component, data-model and class diagrams: .puml and .svg</text><text x="195" y="797.089" fill="#000" font-size="15" textLength="346.992" font-family="Segoe UI">- 8 sequence diagrams SCN-001..008: .puml and .svg</text></g><!--entity I01--><g class="entity" data-qualified-name="I01" id="ent0008" data-source-line="15"><rect x="131.5" y="835" width="530.454" height="139.707" fill="#FFE082" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="141.5" y="861.187" fill="#000" font-size="15" textLength="329.465" font-family="Segoe UI">I-01 Implementation and tests - T-008 in progress</text><text x="141.5" y="881.138" fill="#000" font-size="15" textLength="510.454" font-family="Segoe UI">- backend: 73 Java files across config, domain, ingestion, REST API and search</text><text x="141.5" y="901.089" fill="#000" font-size="15" textLength="451.934" font-family="Segoe UI">- Flyway migrations V1..V3, application.yml and environment profiles</text><text x="141.5" y="921.04" fill="#000" font-size="15" textLength="423.64" font-family="Segoe UI">- 20 test classes, 129 @Test methods, including integration tests</text><text x="141.5" y="940.991" fill="#000" font-size="15" textLength="488.774" font-family="Segoe UI">- Dockerfile, docker-compose.yml, Makefile and .env.example for local run</text><text x="141.5" y="960.942" fill="#000" font-size="15" textLength="202.229" font-family="Segoe UI">- Vue 3 SPA C6a..C6d: pending</text></g><!--entity I02--><g class="entity" data-qualified-name="I02" id="ent0009" data-source-line="16"><rect x="204.5" y="999" width="383.655" height="79.854" fill="#D3D3D3" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="214.5" y="1025.187" fill="#000" font-size="15" textLength="245.559" font-family="Segoe UI">I-02 E2E automation - T-009 pending</text><text x="214.5" y="1045.138" fill="#000" font-size="15" textLength="363.655" font-family="Segoe UI">- tests/e2e/**, scripts/e2e.ps1 and validate-e2e-data.py</text><text x="214.5" y="1065.089" fill="#000" font-size="15" textLength="202.522" font-family="Segoe UI">- planned; ledger has 7 chunks</text></g><!--entity Q01--><g class="entity" data-qualified-name="Q01" id="ent0010" data-source-line="17"><rect x="237.5" y="1103" width="318.352" height="79.854" fill="#D3D3D3" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="247.5" y="1129.187" fill="#000" font-size="15" textLength="298.352" font-family="Segoe UI">Q-01 E2E plan and coverage - T-010 pending</text><text x="247.5" y="1149.138" fill="#000" font-size="15" textLength="164.78" font-family="Segoe UI">- docs/qa/e2e-plan-*.md</text><text x="247.5" y="1169.089" fill="#000" font-size="15" textLength="202.522" font-family="Segoe UI">- planned; ledger has 3 chunks</text></g><!--entity Q02--><g class="entity" data-qualified-name="Q02" id="ent0011" data-source-line="18"><rect x="208" y="1207" width="376.968" height="79.854" fill="#D3D3D3" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="218" y="1233.187" fill="#000" font-size="15" textLength="277.251" font-family="Segoe UI">Q-02 QA and acceptance - T-011 pending</text><text x="218" y="1253.138" fill="#000" font-size="15" textLength="356.968" font-family="Segoe UI">- review-T-011.md, e2e-report-*.md and vision-review</text><text x="218" y="1273.089" fill="#000" font-size="15" textLength="202.522" font-family="Segoe UI">- planned; ledger has 4 chunks</text></g><!--entity D01--><g class="entity" data-qualified-name="D01" id="ent0012" data-source-line="19"><rect x="261" y="1311" width="270.862" height="79.854" fill="#D3D3D3" style="stroke:#181818;stroke-width:0.5;" rx="3" ry="3"/><text x="271" y="1337.187" fill="#000" font-size="15" textLength="250.862" font-family="Segoe UI">D-01 Documentation - T-012 pending</text><text x="271" y="1357.138" fill="#000" font-size="15" textLength="218.95" font-family="Segoe UI">- README.md and docs/guides/*</text><text x="271" y="1377.089" fill="#000" font-size="15" textLength="179.773" font-family="Segoe UI">- planned; card not created</text></g><!--link P00 to A01--><g class="link" data-entity-1="ent0001" data-entity-2="ent0002" id="lnk13" data-source-line="21" data-link-type="dependency"><path d="M396.5,107.27 C396.5,115.07 396.5,118.14 396.5,125.94" style="stroke:#181818;stroke-width:1;" fill="none" id="P00-to-A01"/><polygon points="396.5,130.94,400.5,121.94,396.5,125.94,392.5,121.94,396.5,130.94" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link A01 to A02--><g class="link" data-entity-1="ent0002" data-entity-2="ent0003" id="lnk14" data-source-line="22" data-link-type="dependency"><path d="M396.5,231.12 C396.5,239 396.5,242.06 396.5,249.67" style="stroke:#181818;stroke-width:1;" fill="none" id="A01-to-A02"/><polygon points="396.5,254.67,400.5,245.67,396.5,249.67,392.5,245.67,396.5,254.67" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link A02 to U01--><g class="link" data-entity-1="ent0003" data-entity-2="ent0004" id="lnk15" data-source-line="23" data-link-type="dependency"><path d="M396.5,335.14 C396.5,342.9 396.5,346.04 396.5,353.79" style="stroke:#181818;stroke-width:1;" fill="none" id="A02-to-U01"/><polygon points="396.5,358.79,400.5,349.79,396.5,353.79,392.5,349.79,396.5,358.79" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link U01 to U02--><g class="link" data-entity-1="ent0004" data-entity-2="ent0005" id="lnk16" data-source-line="24" data-link-type="dependency"><path d="M396.5,439.17 C396.5,446.74 396.5,449.76 396.5,457.61" style="stroke:#181818;stroke-width:1;" fill="none" id="U01-to-U02"/><polygon points="396.5,462.61,400.5,453.61,396.5,457.61,392.5,453.61,396.5,462.61" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link U02 to R01--><g class="link" data-entity-1="ent0005" data-entity-2="ent0006" id="lnk17" data-source-line="25" data-link-type="dependency"><path d="M396.5,563.15 C396.5,570.92 396.5,574.03 396.5,581.99" style="stroke:#181818;stroke-width:1;" fill="none" id="U02-to-R01"/><polygon points="396.5,586.99,400.5,577.99,396.5,581.99,392.5,577.99,396.5,586.99" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link R01 to R02--><g class="link" data-entity-1="ent0006" data-entity-2="ent0007" id="lnk18" data-source-line="26" data-link-type="dependency"><path d="M396.5,707.21 C396.5,715.23 396.5,718.28 396.5,725.82" style="stroke:#181818;stroke-width:1;" fill="none" id="R01-to-R02"/><polygon points="396.5,730.82,400.5,721.82,396.5,725.82,392.5,721.82,396.5,730.82" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link R02 to I01--><g class="link" data-entity-1="ent0007" data-entity-2="ent0008" id="lnk19" data-source-line="27" data-link-type="dependency"><path d="M396.5,811.25 C396.5,818.69 396.5,821.69 396.5,829.75" style="stroke:#181818;stroke-width:1;" fill="none" id="R02-to-I01"/><polygon points="396.5,834.75,400.5,825.75,396.5,829.75,392.5,825.75,396.5,834.75" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link I01 to I02--><g class="link" data-entity-1="ent0008" data-entity-2="ent0009" id="lnk20" data-source-line="28" data-link-type="dependency"><path d="M396.5,975.09 C396.5,983.2 396.5,986.25 396.5,993.74" style="stroke:#181818;stroke-width:1;" fill="none" id="I01-to-I02"/><polygon points="396.5,998.74,400.5,989.74,396.5,993.74,392.5,989.74,396.5,998.74" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link I02 to Q01--><g class="link" data-entity-1="ent0009" data-entity-2="ent0010" id="lnk21" data-source-line="29" data-link-type="dependency"><path d="M396.5,1079.14 C396.5,1086.9 396.5,1090.04 396.5,1097.79" style="stroke:#181818;stroke-width:1;" fill="none" id="I02-to-Q01"/><polygon points="396.5,1102.79,400.5,1093.79,396.5,1097.79,392.5,1093.79,396.5,1102.79" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link Q01 to Q02--><g class="link" data-entity-1="ent0010" data-entity-2="ent0011" id="lnk22" data-source-line="30" data-link-type="dependency"><path d="M396.5,1183.14 C396.5,1190.9 396.5,1194.04 396.5,1201.79" style="stroke:#181818;stroke-width:1;" fill="none" id="Q01-to-Q02"/><polygon points="396.5,1206.79,400.5,1197.79,396.5,1201.79,392.5,1197.79,396.5,1206.79" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><!--link Q02 to D01--><g class="link" data-entity-1="ent0011" data-entity-2="ent0012" id="lnk23" data-source-line="31" data-link-type="dependency"><path d="M396.5,1287.14 C396.5,1294.9 396.5,1298.04 396.5,1305.79" style="stroke:#181818;stroke-width:1;" fill="none" id="Q02-to-D01"/><polygon points="396.5,1310.79,400.5,1301.79,396.5,1305.79,392.5,1301.79,396.5,1310.79" fill="#181818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/></g><?plantuml-src TLR1RkCs4BtxAmRRIvjQTcndiqaA57KJ1qZHtKtipRQ7NXXfB1EHI8MKdBXVtpUav2XRBmpObeQSUVFcpP3-KPjAELLInclL5FMrDVKdLJAjEBTCzpS3VsZ9Il_BD7dVC_gDokopDZcjLU6vPt6sCTcbTOOTdVRU6vknvuecP_t5oZpAo-d9OE0uhPN92wPtjydnCTqMoXY9aD0NF4yeiuR_CGbLC8pAx88Uh79PD8v6-9bCXrGh_qYvKzLcI3wr5PCo6N99jTVMUDclqbflTRqRLKrPZ4T-crzWWTDRpgZQAC-9hrNTUCgqWgTIzbpU9fCnlgulADrm-bXPRMeVVAkgSdQh2ifLpVuTAK-tWF_3-V5YSNxSJsiEYBJafqOxBbdsnzIc-zHSpvWSXIId9s_Uqe-J6QqRWnoiGT2VQJ81joPvVVSJFUjwWpHJhX0wPKgThf6WaX1F3NjPr_c_Y_J9prdSwDZRegaxklB2Ug_SBbBUU6tOnymtoeN_y5rgOmkRxqBwSwHvEFqfBQOBQZmWWUVe9LErQecOxOdWAITObeHbBT8pOfCbjKtmq_CHC9TAcx4gWCGeL9TfNTZdwBzsAcNre0kKl7EDGjM918RhdIgBYowN1DRnP4Xh_L8thaN8BnMoW3fGvQOjyHov7CZnNafy_tSll4yTi-bAVRBF40cu92ph2aqLEuy2-c6x_Jf1OQwJi-3dmTb7DgtbTvZ6-9gAfpP2wsQLI3dnVHgP4IqpN8eSlDUH1oYcRfDRDdYh37gVq2wnWFU72tWl1VmBIboZAyGdX5_RUbVnKBPxiDIc-NwVvlD-EV3r6cw5OlMCjBQk1tr8sgH5aqdxSrdLkt5XbJoDsJciZ4a56dKYSTlapybpw0A0mxZHkQ5QQCDZQiiAc4nD3xnHMmqlXzInJ-a2439-eKhbIE-CEZM65v4wkruNw0OmvhcEAQ3q48c6j02YvVAWK9OYb5NRPnrMSPfYtWBJVZYSxgcSNs4JclM2IfirXNBuHTT9aKEbRwslSyUhkpzfSeh1KELRnBDkY9cJwGYvi2c6nkUYK6MO1igb6yo6LCJUSeXvqf48C5lC3HH1KF5BtQDH64O3oPHbevosdbQNd-8maL4YqUQtDrw-khSd4dAVuBwj_nykp0HaoOKe8OyJYofTiH2EX1QhBp8DuXWUKb15swnJXZmSz967WfxGvueDGD1iz18qgjSw3VNn5w_Wuf-JKBBbOValHVvNyKpe1g3988AsKX_sbTgJ53bAGYQnkWN4qXqiY1zQ8bYaBMIlq84PBMExM_Q6s6_tj8WFYkn6H7PJLaKuEqBEKVGWjDFN6GWMrKCvFdJKWqhHCIZCXndzeROAix0GmQSEvu1KRwrpv6LbvFQgqnP5Y0vZZqLQuk-ws3sh7PKQkSGoVqKcNsT3EJcBjXIZNPiIcwrsrWXUGHLYYvVfSK0T2PJPCvcUqszVv5N9zSPclZype0fkmyLanSMLHM9EF0fy-P-4GdcMw4Fwg1vPh95Q01dnYnBoGcV7pd6D4LTV6wOPhMxdT7cgHgFBKz05bKdiK8yRKT3rzUBuRFfDFU89g9eQ_0LuiGhdtNRn7X2FvIGwEfB-ShgApwFAJmAwTiQm75VX71jLk-vgP3ZxXGhESbp0S9kX3xYnDBXcjS0WbAkPVFh0xaGe0amSj6C8hOX95_5DZlluG9uVFob1bCY6qCZV2p_hXxyJNWw6dzBTF5wdNgyjCVIa7zhnLlDp4juZw32Sveuhw-g08h8Jxdf9NFizN2TlSHsavKfeWMoQr_Q9cAPzJCl5_EhZeWiUoCaRZP4-FdeJF9NRAWvUNCSOjSj2vAiU8mEvDoQuLvlaLxb43UGYzVey7SYbetl66JsuxzbnpWpkUtOCiS6oPyU862nxTaXqSDEpGnc3cvuTfHhSzUoWQ73NimFuVm00?></g></svg>
+    </div>
+    <div class="legend" aria-label="Легенда статусов">
+      <span><span class="swatch" style="background:#90EE90"></span>done</span>
+      <span><span class="swatch" style="background:#FFE082"></span>in progress</span>
+      <span><span class="swatch" style="background:#D3D3D3"></span>pending</span>
+    </div>
+    <figcaption>
+      Источник диаграммы: <a href="phase-artifacts-ai-task-tracker.puml">phase-artifacts-ai-task-tracker.puml</a>.
+      Отдельный файл: <a href="phase-artifacts-ai-task-tracker.svg">phase-artifacts-ai-task-tracker.svg</a>.
+      Диаграмма производная и не является источником статусов.
+    </figcaption>
+  </figure>
+</section>
+
+<section class="section" aria-labelledby="phases-h">
+  <h2 id="phases-h">Детализация по фазам</h2>
+  <p class="sub">Созданные артефакты и их назначение. Для pending-этапов указано, что уже подготовлено и что только планируется.</p>
+  <div class="table-wrap">
+    <table>
+      <caption>Таблица фаз, задач и артефактов (12 этапов)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Фаза</th>
+          <th scope="col">Задача / роль</th>
+          <th scope="col">Статус</th>
+          <th scope="col">Артефакты и назначение</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="phase"><span class="phase-id">P-00</span><span class="phase-name">Планирование</span></td>
+          <td>T-001<br><span class="role">orchestrator</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>docs/plan.md</code> — борд и граф задач T-001..T-012.</li>
+              <li><code>docs/tasks/T-001-...md</code> — карточка планирования, scope, e2e/UX-решения.</li>
+              <li><code>docs/activity.puml</code> / <code>.svg</code> — производная статус-диаграмма (обновляется).</li>
+              <li>CP-1 и CP-F планирования. Карточки T-002..T-011 создавались по мере старта; T-012 пока без карточки.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">A-01</span><span class="phase-name">Анализ требований</span></td>
+          <td>T-002<br><span class="role">analyst</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>requirements-...md</code> — 24 атомарных требования: 13 FR <code>R-001..R-013</code> и 11 NFR <code>R-020..R-030</code>, MoSCoW и traceability.</li>
+              <li><code>questions-...md</code> — Q-001..Q-008 (3 blocking) с recommended defaults и решениями.</li>
+              <li><code>glossary.md</code> — бизнес- и harness-термины.</li>
+              <li>CP-1 и CP-F.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">A-02</span><span class="phase-name">E2E-сценарии и данные</span></td>
+          <td>T-003<br><span class="role">analyst</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>e2e-use-cases-...md</code> — 8 <code>UC-E2E</code> с потоками, предусловиями, ожиданиями и покрытием (24 direct + 6 indirect).</li>
+              <li><code>e2e-test-data-...yaml</code> — контракт <code>harness-e2e/1</code>: окружение, фикстуры, 8 UC, expected values, cleanup.</li>
+              <li>CP-2 и CP-F.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">U-01</span><span class="phase-name">UX-потоки и экраны</span></td>
+          <td>T-004<br><span class="role">ux-designer</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>user-flows-...md</code> — 2 персоны, F-1..F-8 + BF-1/BF-2, информационная архитектура и навигация.</li>
+              <li><code>screens-...md</code> — S-01..S-06, состояния loading/empty/success/error, WCAG 2.1 AA, канонический RU-copy.</li>
+              <li>CP-1 и CP-F.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">U-02</span><span class="phase-name">Wireframes, прототип, UI spec</span></td>
+          <td>T-005<br><span class="role">ux-designer (+coder)</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>wireframes-...puml</code> / <code>.svg</code> — Salt-каркасы S-01..S-06 и состояния.</li>
+              <li><code>ui-spec-...md</code> — 9 разделов: flows, screens, interactions, a11y, tokens, responsive, traceability.</li>
+              <li><code>prototype/ai-task-tracker/</code> — index + 8 UC-страниц + <code>app.css</code>/<code>app.js</code>, офлайн без CDN.</li>
+              <li>CP-2 и CP-F (revision 2).</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">R-01</span><span class="phase-name">Решение и контракты</span></td>
+          <td>T-006<br><span class="role">architect</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><code>adr-...md</code> — ADR-0001: модульный монолит, PostgreSQL 16 + pgvector, Redis, polling, локальная Ollama, Vue 3.</li>
+              <li><code>architecture-...md</code> — 11 разделов, SCN-001..008, API-001..004, явный <code>No microservices</code>.</li>
+              <li><code>contracts-...md</code> — 8 разделов: данные, ingestion, REST, ошибки, Ollama, UI mapping, e2e-окружение.</li>
+              <li>4 OpenAPI 3.x спецификации API-001..API-004.</li>
+              <li>CP-1 и CP-F. Позже T-045 добавил replay API-004 как доказательство BUG-001.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">R-02</span><span class="phase-name">Диаграммы и handoff</span></td>
+          <td>T-007<br><span class="role">architect</span></td>
+          <td><span class="badge st-done">done</span></td>
+          <td>
+            <ul class="artifacts">
+              <li>11 диаграмм в <code>.puml</code> + 11 <code>.svg</code>: component, data-model, class и sequence SCN-001..008.</li>
+              <li>Обновлены diagram index и traceability в architecture description.</li>
+              <li>CP-2 и CP-F. Позже T-045 добавил replay SCN-001.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">I-01</span><span class="phase-name">Реализация и тесты</span></td>
+          <td>T-008<br><span class="role">coder</span></td>
+          <td><span class="badge st-progress">in progress</span></td>
+          <td>
+            <ul class="artifacts">
+              <li>Backend: 73 Java-файла — config, domain entities/repos, ingestion 60s poller + Redis lock, API-001/004, API-002 calendar/tokens, API-003 search + Ollama client.</li>
+              <li>Flyway V1..V3 и <code>application.yml</code>; 20 тест-классов / 129 <code>@Test</code>.</li>
+              <li><code>Dockerfile</code>, <code>docker-compose.yml</code>, <code>Makefile</code>, <code>.env.example</code>.</li>
+              <li>CP-1 approved. C6a..C6d (Vue SPA) и CP-F — pending.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">I-02</span><span class="phase-name">E2E-автоматизация</span></td>
+          <td>T-009<br><span class="role">coder</span></td>
+          <td><span class="badge st-pending">pending</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><span class="muted">Подготовлено вне фазы (T-046):</span> карточка и ledger <code>T-009</code> (7 chunks).</li>
+              <li><span class="muted">План:</span> <code>tests/e2e/**</code>, <code>scripts/e2e.ps1</code>, <code>scripts/validate-e2e-data.py</code> — раннер, валидатор датасета, UC-батчи, изоляция и cleanup.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">Q-01</span><span class="phase-name">E2E-план и покрытие</span></td>
+          <td>T-010<br><span class="role">qa</span></td>
+          <td><span class="badge st-pending">pending</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><span class="muted">Подготовлено вне фазы (T-046):</span> карточка и ledger <code>T-010</code> (3 chunks).</li>
+              <li><span class="muted">План:</span> <code>docs/qa/e2e-plan-*.md</code> — матрица requirement → UC → test, валидация данных, подход к запуску.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">Q-02</span><span class="phase-name">QA и приёмка</span></td>
+          <td>T-011<br><span class="role">qa (+qa-vision)</span></td>
+          <td><span class="badge st-pending">pending</span></td>
+          <td>
+            <ul class="artifacts">
+              <li><span class="muted">Подготовлено вне фазы (T-046):</span> карточка и ledger <code>T-011</code> (4 chunks).</li>
+              <li><span class="muted">План:</span> <code>docs/qa/review-T-011.md</code>, <code>e2e-report-*.md</code>, <code>vision-review-*</code> — прогон, доказательства, дефекты, вердикт.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="phase"><span class="phase-id">D-01</span><span class="phase-name">Документация</span></td>
+          <td>T-012<br><span class="role">doc-writer</span></td>
+          <td><span class="badge st-pending">pending</span></td>
+          <td>
+            <ul class="artifacts">
+              <li>Только строка борда; карточка и chunk-ledger ещё не созданы.</li>
+              <li><span class="muted">План:</span> <code>README.md</code>, <code>docs/guides/*</code> — runbook, гайды, финализация ADR.</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="process-h">
+  <h2 id="process-h">Сквозные артефакты процесса</h2>
+  <p class="sub">Создаются и обновляются по мере прохождения этапов; не являются продуктовыми артефактами.</p>
+  <div class="table-wrap">
+    <table>
+      <caption>Процессные артефакты (на 2026-11-15)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Группа</th>
+          <th scope="col">Количество</th>
+          <th scope="col">Назначение</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>docs/checkpoints/</code></td>
+          <td>20 файлов + checks JSON для T-006..T-008</td>
+          <td>Чекпоинты, машинные проверки, решения пользователя и snapshot-коммиты.</td>
+        </tr>
+        <tr>
+          <td><code>docs/evidence/</code></td>
+          <td>3 ledger'а: T-006, T-007, T-008</td>
+          <td>SHA256-леджеры артефактов; защита от незамеченных изменений после чекпоинта.</td>
+        </tr>
+        <tr>
+          <td><code>docs/chunks/</code></td>
+          <td>6 ledger'ов + 9 briefs</td>
+          <td>Учёт chunk-планов и состояний для T-006..T-011.</td>
+        </tr>
+        <tr>
+          <td><code>docs/issues/</code></td>
+          <td>4 issue, все resolved</td>
+          <td>Проблемы harness: budget overrun, CRLF warning, conditional glob, chunk attribution.</td>
+        </tr>
+        <tr>
+          <td><code>docs/bugs/</code></td>
+          <td><code>BUG-001</code> (open) + 3 replay-файла</td>
+          <td>Расхождение OpenAPI API-004 с contracts; replay-артефакты как воспроизводимое доказательство.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="sources-h">
+  <h2 id="sources-h">Источники и допущения</h2>
+  <div class="sources">
+    <p style="margin:0">Отчёт построен по авторитетным источникам статусов и состава артефактов:</p>
+    <ul>
+      <li><code>docs/plan.md</code> — борд, зависимости, статусы, артефакты задач.</li>
+      <li><code>harness/workflows/feature.md</code> — таблица этапов feature-воркфлоу.</li>
+      <li><code>docs/tasks/T-001..T-011-*.md</code> — карточки задач, acceptance и chunk-планы.</li>
+      <li><code>docs/checkpoints/</code>, <code>docs/evidence/</code> — машинные результаты и SHA256-леджеры.</li>
+      <li><code>docs/chunks/T-006..T-011.json</code> — состояния chunk'ов.</li>
+      <li><code>docs/bugs/BUG-001-api-004-spec-diverges.md</code>, <code>docs/issues/</code> — дефект и проблемы harness.</li>
+      <li>Git log: T-045 (replay, BUG-001, chunk-планы) и T-046 (карточки и ledger'ы T-009..T-011).</li>
+    </ul>
+    <p class="note">Граф отображает фактическое распределение артефактов, а не только формальную таблицу этапов. Диаграмма и отчёт не изменяют статусы задач; источник истины — борд и карточки.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>AI Task Tracker · аналитический отчёт по фазам и артефактам</span>
+  <span>Сформировано 15.11.2026 · данные на 2026-11-15</span>
+</footer>
+
+</div>
+</body>
+</html>

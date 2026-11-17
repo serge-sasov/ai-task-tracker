@@ -1,0 +1,33 @@
+@startuml
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam nodesep 18
+skinparam ranksep 24
+
+rectangle "P-00 Planning - T-001 done\n- plan.md: board T-001..T-012, task graph, scope and decisions\n- activity.puml/.svg: derived phase-status diagram\n- CP-1/CP-F: checkpoints and approval gates" as P00 #90EE90
+rectangle "A-01 Requirements - T-002 done\n- requirements-*.md: 24 requirements (13 functional + 11 non-functional) with acceptance criteria\n- questions-*.md: Q-001..Q-008 with resolutions\n- glossary.md: business and harness terminology" as A01 #90EE90
+rectangle "A-02 E2E use cases and data - T-003 done\n- e2e-use-cases-*.md: 8 end-to-end use cases with main/alternative flows and traceability\n- e2e-test-data-*.yaml: harness-e2e/1, fixtures and expected values" as A02 #90EE90
+rectangle "U-01 UX flows and screens - T-004 done\n- user-flows-*.md: 2 personas, flows F-1..F-8 and broken flows BF-1/BF-2\n- screens-*.md: S-01..S-06 with states, accessibility notes and Russian UI copy" as U01 #90EE90
+rectangle "U-02 Wireframes, prototype, UI spec - T-005 done\n- wireframes-*.puml/.svg: Salt wireframes for S-01..S-06, including empty/loading/error states\n- ui-spec-*.md: 9 sections, design tokens, component behavior and traceability\n- prototype: index page, 8 use-case pages and offline assets for UX validation" as U02 #90EE90
+rectangle "R-01 Solution design and contracts - T-006 done\n- ADR-0001: modular monolith with PostgreSQL 16 + pgvector, Redis and local Ollama\n- architecture-*.md: 11 sections covering context, components, data, scenarios SCN-001..008 and APIs API-001..004\n- contracts-*.md: 8 sections covering data model, ingestion pipeline, REST endpoints, errors and e2e strategy\n- 4 OpenAPI 3.x specifications: API-001..API-004" as R01 #90EE90
+rectangle "R-02 Diagrams and handoff - T-007 done\n- component, data-model and class diagrams: .puml and .svg\n- 8 sequence diagrams SCN-001..008: .puml and .svg" as R02 #90EE90
+rectangle "I-01 Implementation and tests - T-008 in progress\n- backend: 73 Java files across config, domain, ingestion, REST API and search\n- Flyway migrations V1..V3, application.yml and environment profiles\n- 20 test classes, 129 @Test methods, including integration tests\n- Dockerfile, docker-compose.yml, Makefile and .env.example for local run\n- Vue 3 SPA C6a..C6d: pending" as I01 #FFE082
+rectangle "I-02 E2E automation - T-009 pending\n- tests/e2e/**, scripts/e2e.ps1 and validate-e2e-data.py\n- planned; ledger has 7 chunks" as I02 #D3D3D3
+rectangle "Q-01 E2E plan and coverage - T-010 pending\n- docs/qa/e2e-plan-*.md\n- planned; ledger has 3 chunks" as Q01 #D3D3D3
+rectangle "Q-02 QA and acceptance - T-011 pending\n- review-T-011.md, e2e-report-*.md and vision-review\n- planned; ledger has 4 chunks" as Q02 #D3D3D3
+rectangle "D-01 Documentation - T-012 pending\n- README.md and docs/guides/*\n- planned; card not created" as D01 #D3D3D3
+
+P00 -down-> A01
+A01 -down-> A02
+A02 -down-> U01
+U01 -down-> U02
+U02 -down-> R01
+R01 -down-> R02
+R02 -down-> I01
+I01 -down-> I02
+I02 -down-> Q01
+Q01 -down-> Q02
+Q02 -down-> D01
+@enduml
