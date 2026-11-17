@@ -7,7 +7,7 @@
 | workflow | bugfix |
 | stage | B-03 |
 | role | qa |
-| status | awaiting_review |
+| status | in_progress |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-013 |
 | bug | BUG-002 |
@@ -43,7 +43,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | verification plan | verification plan (in card log) | - | pending | `docs/checkpoints/T-014-CP-1.md` |
+| CP-1 | verification plan | verification plan (in card log) | 5P/0F/0M | approved | docs/checkpoints/T-014-CP-1.md |
 | CP-F | final acceptance | `docs/qa/review-T-014.md` | 4P/0F/0M | awaiting_review | docs/checkpoints/T-014-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -58,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-16: card created during BUG-002 triage (B-00); verification is the B-03 deliverable; the review file `docs/qa/review-T-014.md` is created at CP-F.
 - 2026-11-17: CP-F awaiting_review (B-03); checks 4 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 01a6f14: CP-F snapshot
+- 2026-11-17: CP-1 approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
