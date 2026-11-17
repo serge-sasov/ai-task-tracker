@@ -4,7 +4,7 @@
 |---|---|
 | id | BUG-002 |
 | title | Docker backend image build fails: pom sourceDirectory resolves outside the image |
-| status | triaged |
+| status | verified |
 | severity | P1 |
 | reported_at | 2026-11-16T16:30:00+03:00 |
 | reporter | lead (via orchestrator, at T-009 C7) |
@@ -13,7 +13,7 @@
 | use_cases | UC-E2E-001..UC-E2E-008 (blocked: no e2e results can be captured) |
 | tasks | T-013, T-014 |
 | duplicate_of | - |
-| commit | - |
+| commit | dd0f659 |
 | issues | - |
 
 Statuses: `new`, `triaged`, `in_progress`, `fixed`, `verified`, `closed`,
@@ -117,3 +117,4 @@ prevention, follow-up task. Owner: orchestrator.
   Maven itself builds cleanly via `mvn -f backend/pom.xml`, 129 tests green).
 - 2026-11-16: triaged P1; tasks T-013 (coder, B-01/B-02) and T-014 (QA, B-03)
   created pending; status set to `triaged`.
+- 2026-11-17: fix verified by T-014 (fail-before reproduced, pass-after 2 passed, real build exit 0, app boots). Status -> verified. The residual stack-health failure was BUG-003, now fixed and verified by T-016.
