@@ -10,3 +10,4 @@ in `docs/issues/`.
 | [BUG-002](BUG-002-dockerfile-source-paths.md) | Docker backend image build fails: pom sourceDirectory resolves outside the image | P1 | verified | T-013, T-014 | 2026-11-17T15:10:00+03:00 |
 | [BUG-003](BUG-003-local-stack-not-healthy.md) | Local stack cannot reach a functional healthy state (Flyway/PG16, port, wiring, JSON shape, token periods) | P1 | verified | T-015, T-016 | 2026-11-17T15:10:00+03:00 |
 | [BUG-004](BUG-004-global-ai-search-empty.md) | Global AI search with no task_id returns an empty result set | P2 | verified | - | 2026-11-17T16:20:00+03:00 |
+| [BUG-005](BUG-005-calendar-heatmap-not-bound.md) | Calendar heatmap renders a local zero-filled grid and ignores /api/calendar | P2 | verified | - | 2026-11-17T16:45:00+03:00 |

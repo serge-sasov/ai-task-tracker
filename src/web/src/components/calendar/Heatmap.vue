@@ -1,5 +1,5 @@
 <template>
-  <div class="heatmap" role="group" aria-label="Календарь активности задач">
+  <div class="heatmap" role="group" aria-label="РљР°Р»РµРЅРґР°СЂСЊ Р°РєС‚РёРІРЅРѕСЃС‚Рё Р·Р°РґР°С‡">
     <WeekdayRow :weekday-labels="weekdayLabels" />
     <div class="heatmap__rows" role="rowgroup">
       <div
@@ -84,7 +84,7 @@ export default {
 }
 .heatmap__week {
   display: grid;
-  grid-template-columns: repeat(12, var(--space-5));
+  grid-template-columns: repeat(7, var(--space-5));
   gap: var(--space-1);
 }
 .heatmap__cell {
