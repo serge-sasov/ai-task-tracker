@@ -69,4 +69,4 @@ then align the backend `HealthResponse` and its tests.
 
 ## Log
 
-- 2026-11-17: the SPA health types/store were aligned to the contracts shape (status, checks.postgres/redis, source_status, ollama_status, last_ingest_at); the Dashboard no longer reports «Источник данных (opencode) недоступен» when the backend is healthy. The API-004 YAML spec still diverges and remains to be regenerated from the contract.
+- 2026-11-17: the SPA health types/store were aligned to the contracts shape (status, checks.postgres/redis, source_status, ollama_status, last_ingest_at); the Dashboard no longer reports the source-unavailable error when the backend is healthy. The API-004 YAML spec still diverges and remains to be regenerated from the contract.
