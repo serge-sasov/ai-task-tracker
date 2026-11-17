@@ -9,12 +9,12 @@
 | role | qa |
 | stage | B-03 |
 | artifacts | docs/qa/review-T-014.md |
-| status | awaiting_review |
-| requested_at | 2026-11-17T15:39:47 |
-| reviewed_at | - |
-| reviewer | user |
-| decision | - |
-| snapshot_commit | 01a6f14 |
+| status | approved |
+| requested_at | 2026-11-17T15:46:40 |
+| reviewed_at | 2026-11-17T15:46:40 |
+| reviewer | auto (explicit -AutoApprove) |
+| decision | approved |
+| snapshot_commit | - |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-014-CP-F.checks.json |
 
@@ -32,7 +32,7 @@
 | ID | Check | Result | Detail |
 |---|---|---|---|
 | artifacts-exist | file-exists | PASS | 1 file(s) |
-| artifact-hashes | hash-match | NOT_APPLICABLE | no ledger docs/evidence/T-014.md |
+| artifact-hashes | hash-match | PASS | 1 artifact(s) match ledger |
 | qa-review-exist | file-exists | PASS | 2 file(s) |
 | qa-verdict | pattern-present | PASS | 1 pattern(s) in 1 file(s) |
 | qa-fail-before-pass-after | pattern-present | PASS | 2 pattern(s) in 1 file(s) |
@@ -40,7 +40,7 @@
 | chunk-coverage | chunk-ledger | NOT_APPLICABLE | no ledger docs/chunks/T-014.json (legacy task) |
 | chunk-budget | chunk-ledger | NOT_APPLICABLE | no ledger docs/chunks/T-014.json (legacy task) |
 
-Summary: 4 PASS, 0 FAIL, 0 MANUAL, 4 N/A, 0 UNCHECKED.
+Summary: 5 PASS, 0 FAIL, 0 MANUAL, 3 N/A, 0 UNCHECKED.
 
 ## Usage
 
@@ -52,48 +52,96 @@ Summary: 4 PASS, 0 FAIL, 0 MANUAL, 4 N/A, 0 UNCHECKED.
 Dockerfile                                         |  10 +-
  backend/pom.xml                                    |   4 +
  docker-compose.yml                                 |   4 +-
- docs/activity.puml                                 |   6 +-
+ docs/activity.puml                                 |   8 +-
  docs/activity.svg                                  |   2 +-
- docs/bugs/BUG-002-dockerfile-source-paths.md       | 119 +++++++++++++++
- docs/bugs/README.md                                |   1 +
- docs/checkpoints/T-013-CP-1.checks.json            |  62 ++++++++
- docs/checkpoints/T-013-CP-1.md                     |  85 +++++++++++
- docs/checkpoints/T-013-CP-2.checks.json            |  74 +++++++++
- docs/checkpoints/T-013-CP-2.md                     |  94 ++++++++++++
- docs/checkpoints/T-013-CP-F.checks.json            |  74 +++++++++
- docs/checkpoints/T-013-CP-F.md                     | 121 +++++++++++++++
- docs/checkpoints/T-015-CP-1.checks.json            |  74 +++++++++
- docs/checkpoints/T-015-CP-1.md                     |  96 ++++++++++++
- docs/checkpoints/T-015-CP-2.checks.json            |  74 +++++++++
- docs/checkpoints/T-015-CP-2.md                     | 112 ++++++++++++++
- docs/checkpoints/T-016-CP-1.checks.json            |  68 +++++++++
- docs/checkpoints/T-016-CP-1.md                     | 104 +++++++++++++
- docs/checkpoints/T-016-CP-F.checks.json            |  68 +++++++++
- docs/checkpoints/T-016-CP-F.md                     | 109 +++++++++++++
- docs/chunks/T-009.json                             | 148 +++++++++++++-----
- docs/chunks/T-013.json                             |  67 ++++++++
- docs/chunks/T-015.json                             | 109 +++++++++++++
- docs/evidence/T-013.md                             |  13 ++
- docs/evidence/T-015.md                             | 170 +++++++++++++++++++++
+ docs/bugs/BUG-002-dockerfile-source-paths.md       | 120 +++++
+ docs/bugs/BUG-003-local-stack-not-healthy.md       | 141 ++++++
+ docs/bugs/README.md                                |   2 +
+ docs/checkpoints/T-009-CP-1.checks.json            |  80 +++
+ docs/checkpoints/T-009-CP-1.md                     |  85 ++++
+ docs/checkpoints/T-009-CP-2.checks.json            |  80 +++
+ docs/checkpoints/T-009-CP-2.md                     |  88 ++++
+ docs/checkpoints/T-009-CP-F.checks.json            |  80 +++
+ docs/checkpoints/T-009-CP-F.md                     |  98 ++++
+ docs/checkpoints/T-013-CP-1.checks.json            |  62 +++
+ docs/checkpoints/T-013-CP-1.md                     |  85 ++++
+ docs/checkpoints/T-013-CP-2.checks.json            |  74 +++
+ docs/checkpoints/T-013-CP-2.md                     |  94 ++++
+ docs/checkpoints/T-013-CP-F.checks.json            |  74 +++
+ docs/checkpoints/T-013-CP-F.md                     | 171 +++++++
+ docs/checkpoints/T-014-CP-1.checks.json            |  68 +++
+ docs/checkpoints/T-014-CP-1.md                     | 157 ++++++
+ docs/checkpoints/T-014-CP-F.checks.json            |  68 +++
+ docs/checkpoints/T-014-CP-F.md                     | 113 +++++
+ docs/checkpoints/T-015-CP-1.checks.json            |  74 +++
+ docs/checkpoints/T-015-CP-1.md                     |  96 ++++
+ docs/checkpoints/T-015-CP-2.checks.json            |  74 +++
+ docs/checkpoints/T-015-CP-2.md                     | 112 +++++
+ docs/checkpoints/T-015-CP-F.checks.json            |  74 +++
+ docs/checkpoints/T-015-CP-F.md                     | 169 +++++++
+ docs/checkpoints/T-016-CP-1.checks.json            |  68 +++
+ docs/checkpoints/T-016-CP-1.md                     | 104 ++++
+ docs/checkpoints/T-016-CP-F.checks.json            |  68 +++
+ docs/checkpoints/T-016-CP-F.md                     | 109 ++++
+ docs/chunks/T-009.json                             | 205 ++++++--
+ docs/chunks/T-009/C1.brief.md                      |  45 ++
+ docs/chunks/T-013.json                             |  67 +++
+ docs/chunks/T-015.json                             | 109 ++++
+ docs/evidence/T-009.md                             | 126 +++++
+ docs/evidence/T-013.md                             |  16 +
+ docs/evidence/T-014.md                             |   8 +
+ docs/evidence/T-015.md                             | 252 ++++++++++
  docs/evidence/T-016.md                             |   8 +
- docs/plan.md                                       |  11 +-
- docs/qa/review-T-016.md                            |  72 +++++++++
- docs/tasks/T-009-e2e-automation.md                 |   2 +
- .../T-013-fix-bug-002-dockerfile-source-paths.md   |  69 +++++++++
- docs/tasks/T-014-verify-bug-002-dockerfile.md      |  58 +++++++
- docs/tasks/T-015-fix-bug-003-local-stack.md        |  71 +++++++++
- docs/tasks/T-016-verify-bug-003-local-stack.md     |  66 ++++++++
+ .../ISSUE-20261117-131059-C1-conftest-destroyed.md |  57 +++
+ docs/plan.md                                       |  13 +-
+ docs/qa/review-T-014.md                            |  77 +++
+ docs/qa/review-T-016.md                            |  72 +++
+ docs/tasks/T-009-e2e-automation.md                 |  25 +-
+ .../T-013-fix-bug-002-dockerfile-source-paths.md   |  71 +++
+ docs/tasks/T-014-verify-bug-002-dockerfile.md      |  62 +++
+ docs/tasks/T-015-fix-bug-003-local-stack.md        |  73 +++
+ docs/tasks/T-016-verify-bug-003-local-stack.md     |  66 +++
+ scripts/e2e.ps1                                    | 224 +++++++++
+ scripts/validate-e2e-data.py                       | 166 ++++++
  .../api/search/exception/EmptyQueryException.java  |   2 +-
- .../api/tokens/service/TokenService.java           |  43 ++++--
- .../config/IngestAutoConfiguration.java            |   9 ++
- .../aitasktracker/domain/TaskStatusConverter.java  |  25 +++
+ .../api/tokens/service/TokenService.java           |  43 +-
+ .../config/IngestAutoConfiguration.java            |   9 +
+ .../aitasktracker/domain/TaskStatusConverter.java  |  25 +
  .../ru/aitasktracker/domain/entity/TaskEntity.java |   9 +-
- .../domain/repository/TaskRepository.java          |  68 +++++----
+ .../domain/repository/TaskRepository.java          |  68 +--
  .../aitasktracker/ingestion/IngestScheduler.java   |   4 +-
  src/main/resources/application.yml                 |   8 +-
- tests/regression/test_dockerfile_source_paths.py   |  99 ++++++++++++
- tests/regression/test_stack_health_prereqs.py      |  47 ++++++
- 44 files changed, 2437 insertions(+), 102 deletions(-)
+ tests/e2e/README.md                                | 128 +++++
+ tests/e2e/conftest.py                              | 359 +++++++++++++
+ tests/e2e/fixtures/__init__.py                     |  78 +++
+ tests/e2e/fixtures/cleanup.py                      | 158 ++++++
+ tests/e2e/fixtures/seed.py                         | 138 +++++
+ tests/e2e/results/UC-E2E-001.json                  |  41 ++
+ tests/e2e/results/UC-E2E-002.json                  |  70 +++
+ tests/e2e/results/UC-E2E-003.json                  | 140 ++++++
+ tests/e2e/results/UC-E2E-004.json                  |  58 +++
+ tests/e2e/results/UC-E2E-005.json                  |  57 +++
+ tests/e2e/results/UC-E2E-006.json                  |  57 +++
+ tests/e2e/results/UC-E2E-007.json                  |  56 +++
+ tests/e2e/results/UC-E2E-008.json                  |  62 +++
+ tests/e2e/results/e2e-results.json                 | 556 +++++++++++++++++++++
+ tests/e2e/uc_e2e_001_003/__init__.py               |   6 +
+ tests/e2e/uc_e2e_001_003/conftest.py               |  51 ++
+ tests/e2e/uc_e2e_001_003/shared.py                 | 160 ++++++
+ .../uc_e2e_001_003/test_uc_e2e_001_stack_start.py  |  74 +++
+ tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py |  70 +++
+ .../test_uc_e2e_003_task_list_detail.py            | 122 +++++
+ tests/e2e/uc_e2e_004_006/__init__.py               |  17 +
+ .../uc_e2e_004_006/test_uc_e2e_004_ai_search.py    | 141 ++++++
+ .../e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py | 176 +++++++
+ .../uc_e2e_004_006/test_uc_e2e_006_token_stats.py  | 157 ++++++
+ tests/e2e/uc_e2e_007_008/__init__.py               |  27 +
+ tests/e2e/uc_e2e_007_008/helpers.py                | 212 ++++++++
+ .../test_uc_e2e_007_restart_idempotency.py         | 207 ++++++++
+ .../test_uc_e2e_008_manual_deletion.py             | 231 +++++++++
+ tests/regression/test_dockerfile_source_paths.py   |  99 ++++
+ tests/regression/test_stack_health_prereqs.py      |  47 ++
+ 92 files changed, 8263 insertions(+), 118 deletions(-)
 ```
 
 ## User remarks
@@ -110,4 +158,4 @@ Dockerfile                                         |  10 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task

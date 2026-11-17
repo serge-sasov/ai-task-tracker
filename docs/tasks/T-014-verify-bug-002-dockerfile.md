@@ -7,7 +7,7 @@
 | workflow | bugfix |
 | stage | B-03 |
 | role | qa |
-| status | in_progress |
+| status | done |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-013 |
 | bug | BUG-002 |
@@ -44,7 +44,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | verification plan | verification plan (in card log) | 5P/0F/0M | approved | docs/checkpoints/T-014-CP-1.md |
-| CP-F | final acceptance | `docs/qa/review-T-014.md` | 4P/0F/0M | awaiting_review | docs/checkpoints/T-014-CP-F.md |
+| CP-F | final acceptance | `docs/qa/review-T-014.md` | 5P/0F/0M | approved | docs/checkpoints/T-014-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -60,3 +60,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 01a6f14: CP-F snapshot
 - 2026-11-17: CP-1 approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 7e83430: CP-1 snapshot
+- 2026-11-17: CP-F approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)

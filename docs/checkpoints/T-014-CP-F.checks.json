@@ -4,7 +4,7 @@
     "stage":  "B-03",
     "root":  "C:\\study\\ai\\research\\ai-task-tracker",
     "base_commit":  "90c22f7",
-    "generated_at":  "2026-11-17T15:39:47",
+    "generated_at":  "2026-11-17T15:46:40",
     "results":  [
                     {
                         "id":  "artifacts-exist",
@@ -15,8 +15,8 @@
                     {
                         "id":  "artifact-hashes",
                         "check":  "hash-match",
-                        "result":  "NOT_APPLICABLE",
-                        "detail":  "no ledger docs/evidence/T-014.md"
+                        "result":  "PASS",
+                        "detail":  "1 artifact(s) match ledger"
                     },
                     {
                         "id":  "qa-review-exist",
@@ -56,10 +56,10 @@
                     }
                 ],
     "summary":  {
-                    "pass":  4,
+                    "pass":  5,
                     "fail":  0,
                     "manual":  0,
-                    "not_applicable":  4,
+                    "not_applicable":  3,
                     "unchecked":  0
                 },
     "unchecked":  [
