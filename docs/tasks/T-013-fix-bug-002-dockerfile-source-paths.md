@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | pending |
+| commit | 349e7e2 |
 
 ## Bug summary
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17 CP-1: reproduction test tests/regression/test_dockerfile_source_paths.py::test_dockerfile_copies_sources_where_pom_expects FAILS on the base revision (expected /src/main/java from the pom; Dockerfile copied to /app/src/main/java). Root cause confirmed (WORKDIR vs pom basedir mismatch).
 - 2026-11-17 CP-2: minimal fix (WORKDIR /app/backend; COPY src/main/java ../src/main/java; COPY src/main/resources ../src/main/resources; runtime jar /app/backend/target/*.jar). Regression: 2 passed. Real build: docker compose -f docker-compose.yml build backend exit 0 (image ai-task-tracker-backend:latest built).
 - 2026-11-17: CP-1 approved (B-01); checks 6 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- 349e7e2: CP-1 snapshot
