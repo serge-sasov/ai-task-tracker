@@ -54,6 +54,13 @@ const routes: RouteRecordRaw[] = [
     meta: { title: 'Календарь' },
   },
   {
+    path: '/calendar/:date',
+    name: 'calendar-day',
+    component: () => resolveView('CalendarDayView')(),
+    props: true,
+    meta: { title: 'День календаря' },
+  },
+  {
     path: '/tokens',
     name: 'tokens',
     component: () => resolveView('HistoryView')(),

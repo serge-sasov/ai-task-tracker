@@ -7,32 +7,13 @@
 
     <div class="panel">
       <div class="calendar__controls">
-        <div class="segmented" role="radiogroup" aria-label="Пресеты периода">
-          <button
-            v-for="preset in presets"
-            :key="preset.id"
-            type="button"
-            class="segmented__item"
-            :class="{ 'segmented__item--active': modeId === preset.id }"
-            role="radio"
-            :aria-checked="modeId === preset.id ? 'true' : 'false'"
-            @click="onMode(preset.id)"
-          >
-            {{ preset.label }}
-          </button>
-        </div>
-
         <div class="calendar__nav">
-          <button class="calendar__nav-btn" type="button" aria-label="Прошлый период" @click="onPrev">‹</button>
-          <span class="calendar__period">{{ periodLabel }}</span>
-          <button class="calendar__nav-btn" type="button" aria-label="Следующий период" @click="onNext">›</button>
+          <button class="calendar__nav-btn" type="button" aria-label="Прошлый месяц" @click="onPrev">‹</button>
+          <span class="calendar__period" aria-live="polite">{{ periodLabel }}</span>
+          <button class="calendar__nav-btn" type="button" aria-label="Следующий месяц" @click="onNext">›</button>
         </div>
-      </div>
 
-      <div v-if="customRange" class="calendar__range">
-        <label class="range__label">Начало: <input id="range-from" v-model="rangeFrom" type="date" class="range__input" /></label>
-        <label class="range__label">Конец: <input id="range-to" v-model="rangeTo" type="date" class="range__input" /></label>
-        <button class="range__apply" type="button" @click="onApplyRange">Применить</button>
+        <button class="calendar__today" type="button" @click="onToday">Текущий месяц</button>
       </div>
 
       <div v-if="loading" class="calendar__state" role="status" aria-live="polite">
@@ -57,26 +38,31 @@
         <Legend />
       </template>
     </div>
-
-    <Dialog
-      :open="dialogOpen"
-      :title="dialogTitle"
-      @close="dialogOpen = false"
-      @confirm="onConfirmOpen"
-    >
-      <p class="dialog__body">{{ dialogText }}</p>
-    </Dialog>
   </section>
 </template>
 
 <script lang="ts">
 import { onMounted, ref, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useCalendarStore } from '@/stores/calendar';
 import Heatmap, { type HeatmapDay } from '@/components/calendar/Heatmap.vue';
 import Legend from '@/components/calendar/Legend.vue';
-import Dialog from '@/components/shared/Dialog.vue';
 
 const WEEK_LABELS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const MONTH_LABELS = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
 
 function pad(v: number): string {
   return String(v).padStart(2, '0');
@@ -84,43 +70,37 @@ function pad(v: number): string {
 function toLocal(d: Date): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
-function addDays(d: Date, delta: number): Date {
-  const n = new Date(d);
-  n.setDate(n.getDate() + delta);
-  return n;
+function monthStart(d: Date): string {
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-01`;
+}
+
+function monthFromQuery(value: unknown): string | null {
+  return typeof value === 'string' && /^\d{4}-(0[1-9]|1[0-2])$/.test(value)
+    ? `${value}-01`
+    : null;
 }
 
 export default {
   name: 'CalendarView',
-  components: { Heatmap, Legend, Dialog },
+  components: { Heatmap, Legend },
   setup() {
     const calendar = useCalendarStore();
+    const route = useRoute();
+    const router = useRouter();
 
-    const modeId = ref<'12w' | 'custom'>('12w');
-    const weekStart = ref(toLocal(addDays(new Date(), -7 * 11)));
-    const dialogOpen = ref(false);
-    const dialogTitle = ref('');
-    const dialogText = ref('');
-    const customRange = ref(false);
-    const rangeFrom = ref(toLocal(addDays(new Date(), -7 * 11)));
-    const rangeTo = ref(toLocal(new Date()));
-
-    const presets = computed(() => [
-      { id: '12w' as const, label: '12 недель' },
-      { id: 'custom' as const, label: 'Произвольно' },
-    ]);
+    const monthAnchor = ref(monthFromQuery(route.query.month) ?? monthStart(new Date()));
 
     const periodLabel = computed(() => {
-      const start = weekStart.value;
-      const end = toLocal(addDays(new Date(`${start}T00:00:00`), 7 * 12 - 1));
-      return `${start} - ${end}`;
+      const date = new Date(`${monthAnchor.value}T00:00:00`);
+      return `${MONTH_LABELS[date.getMonth()]} ${date.getFullYear()}`;
     });
 
-    // 12 Mon-anchored weeks loaded from the API (7 day cells each).
+    // One page = one calendar month; the API returns a full Mon-first grid.
     const weeks = computed<HeatmapDay[][]>(() =>
       calendar.weeks.map((row) =>
         row.map((day) => ({
           date: day.date,
+          dayOfMonth: Number(day.date.slice(8, 10)),
           count: day.tasks.length,
           outside: day.outside,
           current: day.date === toLocal(new Date()),
@@ -133,36 +113,38 @@ export default {
 
     const isEmpty = computed(() => calendar.isEmpty);
 
-    function onMode(id: '12w' | 'custom'): void {
-      modeId.value = id;
-      customRange.value = id === 'custom';
+    function syncMonthQuery(): void {
+      void router.replace({
+        query: { ...route.query, month: monthAnchor.value.slice(0, 7) },
+      });
+    }
+
+    function shiftMonth(delta: number): void {
+      const date = new Date(`${monthAnchor.value}T00:00:00`);
+      date.setMonth(date.getMonth() + delta, 1);
+      monthAnchor.value = monthStart(date);
+      syncMonthQuery();
+      void calendar.loadMonth(monthAnchor.value);
     }
 
     function onPrev(): void {
-      weekStart.value = toLocal(addDays(new Date(weekStart.value), -7 * 12));
-      void calendar.loadWeeks(weekStart.value);
+      shiftMonth(-1);
     }
     function onNext(): void {
-      weekStart.value = toLocal(addDays(new Date(weekStart.value), 7 * 12));
-      void calendar.loadWeeks(weekStart.value);
+      shiftMonth(1);
     }
-
-    function onApplyRange(): void {
-      weekStart.value = rangeFrom.value;
-      void calendar.loadWeeks(weekStart.value);
+    function onToday(): void {
+      monthAnchor.value = monthStart(new Date());
+      syncMonthQuery();
+      void calendar.loadMonth(monthAnchor.value);
     }
 
     function onOpenTask(date: string): void {
-      dialogTitle.value = `Открыть задачу — ${date}`;
-      dialogText.value = `Задачи на ${date}. Выберите задачу, чтобы открыть детали.`;
-      dialogOpen.value = true;
-    }
-    function onConfirmOpen(): void {
-      dialogOpen.value = false;
+      void router.push(`/calendar/${date}`);
     }
 
     function onRetry(): void {
-      void calendar.loadWeeks(weekStart.value);
+      void calendar.loadMonth(monthAnchor.value);
     }
 
     const loading = computed(() => calendar.loading);
@@ -175,7 +157,7 @@ export default {
     );
 
     onMounted(() => {
-      void calendar.loadWeeks(weekStart.value);
+      void calendar.loadMonth(monthAnchor.value);
     });
 
     return {
@@ -185,22 +167,12 @@ export default {
       weeks,
       isEmpty,
       WEEK_LABELS,
-      modeId,
       periodLabel,
-      customRange,
-      rangeFrom,
-      rangeTo,
-      presets,
       updatedLabel,
-      dialogOpen,
-      dialogTitle,
-      dialogText,
-      onMode,
       onPrev,
       onNext,
-      onApplyRange,
+      onToday,
       onOpenTask,
-      onConfirmOpen,
       onRetry,
     };
   },
@@ -208,6 +180,9 @@ export default {
 </script>
 
 <style scoped>
+.calendar {
+  width: 100%;
+}
 .calendar__header {
   display: flex;
   align-items: baseline;
@@ -220,6 +195,7 @@ export default {
   font-size: 14px;
 }
 .panel {
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -232,24 +208,6 @@ export default {
   justify-content: space-between;
   gap: var(--space-3);
   margin-bottom: var(--space-3);
-}
-.segmented {
-  display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.segmented__item {
-  background: var(--surface);
-  border: 0;
-  padding: var(--space-2) var(--space-3);
-  color: var(--text);
-  cursor: pointer;
-  font-size: 14px;
-}
-.segmented__item--active {
-  background: var(--primary);
-  color: var(--primary-contrast);
 }
 .calendar__nav {
   display: flex;
@@ -267,43 +225,22 @@ export default {
   font-size: 18px;
 }
 .calendar__period {
-  color: var(--muted);
-  min-width: 140px;
+  color: var(--text);
+  font-weight: 600;
+  min-width: 160px;
   text-align: center;
 }
-.calendar__range {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  gap: var(--space-2);
-  margin-bottom: var(--space-3);
-}
-.range__label {
-  display: inline-flex;
-  flex-direction: column;
-  font-size: 12px;
-  color: var(--muted);
-}
-.range__input {
+.calendar__today {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
-}
-.range__apply {
-  padding: var(--space-2) var(--space-3);
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--primary);
-  color: var(--primary-contrast);
   cursor: pointer;
+  font-size: 14px;
 }
 .calendar__state {
   color: var(--muted);
-}
-.dialog__body {
-  margin: 0;
 }
 .spinner {
   display: inline-block;

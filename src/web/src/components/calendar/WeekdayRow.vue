@@ -24,8 +24,8 @@ export default {
 
 <style scoped>
 .heatmap__weekdays {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--space-1);
   margin-bottom: var(--space-1);
 }
@@ -37,6 +37,5 @@ export default {
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
-  width: 40px;
 }
 </style>

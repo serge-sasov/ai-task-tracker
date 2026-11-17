@@ -10,23 +10,29 @@ function toLocal(date: Date): string {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
-function addDays(base: string, delta: number): string {
-  const date = new Date(`${base}T00:00:00`);
-  date.setDate(date.getDate() + delta);
+export function monthOf(baseDate: string): string {
+  return `${baseDate.slice(0, 7)}-01`;
+}
+
+export function addMonths(baseDate: string, delta: number): string {
+  const date = new Date(`${baseDate}T00:00:00`);
+  date.setMonth(date.getMonth() + delta, 1);
   return toLocal(date);
 }
 
-function mondayOf(base: string): string {
-  const date = new Date(`${base}T00:00:00`);
-  const dow = date.getDay();
-  return addDays(base, dow === 0 ? -6 : 1 - dow);
+function chunkWeeks(days: CalendarDay[], size = 7): CalendarDay[][] {
+  const weeks: CalendarDay[][] = [];
+  for (let i = 0; i < days.length; i += size) {
+    weeks.push(days.slice(i, i + size));
+  }
+  return weeks;
 }
 
 export const useCalendarStore = defineStore('calendar', {
   state: () => ({
-    view: 'week' as CalendarView,
-    date: toLocal(new Date()),
-    weeks: [] as CalendarDay[][],
+    view: 'month' as CalendarView,
+    month: monthOf(toLocal(new Date())),
+    days: [] as CalendarDay[],
     response: null as CalendarResponse | null,
     loading: false,
     error: null as ApiError | null,
@@ -34,36 +40,24 @@ export const useCalendarStore = defineStore('calendar', {
   }),
 
   getters: {
-    isEmpty: (s) =>
-      s.weeks.length === 0 ||
-      s.weeks.every((week) => week.every((day) => day.tasks.length === 0)),
-    days: (s) => s.weeks.flat(),
+    weeks: (s) => chunkWeeks(s.days),
+    isEmpty: (s) => s.days.length === 0,
     months: (s) => s.response?.months ?? [],
-    total: (s) =>
-      s.weeks.reduce(
-        (acc, week) => acc + week.reduce((a, day) => a + day.tasks.length, 0),
-        0,
-      ),
+    total: (s) => s.days.reduce((acc, day) => acc + day.tasks.length, 0),
   },
 
   actions: {
-    /** Load a heatmap window of `count` consecutive Mon-anchored weeks. */
-    async loadWeeks(baseDate: string, count = 12) {
+    /** Load the full Mon-first month grid for the month containing `baseDate`. */
+    async loadMonth(baseDate: string) {
       this.loading = true;
       this.error = null;
       try {
-        const start = mondayOf(baseDate);
-        const dates: string[] = [];
-        for (let i = 0; i < count; i += 1) {
-          dates.push(addDays(start, i * 7));
-        }
-        const responses = await Promise.all(
-          dates.map((date) => analyticsApi.calendar({ view: 'week', date })),
-        );
-        this.weeks = responses.map((response) => response.days);
-        this.response = responses[0] ?? null;
-        this.view = 'week';
-        this.date = baseDate;
+        const month = monthOf(baseDate);
+        const response = await analyticsApi.calendar({ view: 'month', date: month });
+        this.days = response.days;
+        this.response = response;
+        this.view = 'month';
+        this.month = month;
       } catch (err) {
         this.error =
           err instanceof ApiError
@@ -76,7 +70,7 @@ export const useCalendarStore = defineStore('calendar', {
     },
 
     async reload() {
-      await this.loadWeeks(this.date);
+      await this.loadMonth(this.month);
     },
   },
 });

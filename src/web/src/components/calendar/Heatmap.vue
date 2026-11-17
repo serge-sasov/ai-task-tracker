@@ -22,7 +22,10 @@
           @keydown.enter="onDayClick(day)"
           @keydown.space.prevent="onDayClick(day)"
         >
-          <div class="heatmap__value" aria-hidden="true">{{ day.count === 0 && !day.outside ? '' : day.count }}</div>
+          <div class="heatmap__head" aria-hidden="true">
+            <span class="heatmap__daynum">{{ day.dayOfMonth }}</span>
+            <span v-if="day.count > 0" class="heatmap__value">{{ day.count }}</span>
+          </div>
           <div class="heatmap__tasks" aria-hidden="true">
             <span v-for="(task, i) in day.tasks" :key="i" class="heatmap__task">{{ task }}</span>
           </div>
@@ -37,6 +40,7 @@ import WeekdayRow from './WeekdayRow.vue';
 
 export interface HeatmapDay {
   date: string;
+  dayOfMonth: number;
   count: number;
   outside: boolean;
   current: boolean;
@@ -74,6 +78,7 @@ export default {
 
 <style scoped>
 .heatmap {
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -87,22 +92,24 @@ export default {
 }
 .heatmap__week {
   display: grid;
-  grid-template-columns: repeat(7, 40px);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--space-1);
 }
 .heatmap__cell {
-  width: 40px;
-  min-height: 40px;
+  width: 100%;
+  min-height: 88px;
   border-radius: 2px;
   background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: var(--space-1);
   position: relative;
   cursor: default;
-  padding: 2px;
+  padding: var(--space-1) var(--space-2);
+  overflow: hidden;
 }
 .heatmap__cell--outside {
   background: var(--bg);
@@ -130,18 +137,35 @@ export default {
 .heatmap__cell[tabindex='0'] {
   cursor: pointer;
 }
+.heatmap__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+.heatmap__daynum {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
 .heatmap__value {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--text);
 }
 .heatmap__tasks {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
+  min-width: 0;
 }
 .heatmap__task {
-  font-size: 10px;
-  line-height: 1;
+  font-size: 11px;
+  line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
