@@ -37,6 +37,6 @@ Task graph (feature workflow): `P-00 → A-01 → A-02 → U-01 → U-02 → R-0
 | T-010 | feature | Q-01 E2E plan and coverage matrix | qa | T-003, T-009 | pending | - | docs/qa/e2e-plan-ai-task-tracker.md | - | - |
 | T-011 | feature | Q-02 QA, acceptance and verdict | qa | T-010, T-009, T-008, T-007, T-005 | pending | - | docs/qa/e2e-report-ai-task-tracker.md, docs/qa/review-T-011.md | - | - |
 | T-012 | feature | D-01 Documentation, runbook, ADR finalization | doc-writer | T-007, T-008, T-005, T-011 | pending | - | README.md, docs/guides/* | - | - |
-| T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | in_progress | BUG-002 | Dockerfile, tests/regression/** | n/a | - |
+| T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | in_progress | BUG-002 | Dockerfile, tests/regression/** | n/a | dd0f659 |
 | T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | pending | BUG-002 | docs/qa/review-T-014.md | - | - |
 
