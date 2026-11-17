@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | ccbbc2a |
+| commit | 090a6ce |
 
 ## Bug summary
 
@@ -63,3 +63,4 @@
 - 2026-11-17: CP-1 approved (B-03); checks 4 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - ccbbc2a: CP-1 snapshot
 - 2026-11-17: CP-F awaiting_review (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 090a6ce: CP-F snapshot
