@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | pending |
+| commit | 01a6f14 |
 
 ## Bug summary
 
@@ -57,3 +57,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-16: card created during BUG-002 triage (B-00); verification is the B-03 deliverable; the review file `docs/qa/review-T-014.md` is created at CP-F.
 - 2026-11-17: CP-F awaiting_review (B-03); checks 4 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 01a6f14: CP-F snapshot
