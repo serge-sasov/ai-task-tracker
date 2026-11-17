@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | pending |
+| commit | ccbbc2a |
 
 ## Bug summary
 
@@ -61,3 +61,4 @@
   (3) ingest 5 tasks; (4) full T-009 e2e; (5) collateral diff. Verdict in
   `docs/qa/review-T-016.md`.
 - 2026-11-17: CP-1 approved (B-03); checks 4 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- ccbbc2a: CP-1 snapshot
