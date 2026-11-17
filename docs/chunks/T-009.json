@@ -5,7 +5,7 @@
 
                  ],
     "budget":  {
-                   "max_write_kb":  12,
+                   "max_write_kb":  24,
                    "max_session_kb":  40,
                    "context_stop_pct":  65,
                    "max_turns":  40,
@@ -34,10 +34,21 @@
                                           "runner starts the stack, loads YAML, writes JSON results"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "scripts/e2e.ps1",
+                                            "sha256":  "5951b36538e7b1b683e387e88f1d1a091af410edb812543a79f42ceb05cc2bd9"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/conftest.py",
+                                            "sha256":  "c97fdaaabe94f3e9d62d9c985682b0d5a9dd97d17621642e620c0782bd249b77"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/README.md",
+                                            "sha256":  "ac4e7506338686251680e557b62290342c927a408ce561624e394cef524e3ce0"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  2,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -48,10 +59,12 @@
 
                                   ],
                        "notes":  [
-
+                                     "Smoke deferred: base_commit d79f4dd does NOT build (mvn package exit 1) - pre-existing product defect, not runner-caused. Runner verified offline: list=8 UCs, collect-only=8 items, run/result pipeline via _run_probe.py. Build smoke (up/health/down) not completed; deferred to C7.",
+                                     "re-complete: re-record conftest.py sha256 after hash drift (ledger had stale hash 3b383aee; disk c97fdaaa verified correct)",
+                                     "re-opened (Variant 3, user-approved): replace the inert pytest_collect_directory per-UC emitter with a pytest_runtest_logreport aggregator so real test outcomes are recorded per UC; guard pytest_sessionfinish for --collect-only; scripts/e2e.ps1 run must not abort when stack-up fails; sync README with the implementation."
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T01:34:59",
+                       "finished":  "2026-11-16T02:30:53"
                    },
                    {
                        "id":  "C2",
@@ -60,7 +73,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Dataset validator",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "scripts/validate-e2e-data.py"
                                 ],
@@ -72,10 +85,13 @@
                                           "validates the analyst YAML with clear errors"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "scripts/validate-e2e-data.py",
+                                            "sha256":  "6287f72df3166f6a7f30f281e21e9f6bc3e5331511e43f71f852da73ff047d41"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -88,8 +104,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T09:38:30",
+                       "finished":  "2026-11-16T09:45:02"
                    },
                    {
                        "id":  "C3",
@@ -110,10 +126,29 @@
                                           "tests for the three use cases"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_001_003/__init__.py",
+                                            "sha256":  "066d0dcef979d459bbc77924f18a1fb562909d3fe92d6c77bfb40f7fe20eff36"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_001_003/shared.py",
+                                            "sha256":  "a34dc59700559c2479220fa09d8b0260e7206a11cce702ced611de32314fd76f"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py",
+                                            "sha256":  "f7d05d832e303f16cb3f01639cf43436d75ee3d52e9b66e5d9b6e719a9cdf66c"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py",
+                                            "sha256":  "b5471fc7dba2912d049abdcafa0bd86eda3d0628243ff5945f5ab46f4e84bc3f"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py",
+                                            "sha256":  "9a8cc25030bbf0584741794e8abd22e71323eb051c91dab0da07963c063a3aab"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -124,10 +159,10 @@
 
                                   ],
                        "notes":  [
-
+                                     "re-opened (Variant 3, user-approved): add tests/e2e/uc_e2e_001_003/conftest.py with a shared session stack fixture (health gate + fixtures.seed.apply + wait total==5); fix UC-002/003 missing stack fixture; make the health-status assertion contract-faithful (ok/degraded); skip instead of RuntimeError when the stack is down."
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T10:15:49",
+                       "finished":  "2026-11-16T10:35:07"
                    },
                    {
                        "id":  "C4",
@@ -148,10 +183,25 @@
                                           "tests for the three use cases"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_004_006/__init__.py",
+                                            "sha256":  "94672535e2fdbd45a170ea489adf94e988f330ac2e79987fc58538175d40f465"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py",
+                                            "sha256":  "ee3fb9bd59d6640ef6136aa503cf5112af5ae449fbf4c4642eafebaa9c3707b0"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py",
+                                            "sha256":  "88155ececfc84707c06bf56997a7ad36c749bbebc11eac8f5b92f06bd20bb89c"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py",
+                                            "sha256":  "15c3844a7e2792dfc207bf5dd9073079fb9f0e2948b69dd932324d7dbcbb6cec"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -162,10 +212,10 @@
 
                                   ],
                        "notes":  [
-
+                                     "re-opened (Variant 3, user-approved): stack-down =\u003e pytest.skip instead of RuntimeError; AI-search tests skip with an explicit reason when Ollama is unavailable."
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T10:38:11",
+                       "finished":  "2026-11-16T11:18:52"
                    },
                    {
                        "id":  "C5",
@@ -174,7 +224,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Use cases UC-E2E-007..008",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "tests/e2e/uc_e2e_007_008/**"
                                 ],
@@ -186,10 +236,25 @@
                                           "tests for the two use cases"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_007_008/__init__.py",
+                                            "sha256":  "1705d40e3eea2e7289d043b2f21b66846f6a0559e7552393ab98ba1b9b82573d"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_007_008/helpers.py",
+                                            "sha256":  "f18827cf9e040200ec8416c31a8a383108732f4e1be776507b32579cbfa088ab"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py",
+                                            "sha256":  "926a72fc42d51ae57cdb0723df7b1e7bd001fd7859ef603496d572ec512d7659"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py",
+                                            "sha256":  "58201f659851147b12c3dd714176da6b1e385d04e2c336ac83eb4ef774ff4507"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -202,8 +267,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T11:21:50",
+                       "finished":  "2026-11-16T11:57:59"
                    },
                    {
                        "id":  "C6",
@@ -212,7 +277,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Fixtures, isolation, cleanup",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "tests/e2e/fixtures/**"
                                 ],
@@ -224,10 +289,21 @@
                                           "seed and cleanup are idempotent; no production endpoints"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "tests/e2e/fixtures/__init__.py",
+                                            "sha256":  "d9b16f800e9f8b24582dc76277bc957a71e9eed9be81619e98350a57fd596300"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/fixtures/seed.py",
+                                            "sha256":  "a0fca4705959e4deb14b840855e3c5f966851a108d126e05407e9406b9ba337c"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/fixtures/cleanup.py",
+                                            "sha256":  "d9c5d195c63fc665398bfa6a93d489886c044d0b4d6c48a22eee4ac011cf2edc"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -240,8 +316,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-16T14:53:45",
+                       "finished":  "2026-11-16T15:15:17"
                    },
                    {
                        "id":  "C7",
@@ -265,7 +341,7 @@
 
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -276,11 +352,11 @@
 
                                   ],
                        "notes":  [
-
+                                     "2026-11-16T16:30:00+03:00 held (Variant 3, user-approved): C7 pending until the harness fixes land in C1/C3/C4 and BUG-002 is fixed by T-013 and verified by T-014. C7 then runs the full suite live and records per-UC JSON results under tests/e2e/results/."
                                  ],
-                       "started":  null,
+                       "started":  "2026-11-16T15:25:16",
                        "finished":  null
                    }
                ],
-    "updated":  "2026-11-14T21:57:49"
+    "updated":  "2026-11-16T17:05:00+03:00"
 }

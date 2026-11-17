@@ -1,0 +1,60 @@
+{
+    "task":  "T-013",
+    "version":  1,
+    "baseline":  [
+                     "docs/tasks/T-013-fix-bug-002-dockerfile-source-paths.md"
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "B-01",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "B-01 reproduction/root cause + B-02 minimal fix and regression",
+                       "state":  "pending",
+                        "owns":  [
+                                     "Dockerfile",
+                                     "tests/regression/**"
+                                 ],
+                       "inputs":  [
+                                      "docs/bugs/BUG-002-dockerfile-source-paths.md",
+                                      "Dockerfile",
+                                      "backend/pom.xml",
+                                      "docker-compose.yml"
+                                  ],
+                       "brief":  "Reproduce BUG-002 on the base commit, write a failing regression test under tests/regression/, document the root cause in the T-013 card, then apply the minimal Dockerfile fix so the regression passes. See docs/bugs/BUG-002-dockerfile-source-paths.md.",
+                       "acceptance":  [
+                                          "regression test fails on base commit 90c22f7",
+                                          "root cause documented in docs/tasks/T-013-fix-bug-002-dockerfile-source-paths.md",
+                                          "minimal Dockerfile fix passes the regression",
+                                          "no unrelated behavior or files changed"
+                                      ],
+                       "produced":  [
+
+                                     ],
+                       "base_commit":  "90c22f7",
+                       "attempts":  0,
+                       "usage":  {
+                                    "in":  0,
+                                    "out":  0,
+                                    "cr":  0,
+                                    "min":  0
+                                },
+                       "issues":  [
+
+                                   ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-16T16:30:00+03:00"
+}

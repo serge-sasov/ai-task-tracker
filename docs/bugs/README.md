@@ -7,3 +7,4 @@ in `docs/issues/`.
 | ID | Summary | Severity | Status | Tasks | Updated |
 |---|---|---|---|---|---|
 | [BUG-001](BUG-001-api-004-spec-diverges.md) | API-004 health spec diverges from the contracts | major | open | T-006, T-008 | 2026-11-14T21:10:00+03:00 |
+| [BUG-002](BUG-002-dockerfile-source-paths.md) | Docker backend image build fails: pom sourceDirectory resolves outside the image | P1 | triaged | T-013, T-014 | 2026-11-16T16:30:00+03:00 |
