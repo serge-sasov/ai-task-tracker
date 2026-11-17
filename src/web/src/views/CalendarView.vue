@@ -1,13 +1,13 @@
 <template>
   <section class="calendar" aria-labelledby="calendar-title">
     <header class="calendar__header">
-      <h1 id="calendar-title">РљР°Р»РµРЅРґР°СЂСЊ</h1>
+      <h1 id="calendar-title">Календарь</h1>
       <p class="calendar__updated" aria-live="polite">{{ updatedLabel }}</p>
     </header>
 
     <div class="panel">
       <div class="calendar__controls">
-        <div class="segmented" role="radiogroup" aria-label="РџСЂРµСЃРµС‚С‹ РїРµСЂРёРѕРґР°">
+        <div class="segmented" role="radiogroup" aria-label="Пресеты периода">
           <button
             v-for="preset in presets"
             :key="preset.id"
@@ -23,29 +23,29 @@
         </div>
 
         <div class="calendar__nav">
-          <button class="calendar__nav-btn" type="button" aria-label="РџСЂРѕС€Р»С‹Р№ РїРµСЂРёРѕРґ" @click="onPrev">вЂ№</button>
+          <button class="calendar__nav-btn" type="button" aria-label="Прошлый период" @click="onPrev">‹</button>
           <span class="calendar__period">{{ periodLabel }}</span>
-          <button class="calendar__nav-btn" type="button" aria-label="РЎР»РµРґСѓСЋС‰РёР№ РїРµСЂРёРѕРґ" @click="onNext">вЂє</button>
+          <button class="calendar__nav-btn" type="button" aria-label="Следующий период" @click="onNext">›</button>
         </div>
       </div>
 
       <div v-if="customRange" class="calendar__range">
-        <label class="range__label">РќР°С‡Р°Р»Рѕ: <input id="range-from" v-model="rangeFrom" type="date" class="range__input" /></label>
-        <label class="range__label">РљРѕРЅРµС†: <input id="range-to" v-model="rangeTo" type="date" class="range__input" /></label>
-        <button class="range__apply" type="button" @click="onApplyRange">РџСЂРёРјРµРЅРёС‚СЊ</button>
+        <label class="range__label">Начало: <input id="range-from" v-model="rangeFrom" type="date" class="range__input" /></label>
+        <label class="range__label">Конец: <input id="range-to" v-model="rangeTo" type="date" class="range__input" /></label>
+        <button class="range__apply" type="button" @click="onApplyRange">Применить</button>
       </div>
 
       <div v-if="loading" class="calendar__state" role="status" aria-live="polite">
-        <span class="spinner" aria-hidden="true"></span> Р—Р°РіСЂСѓР·РєР°вЂ¦
+        <span class="spinner" aria-hidden="true"></span> Загрузка…
       </div>
 
       <div v-else-if="error" class="alert alert--error" role="alert">
-        <div>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ РєР°Р»РµРЅРґР°СЂСЊ</div>
-        <button class="alert__retry" type="button" @click="onRetry">РџРѕРІС‚РѕСЂРёС‚СЊ</button>
+        <div>Не удалось загрузить календарь</div>
+        <button class="alert__retry" type="button" @click="onRetry">Повторить</button>
       </div>
 
       <div v-else-if="isEmpty" class="calendar__state" role="status">
-        РќРµС‚ Р·Р°РґР°С‡ РІ РІС‹Р±СЂР°РЅРЅРѕРј РїРµСЂРёРѕРґРµ.
+        Нет задач в выбранном периоде.
       </div>
 
       <template v-else>
@@ -76,7 +76,7 @@ import Heatmap, { type HeatmapDay } from '@/components/calendar/Heatmap.vue';
 import Legend from '@/components/calendar/Legend.vue';
 import Dialog from '@/components/shared/Dialog.vue';
 
-const WEEK_LABELS = ['РџРЅ', 'Р’С‚', 'РЎСЂ', 'Р§С‚', 'РџС‚', 'РЎР±', 'Р’СЃ'];
+const WEEK_LABELS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 function pad(v: number): string {
   return String(v).padStart(2, '0');
@@ -106,8 +106,8 @@ export default {
     const rangeTo = ref(toLocal(new Date()));
 
     const presets = computed(() => [
-      { id: '12w' as const, label: '12 РЅРµРґРµР»СЊ' },
-      { id: 'custom' as const, label: 'РџСЂРѕРёР·РІРѕР»СЊРЅРѕ' },
+      { id: '12w' as const, label: '12 недель' },
+      { id: 'custom' as const, label: 'Произвольно' },
     ]);
 
     const periodLabel = computed(() => {
@@ -153,8 +153,8 @@ export default {
     }
 
     function onOpenTask(date: string): void {
-      dialogTitle.value = `РћС‚РєСЂС‹С‚СЊ Р·Р°РґР°С‡Сѓ вЂ” ${date}`;
-      dialogText.value = `Р—Р°РґР°С‡Рё РЅР° ${date}. Р’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°С‡Сѓ, С‡С‚РѕР±С‹ РѕС‚РєСЂС‹С‚СЊ РґРµС‚Р°Р»Рё.`;
+      dialogTitle.value = `Открыть задачу — ${date}`;
+      dialogText.value = `Задачи на ${date}. Выберите задачу, чтобы открыть детали.`;
       dialogOpen.value = true;
     }
     function onConfirmOpen(): void {
@@ -170,7 +170,7 @@ export default {
 
     const updatedLabel = computed(() =>
       calendar.lastUpdated
-        ? `РћР±РЅРѕРІР»РµРЅРѕ ${new Date(calendar.lastUpdated).toLocaleTimeString('ru-RU')}`
+        ? `Обновлено ${new Date(calendar.lastUpdated).toLocaleTimeString('ru-RU')}`
         : '',
     );
 

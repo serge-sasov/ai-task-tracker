@@ -6,7 +6,7 @@
       :key="label"
       class="heatmap__weekday"
       role="columnheader"
-      :aria-label="`Неделя: ${label}`"
+      :aria-label="`День недели: ${label}`"
     >
       {{ label }}
     </div>
@@ -23,14 +23,20 @@ export default {
 </script>
 
 <style scoped>
+.heatmap__weekdays {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
 .heatmap__corner {
-  width: var(--space-3);
+  display: none;
 }
 .heatmap__weekday {
   text-align: center;
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
-  width: var(--space-5);
+  width: 40px;
 }
 </style>

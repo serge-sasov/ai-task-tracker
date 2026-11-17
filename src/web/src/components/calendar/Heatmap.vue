@@ -33,6 +33,8 @@
 </template>
 
 <script lang="ts">
+import WeekdayRow from './WeekdayRow.vue';
+
 export interface HeatmapDay {
   date: string;
   count: number;
@@ -45,6 +47,7 @@ export interface HeatmapDay {
 
 export default {
   name: 'Heatmap',
+  components: { WeekdayRow },
   props: {
     rows: { type: Array as () => HeatmapDay[][], required: true },
     weekdayLabels: { type: Array as () => string[], required: true },
@@ -84,12 +87,12 @@ export default {
 }
 .heatmap__week {
   display: grid;
-  grid-template-columns: repeat(7, var(--space-5));
+  grid-template-columns: repeat(7, 40px);
   gap: var(--space-1);
 }
 .heatmap__cell {
-  width: var(--space-5);
-  min-height: var(--space-5);
+  width: 40px;
+  min-height: 40px;
   border-radius: 2px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -128,7 +131,7 @@ export default {
   cursor: pointer;
 }
 .heatmap__value {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
 }
 .heatmap__tasks {
@@ -137,7 +140,7 @@ export default {
   gap: 1px;
 }
 .heatmap__task {
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1;
   overflow: hidden;
   text-overflow: ellipsis;
