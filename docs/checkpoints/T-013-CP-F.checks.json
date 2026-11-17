@@ -4,7 +4,7 @@
     "stage":  "B-02",
     "root":  "C:\\study\\ai\\research\\ai-task-tracker",
     "base_commit":  "90c22f7",
-    "generated_at":  "2026-11-17T15:39:43",
+    "generated_at":  "2026-11-17T15:46:36",
     "results":  [
                     {
                         "id":  "artifacts-exist",
@@ -16,7 +16,7 @@
                         "id":  "artifact-hashes",
                         "check":  "hash-match",
                         "result":  "PASS",
-                        "detail":  "2 artifact(s) match ledger"
+                        "detail":  "3 artifact(s) match ledger"
                     },
                     {
                         "id":  "fix-src-exist",

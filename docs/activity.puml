@@ -18,7 +18,7 @@ start
 :T-010 Q-01 E2E plan and coverage matrix; <<#D3D3D3>>
 :T-011 Q-02 QA, acceptance and verdict; <<#D3D3D3>>
 :T-012 D-01 Documentation, runbook, ADR finalization; <<#D3D3D3>>
-:T-013 Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02); <<#87CEFA>>
+:T-013 Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02); <<#90EE90>>
 :T-014 Verify BUG-002: Dockerfile fix (B-03); <<#FFE082>>
 :T-015 Fix BUG-003: local stack functional health (B-01/B-02); <<#87CEFA>>
 :T-016 Verify BUG-003: local stack (B-03); <<#87CEFA>>
