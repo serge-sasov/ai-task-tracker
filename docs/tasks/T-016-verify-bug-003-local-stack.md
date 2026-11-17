@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | 090a6ce |
+| commit | 3bc860c |
 
 ## Bug summary
 
@@ -65,3 +65,4 @@
 - 2026-11-17: CP-F awaiting_review (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 090a6ce: CP-F snapshot
 - 2026-11-17: CP-F approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
+- 3bc860c: CP-F snapshot
