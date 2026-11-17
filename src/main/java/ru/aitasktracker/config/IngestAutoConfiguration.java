@@ -26,6 +26,15 @@ import ru.aitasktracker.ingestion.lock.TaskLock;
 @EnableConfigurationProperties(TrackerProperties.class)
 public class IngestAutoConfiguration {
 
+    /**
+     * The read-only opencode source directory consumed by {@code IngestService}.
+     * Bound from {@code tracker.opencode.data-dir} (OPENCODE_DATA_DIR in compose).
+     */
+    @Bean
+    public Path opencodeDataDir(TrackerProperties properties) {
+        return Path.of(properties.getOpencode().getDataDir());
+    }
+
     @Bean
     public IngestJsonParser ingestJsonParser() {
         return new IngestJsonParser();

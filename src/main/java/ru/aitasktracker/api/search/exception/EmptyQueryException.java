@@ -13,7 +13,7 @@ public class EmptyQueryException extends ApiException {
     private static final long serialVersionUID = 1L;
 
     public static final String CODE = "INVALID_QUERY";
-    public static final String MESSAGE = "Запрос не может быть пустым.";
+    public static final String MESSAGE = "Введите запрос.";
 
     public EmptyQueryException(String message) {
         super(message != null && !message.isBlank() ? message : MESSAGE);

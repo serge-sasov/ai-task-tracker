@@ -4,16 +4,15 @@ import ru.aitasktracker.domain.TaskStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * A tracked opencode session (one task). Data model {@code tasks}, ADR-0001 §3.
+ * A tracked opencode session (one task). Data model {@code tasks}, ADR-0001 В§3.
  *
- * <p>{@code task_id} is the source-provided id when present (seed uses {@code TASK-001}…),
+ * <p>{@code task_id} is the source-provided id when present (seed uses {@code TASK-001}вЂ¦),
  * otherwise a stable derived id from {@code session_id}; uniqueness enforced by the PK
  * and by ingestion (natural key {@code session_id}).
  */
@@ -37,7 +36,7 @@ public class TaskEntity {
     @Column(name = "finished_at")
     private LocalDateTime finishedAt;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ru.aitasktracker.domain.TaskStatusConverter.class)
     @Column(name = "status", nullable = false, length = 32)
     private TaskStatus status;
 

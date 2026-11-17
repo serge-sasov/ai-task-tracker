@@ -19,9 +19,9 @@ At most one task is active (`in_progress` or `awaiting_review`) across both work
 
 ## Board
 
-Project: «Сервис мониторинга активностей пользователя в opencode» (ai-task-tracker).
-Source requirements: `requirements/исходные требования.txt`.
-Task graph (feature workflow): `P-00 → A-01 → A-02 → U-01 → U-02 → R-01 → R-02 → I-01 → I-02 → Q-01 → Q-02 → D-01` (e2e required, ux required — all stages in scope).
+Project: В«РЎРµСЂРІРёСЃ РјРѕРЅРёС‚РѕСЂРёРЅРіР° Р°РєС‚РёРІРЅРѕСЃС‚РµР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ opencodeВ» (ai-task-tracker).
+Source requirements: `requirements/РёСЃС…РѕРґРЅС‹Рµ С‚СЂРµР±РѕРІР°РЅРёСЏ.txt`.
+Task graph (feature workflow): `P-00 в†’ A-01 в†’ A-02 в†’ U-01 в†’ U-02 в†’ R-01 в†’ R-02 в†’ I-01 в†’ I-02 в†’ Q-01 в†’ Q-02 в†’ D-01` (e2e required, ux required вЂ” all stages in scope).
 
 | ID | Workflow | Task | Role | Dependencies | Status | Bug | Artifacts | Usage | Commit |
 |---|---|---|---|---|---|---|---|---|---|
@@ -38,5 +38,5 @@ Task graph (feature workflow): `P-00 → A-01 → A-02 → U-01 → U-02 → R-0
 | T-011 | feature | Q-02 QA, acceptance and verdict | qa | T-010, T-009, T-008, T-007, T-005 | pending | - | docs/qa/e2e-report-ai-task-tracker.md, docs/qa/review-T-011.md | - | - |
 | T-012 | feature | D-01 Documentation, runbook, ADR finalization | doc-writer | T-007, T-008, T-005, T-011 | pending | - | README.md, docs/guides/* | - | - |
 | T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | in_progress | BUG-002 | Dockerfile, tests/regression/** | n/a | dd0f659 |
-| T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | pending | BUG-002 | docs/qa/review-T-014.md | - | - |
+| T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | in_progress | BUG-002 | docs/qa/review-T-014.md | - | - |
 

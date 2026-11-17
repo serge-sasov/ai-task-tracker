@@ -2,6 +2,7 @@ package ru.aitasktracker.ingestion;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,8 @@ public class IngestScheduler {
     private final TaskLock taskLock;
     private final int intervalSeconds;
 
-    public IngestScheduler(IngestService ingestService, TaskLock taskLock, int intervalSeconds) {
+    public IngestScheduler(IngestService ingestService, TaskLock taskLock,
+                           @Value("${tracker.ingest-interval-seconds:60}") int intervalSeconds) {
         this.ingestService = ingestService;
         this.taskLock = taskLock;
         this.intervalSeconds = intervalSeconds;

@@ -1,0 +1,109 @@
+{
+    "task":  "T-015",
+    "version":  1,
+    "baseline":  [
+                     "docs/tasks/T-015-fix-bug-003-local-stack.md"
+                 ],
+    "budget":  {
+                   "max_write_kb":  24,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "B-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "B-01 reproduction/root cause + B-02 minimal fix and regression",
+                       "state":  "done",
+                       "owns":  [
+                                    "backend/pom.xml",
+                                    "src/main/**",
+                                    "docker-compose.yml",
+                                    "tests/regression/**"
+                                ],
+                       "inputs":  [
+                                      "docs/bugs/BUG-003-local-stack-not-healthy.md",
+                                      "backend/pom.xml",
+                                      "src/main/**",
+                                      "docker-compose.yml"
+                                  ],
+                       "brief":  "Reproduce BUG-003 on the base revision, add/extend the static regression under tests/regression/, document the root cause in the T-015 card, then apply the minimal fixes so the stack becomes functionally healthy. See docs/bugs/BUG-003-local-stack-not-healthy.md.",
+                       "acceptance":  [
+                                          "regression test fails on base commit 90c22f7",
+                                          "root cause documented in docs/tasks/T-015-fix-bug-003-local-stack.md",
+                                          "minimal fix passes the regression",
+                                          "docker compose build backend succeeds and /api/health returns 200",
+                                          "no unrelated behavior or files changed"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "backend/pom.xml",
+                                            "sha256":  "306c9084b886bf3d30102c2d55e5ca9aa620111c13f1a074a660f175dd4103b8"
+                                        },
+                                        {
+                                            "path":  "docker-compose.yml",
+                                            "sha256":  "60e6dab8c14126e5ea0f8c77e451572770e584b1a7ce4b8c015f38000a943635"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/search/exception/EmptyQueryException.java",
+                                            "sha256":  "5369a1044274c83cd1c470f7b6a5365e1f074f2536c292737062ade4e366a457"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/tokens/service/TokenService.java",
+                                            "sha256":  "45033c219ed20e117568193d35715d02df91bf3508f7387516aa50cc501c423c"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/config/IngestAutoConfiguration.java",
+                                            "sha256":  "e40f98b967bb61d4c7cd8702e0fadb23952c936fadde5393cb9c2542ea5d20be"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/domain/TaskStatusConverter.java",
+                                            "sha256":  "a5692e95cd12a5f25b0013c75894b16943cd0da36d9d9979823d3338f2ca1c0a"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/domain/entity/TaskEntity.java",
+                                            "sha256":  "0b43398d60729b3e88cdad27d9506b22ea8293332c77546be0fd50fb5fa6fb3c"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/domain/repository/TaskRepository.java",
+                                            "sha256":  "abc84a8c6ed84afb9ee89ad3efe97190b47b555f963f793162db7dbea52b0954"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/ingestion/IngestScheduler.java",
+                                            "sha256":  "d7a05bee07917570d75ec827faa98866f01c2aa864df8f4df95f0d984df67e65"
+                                        },
+                                        {
+                                            "path":  "src/main/resources/application.yml",
+                                            "sha256":  "3fe5f6b72112900f21f867b46853d3d0943980b5ee19e53a2053bff4c89a619b"
+                                        },
+                                        {
+                                            "path":  "tests/regression/test_stack_health_prereqs.py",
+                                            "sha256":  "017495e7217181801a317dce5d1227422b8d4af1085b4d83e0adfc43165a120f"
+                                        }
+                                    ],
+                       "base_commit":  "90c22f7",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+                                      "ISSUE-20261117-131059-C1-conftest-destroyed"
+                                  ],
+                       "notes":  [
+                                     "Root causes fixed: Flyway PostgreSQL module; compose port overrides; TaskStatus RU converter; typed repository filter; missing Path bean; scheduler @Value; Boot-3 Redis keys; snake_case Jackson; token periods/bounds/cache; empty-query message."
+                                 ],
+                       "started":  "2026-11-17T15:37:21",
+                       "finished":  "2026-11-17T15:37:21"
+                   }
+               ],
+    "updated":  "2026-11-17T15:37:21"
+}
