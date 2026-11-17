@@ -38,6 +38,6 @@ Task graph (feature workflow): `P-00 РІвЂ вЂ™ A-01 РІвЂ вЂ™ A-
 | T-011 | feature | Q-02 QA, acceptance and verdict | qa | T-010, T-009, T-008, T-007, T-005 | pending | - | docs/qa/e2e-report-ai-task-tracker.md, docs/qa/review-T-011.md | - | - |
 | T-012 | feature | D-01 Documentation, runbook, ADR finalization | doc-writer | T-007, T-008, T-005, T-011 | pending | - | README.md, docs/guides/* | - | - |
 | T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | awaiting_review | BUG-002 | Dockerfile, tests/regression/** | n/a | e2c518e |
-| T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | in_progress | BUG-002 | docs/qa/review-T-014.md | n/a | - |
+| T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | in_progress | BUG-002 | docs/qa/review-T-014.md | n/a | 7e83430 |
 | T-015 | bugfix | Fix BUG-003: local stack functional health (B-01/B-02) | coder | T-009 | in_progress | BUG-003 | backend/pom.xml, src/main/**, docker-compose.yml, tests/regression/** | - | db91a97 |
 | T-016 | bugfix | Verify BUG-003: local stack (B-03) | qa | T-015 | awaiting_review | BUG-003 | docs/qa/review-T-016.md | n/a | 090a6ce |
