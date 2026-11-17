@@ -5,7 +5,7 @@
 | id | T-013 |
 | title | Fix BUG-002 - Dockerfile source-path mismatch (B-01/B-02) |
 | workflow | bugfix |
-| stage | B-01 / B-02 |
+| stage | B-02 |
 | role | coder |
 | status | in_progress |
 | hold | false (true forces human review at every checkpoint) |
@@ -14,7 +14,7 @@
 | severity | P1 |
 | profile | - |
 | inputs | `docs/bugs/BUG-002-dockerfile-source-paths.md`, `Dockerfile`, `backend/pom.xml`, `docker-compose.yml` |
-| artifacts | `Dockerfile`, `tests/regression/**`, `docs/tasks/T-013-*.md` |
+| artifacts | `Dockerfile`, `tests/regression/**` |
 | e2e | not applicable (build infrastructure; verified by compose build + `/api/health`; the full suite is T-009 C7) |
 | ux | not applicable (build infrastructure only) |
 | chunks | ledger `docs/chunks/T-013.json` (single source of truth for per-chunk state, `owns`, and usage) |
@@ -45,7 +45,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | reproduction/root cause | `tests/regression/**` + card log | 6P/0F/0M | approved | docs/checkpoints/T-013-CP-1.md |
-| CP-2 | fix/regression | `Dockerfile` + `tests/regression/**` | - | pending | `docs/checkpoints/T-013-CP-2.md` |
+| CP-2 | fix/regression | `Dockerfile` + `tests/regression/**` | 9P/0F/0M | approved | docs/checkpoints/T-013-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-013-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -62,3 +62,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17 CP-2: minimal fix (WORKDIR /app/backend; COPY src/main/java ../src/main/java; COPY src/main/resources ../src/main/resources; runtime jar /app/backend/target/*.jar). Regression: 2 passed. Real build: docker compose -f docker-compose.yml build backend exit 0 (image ai-task-tracker-backend:latest built).
 - 2026-11-17: CP-1 approved (B-01); checks 6 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 349e7e2: CP-1 snapshot
+- 2026-11-17: the living task card is excluded from hashed artifacts (it changes at every checkpoint); the CP-1 evidence row for the card was removed to avoid self-referential hash churn. Hashed deliverables: Dockerfile + regression test.
+- 2026-11-17: CP-2 approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)

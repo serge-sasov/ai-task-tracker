@@ -16,7 +16,7 @@
                    {
                        "id":  "C1",
                        "parent":  null,
-                       "stage":  "B-01",
+                       "stage":  "B-02",
                        "role":  "coder",
                        "depth":  1,
                        "title":  "B-01 reproduction/root cause + B-02 minimal fix and regression",
