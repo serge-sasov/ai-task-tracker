@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | 7e83430 |
+| commit | 4b51ef3 |
 
 ## Bug summary
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: CP-1 approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 7e83430: CP-1 snapshot
 - 2026-11-17: CP-F approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
+- 4b51ef3: CP-F snapshot
