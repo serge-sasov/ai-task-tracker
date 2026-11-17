@@ -19,9 +19,9 @@ At most one task is active (`in_progress` or `awaiting_review`) across both work
 
 ## Board
 
-Project: В«РЎРµСЂРІРёСЃ РјРѕРЅРёС‚РѕСЂРёРЅРіР° Р°РєС‚РёРІРЅРѕСЃС‚РµР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ opencodeВ» (ai-task-tracker).
-Source requirements: `requirements/РёСЃС…РѕРґРЅС‹Рµ С‚СЂРµР±РѕРІР°РЅРёСЏ.txt`.
-Task graph (feature workflow): `P-00 в†’ A-01 в†’ A-02 в†’ U-01 в†’ U-02 в†’ R-01 в†’ R-02 в†’ I-01 в†’ I-02 в†’ Q-01 в†’ Q-02 в†’ D-01` (e2e required, ux required вЂ” all stages in scope).
+Project: Р’В«Р РЋР ВµРЎР‚Р Р†Р С‘РЎРѓ Р СР С•Р Р…Р С‘РЎвЂљР С•РЎР‚Р С‘Р Р…Р С–Р В° Р В°Р С”РЎвЂљР С‘Р Р†Р Р…Р С•РЎРѓРЎвЂљР ВµР в„– Р С—Р С•Р В»РЎРЉР В·Р С•Р Р†Р В°РЎвЂљР ВµР В»РЎРЏ Р Р† opencodeР’В» (ai-task-tracker).
+Source requirements: `requirements/Р С‘РЎРѓРЎвЂ¦Р С•Р Т‘Р Р…РЎвЂ№Р Вµ РЎвЂљРЎР‚Р ВµР В±Р С•Р Р†Р В°Р Р…Р С‘РЎРЏ.txt`.
+Task graph (feature workflow): `P-00 РІвЂ вЂ™ A-01 РІвЂ вЂ™ A-02 РІвЂ вЂ™ U-01 РІвЂ вЂ™ U-02 РІвЂ вЂ™ R-01 РІвЂ вЂ™ R-02 РІвЂ вЂ™ I-01 РІвЂ вЂ™ I-02 РІвЂ вЂ™ Q-01 РІвЂ вЂ™ Q-02 РІвЂ вЂ™ D-01` (e2e required, ux required РІР‚вЂќ all stages in scope).
 
 | ID | Workflow | Task | Role | Dependencies | Status | Bug | Artifacts | Usage | Commit |
 |---|---|---|---|---|---|---|---|---|---|
@@ -33,10 +33,11 @@ Task graph (feature workflow): `P-00 в†’ A-01 в†’ A-02 в†’ U-01 �
 | T-006 | feature | R-01 Architecture and contracts (ADR) | architect | T-002, T-003, T-005 | done | - | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-*.yaml | in=452356 out=182070 cr=4372564 ratio=9.7x min=211 | 411881b |
 | T-007 | feature | R-02 Diagrams and module handoff | architect | T-006 | done | - | docs/architecture/component-*.puml, docs/architecture/sequence-scn-*.puml, docs/architecture/data-model-*.puml, docs/architecture/class-*.puml, docs/architecture/*.svg | in=570819 out=160155 cr=3311589 ratio=5.8x min=182 | f27a665 |
 | T-008 | feature | I-01 Implementation + unit/integration tests | coder | T-007, T-005 | done | - | src/**, tests/**, backend/**, Dockerfile, docker-compose*.yml, Makefile | in=7553059 out=1761270 cr=72365374 ratio=9.6x min=3316 | e71c4ed |
-| T-009 | feature | I-02 E2E automation and runner | coder | T-008, T-003, T-007 | blocked | - | tests/e2e/, scripts/e2e.ps1, scripts/validate-e2e-data.py | - | - |
+| T-009 | feature | I-02 E2E automation and runner | coder | T-008, T-003, T-007 | in_progress | - | tests/e2e/, scripts/e2e.ps1, scripts/validate-e2e-data.py | - | - |
 | T-010 | feature | Q-01 E2E plan and coverage matrix | qa | T-003, T-009 | pending | - | docs/qa/e2e-plan-ai-task-tracker.md | - | - |
 | T-011 | feature | Q-02 QA, acceptance and verdict | qa | T-010, T-009, T-008, T-007, T-005 | pending | - | docs/qa/e2e-report-ai-task-tracker.md, docs/qa/review-T-011.md | - | - |
 | T-012 | feature | D-01 Documentation, runbook, ADR finalization | doc-writer | T-007, T-008, T-005, T-011 | pending | - | README.md, docs/guides/* | - | - |
 | T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | in_progress | BUG-002 | Dockerfile, tests/regression/** | n/a | dd0f659 |
 | T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | in_progress | BUG-002 | docs/qa/review-T-014.md | - | - |
-
+| T-015 | bugfix | Fix BUG-003: local stack functional health (B-01/B-02) | coder | T-009 | in_progress | BUG-003 | backend/pom.xml, src/main/**, docker-compose.yml, tests/regression/** | - | db91a97 |
+| T-016 | bugfix | Verify BUG-003: local stack (B-03) | qa | T-015 | in_progress | BUG-003 | docs/qa/review-T-016.md | n/a | - |

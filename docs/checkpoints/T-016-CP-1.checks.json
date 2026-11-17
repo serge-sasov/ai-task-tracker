@@ -1,0 +1,68 @@
+{
+    "task":  "T-016",
+    "workflow":  "bugfix",
+    "stage":  "B-03",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "90c22f7",
+    "generated_at":  "2026-11-17T15:39:20",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-016.md"
+                    },
+                    {
+                        "id":  "qa-review-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "qa-verdict",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "1 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "qa-fail-before-pass-after",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "2 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/chunks/T-016.json (legacy task)"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/chunks/T-016.json (legacy task)"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/chunks/T-016.json (legacy task)"
+                    }
+                ],
+    "summary":  {
+                    "pass":  4,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  4,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
