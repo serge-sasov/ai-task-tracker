@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | a65a58c |
+| commit | db91a97 |
 
 ## Bug summary
 
@@ -68,3 +68,4 @@
 - 2026-11-17: CP-1 approved (B-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - a65a58c: CP-1 snapshot
 - 2026-11-17: CP-2 approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- db91a97: CP-2 snapshot
