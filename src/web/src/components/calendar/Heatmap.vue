@@ -1,5 +1,5 @@
 <template>
-  <div class="heatmap" role="group" aria-label="РљР°Р»РµРЅРґР°СЂСЊ Р°РєС‚РёРІРЅРѕСЃС‚Рё Р·Р°РґР°С‡">
+  <div class="heatmap" role="group" aria-label="Календарь активности задач">
     <WeekdayRow :weekday-labels="weekdayLabels" />
     <div class="heatmap__rows" role="rowgroup">
       <div

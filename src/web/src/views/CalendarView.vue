@@ -97,12 +97,12 @@ export default {
     const calendar = useCalendarStore();
 
     const modeId = ref<'12w' | 'custom'>('12w');
-    const weekStart = ref(toLocal(addDays(new Date(), -35)));
+    const weekStart = ref(toLocal(addDays(new Date(), -7 * 11)));
     const dialogOpen = ref(false);
     const dialogTitle = ref('');
     const dialogText = ref('');
     const customRange = ref(false);
-    const rangeFrom = ref(toLocal(addDays(new Date(), -35)));
+    const rangeFrom = ref(toLocal(addDays(new Date(), -7 * 11)));
     const rangeTo = ref(toLocal(new Date()));
 
     const presets = computed(() => [

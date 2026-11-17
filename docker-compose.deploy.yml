@@ -1,8 +1,29 @@
 # Local deployment override (not part of the T-009 e2e acceptance artifacts).
 # The base docker-compose.yml keeps the generic defaults; this override wires the
-# AI-search client to the host Ollama and a real chat model for local use.
+# AI-search client to the host Ollama and adds a cron-like periodic exporter that
+# reads the real opencode SQLite DB and writes e2e JSON files for the backend.
 services:
   backend:
     environment:
       API_OLLAMA_BASE_URL: ${API_OLLAMA_BASE_URL:-http://host.docker.internal:11434}
       API_OLLAMA_MODEL: ${API_OLLAMA_MODEL:-qwen3.8:27b}
+
+  exporter:
+    image: python:3.12-alpine
+    container_name: aitasktracker-exporter
+    restart: unless-stopped
+    command: ["python", "/app/opencode-export.py"]
+    environment:
+      OPENCODE_DB: /opencode-src/opencode.db
+      EXPORT_DIR: /export
+      EXPORT_INTERVAL_SECONDS: ${EXPORT_INTERVAL_SECONDS:-60}
+      EXPORT_LIMIT_SESSIONS: ${EXPORT_LIMIT_SESSIONS:-1000}
+      EXPORT_MAX_PARTS: ${EXPORT_MAX_PARTS:-400}
+      EXPORT_MAX_MESSAGES: ${EXPORT_MAX_MESSAGES:-50}
+      EXPORT_MAX_TEXT: ${EXPORT_MAX_TEXT:-500}
+    volumes:
+      - ${OPENCODE_DB_DIR:?set OPENCODE_DB_DIR to the opencode data dir}:/opencode-src:ro
+      - ${EXPORT_DIR:-./data/opencode-export}:/export
+      - ./scripts/opencode-export.py:/app/opencode-export.py:ro
+    networks:
+      - aitasktracker-net
