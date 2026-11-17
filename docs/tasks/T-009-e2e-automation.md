@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-02 |
 | role | coder |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-008, T-003, T-007 |
 | inputs | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/architecture/contracts-ai-task-tracker.md` |
@@ -17,7 +17,7 @@
 | chunks | ledger `docs/chunks/T-009.json` (single source of truth for per-chunk state); runner skeleton, dataset validator, three UC batches, fixtures and cleanup, final full run |
 | budget | `max_write_kb` / `max_session_kb` / `context_stop_pct` / `max_turns` / `max_input_tokens` / `max_wall_min`; effective values in the ledger `budget` object |
 | base_commit | - |
-| usage | in=4533741 out=1135839 cr=108249337 ratio=23.9x min=2654 |
+| usage | in=4539299 out=1137324 cr=110482991 ratio=24.3x min=2657 |
 | issues | - |
 | commit | ac0757f |
 
@@ -33,7 +33,7 @@
 |---|---|---|---|---|---|
 | CP-1 | runner and validator | `scripts/e2e.ps1`, `scripts/validate-e2e-data.py` | 9P/0F/0M | approved | docs/checkpoints/T-009-CP-1.md |
 | CP-2 | UC batches and full run | `tests/e2e/**` | 10P/0F/0M | approved | docs/checkpoints/T-009-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-009-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | approved | docs/checkpoints/T-009-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -54,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 3378dd8: CP-2 snapshot
 - 2026-11-17: CP-F awaiting_review (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4533741 out=1135839 cr=108249337 ratio=23.9x min=2654; reviewer user
 - ac0757f: CP-F snapshot
+- 2026-11-17: CP-F approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4539299 out=1137324 cr=110482991 ratio=24.3x min=2657; reviewer auto (explicit -AutoApprove)

@@ -9,12 +9,12 @@
 | role | coder |
 | stage | I-02 |
 | artifacts | tests/e2e/**, scripts/e2e.ps1, scripts/validate-e2e-data.py |
-| status | awaiting_review |
-| requested_at | 2026-11-17T15:41:17 |
-| reviewed_at | - |
-| reviewer | user |
-| decision | - |
-| snapshot_commit | ac0757f |
+| status | approved |
+| requested_at | 2026-11-17T15:44:01 |
+| reviewed_at | 2026-11-17T15:44:01 |
+| reviewer | auto (explicit -AutoApprove) |
+| decision | approved |
+| snapshot_commit | - |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-009-CP-F.checks.json |
 
@@ -60,20 +60,25 @@ Summary: 10 PASS, 0 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
 
 | Sessions | Input | Output | Reasoning | Cache read | Cache/Input | Minutes | Cost |
 |---|---|---|---|---|---|---|---|
-| 29 | 4533741 | 1135839 | 194612 | 108249337 | 23.9x | 2654 | 1.19 |
+| 29 | 4539299 | 1137324 | 197017 | 110482991 | 24.3x | 2657 | 1.21 |
 
 ## Diff stat
 
 ```
-docs/bugs/BUG-002-dockerfile-source-paths.md       |   5 +-
- docs/bugs/BUG-003-local-stack-not-healthy.md       | 141 +++++++++++++++++++++
- docs/bugs/README.md                                |   3 +-
- docs/checkpoints/T-009-CP-2.md                     |   2 +-
- docs/chunks/T-009/C1.brief.md                      |  45 +++++++
- .../ISSUE-20261117-131059-C1-conftest-destroyed.md |  57 +++++++++
- docs/plan.md                                       |   2 +-
- docs/tasks/T-009-e2e-automation.md                 |   3 +-
- 8 files changed, 252 insertions(+), 6 deletions(-)
+docs/activity.puml                            |   4 +-
+ docs/activity.svg                             |   2 +-
+ docs/checkpoints/T-009-CP-F.md                |   2 +-
+ docs/checkpoints/T-014-CP-1.checks.json       |  68 +++++++++++
+ docs/checkpoints/T-014-CP-1.md                | 157 ++++++++++++++++++++++++
+ docs/checkpoints/T-015-CP-F.checks.json       |  74 +++++++++++
+ docs/checkpoints/T-015-CP-F.md                | 169 ++++++++++++++++++++++++++
+ docs/evidence/T-014.md                        |   1 +
+ docs/evidence/T-015.md                        |  82 +++++++++++++
+ docs/plan.md                                  |   6 +-
+ docs/tasks/T-009-e2e-automation.md            |   3 +-
+ docs/tasks/T-014-verify-bug-002-dockerfile.md |   8 +-
+ docs/tasks/T-015-fix-bug-003-local-stack.md   |   8 +-
+ 13 files changed, 570 insertions(+), 14 deletions(-)
 ```
 
 ## User remarks
@@ -90,4 +95,4 @@ docs/bugs/BUG-002-dockerfile-source-paths.md       |   5 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
