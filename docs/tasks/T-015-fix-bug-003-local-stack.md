@@ -7,7 +7,7 @@
 | workflow | bugfix |
 | stage | B-02 |
 | role | coder |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-009 (held at C7) |
 | bug | BUG-003 |
@@ -49,7 +49,7 @@
 |---|---|---|---|---|---|
 | CP-1 | reproduction/root cause | `tests/regression/**` + card log | 8P/0F/0M | approved | docs/checkpoints/T-015-CP-1.md |
 | CP-2 | fix/regression | `backend/pom.xml`, `src/main/**`, `docker-compose.yml` | 9P/0F/0M | approved | docs/checkpoints/T-015-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-015-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-015-CP-F.md |
 
 ## Blockers
 
@@ -71,3 +71,4 @@
 - db91a97: CP-2 snapshot
 - 2026-11-17: CP-F awaiting_review (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - b37e5fe: CP-F snapshot
+- 2026-11-17: CP-F approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)

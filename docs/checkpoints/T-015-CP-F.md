@@ -9,12 +9,12 @@
 | role | coder |
 | stage | B-02 |
 | artifacts | backend/pom.xml, src/main/**, docker-compose.yml, tests/regression/** |
-| status | awaiting_review |
-| requested_at | 2026-11-17T15:41:38 |
-| reviewed_at | - |
-| reviewer | user |
-| decision | - |
-| snapshot_commit | b37e5fe |
+| status | approved |
+| requested_at | 2026-11-17T15:46:45 |
+| reviewed_at | 2026-11-17T15:46:45 |
+| reviewer | auto (explicit -AutoApprove) |
+| decision | approved |
+| snapshot_commit | - |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-015-CP-F.checks.json |
 
@@ -72,21 +72,23 @@ Dockerfile                                         |  10 +-
  docs/checkpoints/T-009-CP-2.checks.json            |  80 +++
  docs/checkpoints/T-009-CP-2.md                     |  88 ++++
  docs/checkpoints/T-009-CP-F.checks.json            |  80 +++
- docs/checkpoints/T-009-CP-F.md                     |  93 ++++
+ docs/checkpoints/T-009-CP-F.md                     |  98 ++++
  docs/checkpoints/T-013-CP-1.checks.json            |  62 +++
  docs/checkpoints/T-013-CP-1.md                     |  85 ++++
  docs/checkpoints/T-013-CP-2.checks.json            |  74 +++
  docs/checkpoints/T-013-CP-2.md                     |  94 ++++
  docs/checkpoints/T-013-CP-F.checks.json            |  74 +++
- docs/checkpoints/T-013-CP-F.md                     | 121 +++++
+ docs/checkpoints/T-013-CP-F.md                     | 171 +++++++
  docs/checkpoints/T-014-CP-1.checks.json            |  68 +++
  docs/checkpoints/T-014-CP-1.md                     | 157 ++++++
  docs/checkpoints/T-014-CP-F.checks.json            |  68 +++
- docs/checkpoints/T-014-CP-F.md                     | 113 +++++
+ docs/checkpoints/T-014-CP-F.md                     | 161 ++++++
  docs/checkpoints/T-015-CP-1.checks.json            |  74 +++
  docs/checkpoints/T-015-CP-1.md                     |  96 ++++
  docs/checkpoints/T-015-CP-2.checks.json            |  74 +++
  docs/checkpoints/T-015-CP-2.md                     | 112 +++++
+ docs/checkpoints/T-015-CP-F.checks.json            |  74 +++
+ docs/checkpoints/T-015-CP-F.md                     | 169 +++++++
  docs/checkpoints/T-016-CP-1.checks.json            |  68 +++
  docs/checkpoints/T-016-CP-1.md                     | 104 ++++
  docs/checkpoints/T-016-CP-F.checks.json            |  68 +++
@@ -95,19 +97,19 @@ Dockerfile                                         |  10 +-
  docs/chunks/T-009/C1.brief.md                      |  45 ++
  docs/chunks/T-013.json                             |  67 +++
  docs/chunks/T-015.json                             | 109 ++++
- docs/evidence/T-009.md                             |  96 ++++
- docs/evidence/T-013.md                             |  13 +
- docs/evidence/T-014.md                             |   8 +
- docs/evidence/T-015.md                             | 170 +++++++
+ docs/evidence/T-009.md                             | 126 +++++
+ docs/evidence/T-013.md                             |  16 +
+ docs/evidence/T-014.md                             |   9 +
+ docs/evidence/T-015.md                             | 252 ++++++++++
  docs/evidence/T-016.md                             |   8 +
  .../ISSUE-20261117-131059-C1-conftest-destroyed.md |  57 +++
  docs/plan.md                                       |  13 +-
  docs/qa/review-T-014.md                            |  77 +++
  docs/qa/review-T-016.md                            |  72 +++
- docs/tasks/T-009-e2e-automation.md                 |  23 +-
- .../T-013-fix-bug-002-dockerfile-source-paths.md   |  69 +++
- docs/tasks/T-014-verify-bug-002-dockerfile.md      |  62 +++
- docs/tasks/T-015-fix-bug-003-local-stack.md        |  71 +++
+ docs/tasks/T-009-e2e-automation.md                 |  25 +-
+ .../T-013-fix-bug-002-dockerfile-source-paths.md   |  71 +++
+ docs/tasks/T-014-verify-bug-002-dockerfile.md      |  64 +++
+ docs/tasks/T-015-fix-bug-003-local-stack.md        |  73 +++
  docs/tasks/T-016-verify-bug-003-local-stack.md     |  66 +++
  scripts/e2e.ps1                                    | 224 +++++++++
  scripts/validate-e2e-data.py                       | 166 ++++++
@@ -149,7 +151,7 @@ Dockerfile                                         |  10 +-
  .../test_uc_e2e_008_manual_deletion.py             | 231 +++++++++
  tests/regression/test_dockerfile_source_paths.py   |  99 ++++
  tests/regression/test_stack_health_prereqs.py      |  47 ++
- 90 files changed, 7844 insertions(+), 118 deletions(-)
+ 92 files changed, 8314 insertions(+), 118 deletions(-)
 ```
 
 ## User remarks
@@ -166,4 +168,4 @@ Dockerfile                                         |  10 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
