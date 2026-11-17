@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | pending |
+| commit | a65a58c |
 
 ## Bug summary
 
@@ -66,3 +66,4 @@
   empty-query message). Regression в†’ 4 passed. Real stack в†’ `/api/health` 200,
   ingest 5 tasks. Full e2e (T-009 C7) в†’ 49 passed, 4 skipped (Ollama), 0 failed.
 - 2026-11-17: CP-1 approved (B-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- a65a58c: CP-1 snapshot
