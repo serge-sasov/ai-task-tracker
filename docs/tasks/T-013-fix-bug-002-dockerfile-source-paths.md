@@ -22,7 +22,7 @@
 | base_commit | 90c22f7 |
 | usage | n/a |
 | issues | - |
-| commit | e2c518e |
+| commit | 095944b |
 
 ## Bug summary
 
@@ -68,3 +68,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: CP-F awaiting_review (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - e2c518e: CP-F snapshot
 - 2026-11-17: CP-F approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
+- 095944b: CP-F snapshot
