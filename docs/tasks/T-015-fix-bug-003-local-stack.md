@@ -14,7 +14,7 @@
 | severity | P1 |
 | profile | - |
 | inputs | `docs/bugs/BUG-003-local-stack-not-healthy.md`, `backend/pom.xml`, `src/main/**`, `docker-compose.yml`, `tests/regression/**` |
-| artifacts | `backend/pom.xml`, `src/main/**`, `docker-compose.yml`, `tests/regression/**`, `docs/tasks/T-015-*.md` |
+| artifacts | `backend/pom.xml`, `src/main/**`, `docker-compose.yml`, `tests/regression/**` |
 | e2e | required - the full T-009 suite is the acceptance gate |
 | ux | not applicable (backend/infrastructure) |
 | chunks | ledger `docs/chunks/T-015.json` |
@@ -48,7 +48,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | reproduction/root cause | `tests/regression/**` + card log | 8P/0F/0M | approved | docs/checkpoints/T-015-CP-1.md |
-| CP-2 | fix/regression | `backend/pom.xml`, `src/main/**`, `docker-compose.yml` | - | pending | `docs/checkpoints/T-015-CP-2.md` |
+| CP-2 | fix/regression | `backend/pom.xml`, `src/main/**`, `docker-compose.yml` | 9P/0F/0M | approved | docs/checkpoints/T-015-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-015-CP-F.md` |
 
 ## Blockers
@@ -58,12 +58,13 @@
 ## Log
 
 - 2026-11-17 CP-1: `python -m pytest tests/regression/test_stack_health_prereqs.py`
-  в†’ 2 failed on the base revision (Flyway PostgreSQL module missing; backend port
+  РІвЂ вЂ™ 2 failed on the base revision (Flyway PostgreSQL module missing; backend port
   hardcoded 8080). Root cause documented in BUG-003.
 - 2026-11-17 CP-2: fixes applied (pom Flyway module; compose port overrides;
   TaskStatus converter; typed repository queries; Path bean; scheduler `@Value`;
   `spring.data.redis.*`; snake_case Jackson; TokenService periods/bounds/cache;
-  empty-query message). Regression в†’ 4 passed. Real stack в†’ `/api/health` 200,
-  ingest 5 tasks. Full e2e (T-009 C7) в†’ 49 passed, 4 skipped (Ollama), 0 failed.
+  empty-query message). Regression РІвЂ вЂ™ 4 passed. Real stack РІвЂ вЂ™ `/api/health` 200,
+  ingest 5 tasks. Full e2e (T-009 C7) РІвЂ вЂ™ 49 passed, 4 skipped (Ollama), 0 failed.
 - 2026-11-17: CP-1 approved (B-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - a65a58c: CP-1 snapshot
+- 2026-11-17: CP-2 approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
