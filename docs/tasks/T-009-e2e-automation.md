@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=4532332 out=1135651 cr=107137159 ratio=23.6x min=2654 |
 | issues | - |
-| commit | 2dc17b4 |
+| commit | 3378dd8 |
 
 ## Acceptance
 
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: CP-1 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4531810 out=1135533 cr=106581809 ratio=23.5x min=2654; reviewer auto (P2)
 - 2dc17b4: CP-1 snapshot
 - 2026-11-17: CP-2 approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4532332 out=1135651 cr=107137159 ratio=23.6x min=2654; reviewer auto (P2)
+- 3378dd8: CP-2 snapshot
