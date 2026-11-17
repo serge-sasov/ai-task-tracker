@@ -7,7 +7,7 @@
 | workflow | bugfix |
 | stage | B-02 |
 | role | coder |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false (true forces human review at every checkpoint) |
 | depends_on | T-009 (held at C7) |
 | bug | BUG-002 |
@@ -46,7 +46,7 @@
 |---|---|---|---|---|---|
 | CP-1 | reproduction/root cause | `tests/regression/**` + card log | 6P/0F/0M | approved | docs/checkpoints/T-013-CP-1.md |
 | CP-2 | fix/regression | `Dockerfile` + `tests/regression/**` | 9P/0F/0M | approved | docs/checkpoints/T-013-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-013-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-013-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -65,3 +65,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-17: the living task card is excluded from hashed artifacts (it changes at every checkpoint); the CP-1 evidence row for the card was removed to avoid self-referential hash churn. Hashed deliverables: Dockerfile + regression test.
 - 2026-11-17: CP-2 approved (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - dd0f659: CP-2 snapshot
+- 2026-11-17: CP-F awaiting_review (B-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
