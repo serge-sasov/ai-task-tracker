@@ -1175,6 +1175,28 @@ function Invoke-SelfTest {
         New-TextFile $d 'stray.txt' 'y'
         Invoke-Case -Name 'tree-clean stray' -Type 'tree-clean' -Params @{ allow = @('tracked.txt') } -Dir $d -Expect 'FAIL'
 
+        $d = New-CaseDir 'git-crlf-warning'
+        $null = Invoke-Git -Root $d -Arguments @('init', '-q')
+        $null = Invoke-Git -Root $d -Arguments @('config', 'core.autocrlf', 'true')
+        $null = Invoke-Git -Root $d -Arguments @('config', 'core.safecrlf', 'warn')
+        New-TextFile $d 'lf.txt' "line one`nline two`n"
+        $crlfOk = 'FAIL'
+        $previousEap = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = 'Stop'
+            $r = Invoke-Git -Root $d -Arguments @('add', '--', 'lf.txt')
+            $stderrText = $r.StdErr -join "`n"
+            $stdoutText = $r.Output -join "`n"
+            if ($r.ExitCode -eq 0 -and $stderrText -match 'LF will be replaced by CRLF' -and $stdoutText -notmatch 'warning:') { $crlfOk = 'PASS' }
+        }
+        catch {
+            Write-Host ("       {0}" -f $_.Exception.Message) -ForegroundColor Red
+        }
+        finally {
+            $ErrorActionPreference = $previousEap
+        }
+        Assert-Equal -Label 'Invoke-Git tolerates a CRLF warning under EAP=Stop' -Actual $crlfOk -Expected 'PASS' -Failed ([ref]$failed)
+
         $d = New-CaseDir 'sanity-good'
         New-TextFile $d 'docs/a.md' "# A`n`n## Required`n`ntext"
         New-TextFile $d 'p/index.html' '<html lang="ru"><head><title>X</title></head><body><a href="uc-e2e-001.html">1</a></body></html>'
