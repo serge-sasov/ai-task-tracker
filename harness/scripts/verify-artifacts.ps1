@@ -620,7 +620,8 @@ function Check-DepsAcyclic {
         $id = $fields['id'].Trim('`').Trim()
         $deps = @()
         if ($fields.ContainsKey('depends_on')) {
-            foreach ($d in ($fields['depends_on'] -replace '`', '').Split(',')) {
+            $raw = ($fields['depends_on'] -replace '`', '') -replace '\([^)]*\)', ''
+            foreach ($d in $raw.Split(',')) {
                 $d = $d.Trim()
                 if ($d -and $d -ne '-') { $deps += $d }
             }
@@ -1068,6 +1069,24 @@ function Invoke-SelfTest {
         $p = Join-Path $Dir $Rel
         Write-Utf8NoBom $p $Text
     }
+    function New-CardFile {
+        param([string]$Dir, [string]$Rel, [string]$Id, [string]$Depends = '-')
+        $text = @(
+            '| Field | Value |'
+            '|---|---|'
+            "| id | $Id |"
+            "| title | Card $Id |"
+            '| workflow | feature |'
+            '| stage | P-00 |'
+            '| role | orchestrator |'
+            '| status | pending |'
+            "| depends_on | $Depends |"
+            '| artifacts | docs/plan.md |'
+            '| e2e | required |'
+            '| ux | required |'
+        ) -join "`n"
+        New-TextFile $Dir $Rel $text
+    }
     function Invoke-Case {
         param([string]$Name, [string]$Type, [hashtable]$Params, [string]$Dir, [string]$Expect)
         $all = @(Get-AllFiles -Root $Dir)
@@ -1174,6 +1193,15 @@ function Invoke-SelfTest {
         $null = Invoke-Git -Root $d -Arguments @('-c', 'user.email=t@t', '-c', 'user.name=t', 'commit', '-qm', 'base')
         New-TextFile $d 'stray.txt' 'y'
         Invoke-Case -Name 'tree-clean stray' -Type 'tree-clean' -Params @{ allow = @('tracked.txt') } -Dir $d -Expect 'FAIL'
+
+        $d = New-CaseDir 'card-fields-good'
+        New-CardFile $d 'docs/tasks/T-001-x.md' 'T-001'
+        Invoke-Case -Name 'card-fields e2e parsed' -Type 'card-fields' -Params @{} -Dir $d -Expect 'PASS'
+
+        $d = New-CaseDir 'deps-parenthetical-good'
+        New-CardFile $d 'docs/tasks/T-001-x.md' 'T-001'
+        New-CardFile $d 'docs/tasks/T-002-x.md' 'T-002' 'T-001 (done)'
+        Invoke-Case -Name 'deps-acyclic parenthetical' -Type 'deps-acyclic' -Params @{} -Dir $d -Expect 'PASS'
 
         $d = New-CaseDir 'git-crlf-warning'
         $null = Invoke-Git -Root $d -Arguments @('init', '-q')

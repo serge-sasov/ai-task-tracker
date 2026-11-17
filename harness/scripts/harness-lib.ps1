@@ -163,7 +163,7 @@ function Get-CardFields {
     param([Parameter(Mandatory = $true)][string]$Path)
     $fields = @{}
     foreach ($line in ((Read-Utf8 $Path) -split "`r?`n")) {
-        if ($line -match '^\|\s*([A-Za-z_]+)\s*\|\s*(.*?)\s*\|\s*$') {
+        if ($line -match '^\|\s*([A-Za-z0-9_]+)\s*\|\s*(.*?)\s*\|\s*$') {
             $key = $Matches[1].ToLowerInvariant()
             if ($key -eq 'field') { continue }
             if (-not $fields.ContainsKey($key)) { $fields[$key] = $Matches[2] }
