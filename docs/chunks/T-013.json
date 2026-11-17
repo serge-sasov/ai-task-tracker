@@ -20,11 +20,11 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "B-01 reproduction/root cause + B-02 minimal fix and regression",
-                       "state":  "pending",
-                        "owns":  [
-                                     "Dockerfile",
-                                     "tests/regression/**"
-                                 ],
+                       "state":  "done",
+                       "owns":  [
+                                    "Dockerfile",
+                                    "tests/regression/**"
+                                ],
                        "inputs":  [
                                       "docs/bugs/BUG-002-dockerfile-source-paths.md",
                                       "Dockerfile",
@@ -39,22 +39,29 @@
                                           "no unrelated behavior or files changed"
                                       ],
                        "produced":  [
-
-                                     ],
+                                        {
+                                            "path":  "Dockerfile",
+                                            "sha256":  "727ca1bf6df0ea3471d54d7067fd784c455617fce8819dcd5f223593f073f7b6"
+                                        },
+                                        {
+                                            "path":  "tests/regression/test_dockerfile_source_paths.py",
+                                            "sha256":  "effe2bf157efe3bcb6ce7505d361d35ba5258178827bc1e540252911a67edf77"
+                                        }
+                                    ],
                        "base_commit":  "90c22f7",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
-                                    "in":  0,
-                                    "out":  0,
-                                    "cr":  0,
-                                    "min":  0
-                                },
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
                        "issues":  [
 
-                                   ],
-                       "started":  null,
-                       "finished":  null
+                                  ],
+                       "started":  "2026-11-17T13:29:22",
+                       "finished":  "2026-11-17T13:30:51"
                    }
                ],
-    "updated":  "2026-11-16T16:30:00+03:00"
+    "updated":  "2026-11-17T13:30:51"
 }
