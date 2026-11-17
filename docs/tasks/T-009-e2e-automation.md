@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=4531810 out=1135533 cr=106581809 ratio=23.5x min=2654 |
 | issues | - |
-| commit | pending |
+| commit | 2dc17b4 |
 
 ## Acceptance
 
@@ -49,3 +49,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-16: Variant 3 re-plan (user-approved). C7 held pending. C1/C3/C4 re-opened: (C1) inert per-UC emitter replaced by pytest_runtest_logreport aggregation, sessionfinish collect-only guard, runner no-abort, README sync; (C3) package conftest stack fixture with seed+wait, UC-002/003 missing fixture, contract-faithful health status, skip-on-stack-down; (C4) skip-on-stack-down + Ollama-down skip. BUG-002 (Dockerfile source-path defect) triaged P1; bugfix tasks T-013 (coder) and T-014 (QA) created. C7 resumes after the C1/C3/C4 fixes and BUG-002 verification, then runs the full suite live and records per-UC results.
 - 2026-11-17: C7 full run GREEN on the local stack: 49 passed, 4 skipped (Ollama-dependent AI-search), 0 failed, 0 errors; per-UC results in tests/e2e/results/ (summary: 8/8 pass). Chunks 7/7 done.
 - 2026-11-17: CP-1 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=4531810 out=1135533 cr=106581809 ratio=23.5x min=2654; reviewer auto (P2)
+- 2dc17b4: CP-1 snapshot
