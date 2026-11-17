@@ -111,20 +111,30 @@ public class SearchService {
         return Math.min(limit, topK);
     }
 
-    /** Collect non-empty snippets from steps (kind=step) and solutions (kind=solution). */
+    /** Collect non-empty snippets from steps (kind=step) and solutions (kind=solution).
+     *
+     * <p>When {@code taskId} is null/blank (the global S-03 search) candidates are
+     * collected across ALL tasks; a non-blank {@code taskId} restricts the search.
+     */
     List<Candidate> collectCandidates(String taskId) {
         List<Candidate> snippets = new ArrayList<>();
-        for (StepEntity step : stepRepository.findByTaskIdOrderByAtAsc(taskId)) {
+        boolean scoped = taskId != null && !taskId.isBlank();
+        List<StepEntity> steps = scoped
+                ? stepRepository.findByTaskIdOrderByAtAsc(taskId)
+                : stepRepository.findAll();
+        for (StepEntity step : steps) {
             String text = step.getText();
             if (text != null && !text.isBlank()) {
-                snippets.add(new Candidate(taskId, "step", text));
+                snippets.add(new Candidate(step.getTaskId(), "step", text));
             }
         }
-        for (SolutionEntity solution : solutionRepository
-                .findByTaskIdOrderBySolutionIdAsc(taskId)) {
+        List<SolutionEntity> solutions = scoped
+                ? solutionRepository.findByTaskIdOrderBySolutionIdAsc(taskId)
+                : solutionRepository.findAll();
+        for (SolutionEntity solution : solutions) {
             String text = solution.getText();
             if (text != null && !text.isBlank()) {
-                snippets.add(new Candidate(taskId, "solution", text));
+                snippets.add(new Candidate(solution.getTaskId(), "solution", text));
             }
         }
         return snippets;

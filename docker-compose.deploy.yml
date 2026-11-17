@@ -1,0 +1,8 @@
+# Local deployment override (not part of the T-009 e2e acceptance artifacts).
+# The base docker-compose.yml keeps the generic defaults; this override wires the
+# AI-search client to the host Ollama and a real chat model for local use.
+services:
+  backend:
+    environment:
+      API_OLLAMA_BASE_URL: ${API_OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      API_OLLAMA_MODEL: ${API_OLLAMA_MODEL:-qwen3.8:27b}
