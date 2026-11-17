@@ -1,0 +1,80 @@
+{
+    "task":  "T-009",
+    "workflow":  "feature",
+    "stage":  "I-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "3378dd8",
+    "generated_at":  "2026-11-17T15:41:17",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "30 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "PASS",
+                        "detail":  "30 artifact(s) match ledger"
+                    },
+                    {
+                        "id":  "e2e-tests-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "26 file(s)"
+                    },
+                    {
+                        "id":  "e2e-runner-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "e2e-validator-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "e2e-cleanup",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "1 pattern(s) in 26 file(s)"
+                    },
+                    {
+                        "id":  "e2e-no-production",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "2 pattern(s) absent in 26 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "7 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "7 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "7 chunk(s) within 24/80 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  10,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  0,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
