@@ -7,7 +7,7 @@
 | workflow | bugfix |
 | stage | B-03 |
 | role | qa |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-015 |
 | bug | BUG-003 |
@@ -48,7 +48,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | verification plan | verification plan (in card log) | 4P/0F/0M | approved | docs/checkpoints/T-016-CP-1.md |
-| CP-F | final acceptance | `docs/qa/review-T-016.md` | 5P/0F/0M | awaiting_review | docs/checkpoints/T-016-CP-F.md |
+| CP-F | final acceptance | `docs/qa/review-T-016.md` | 5P/0F/0M | approved | docs/checkpoints/T-016-CP-F.md |
 
 ## Blockers
 
@@ -64,3 +64,4 @@
 - ccbbc2a: CP-1 snapshot
 - 2026-11-17: CP-F awaiting_review (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 090a6ce: CP-F snapshot
+- 2026-11-17: CP-F approved (B-03); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)

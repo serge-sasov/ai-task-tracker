@@ -40,4 +40,4 @@ Task graph (feature workflow): `P-00 РІвЂ вЂ™ A-01 РІвЂ вЂ™ A-
 | T-013 | bugfix | Fix BUG-002: Dockerfile source-path mismatch (B-01/B-02) | coder | T-009 | done | BUG-002 | Dockerfile, tests/regression/** | n/a | 095944b |
 | T-014 | bugfix | Verify BUG-002: Dockerfile fix (B-03) | qa | T-013 | done | BUG-002 | docs/qa/review-T-014.md | n/a | 4b51ef3 |
 | T-015 | bugfix | Fix BUG-003: local stack functional health (B-01/B-02) | coder | T-009 | done | BUG-003 | backend/pom.xml, src/main/**, docker-compose.yml, tests/regression/** | n/a | 4bc664b |
-| T-016 | bugfix | Verify BUG-003: local stack (B-03) | qa | T-015 | awaiting_review | BUG-003 | docs/qa/review-T-016.md | n/a | 090a6ce |
+| T-016 | bugfix | Verify BUG-003: local stack (B-03) | qa | T-015 | done | BUG-003 | docs/qa/review-T-016.md | n/a | - |
