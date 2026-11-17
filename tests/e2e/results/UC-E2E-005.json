@@ -1,0 +1,57 @@
+{
+  "uc_id": "UC-E2E-005",
+  "title": "Календарный вид задач с продолжительностью",
+  "actor": "пользователь-разработчик",
+  "priority": "P1",
+  "source_requirements": [
+    "R-008",
+    "R-009",
+    "R-023",
+    "R-030"
+  ],
+  "expected_postcondition": "состояние не изменено (read-only)",
+  "status": "pass",
+  "counts": {
+    "total": 5,
+    "pass": 5,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_view_days",
+      "status": "passed",
+      "duration_ms": 45,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_cell_tasks_match_dataset",
+      "status": "passed",
+      "duration_ms": 39,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_day_view_duration_semantics",
+      "status": "passed",
+      "duration_ms": 31,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_month_view_task_counts",
+      "status": "passed",
+      "duration_ms": 79,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_invalid_period_400",
+      "status": "passed",
+      "duration_ms": 27,
+      "detail": ""
+    }
+  ],
+  "duration_ms": 221,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}

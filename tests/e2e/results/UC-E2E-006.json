@@ -1,0 +1,57 @@
+{
+  "uc_id": "UC-E2E-006",
+  "title": "Статистика потреблённых токенов по моделям",
+  "actor": "пользователь-разработчик",
+  "priority": "P1",
+  "source_requirements": [
+    "R-012",
+    "R-013",
+    "R-023",
+    "R-030"
+  ],
+  "expected_postcondition": "состояние не изменено (read-only)",
+  "status": "pass",
+  "counts": {
+    "total": 5,
+    "pass": 5,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_all_period_totals",
+      "status": "passed",
+      "duration_ms": 67,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_period_2026_11_10_totals",
+      "status": "passed",
+      "duration_ms": 43,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_range_equals_all",
+      "status": "passed",
+      "duration_ms": 64,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_from_gt_to_400",
+      "status": "passed",
+      "duration_ms": 2,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_has_data_true",
+      "status": "passed",
+      "duration_ms": 6,
+      "detail": ""
+    }
+  ],
+  "duration_ms": 182,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}

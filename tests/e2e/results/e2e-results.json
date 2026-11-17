@@ -1,0 +1,556 @@
+{
+  "scope": "ai-task-tracker",
+  "dataset": "e2e-test-data-ai-task-tracker.yaml",
+  "generated_at": "2026-11-17T12:35:56.042267+00:00",
+  "results": [
+    {
+      "uc_id": "UC-E2E-001",
+      "title": "Подъём стека и стартовое состояние сервиса",
+      "actor": "QA-инженер (e2e-раннер)",
+      "priority": "P0",
+      "source_requirements": [
+        "R-020",
+        "R-021",
+        "R-022",
+        "R-027",
+        "R-028",
+        "R-030"
+      ],
+      "expected_postcondition": "стек работает локально, UI доступен, БД пуста, готово для UC-E2E-002",
+      "status": "pass",
+      "counts": {
+        "total": 2,
+        "pass": 2,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_stack_boots_and_empty_state",
+          "status": "passed",
+          "duration_ms": 70,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_initial_state_has_no_tasks_in_db",
+          "status": "passed",
+          "duration_ms": 22,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 92,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-002",
+      "title": "Сбор данных об активностях opencode (инжест)",
+      "actor": "сервис (polling-синхронизатор)",
+      "priority": "P0",
+      "source_requirements": [
+        "R-001",
+        "R-002",
+        "R-006",
+        "R-024",
+        "R-026"
+      ],
+      "expected_postcondition": "в БД 5 задач TASK-001..TASK-005 со ссылкой на исходные сессии; UI показывает список из 5 задач",
+      "status": "pass",
+      "counts": {
+        "total": 7,
+        "pass": 7,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_sessions_are_ingested_to_five_tasks",
+          "status": "passed",
+          "duration_ms": 57223,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 39,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 14,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 13,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 11,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 13,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_detail_has_six_chronological_steps",
+          "status": "passed",
+          "duration_ms": 45,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 57358,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-003",
+      "title": "Просмотр списка задач и деталей задачи",
+      "actor": "пользователь-разработчик",
+      "priority": "P0",
+      "source_requirements": [
+        "R-002",
+        "R-003",
+        "R-004",
+        "R-005",
+        "R-006",
+        "R-007",
+        "R-009",
+        "R-023",
+        "R-030"
+      ],
+      "expected_postcondition": "состояние не изменено (read-only); пользователь видит список и детали",
+      "status": "pass",
+      "counts": {
+        "total": 18,
+        "pass": 18,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-001-\\u041d\\u0430\\u0441\\u0442\\u0440\\u043e\\u0439\\u043a\\u0430 CI \\u0434\\u043b\\u044f \\u0440\\u0435\\u043f\\u043e\\u0437\\u0438\\u0442\\u043e\\u0440\\u0438\\u044f ai-task-tracker]",
+          "status": "passed",
+          "duration_ms": 15,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-002-\\u0412\\u044b\\u0431\\u043e\\u0440 \\u0441\\u043f\\u043e\\u0441\\u043e\\u0431\\u0430 \\u0430\\u0432\\u0442\\u043e\\u0440\\u0438\\u0437\\u0430\\u0446\\u0438\\u0438 \\u043b\\u043e\\u043a\\u0430\\u043b\\u044c\\u043d\\u043e\\u0433\\u043e API]",
+          "status": "passed",
+          "duration_ms": 31,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-003-\\u0418\\u0441\\u0441\\u043b\\u0435\\u0434\\u043e\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0437\\u0430\\u0432\\u0438\\u0441\\u0430\\u043d\\u0438\\u044f backend \\u043f\\u043e\\u0434 \\u043d\\u0430\\u0433\\u0440\\u0443\\u0437\\u043a\\u043e\\u0439]",
+          "status": "passed",
+          "duration_ms": 29,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-004-\\u0420\\u0435\\u0430\\u043b\\u0438\\u0437\\u0430\\u0446\\u0438\\u044f \\u0432\\u0435\\u043a\\u0442\\u043e\\u0440\\u043d\\u043e\\u0433\\u043e \\u0438\\u043d\\u0434\\u0435\\u043a\\u0441\\u0430 \\u0434\\u043b\\u044f AI-\\u043f\\u043e\\u0438\\u0441\\u043a\\u0430]",
+          "status": "passed",
+          "duration_ms": 28,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-005-\\u0414\\u043e\\u0431\\u0430\\u0432\\u043b\\u0435\\u043d\\u0438\\u0435 \\u0432\\u0438\\u0434\\u0436\\u0435\\u0442\\u0430 \\u0442\\u043e\\u043a\\u0435\\u043d\\u043e\\u0432 \\u043d\\u0430 \\u044d\\u043a\\u0440\\u0430\\u043d \\u0441\\u0442\\u0430\\u0442\\u0438\\u0441\\u0442\\u0438\\u043a\\u0438]",
+          "status": "passed",
+          "duration_ms": 12,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 33,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 12,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 12,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 41,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+          "status": "passed",
+          "duration_ms": 14,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_task_001_actions_and_chosen_solution",
+          "status": "passed",
+          "duration_ms": 36,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-001-proposed0-GitLab CI]",
+          "status": "passed",
+          "duration_ms": 14,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-002-proposed1-JWT \\u0441 \\u0440\\u043e\\u0442\\u0430\\u0446\\u0438\\u0435\\u0439]",
+          "status": "passed",
+          "duration_ms": 11,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-003-proposed2-\\u041e\\u0433\\u0440\\u0430\\u043d\\u0438\\u0447\\u0435\\u043d\\u0438\\u0435 \\u043e\\u0447\\u0435\\u0440\\u0435\\u0434\\u0438 \\u0437\\u0430\\u0434\\u0430\\u0447]",
+          "status": "passed",
+          "duration_ms": 8,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-004-proposed3-None]",
+          "status": "passed",
+          "duration_ms": 30,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-005-proposed4-None]",
+          "status": "passed",
+          "duration_ms": 29,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_task_005_has_explicit_empty_state",
+          "status": "passed",
+          "duration_ms": 29,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_token_block_matches_seed_usage",
+          "status": "passed",
+          "duration_ms": 31,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 415,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-004",
+      "title": "AI-поиск задач свободным текстом",
+      "actor": "пользователь-разработчик",
+      "priority": "P1",
+      "source_requirements": [
+        "R-010",
+        "R-011",
+        "R-023",
+        "R-027",
+        "R-028"
+      ],
+      "expected_postcondition": "состояние не изменено (read-only)",
+      "status": "pass",
+      "counts": {
+        "total": 5,
+        "pass": 1,
+        "fail": 0,
+        "error": 0,
+        "skipped": 4
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_semantic_query_top_k",
+          "status": "skipped",
+          "duration_ms": 34,
+          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 84, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_unrelated_query_empty",
+          "status": "skipped",
+          "duration_ms": 0,
+          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 107, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_empty_query_client_validation",
+          "status": "passed",
+          "duration_ms": 34,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_response_time_bound",
+          "status": "skipped",
+          "duration_ms": 0,
+          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 125, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_english_query_valid_200",
+          "status": "skipped",
+          "duration_ms": 0,
+          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 135, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+        }
+      ],
+      "duration_ms": 68,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-005",
+      "title": "Календарный вид задач с продолжительностью",
+      "actor": "пользователь-разработчик",
+      "priority": "P1",
+      "source_requirements": [
+        "R-008",
+        "R-009",
+        "R-023",
+        "R-030"
+      ],
+      "expected_postcondition": "состояние не изменено (read-only)",
+      "status": "pass",
+      "counts": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_view_days",
+          "status": "passed",
+          "duration_ms": 45,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_cell_tasks_match_dataset",
+          "status": "passed",
+          "duration_ms": 39,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_day_view_duration_semantics",
+          "status": "passed",
+          "duration_ms": 31,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_month_view_task_counts",
+          "status": "passed",
+          "duration_ms": 79,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_invalid_period_400",
+          "status": "passed",
+          "duration_ms": 27,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 221,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-006",
+      "title": "Статистика потреблённых токенов по моделям",
+      "actor": "пользователь-разработчик",
+      "priority": "P1",
+      "source_requirements": [
+        "R-012",
+        "R-013",
+        "R-023",
+        "R-030"
+      ],
+      "expected_postcondition": "состояние не изменено (read-only)",
+      "status": "pass",
+      "counts": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_all_period_totals",
+          "status": "passed",
+          "duration_ms": 67,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_period_2026_11_10_totals",
+          "status": "passed",
+          "duration_ms": 43,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_range_equals_all",
+          "status": "passed",
+          "duration_ms": 64,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_from_gt_to_400",
+          "status": "passed",
+          "duration_ms": 2,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_has_data_true",
+          "status": "passed",
+          "duration_ms": 6,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 182,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-007",
+      "title": "Надёжность: перезапуск сервиса и идемпотентная синхронизация",
+      "actor": "QA-инженер (e2e-раннер)",
+      "priority": "P1",
+      "source_requirements": [
+        "R-025",
+        "R-026",
+        "R-028"
+      ],
+      "expected_postcondition": "данные полностью сохранены и неизменны; дубликатов нет",
+      "status": "pass",
+      "counts": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_health_after_restart",
+          "status": "passed",
+          "duration_ms": 7446,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_list_unchanged_after_restart",
+          "status": "passed",
+          "duration_ms": 7544,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_token_totals_unchanged_after_restart",
+          "status": "passed",
+          "duration_ms": 7533,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_resync_idempotent_no_duplicates",
+          "status": "passed",
+          "duration_ms": 162,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_no_partial_records_after_resync",
+          "status": "passed",
+          "duration_ms": 120,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 22805,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    },
+    {
+      "uc_id": "UC-E2E-008",
+      "title": "Ручное удаление истории",
+      "actor": "пользователь-разработчик",
+      "priority": "P2",
+      "source_requirements": [
+        "R-029",
+        "R-028",
+        "R-030"
+      ],
+      "expected_postcondition": "данные сервиса удалены; источник opencode не изменён; UI в корректном пустом состоянии",
+      "status": "pass",
+      "counts": {
+        "total": 6,
+        "pass": 6,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "tests": [
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_requires_confirmation",
+          "status": "passed",
+          "duration_ms": 87,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_cancel_confirmation_leaves_data",
+          "status": "passed",
+          "duration_ms": 61,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_confirmed_empties_all_sections",
+          "status": "passed",
+          "duration_ms": 60306,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_opencode_source_not_deleted",
+          "status": "passed",
+          "duration_ms": 60139,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_again_empty_db_is_noop",
+          "status": "passed",
+          "duration_ms": 60176,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_reimport_after_delete_resets_data",
+          "status": "passed",
+          "duration_ms": 60256,
+          "detail": ""
+        }
+      ],
+      "duration_ms": 241025,
+      "errors": [],
+      "timestamp": "2026-11-17T12:35:56.042267+00:00",
+      "base_url": "http://127.0.0.1:18080"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "pass": 8,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0,
+    "not_run": 0
+  }
+}

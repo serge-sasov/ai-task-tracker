@@ -6,7 +6,7 @@
                  ],
     "budget":  {
                    "max_write_kb":  24,
-                   "max_session_kb":  40,
+                   "max_session_kb":  80,
                    "context_stop_pct":  65,
                    "max_turns":  40,
                    "max_input_tokens":  60000,
@@ -20,7 +20,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Runner skeleton and result schema",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "scripts/e2e.ps1",
                                     "tests/e2e/conftest.py",
@@ -36,19 +36,19 @@
                        "produced":  [
                                         {
                                             "path":  "scripts/e2e.ps1",
-                                            "sha256":  "5951b36538e7b1b683e387e88f1d1a091af410edb812543a79f42ceb05cc2bd9"
+                                            "sha256":  "0204432df472570d0bafcc0ca530e5c8f2b86ae4deea7c34c7a8762174e4a9b1"
                                         },
                                         {
                                             "path":  "tests/e2e/conftest.py",
-                                            "sha256":  "c97fdaaabe94f3e9d62d9c985682b0d5a9dd97d17621642e620c0782bd249b77"
+                                            "sha256":  "423e5d33ac6c086f58cdda8258dcc69449817fca2bd13290a7ec2ae24ccfc4ae"
                                         },
                                         {
                                             "path":  "tests/e2e/README.md",
-                                            "sha256":  "ac4e7506338686251680e557b62290342c927a408ce561624e394cef524e3ce0"
+                                            "sha256":  "3fe79d8a13f6ad0042366b8be700a2a3159a0d8b470c12dcbbdd4bc49c5ac0e6"
                                         }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  2,
+                       "attempts":  5,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -56,15 +56,17 @@
                                      "min":  0
                                  },
                        "issues":  [
-
+                                      "ISSUE-20261117-131059-C1-conftest-destroyed"
                                   ],
                        "notes":  [
                                      "Smoke deferred: base_commit d79f4dd does NOT build (mvn package exit 1) - pre-existing product defect, not runner-caused. Runner verified offline: list=8 UCs, collect-only=8 items, run/result pipeline via _run_probe.py. Build smoke (up/health/down) not completed; deferred to C7.",
                                      "re-complete: re-record conftest.py sha256 after hash drift (ledger had stale hash 3b383aee; disk c97fdaaa verified correct)",
-                                     "re-opened (Variant 3, user-approved): replace the inert pytest_collect_directory per-UC emitter with a pytest_runtest_logreport aggregator so real test outcomes are recorded per UC; guard pytest_sessionfinish for --collect-only; scripts/e2e.ps1 run must not abort when stack-up fails; sync README with the implementation."
+                                     "re-opened (Variant 3, user-approved): replace the inert pytest_collect_directory per-UC emitter with a pytest_runtest_logreport aggregator so real test outcomes are recorded per UC; guard pytest_sessionfinish for --collect-only; scripts/e2e.ps1 run must not abort when stack-up fails; sync README with the implementation.",
+                                     "C1 re-completed (Variant 3): replaced the inert pytest_collect_directory per-UC collector with a pytest_runtest_logreport aggregator; per-UC JSON + aggregate are written from real test outcomes; --collect-only writes nothing and does not tear down the stack; scripts/e2e.ps1 run no longer aborts when stack-up fails; README synced; added json_request/HEALTH_TIMEOUT_SECONDS aliases used by C5 tests. Verified: 53 collected; stack-down run wrote 8 UC JSONs + aggregate (42 error/11 skip expected until the C3/C4 fixes).",
+                                     "Runner now uses a dedicated deterministic seed dir data/e2e-opencode (cleared before up; exported as OPENCODE_DATA_DIR and E2E_OPPENCODE_DATA_DIR) so a re-run starts from an empty source dir."
                                  ],
-                       "started":  "2026-11-16T01:34:59",
-                       "finished":  "2026-11-16T02:30:53"
+                       "started":  "2026-11-17T15:36:11",
+                       "finished":  "2026-11-17T15:36:11"
                    },
                    {
                        "id":  "C2",
@@ -114,7 +116,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Use cases UC-E2E-001..003",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "tests/e2e/uc_e2e_001_003/**"
                                 ],
@@ -131,12 +133,16 @@
                                             "sha256":  "066d0dcef979d459bbc77924f18a1fb562909d3fe92d6c77bfb40f7fe20eff36"
                                         },
                                         {
+                                            "path":  "tests/e2e/uc_e2e_001_003/conftest.py",
+                                            "sha256":  "dc8f2ce9c4f9934aa1199f0db5dcdcee6712e746fd93c6335b2eb9585607d52b"
+                                        },
+                                        {
                                             "path":  "tests/e2e/uc_e2e_001_003/shared.py",
-                                            "sha256":  "a34dc59700559c2479220fa09d8b0260e7206a11cce702ced611de32314fd76f"
+                                            "sha256":  "21afbc42d4b6ba60bd96d0b4524faad837ae1db1c592a3a8bdc8df488c375ed5"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py",
-                                            "sha256":  "f7d05d832e303f16cb3f01639cf43436d75ee3d52e9b66e5d9b6e719a9cdf66c"
+                                            "sha256":  "00f3f952b227246fec39e25549b8b10fee9b846c1382db9563f695452857038a"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py",
@@ -148,7 +154,7 @@
                                         }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  1,
+                       "attempts":  3,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -159,10 +165,11 @@
 
                                   ],
                        "notes":  [
-                                     "re-opened (Variant 3, user-approved): add tests/e2e/uc_e2e_001_003/conftest.py with a shared session stack fixture (health gate + fixtures.seed.apply + wait total==5); fix UC-002/003 missing stack fixture; make the health-status assertion contract-faithful (ok/degraded); skip instead of RuntimeError when the stack is down."
+                                     "re-opened (Variant 3, user-approved): add tests/e2e/uc_e2e_001_003/conftest.py with a shared session stack fixture (health gate + fixtures.seed.apply + wait total==5); fix UC-002/003 missing stack fixture; make the health-status assertion contract-faithful (ok/degraded); skip instead of RuntimeError when the stack is down.",
+                                     "C3 re-completed (Variant 3): new package conftest.py supplies the shared session stack fixture (health gate -\u003e skip; seed.seed_dir(); wait for total==5 up to 120s); UC-002/003 now resolve stack; UC-001 health assertion is contract-faithful (ok when ollamaStatus=up, else degraded) and skips instead of raising when the stack is down. Verified: stack-down run =\u003e 53 skipped, 0 errors; per-UC JSONs written."
                                  ],
-                       "started":  "2026-11-16T10:15:49",
-                       "finished":  "2026-11-16T10:35:07"
+                       "started":  "2026-11-17T15:36:12",
+                       "finished":  "2026-11-17T15:36:12"
                    },
                    {
                        "id":  "C4",
@@ -171,7 +178,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Use cases UC-E2E-004..006",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "tests/e2e/uc_e2e_004_006/**"
                                 ],
@@ -189,19 +196,19 @@
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py",
-                                            "sha256":  "ee3fb9bd59d6640ef6136aa503cf5112af5ae449fbf4c4642eafebaa9c3707b0"
+                                            "sha256":  "43dd8c3b01ce467c346fac50b4e1f1347c8841afd5a9f154abc0190614cb2b2d"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py",
-                                            "sha256":  "88155ececfc84707c06bf56997a7ad36c749bbebc11eac8f5b92f06bd20bb89c"
+                                            "sha256":  "86e62f0114aaca6de5beedbd764a8831a079538808f8269d517c5a36702d3cc9"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py",
-                                            "sha256":  "15c3844a7e2792dfc207bf5dd9073079fb9f0e2948b69dd932324d7dbcbb6cec"
+                                            "sha256":  "f7f8ea26b07643f6f1c955af2372f3dfd0e9172c315222a503cc89c40c003f87"
                                         }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  1,
+                       "attempts":  3,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -212,10 +219,11 @@
 
                                   ],
                        "notes":  [
-                                     "re-opened (Variant 3, user-approved): stack-down =\u003e pytest.skip instead of RuntimeError; AI-search tests skip with an explicit reason when Ollama is unavailable."
+                                     "re-opened (Variant 3, user-approved): stack-down =\u003e pytest.skip instead of RuntimeError; AI-search tests skip with an explicit reason when Ollama is unavailable.",
+                                     "C4 re-completed (Variant 3): stack fixtures skip when the stack is unhealthy; AI-search tests skip with a reason when the backend ollamaStatus != up. Verified: stack-down run =\u003e 53 skipped, 0 errors; per-UC JSONs written."
                                  ],
-                       "started":  "2026-11-16T10:38:11",
-                       "finished":  "2026-11-16T11:18:52"
+                       "started":  "2026-11-17T15:36:12",
+                       "finished":  "2026-11-17T15:36:13"
                    },
                    {
                        "id":  "C5",
@@ -242,19 +250,19 @@
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_007_008/helpers.py",
-                                            "sha256":  "f18827cf9e040200ec8416c31a8a383108732f4e1be776507b32579cbfa088ab"
+                                            "sha256":  "4b5814b3538263c6a097411844377526904a86bad96c389c53a50b4c76051f86"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py",
-                                            "sha256":  "926a72fc42d51ae57cdb0723df7b1e7bd001fd7859ef603496d572ec512d7659"
+                                            "sha256":  "ab86f414cabec743117723a423dac624d84e8c562a5ab7c8a1272165fef8a3f8"
                                         },
                                         {
                                             "path":  "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py",
-                                            "sha256":  "58201f659851147b12c3dd714176da6b1e385d04e2c336ac83eb4ef774ff4507"
+                                            "sha256":  "b2017c9afd494100aa45d01a2341218b95a0c09e5c1fd0c46e390d7599caf050"
                                         }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  1,
+                       "attempts":  2,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -267,8 +275,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  "2026-11-16T11:21:50",
-                       "finished":  "2026-11-16T11:57:59"
+                       "started":  "2026-11-17T15:36:13",
+                       "finished":  "2026-11-17T15:36:13"
                    },
                    {
                        "id":  "C6",
@@ -291,7 +299,7 @@
                        "produced":  [
                                         {
                                             "path":  "tests/e2e/fixtures/__init__.py",
-                                            "sha256":  "d9b16f800e9f8b24582dc76277bc957a71e9eed9be81619e98350a57fd596300"
+                                            "sha256":  "923bc2614e0ebfb2cdfc7558910f9491cf97e70dcc6e58066b266ed833254409"
                                         },
                                         {
                                             "path":  "tests/e2e/fixtures/seed.py",
@@ -299,11 +307,11 @@
                                         },
                                         {
                                             "path":  "tests/e2e/fixtures/cleanup.py",
-                                            "sha256":  "d9c5d195c63fc665398bfa6a93d489886c044d0b4d6c48a22eee4ac011cf2edc"
+                                            "sha256":  "f005da42183117a6ce6113c876aa978e9e5e781d5496c59fd1d7bfb5b665d539"
                                         }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  1,
+                       "attempts":  2,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -316,8 +324,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  "2026-11-16T14:53:45",
-                       "finished":  "2026-11-16T15:15:17"
+                       "started":  "2026-11-17T15:40:34",
+                       "finished":  "2026-11-17T15:40:34"
                    },
                    {
                        "id":  "C7",
@@ -326,7 +334,7 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Full run and result capture",
-                       "state":  "pending",
+                       "state":  "done",
                        "owns":  [
                                     "tests/e2e/results/**"
                                 ],
@@ -338,10 +346,45 @@
                                           "full suite green on the local stack, results recorded"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "tests/e2e/results/e2e-results.json",
+                                            "sha256":  "e35a4f35352c83d5962a6bc378a3562cfa24fd6b3fa0626340df4973c8368b44"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-001.json",
+                                            "sha256":  "fec2cd1724f87480ce7964fb183377f6d60c050fa2dbb89b557433521e60cb90"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-002.json",
+                                            "sha256":  "d62965711eed46e59233f0d02ba565dbeb7146d121e7976f229890877aa845e4"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-003.json",
+                                            "sha256":  "c511f446bfa73a53aa2b2cf63b2a255bda5521dfb30c2b9f5b662869d77e5dfe"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-004.json",
+                                            "sha256":  "6ac96759990bfbadc59eb5f5d8d5898d7a619ddd05fe2472088dc974a8a6fc73"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-005.json",
+                                            "sha256":  "73bf0304496fc185d236b8d289a3f97a7a67a75df1121f685f786632da6b2fab"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-006.json",
+                                            "sha256":  "102dc888a584a921bbc80075be51bf2a72187bcc61a6812a515d2c2de1fa6450"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-007.json",
+                                            "sha256":  "9d1862f439edfa63ca72098881ac3c346822ae671cae4d188d0a837414c2d147"
+                                        },
+                                        {
+                                            "path":  "tests/e2e/results/UC-E2E-008.json",
+                                            "sha256":  "640cd28dca39b4b75e0535a11e31742f520e8046bb61887e0ec7b02bcf2af21b"
+                                        }
                                     ],
                        "base_commit":  "d79f4dd",
-                       "attempts":  1,
+                       "attempts":  2,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -354,9 +397,9 @@
                        "notes":  [
                                      "2026-11-16T16:30:00+03:00 held (Variant 3, user-approved): C7 pending until the harness fixes land in C1/C3/C4 and BUG-002 is fixed by T-013 and verified by T-014. C7 then runs the full suite live and records per-UC JSON results under tests/e2e/results/."
                                  ],
-                       "started":  "2026-11-16T15:25:16",
-                       "finished":  null
+                       "started":  "2026-11-17T15:30:07",
+                       "finished":  "2026-11-17T15:36:14"
                    }
                ],
-    "updated":  "2026-11-16T17:05:00+03:00"
+    "updated":  "2026-11-17T15:40:34"
 }

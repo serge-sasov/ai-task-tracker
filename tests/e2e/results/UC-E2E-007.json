@@ -1,0 +1,56 @@
+{
+  "uc_id": "UC-E2E-007",
+  "title": "Надёжность: перезапуск сервиса и идемпотентная синхронизация",
+  "actor": "QA-инженер (e2e-раннер)",
+  "priority": "P1",
+  "source_requirements": [
+    "R-025",
+    "R-026",
+    "R-028"
+  ],
+  "expected_postcondition": "данные полностью сохранены и неизменны; дубликатов нет",
+  "status": "pass",
+  "counts": {
+    "total": 5,
+    "pass": 5,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_health_after_restart",
+      "status": "passed",
+      "duration_ms": 7446,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_list_unchanged_after_restart",
+      "status": "passed",
+      "duration_ms": 7544,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_token_totals_unchanged_after_restart",
+      "status": "passed",
+      "duration_ms": 7533,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_resync_idempotent_no_duplicates",
+      "status": "passed",
+      "duration_ms": 162,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_no_partial_records_after_resync",
+      "status": "passed",
+      "duration_ms": 120,
+      "detail": ""
+    }
+  ],
+  "duration_ms": 22805,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}

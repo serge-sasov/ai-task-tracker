@@ -1,0 +1,70 @@
+{
+  "uc_id": "UC-E2E-002",
+  "title": "Сбор данных об активностях opencode (инжест)",
+  "actor": "сервис (polling-синхронизатор)",
+  "priority": "P0",
+  "source_requirements": [
+    "R-001",
+    "R-002",
+    "R-006",
+    "R-024",
+    "R-026"
+  ],
+  "expected_postcondition": "в БД 5 задач TASK-001..TASK-005 со ссылкой на исходные сессии; UI показывает список из 5 задач",
+  "status": "pass",
+  "counts": {
+    "total": 7,
+    "pass": 7,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_sessions_are_ingested_to_five_tasks",
+      "status": "passed",
+      "duration_ms": 57223,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+      "status": "passed",
+      "duration_ms": 39,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+      "status": "passed",
+      "duration_ms": 14,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
+      "status": "passed",
+      "duration_ms": 13,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+      "status": "passed",
+      "duration_ms": 11,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
+      "status": "passed",
+      "duration_ms": 13,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_detail_has_six_chronological_steps",
+      "status": "passed",
+      "duration_ms": 45,
+      "detail": ""
+    }
+  ],
+  "duration_ms": 57358,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}

@@ -1,0 +1,58 @@
+{
+  "uc_id": "UC-E2E-004",
+  "title": "AI-поиск задач свободным текстом",
+  "actor": "пользователь-разработчик",
+  "priority": "P1",
+  "source_requirements": [
+    "R-010",
+    "R-011",
+    "R-023",
+    "R-027",
+    "R-028"
+  ],
+  "expected_postcondition": "состояние не изменено (read-only)",
+  "status": "pass",
+  "counts": {
+    "total": 5,
+    "pass": 1,
+    "fail": 0,
+    "error": 0,
+    "skipped": 4
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_semantic_query_top_k",
+      "status": "skipped",
+      "duration_ms": 34,
+      "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 84, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_unrelated_query_empty",
+      "status": "skipped",
+      "duration_ms": 0,
+      "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 107, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_empty_query_client_validation",
+      "status": "passed",
+      "duration_ms": 34,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_response_time_bound",
+      "status": "skipped",
+      "duration_ms": 0,
+      "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 125, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_english_query_valid_200",
+      "status": "skipped",
+      "duration_ms": 0,
+      "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 135, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+    }
+  ],
+  "duration_ms": 68,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}

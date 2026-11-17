@@ -1,0 +1,41 @@
+{
+  "uc_id": "UC-E2E-001",
+  "title": "Подъём стека и стартовое состояние сервиса",
+  "actor": "QA-инженер (e2e-раннер)",
+  "priority": "P0",
+  "source_requirements": [
+    "R-020",
+    "R-021",
+    "R-022",
+    "R-027",
+    "R-028",
+    "R-030"
+  ],
+  "expected_postcondition": "стек работает локально, UI доступен, БД пуста, готово для UC-E2E-002",
+  "status": "pass",
+  "counts": {
+    "total": 2,
+    "pass": 2,
+    "fail": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_stack_boots_and_empty_state",
+      "status": "passed",
+      "duration_ms": 70,
+      "detail": ""
+    },
+    {
+      "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_initial_state_has_no_tasks_in_db",
+      "status": "passed",
+      "duration_ms": 22,
+      "detail": ""
+    }
+  ],
+  "duration_ms": 92,
+  "errors": [],
+  "timestamp": "2026-11-17T12:35:56.042267+00:00",
+  "base_url": "http://127.0.0.1:18080"
+}
