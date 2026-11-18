@@ -19,7 +19,7 @@
 | base_commit | 0ef0d3c |
 | usage | in=60511 out=9996 cr=1620588 ratio=26.8x min=103 |
 | issues | ISSUE-20261118-153622, ISSUE-20261118-185907 |
-| commit | 813579a |
+| commit | 85c202e |
 
 ## Acceptance
 
@@ -54,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=60511 out=9996 cr=1620588 ratio=26.8x min=103; reviewer auto (P2)
 - 813579a: CP-1 snapshot
 - 2026-11-18: CP-F approved (Q-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=60511 out=9996 cr=1620588 ratio=26.8x min=103; reviewer auto (explicit -AutoApprove)
+- 85c202e: CP-F snapshot
