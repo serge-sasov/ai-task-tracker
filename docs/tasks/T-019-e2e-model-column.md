@@ -19,7 +19,7 @@
 | base_commit | 33cd6b9 |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | f243632 |
 
 ## Acceptance
 
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-019 started on base `33cd6b9`; T-018 is done. UC-E2E-003 and the YAML dataset extended for R-014; validator passed.
 - 2026-11-18: CP-2 approved (A-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- f243632: CP-2 snapshot
