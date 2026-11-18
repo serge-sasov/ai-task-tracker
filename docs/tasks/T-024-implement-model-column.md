@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-01 |
 | role | coder |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | T-023, T-021 |
 | inputs | `docs/tasks/T-023-contracts-model-column.md`, `docs/tasks/T-021-prototype-model-column.md`, `docs/architecture/contracts-ai-task-tracker.md` (R-014, §4.2), `docs/analysis/requirements-ai-task-tracker.md` (R-014), `docs/analysis/e2e-use-cases-ai-task-tracker.md` (UC-E2E-003), `docs/architecture/architecture-ai-task-tracker.md` (class model) |
@@ -38,7 +38,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | I-01 DTO, service, tests, frontend column | TaskListItem, TaskQueryService, TaskQueryServiceTest, types.ts, DashboardView.vue | 8P/0F/0M | approved | docs/checkpoints/T-024-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-024-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-024-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: Coder completed C1 and C2 (both `done` in `docs/chunks/T-024.json`). Targeted `TaskQueryServiceTest` 15/15 pass; `npm run build` (src/web) pass. Full backend suite shows 5 pre-existing failures (SearchServiceTest ×3, TokenServiceTest ×2) reproduced at base `d4dde64`, out of scope for R-014, recorded as BUG-007.
 - 2026-11-18: CP-1 approved (I-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=82511 out=17279 cr=2997680 ratio=36.3x min=10; reviewer auto (P2)
 - 73a567b: CP-1 snapshot
+- 2026-11-18: CP-F approved (I-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=82511 out=17279 cr=2997680 ratio=36.3x min=10; reviewer auto (explicit -AutoApprove)
