@@ -9,11 +9,11 @@
 | role | ux-designer |
 | stage | U-02 |
 | artifacts | docs/ux/wireframes-ai-task-tracker.puml, docs/ux/wireframes-ai-task-tracker.svg, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/prototype/ai-task-tracker/index.html, docs/ux/prototype/ai-task-tracker/uc-e2e-*.html, docs/ux/prototype/ai-task-tracker/assets/* |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-18T10:12:17 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-18T10:13:00 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | e5590d5 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-021-CP-F.checks.json |
@@ -97,7 +97,7 @@ docs/activity.puml                                |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via opencode question: "Approve CP-F" (final U-02 acceptance; same MANUAL check as CP-2, artifacts unchanged).
 
 ## User edits
 
@@ -109,4 +109,4 @@ docs/activity.puml                                |   2 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
