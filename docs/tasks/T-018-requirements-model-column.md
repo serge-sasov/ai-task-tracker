@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-01 |
 | role | analyst |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | T-017 |
 | inputs | `docs/plan.md`, `docs/tasks/T-017-task-list-model-planning.md`, `harness/workflows/feature.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md` |
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | A-01 requirements baseline | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md` | 8P/0F/0M | approved | docs/checkpoints/T-018-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-018-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-018-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -70,3 +70,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: T-018 started on base `8fab879`; T-017 CP-F is approved. Requirement R-014 and glossary terms added; traceability and summary updated. C1 recorded as done.
 - 2026-11-18: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 848442e: CP-1 snapshot
+- 2026-11-18: CP-F approved (A-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
