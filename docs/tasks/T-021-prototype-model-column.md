@@ -19,7 +19,7 @@
 | base_commit | e2ee9b2 |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | 55e1b32 |
 
 ## Acceptance
 
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-021 started on base `e2ee9b2`; T-020 is done. Wireframes, UI spec and prototype updated for R-014; SVG rendered; chunks recorded.
 - 2026-11-18: CP-2 awaiting_review (U-02); checks 18 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 55e1b32: CP-2 snapshot
