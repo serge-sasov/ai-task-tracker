@@ -1,0 +1,98 @@
+# T-025 CP-F: I-02 E2E automation: S-01 model column
+
+| Field | Value |
+|---|---|
+| task | T-025 |
+| workflow | feature |
+| bug | - |
+| checkpoint | CP-F |
+| role | coder |
+| stage | I-02 |
+| artifacts | tests/e2e/uc_e2e_001_003/shared.py, tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py |
+| status | approved |
+| requested_at | 2026-11-18T15:53:34 |
+| reviewed_at | 2026-11-18T15:53:34 |
+| reviewer | auto (explicit -AutoApprove) |
+| decision | approved |
+| snapshot_commit | - |
+| generated_by | stage-done/1 |
+| checks_file | docs/checkpoints/T-025-CP-F.checks.json |
+
+## Review scope
+
+- Stage `I-02` acceptance for T-025.
+- `shared.py` exposes a helper that computes the expected `models` list per task from the YAML `fixtures.sessions` `usage`: sum `input_tokens + output_tokens + cache_tokens` per model, order by that total descending then model name ascending; a session with `usage: null`/empty yields an empty list. (helper `models_by_task()`).
+- `test_uc_e2e_003_task_list_detail.py` asserts `GET /api/tasks` returns `models` for every TASK-001..TASK-005, including `[]` (empty list) for TASK-002 (no usage → «Нет данных»). (`test_list_models_field_order_and_empty_state`, parametrized TASK-001..005).
+- The test asserts the ordering (total tokens desc, tie-break by model name asc) so `TASK-001/003/004/005` return `["qwen3.8:27b", "llama3.1:8b"]` in that order. (offline `test_models_by_task_aggregation_math_offline` passed).
+- `python -m py_compile` passes for both `shared.py` and `test_uc_e2e_003_task_list_detail.py`.
+- No production endpoints are used (local `127.0.0.1` stack only); no new network calls or storage writes are introduced.
+- Targeted live run skipped: runner/environment issue tracked in ISSUE-20261118-153622; `py_compile` + offline aggregation test + YAML validation (0 errors) pass.
+- Chunk C1 is `done` with produced hashes in `docs/chunks/T-025.json`.
+- No unrelated changes; the runner `scripts/e2e.ps1` and validator `scripts/validate-e2e-data.py` are unchanged.
+- `CP-2` (e2e automation) and `CP-F` (final acceptance) are declared.
+
+## Chunks
+
+| Chunk | State | Depth | Role | Produced | Title |
+|---|---|---|---|---|---|
+| C1 | done | d1 | coder | 2 | E2E: S-01 model column (models field, order, empty state) |
+
+Ledger: `docs/chunks/T-025.json`
+
+## Checks
+
+| ID | Check | Result | Detail |
+|---|---|---|---|
+| artifacts-exist | file-exists | PASS | 2 file(s) |
+| artifact-hashes | hash-match | PASS | 2 artifact(s) match ledger |
+| e2e-tests-exist | file-exists | PASS | 26 file(s) |
+| e2e-runner-exist | file-exists | PASS | 1 file(s) |
+| e2e-validator-exist | file-exists | PASS | 1 file(s) |
+| e2e-cleanup | pattern-present | PASS | 1 pattern(s) in 26 file(s) |
+| e2e-no-production | pattern-absent | PASS | 2 pattern(s) absent in 26 file(s) |
+| chunk-ownership-no-overlap | chunk-ledger | PASS | 1 chunk(s), rule ownership |
+| chunk-coverage | chunk-ledger | PASS | 1 chunk(s), rule coverage |
+| chunk-budget | chunk-ledger | PASS | 1 chunk(s) within 24/48 KB |
+
+Summary: 10 PASS, 0 FAIL, 0 MANUAL, 0 N/A, 0 UNCHECKED.
+
+## Usage
+
+| Sessions | Input | Output | Reasoning | Cache read | Cache/Input | Minutes | Cost |
+|---|---|---|---|---|---|---|---|
+| 1 | 109818 | 26993 | 0 | 6432125 | 58.6x | 16 | 0.00 |
+
+## Diff stat
+
+```
+docs/activity.puml                                 |  2 +-
+ docs/activity.svg                                  |  2 +-
+ docs/checkpoints/T-025-CP-2.checks.json            | 80 +++++++++++++++++++
+ docs/checkpoints/T-025-CP-2.md                     | 92 ++++++++++++++++++++++
+ docs/chunks/T-025.json                             | 64 +++++++++++++++
+ docs/chunks/T-025/C1.brief.md                      | 44 +++++++++++
+ docs/evidence/T-025.md                             |  8 ++
+ ...t-start-the-local-stack-and-invokes-pytest-w.md | 53 +++++++++++++
+ docs/issues/README.md                              |  1 +
+ docs/plan.md                                       |  2 +-
+ docs/tasks/T-025-e2e-model-column.md               | 56 +++++++++++++
+ tests/e2e/uc_e2e_001_003/shared.py                 | 30 +++++++
+ .../test_uc_e2e_003_task_list_detail.py            | 79 +++++++++++++++++--
+ 13 files changed, 504 insertions(+), 9 deletions(-)
+```
+
+## User remarks
+
+- (user fills; may be empty if artifacts were edited directly)
+
+## User edits
+
+- none
+
+## Role response
+
+- Machine checks: 0 FAIL, 0 UNCHECKED, 0 MANUAL.
+
+## Next action
+
+- accept task

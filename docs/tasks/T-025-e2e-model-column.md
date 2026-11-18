@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-02 |
 | role | coder |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | T-024, T-019, T-023 |
 | inputs | `docs/tasks/T-024-implement-model-column.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md` (UC-E2E-003 S8), `docs/analysis/e2e-test-data-ai-task-tracker.yaml` (UC-E2E-003 S8, `fixtures.sessions`), `docs/architecture/contracts-ai-task-tracker.md` (§4.2), `docs/architecture/openapi-api-001-ai-task-tracker.yaml` (API-001) |
@@ -38,7 +38,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | I-02 e2e automation | shared.py, test_uc_e2e_003_task_list_detail.py | 9P/0F/0M | approved | docs/checkpoints/T-025-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-025-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | approved | docs/checkpoints/T-025-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -54,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: Coder completed C1 (`done` in `docs/chunks/T-025.json`). Added the `models_by_task()` helper and `test_list_models_field_order_and_empty_state` (parametrized TASK-001..005, incl. `[]` for TASK-002 and total-desc/name-asc order) plus an offline aggregation-math test. `python -m py_compile` passes; offline pytest 1 passed / 23 skipped (stack-dependent tests skip cleanly); YAML validator 0 errors. Targeted live run skipped: runner/environment issue tracked in ISSUE-20261118-153622 (`docker compose` plugin missing + runner pytest backslash path); `scripts/e2e.ps1` and test `__init__` files left unchanged per scope.
 - 2026-11-18: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=109818 out=26993 cr=6432125 ratio=58.6x min=16; reviewer auto (P2)
 - 0990a6b: CP-2 snapshot
+- 2026-11-18: CP-F approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=109818 out=26993 cr=6432125 ratio=58.6x min=16; reviewer auto (explicit -AutoApprove)
