@@ -508,15 +508,28 @@ function Check-HashMatch {
         }
     }
     if ($latest.Count -eq 0) { return New-Result $P.id 'hash-match' 'NOT_APPLICABLE' 'ledger has no hashes' }
+    $harnessManaged = @(
+        '^docs/plan\.md$',
+        '^docs/tasks/T-[^/]+\.md$',
+        '^docs/activity\.(puml|svg)$',
+        '^docs/checkpoints/',
+        '^docs/evidence/'
+    )
     $bad = @()
+    $checked = 0
     foreach ($path in $latest.Keys) {
+        $skip = $false
+        foreach ($rx in $harnessManaged) { if ($path -match $rx) { $skip = $true; break } }
+        if ($skip) { continue }
+        $checked++
         $target = Join-Path $Ctx.Root $path
         if (-not (Test-Path -LiteralPath $target -PathType Leaf)) { $bad += "$path (missing)"; continue }
         $actual = Get-Sha256 $target
         if ($actual -ne $latest[$path]) { $bad += "$path (hash changed)" }
     }
     if ($bad.Count -gt 0) { return New-Result $P.id 'hash-match' 'FAIL' (($bad | Select-Object -First 8) -join '; ') }
-    New-Result $P.id 'hash-match' 'PASS' "$($latest.Count) artifact(s) match ledger"
+    if ($checked -eq 0) { return New-Result $P.id 'hash-match' 'NOT_APPLICABLE' 'ledger has only harness-managed artifacts' }
+    New-Result $P.id 'hash-match' 'PASS' "$checked artifact(s) match ledger"
 }
 
 function Get-CardCheckpointRows {
@@ -1168,6 +1181,11 @@ function Invoke-SelfTest {
         New-TextFile $d 'a.md' 'content'
         New-TextFile $d 'docs/evidence/T-999.md' "| Artifact | SHA256 |`n|---|---|`n| a.md | $('0' * 64) |"
         Invoke-Case -Name 'hash-match changed' -Type 'hash-match' -Params @{ ledger = 'docs/evidence/{task}.md' } -Dir $d -Expect 'FAIL'
+
+        $d = New-CaseDir 'hash-mutable'
+        New-TextFile $d 'docs/plan.md' 'content'
+        New-TextFile $d 'docs/evidence/T-999.md' "| Artifact | SHA256 |`n|---|---|`n| docs/plan.md | $('0' * 64) |"
+        Invoke-Case -Name 'hash-match skips harness-managed' -Type 'hash-match' -Params @{ ledger = 'docs/evidence/{task}.md' } -Dir $d -Expect 'NOT_APPLICABLE'
 
         $d = New-CaseDir 'diff-bad'
         $null = Invoke-Git -Root $d -Arguments @('init', '-q')
