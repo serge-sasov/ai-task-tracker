@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | P-00 |
 | role | orchestrator |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | - |
 | inputs | `docs/plan.md`, `harness/process.md`, `harness/workflows/feature.md`, `docs/analysis/requirements-ai-task-tracker.md` |
@@ -23,23 +23,23 @@
 
 ## Acceptance
 
-- [ ] Scope is fixed: S-01 gets a visible "Модель" column immediately after "Название"; it shows the primary model plus `+N`, the full ordered list in tooltip and `aria-label`, and "Нет данных" when there is no usage.
-- [ ] API contract is fixed: `TaskListItem` gets `models: string[]` for `GET /api/tasks`, ordered by total tokens (input+output+cache) descending with model-name tie-break; an empty array means no usage; existing fields stay unchanged; no DB migration.
-- [ ] e2e applicability decided with a reason (`e2e: required`, see field above); A-02, I-02, Q-01 and Q-02 are in the graph.
-- [ ] UX applicability decided with a reason (`ux: required`, see field above); U-01 and U-02 are in the graph.
-- [ ] D-01 is explicitly waived for this feature: README/changelog do not exist and are owned by the already-pending baseline T-012 D-01; documentation for this change is covered by requirements, UX spec, architecture/contracts, OpenAPI and QA evidence.
-- [ ] Task graph built from the feature workflow stage table: `P-00 -> A-01 -> A-02 -> U-01 -> U-02 -> R-01 -> R-02 -> I-01 -> I-02 -> Q-01 -> Q-02 -> F-01` (D-01 waived).
-- [ ] All P-00 successor tasks are registered as `pending` rows in `docs/plan.md` (T-018..T-028) with explicit dependencies. No successor cards are created at this checkpoint; cards are created at the start of each task.
-- [ ] Existing pending tasks T-010, T-011 and T-012 are untouched.
-- [ ] Pre-flight commits are recorded: 5f8d5a7 (harness CRLF fix), b11428c (calendar web fix), 9937007 (phase artifacts diagram), 5abdd53 (card parser/deps fix).
-- [ ] `CP-1` (plan and task graph) and `CP-F` (final acceptance) are declared in the checkpoints table.
+- [x] Scope is fixed: S-01 gets a visible "Модель" column immediately after "Название"; it shows the primary model plus `+N`, the full ordered list in tooltip and `aria-label`, and "Нет данных" when there is no usage.
+- [x] API contract is fixed: `TaskListItem` gets `models: string[]` for `GET /api/tasks`, ordered by total tokens (input+output+cache) descending with model-name tie-break; an empty array means no usage; existing fields stay unchanged; no DB migration.
+- [x] e2e applicability decided with a reason (`e2e: required`, see field above); A-02, I-02, Q-01 and Q-02 are in the graph.
+- [x] UX applicability decided with a reason (`ux: required`, see field above); U-01 and U-02 are in the graph.
+- [x] D-01 is explicitly waived for this feature: README/changelog do not exist and are owned by the already-pending baseline T-012 D-01; documentation for this change is covered by requirements, UX spec, architecture/contracts, OpenAPI and QA evidence.
+- [x] Task graph built from the feature workflow stage table: `P-00 -> A-01 -> A-02 -> U-01 -> U-02 -> R-01 -> R-02 -> I-01 -> I-02 -> Q-01 -> Q-02 -> F-01` (D-01 waived).
+- [x] All P-00 successor tasks are registered as `pending` rows in `docs/plan.md` (T-018..T-028) with explicit dependencies. No successor cards are created at this checkpoint; cards are created at the start of each task.
+- [x] Existing pending tasks T-010, T-011 and T-012 are untouched.
+- [x] Pre-flight commits are recorded: 5f8d5a7 (harness CRLF fix), b11428c (calendar web fix), 9937007 (phase artifacts diagram), 5abdd53 (card parser/deps fix).
+- [x] `CP-1` (plan and task graph) and `CP-F` (final acceptance) are declared in the checkpoints table.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | P-00 plan and task graph | `docs/plan.md`, this card, `docs/activity.puml/.svg` | 5P/0F/0M | approved | docs/checkpoints/T-017-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-017-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 5P/0F/0M | approved | docs/checkpoints/T-017-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -109,3 +109,4 @@ D-01 is waived and therefore has no row. T-010, T-011 and T-012 remain pending b
 - 2026-11-17: P-00 started. Registered T-017 as `in_progress` and T-018..T-028 as `pending`; recorded the S-01 model scope, e2e/UX applicability, D-01 waiver and task graph. CP-1 prepared.
 - 2026-11-18: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=1341131 out=201058 cr=2551015 ratio=1.9x min=327; reviewer auto (P2)
 - c45792a: CP-1 snapshot
+- 2026-11-18: CP-F approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=1341131 out=201058 cr=2551015 ratio=1.9x min=327; reviewer auto (explicit -AutoApprove)
