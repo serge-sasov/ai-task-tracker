@@ -19,7 +19,7 @@
 | base_commit | c8139c2 |
 | usage | n/a |
 | issues | ISSUE-20261118-153622, ISSUE-20261118-185907, BUG-008 |
-| commit | 03c0894 |
+| commit | 1e3ff88 |
 
 ## Acceptance
 
@@ -56,3 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 03c0894: CP-2 snapshot
 - 2026-11-18: CP-2 approved by the user (opencode question "Approve CP-2 and CP-F"); UC-E2E-004 deviation accepted as a separate follow-up and recorded as BUG-008 (`docs/bugs/BUG-008-uc-e2e-004-ai-search-failures.md`). Status back to in_progress; proceed to CP-F.
 - 2026-11-18: CP-F awaiting_review (Q-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 1e3ff88: CP-F snapshot
