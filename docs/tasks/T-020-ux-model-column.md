@@ -19,7 +19,7 @@
 | base_commit | aa9d8cb |
 | usage | n/a |
 | issues | - |
-| commit | 61d91a4 |
+| commit | 381ff63 |
 
 ## Acceptance
 
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-1 approved (U-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 61d91a4: CP-1 snapshot
 - 2026-11-18: CP-F approved (U-01); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
+- 381ff63: CP-F snapshot
