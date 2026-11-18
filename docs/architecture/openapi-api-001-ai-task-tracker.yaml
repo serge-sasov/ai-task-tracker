@@ -10,7 +10,7 @@ paths:
   /api/tasks:
     get:
       operationId: listTasks
-      summary: "Paginated task list (S-01, R-007, R-023, R-024, UC-E2E-003)"
+      summary: "Paginated task list with ordered models (S-01, R-007, R-014, R-023, R-024, UC-E2E-003)"
       parameters:
         - { name: from, in: query, schema: { type: string, format: date } }
         - { name: to, in: query, schema: { type: string, format: date } }
@@ -99,6 +99,10 @@ components:
           enum: [Завершена, Прервана, Не завершена]
         duration_s: { type: integer }
         tokens_total: { type: integer, nullable: true }
+        models:
+          type: array
+          description: "Ordered by total tokens (input+output+cache) desc, then model name asc; empty when no usage (R-014)."
+          items: { type: string }
     TaskListResponse:
       type: object
       required: [total, items]

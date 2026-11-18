@@ -87,6 +87,15 @@ empty and no swim-lane diagrams are required.
 | MOD-004 | store (JPA / PG16) | task, step, solution, token_usage repositories | HTTP contracts, UI rendering, ingestion scheduling |
 | MOD-005 | search (AI) | vector recall, Ollama re-rank, snippet generation | task list aggregation, token statistics, persistence |
 
+### Classes
+
+| Class | Parent | Owns | Does not own |
+|---|---|---|---|
+| CLS-001 | MOD-001 | TaskService task-list query, total-token ordering and `models` projection (R-014) | ingestion parsing, UI rendering, persistence engine |
+| CLS-002 | MOD-001 | TaskListItem DTO including the ordered `models` array | aggregation logic, database queries, UI state |
+| CLS-003 | MOD-002 | S-01 task table and model-cell rendering (primary, `+N`, tooltip/aria, «Нет данных») | API aggregation, ingestion, storage |
+| CLS-004 | MOD-003 | TokenUsage parsing and normalization per model | DTO shape, model ordering policy, UI rendering |
+
 ## Scenarios
 
 | SCN | Name | UC | APIs |
@@ -108,16 +117,20 @@ PostgreSQL 16: `tasks` (`task_id` PK, `session_id` UNIQUE, `name`, `started_at`,
 `text`, `source_message_id`); `token_usage` (`model`, input/output/cache tokens,
 `scope`); `ingest_state` (watermark + `parse_errors`). Invariants: `finished_at`
 NULL ⇒ `Не завершена`; `Завершена` ⇒ `finished_at` NOT NULL; no token double
-counting. Full DDL, mapping and invariants: `contracts-ai-task-tracker.md` §2–3.
+counting. The task-list `models` array is derived from `token_usage` (total tokens
+desc, model name asc); it adds no column or migration (R-014). Full DDL, mapping
+and invariants: `contracts-ai-task-tracker.md` §2–3.
 
 ## Class model
 
-Backend Spring beans: `TaskService`, `SolutionService`, `CalendarService`,
-`TokenStatsService`, `SearchService`, `IngestionPoller`, `OllamaClient`,
-`HealthService` and JPA repositories for the five tables; DTOs `TaskListResponse`,
+Backend Spring beans: `TaskService` (task-list query and `models` ordering,
+R-014), `SolutionService`, `CalendarService`, `TokenStatsService`, `SearchService`,
+`IngestionPoller`, `OllamaClient`, `HealthService` and JPA repositories for the
+five tables; DTOs `TaskListResponse`, `TaskListItem.models`,
 `TaskDetailResponse`, `SearchRequest`/`SearchResult`, `CalendarResponse`,
 `TokenStatsResponse`, `ErrorEnvelope`. Frontend: Pinia store, typed API client and
-S-01..S-06 screen components. Class diagram is produced in R-02 (T-007).
+S-01..S-06 screen components; S-01 renders the model cell. Class diagram is
+produced in R-02 (T-023).
 
 ## REST API
 
@@ -140,6 +153,7 @@ R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
 | Diagram | Stage | File |
 |---|---|---|
 | component | R-01 (T-022) | components-ai-task-tracker.puml |
+| component (legacy alias, superseded by components-ai-task-tracker.puml) | R-02 (T-007) | component-ai-task-tracker.puml |
 | sequence SCN-001 | R-02 (T-007) | sequence-scn-001-ai-task-tracker.puml |
 | sequence SCN-002 | R-02 (T-007) | sequence-scn-002-ai-task-tracker.puml |
 | sequence SCN-003 | R-01 (T-022) | sequence-scn-003-ai-task-tracker.puml |
@@ -148,9 +162,9 @@ R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
 | sequence SCN-006 | R-02 (T-007) | sequence-scn-006-ai-task-tracker.puml |
 | sequence SCN-007 | R-02 (T-007) | sequence-scn-007-ai-task-tracker.puml |
 | sequence SCN-008 | R-02 (T-007) | sequence-scn-008-ai-task-tracker.puml |
-| data model | R-02 (T-007) | data-model-ai-task-tracker.puml |
-| class | R-02 (T-007) | class-ai-task-tracker.puml |
-| OpenAPI API-001..API-004 | R-01 (this stage) | openapi-api-001-ai-task-tracker.yaml, openapi-api-002-ai-task-tracker.yaml, openapi-api-003-ai-task-tracker.yaml, openapi-api-004-ai-task-tracker.yaml |
+| data model | R-02 (T-023) | data-model-ai-task-tracker.puml |
+| class | R-02 (T-023) | class-ai-task-tracker.puml |
+| OpenAPI API-001..API-004 | R-01/R-02 (T-022/T-023) | openapi-api-001-ai-task-tracker.yaml, openapi-api-002-ai-task-tracker.yaml, openapi-api-003-ai-task-tracker.yaml, openapi-api-004-ai-task-tracker.yaml |
 
 ## Traceability
 

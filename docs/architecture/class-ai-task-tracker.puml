@@ -83,6 +83,18 @@ package "DTO (JSON contracts)" {
     total : int
     items : List
   }
+  class TaskListItem {
+    task_id : String
+    name : String
+    started_at : String
+    finished_at : String
+    status : String
+    duration_s : int
+    tokens_total : int
+    models : List
+  }
+  TaskListResponse --> TaskListItem
+  note right of TaskListItem : models ordered by total tokens desc,\nmodel name asc; empty = no usage (R-014)
   class TaskDetailResponse {
     task : TaskDto
     steps : List

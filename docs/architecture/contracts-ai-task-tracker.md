@@ -2,11 +2,11 @@
 
 | Field | Value |
 |---|---|
-| Task | T-006, chunk R-01b |
+| Task | T-006, T-023, chunks R-01b/R-02 |
 | Role | architect |
 | ADR | `docs/architecture/adr-ai-task-tracker.md` (ADR-0001) |
 | Inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/ux/ui-spec-ai-task-tracker.md` |
-| Scope | UC-E2E-001..008, screens S-01..S-06, R-001..R-013, R-020..R-030 |
+| Scope | UC-E2E-001..008, screens S-01..S-06, R-001..R-014, R-020..R-030 |
 | Status | proposed |
 
 ## 1. Conventions
@@ -105,7 +105,7 @@ E2E: `GET /api/health` → 200 with `$.status == "ok"`, `$.checks.postgres == "o
 `$.checks.redis == "ok"` — matches e2e `$.checks.postgres/$.checks.redis == "ok"`
 (UC-E2E-001 step 2, UC-E2E-007 step 1).
 
-### 4.2 `GET /api/tasks` — list (S-01, R-007, UC-E2E-003)
+### 4.2 `GET /api/tasks` — list (S-01, R-007, R-014, UC-E2E-003)
 
 Query: `from`, `to` (dates, inclusive), `status` (enum of section 1), `page`, `size`.
 200:
@@ -114,9 +114,14 @@ Query: `from`, `to` (dates, inclusive), `status` (enum of section 1), `page`, `s
 { "total": 5, "items": [
   { "task_id": "TASK-001", "name": "Настройка CI для репозитория ai-task-tracker",
     "started_at": "2026-11-10T09:00:00", "finished_at": "2026-11-10T11:30:00",
-    "status": "Завершена", "duration_s": 9000, "tokens_total": 12150 } ] }
+    "status": "Завершена", "duration_s": 9000, "tokens_total": 12150,
+    "models": ["qwen3.8:27b", "llama3.1:8b"] } ] }
 ```
 
+- `models`: ordered by total tokens (input + output + cache) descending, then by
+  model name ascending. An empty array means no usage and the S-01 cell shows
+  «Нет данных» (R-014). The field is derived from the same `token_usage` rows as
+  `tokens_total`; no schema change is needed.
 - Empty: `{"total":0,"items":[]}` → S-01 «нет данных» (UC-E2E-001 F-5).
 - Load < 3 s (R-023); list stays fast on the `large` profile (R-024).
 - Fixture expectations (UC-E2E-003/007): 5 tasks TASK-001..005, durations
@@ -315,7 +320,7 @@ Use case → contract coverage (UC-E2E-001..008, `e2e-use-cases-ai-task-tracker.
 | UC-E2E-007 restart + idempotency | §3 idempotency, §4.1, §2 invariants, §4.2/4.6 fixture invariance |
 | UC-E2E-008 deletion | §4.7, A1 re-import (C-3), E2 no-op |
 
-Requirement traceability (R-001..R-013, R-020..R-030):
+Requirement traceability (R-001..R-014, R-020..R-030):
 
 | Req | Covered by |
 |---|---|
@@ -332,6 +337,7 @@ Requirement traceability (R-001..R-013, R-020..R-030):
 | R-011 | §4.4 top-K/snippet |
 | R-012 | §2 `token_usage`, §4.6 |
 | R-013 | §4.6, S-05 mapping |
+| R-014 | §4.2 `models`, S-01/S-02 mapping, UC-E2E-003 |
 | R-020 | ADR §1 (Java 21/Spring Boot 3, Postgres 16, Redis 7) |
 | R-021 | ADR §1, §7 (Vue 3 SPA) |
 | R-022 | ADR §1, §8 e2e `docker compose up` (one-command local stack) |
