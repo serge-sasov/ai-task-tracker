@@ -1,0 +1,100 @@
+{
+    "task":  "T-019",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  64,
+                   "max_session_kb":  96,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "A-02",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "UC-E2E-003 model-column use case",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/e2e-use-cases-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-019-e2e-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-019-e2e-model-column.md",
+                       "acceptance":  [
+                                          "UC-E2E-003 covers R-014 and the visible model column"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/e2e-use-cases-ai-task-tracker.md",
+                                            "sha256":  "2d48bbc7192c0adb28df5de443d947a9260a83401cc8fcd7942b89e3fd8093ff"
+                                        }
+                                    ],
+                       "base_commit":  "33cd6b9",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:02:54",
+                       "finished":  "2026-11-18T10:02:55"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "A-02",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "YAML dataset S8 model assertions",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/e2e-test-data-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-019-e2e-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-019-e2e-model-column.md",
+                       "acceptance":  [
+                                          "YAML validates and encodes ordered models and no-usage state"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/e2e-test-data-ai-task-tracker.yaml",
+                                            "sha256":  "a4e67928178de84491c0347dd7e7b84ed56327928487c6329c3a2d49fb383fb5"
+                                        }
+                                    ],
+                       "base_commit":  "33cd6b9",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:02:55",
+                       "finished":  "2026-11-18T10:02:55"
+                   }
+               ],
+    "updated":  "2026-11-18T10:02:55"
+}

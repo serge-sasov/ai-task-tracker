@@ -372,7 +372,7 @@ use_cases:
 
   - id: "UC-E2E-003"
     title: "Просмотр списка задач и деталей задачи"
-    source_requirements: ["R-002", "R-003", "R-004", "R-005", "R-006", "R-007", "R-009", "R-023", "R-030"]
+    source_requirements: ["R-002", "R-003", "R-004", "R-005", "R-006", "R-007", "R-009", "R-014", "R-023", "R-030"]
     actor: "пользователь-разработчик"
     priority: "P0"
     preconditions:
@@ -422,11 +422,25 @@ use_cases:
         action: "UI: детали TASK-004 и TASK-005 -> раздел «Решения»"
         expected:
           explicit_empty_state: "Решений не зафиксировано"
+      - id: "S8"
+        action: "UI: проверить колонку «Модель» в списке задач"
+        expected:
+          column_after: "Название"
+          no_usage_display: "Нет данных"
+          more_indicator: "+1"
+          tooltip_and_aria_full_list: true
+          ordered_by: "total_tokens_desc_then_name"
+          models_by_task:
+            TASK-001: ["qwen3.8:27b", "llama3.1:8b"]
+            TASK-002: []
+            TASK-003: ["qwen3.8:27b", "llama3.1:8b"]
+            TASK-004: ["qwen3.8:27b", "llama3.1:8b"]
+            TASK-005: ["qwen3.8:27b", "llama3.1:8b"]
     expected_postcondition: "состояние не изменено (read-only); пользователь видит список и детали"
     cleanup:
       - "не требуется (read-only)"
     traceability:
-      test_ids: ["e2e/test_task_list_details.py::test_list_and_details"]
+      test_ids: ["tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles", "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_primary_and_plus_n"]
 
   - id: "UC-E2E-004"
     title: "AI-поиск задач свободным текстом"

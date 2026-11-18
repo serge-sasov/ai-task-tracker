@@ -24,7 +24,7 @@ start
 :T-016 Verify BUG-003: local stack (B-03); <<#90EE90>>
 :T-017 P-00 Feature planning: S-01 model column (D-01 waived); <<#90EE90>>
 :T-018 A-01 Requirements baseline for the model column; <<#90EE90>>
-:T-019 A-02 E2E use cases and dataset for the model column; <<#D3D3D3>>
+:T-019 A-02 E2E use cases and dataset for the model column; <<#FFE082>>
 :T-020 U-01 UX flows and screens for S-01 model display; <<#D3D3D3>>
 :T-021 U-02 Wireframes, prototype and UI spec for the model column; <<#D3D3D3>>
 :T-022 R-01 Solution design for model aggregation and S-01 display; <<#D3D3D3>>
