@@ -22,36 +22,36 @@
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_view_days",
       "status": "passed",
-      "duration_ms": 45,
+      "duration_ms": 70,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_cell_tasks_match_dataset",
       "status": "passed",
-      "duration_ms": 39,
+      "duration_ms": 63,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_day_view_duration_semantics",
       "status": "passed",
-      "duration_ms": 31,
+      "duration_ms": 56,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_month_view_task_counts",
       "status": "passed",
-      "duration_ms": 79,
+      "duration_ms": 80,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_invalid_period_400",
       "status": "passed",
-      "duration_ms": 27,
+      "duration_ms": 6,
       "detail": ""
     }
   ],
-  "duration_ms": 221,
+  "duration_ms": 275,
   "errors": [],
-  "timestamp": "2026-11-17T12:35:56.042267+00:00",
-  "base_url": "http://127.0.0.1:18080"
+  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "base_url": "http://127.0.0.1:8080"
 }

@@ -1,7 +1,7 @@
 {
   "scope": "ai-task-tracker",
   "dataset": "e2e-test-data-ai-task-tracker.yaml",
-  "generated_at": "2026-11-17T12:35:56.042267+00:00",
+  "generated_at": "2026-11-18T16:43:05.793573+00:00",
   "results": [
     {
       "uc_id": "UC-E2E-001",
@@ -29,20 +29,20 @@
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_stack_boots_and_empty_state",
           "status": "passed",
-          "duration_ms": 70,
+          "duration_ms": 123,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_initial_state_has_no_tasks_in_db",
           "status": "passed",
-          "duration_ms": 22,
+          "duration_ms": 17,
           "detail": ""
         }
       ],
-      "duration_ms": 92,
+      "duration_ms": 140,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-002",
@@ -69,50 +69,50 @@
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_sessions_are_ingested_to_five_tasks",
           "status": "passed",
-          "duration_ms": 57223,
+          "duration_ms": 57342,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 39,
+          "duration_ms": 15,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 14,
+          "duration_ms": 24,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 13,
+          "duration_ms": 16,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 11,
+          "duration_ms": 30,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 13,
+          "duration_ms": 26,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_detail_has_six_chronological_steps",
           "status": "passed",
-          "duration_ms": 45,
+          "duration_ms": 48,
           "detail": ""
         }
       ],
-      "duration_ms": 57358,
+      "duration_ms": 57501,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-003",
@@ -127,14 +127,15 @@
         "R-006",
         "R-007",
         "R-009",
+        "R-014",
         "R-023",
         "R-030"
       ],
       "expected_postcondition": "состояние не изменено (read-only); пользователь видит список и детали",
       "status": "pass",
       "counts": {
-        "total": 18,
-        "pass": 18,
+        "total": 24,
+        "pass": 24,
         "fail": 0,
         "error": 0,
         "skipped": 0
@@ -143,116 +144,152 @@
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-001-\\u041d\\u0430\\u0441\\u0442\\u0440\\u043e\\u0439\\u043a\\u0430 CI \\u0434\\u043b\\u044f \\u0440\\u0435\\u043f\\u043e\\u0437\\u0438\\u0442\\u043e\\u0440\\u0438\\u044f ai-task-tracker]",
           "status": "passed",
-          "duration_ms": 15,
+          "duration_ms": 27,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-002-\\u0412\\u044b\\u0431\\u043e\\u0440 \\u0441\\u043f\\u043e\\u0441\\u043e\\u0431\\u0430 \\u0430\\u0432\\u0442\\u043e\\u0440\\u0438\\u0437\\u0430\\u0446\\u0438\\u0438 \\u043b\\u043e\\u043a\\u0430\\u043b\\u044c\\u043d\\u043e\\u0433\\u043e API]",
           "status": "passed",
-          "duration_ms": 31,
+          "duration_ms": 12,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-003-\\u0418\\u0441\\u0441\\u043b\\u0435\\u0434\\u043e\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0437\\u0430\\u0432\\u0438\\u0441\\u0430\\u043d\\u0438\\u044f backend \\u043f\\u043e\\u0434 \\u043d\\u0430\\u0433\\u0440\\u0443\\u0437\\u043a\\u043e\\u0439]",
           "status": "passed",
-          "duration_ms": 29,
+          "duration_ms": 31,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-004-\\u0420\\u0435\\u0430\\u043b\\u0438\\u0437\\u0430\\u0446\\u0438\\u044f \\u0432\\u0435\\u043a\\u0442\\u043e\\u0440\\u043d\\u043e\\u0433\\u043e \\u0438\\u043d\\u0434\\u0435\\u043a\\u0441\\u0430 \\u0434\\u043b\\u044f AI-\\u043f\\u043e\\u0438\\u0441\\u043a\\u0430]",
           "status": "passed",
-          "duration_ms": 28,
+          "duration_ms": 30,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_shows_five_tasks_with_seed_titles[TASK-005-\\u0414\\u043e\\u0431\\u0430\\u0432\\u043b\\u0435\\u043d\\u0438\\u0435 \\u0432\\u0438\\u0434\\u0436\\u0435\\u0442\\u0430 \\u0442\\u043e\\u043a\\u0435\\u043d\\u043e\\u0432 \\u043d\\u0430 \\u044d\\u043a\\u0440\\u0430\\u043d \\u0441\\u0442\\u0430\\u0442\\u0438\\u0441\\u0442\\u0438\\u043a\\u0438]",
           "status": "passed",
-          "duration_ms": 12,
+          "duration_ms": 17,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 33,
+          "duration_ms": 25,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 12,
+          "duration_ms": 27,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 12,
+          "duration_ms": 13,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 41,
+          "duration_ms": 12,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_task_status_is_canonical[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
           "status": "passed",
-          "duration_ms": 14,
+          "duration_ms": 10,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_task_001_actions_and_chosen_solution",
           "status": "passed",
-          "duration_ms": 36,
+          "duration_ms": 9,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-001-proposed0-GitLab CI]",
           "status": "passed",
-          "duration_ms": 14,
+          "duration_ms": 8,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-002-proposed1-JWT \\u0441 \\u0440\\u043e\\u0442\\u0430\\u0446\\u0438\\u0435\\u0439]",
           "status": "passed",
-          "duration_ms": 11,
+          "duration_ms": 29,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-003-proposed2-\\u041e\\u0433\\u0440\\u0430\\u043d\\u0438\\u0447\\u0435\\u043d\\u0438\\u0435 \\u043e\\u0447\\u0435\\u0440\\u0435\\u0434\\u0438 \\u0437\\u0430\\u0434\\u0430\\u0447]",
           "status": "passed",
-          "duration_ms": 8,
+          "duration_ms": 28,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-004-proposed3-None]",
           "status": "passed",
-          "duration_ms": 30,
+          "duration_ms": 11,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_solutions_match_seed[TASK-005-proposed4-None]",
           "status": "passed",
-          "duration_ms": 29,
+          "duration_ms": 32,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_task_005_has_explicit_empty_state",
           "status": "passed",
-          "duration_ms": 29,
+          "duration_ms": 7,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_detail_token_block_matches_seed_usage",
           "status": "passed",
-          "duration_ms": 31,
+          "duration_ms": 54,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_field_order_and_empty_state[TASK-001]",
+          "status": "passed",
+          "duration_ms": 10,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_field_order_and_empty_state[TASK-002]",
+          "status": "passed",
+          "duration_ms": 32,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_field_order_and_empty_state[TASK-003]",
+          "status": "passed",
+          "duration_ms": 12,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_field_order_and_empty_state[TASK-004]",
+          "status": "passed",
+          "duration_ms": 10,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_list_models_field_order_and_empty_state[TASK-005]",
+          "status": "passed",
+          "duration_ms": 23,
+          "detail": ""
+        },
+        {
+          "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py::test_models_by_task_aggregation_math_offline",
+          "status": "passed",
+          "duration_ms": 55,
           "detail": ""
         }
       ],
-      "duration_ms": 415,
+      "duration_ms": 524,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-004",
@@ -267,50 +304,55 @@
         "R-028"
       ],
       "expected_postcondition": "состояние не изменено (read-only)",
-      "status": "pass",
+      "status": "fail",
       "counts": {
         "total": 5,
         "pass": 1,
-        "fail": 0,
+        "fail": 4,
         "error": 0,
-        "skipped": 4
+        "skipped": 0
       },
       "tests": [
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_semantic_query_top_k",
-          "status": "skipped",
-          "duration_ms": 34,
-          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 84, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+          "status": "failed",
+          "duration_ms": 183,
+          "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:90: TypeError"
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_unrelated_query_empty",
-          "status": "skipped",
-          "duration_ms": 0,
-          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 107, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+          "status": "failed",
+          "duration_ms": 34,
+          "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:111: AttributeError"
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_empty_query_client_validation",
           "status": "passed",
-          "duration_ms": 34,
+          "duration_ms": 9,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_response_time_bound",
-          "status": "skipped",
-          "duration_ms": 0,
-          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 125, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+          "status": "failed",
+          "duration_ms": 39,
+          "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:132: AttributeError"
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_english_query_valid_200",
-          "status": "skipped",
-          "duration_ms": 0,
-          "detail": "('C:\\\\study\\\\ai\\\\research\\\\ai-task-tracker\\\\tests\\\\e2e\\\\uc_e2e_004_006\\\\test_uc_e2e_004_ai_search.py', 135, 'Skipped: Ollama unavailable from the backend - AI search requires it')"
+          "status": "failed",
+          "duration_ms": 21,
+          "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:138: AssertionError"
         }
       ],
-      "duration_ms": 68,
-      "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "duration_ms": 286,
+      "errors": [
+        "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:90: TypeError",
+        "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:111: AttributeError",
+        "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:132: AttributeError",
+        "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:138: AssertionError"
+      ],
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-005",
@@ -336,38 +378,38 @@
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_view_days",
           "status": "passed",
-          "duration_ms": 45,
+          "duration_ms": 70,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_week_cell_tasks_match_dataset",
           "status": "passed",
-          "duration_ms": 39,
+          "duration_ms": 63,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_day_view_duration_semantics",
           "status": "passed",
-          "duration_ms": 31,
+          "duration_ms": 56,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_month_view_task_counts",
           "status": "passed",
-          "duration_ms": 79,
+          "duration_ms": 80,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_invalid_period_400",
           "status": "passed",
-          "duration_ms": 27,
+          "duration_ms": 6,
           "detail": ""
         }
       ],
-      "duration_ms": 221,
+      "duration_ms": 275,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-006",
@@ -393,38 +435,38 @@
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_all_period_totals",
           "status": "passed",
-          "duration_ms": 67,
+          "duration_ms": 107,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_period_2026_11_10_totals",
           "status": "passed",
-          "duration_ms": 43,
+          "duration_ms": 88,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_range_equals_all",
           "status": "passed",
-          "duration_ms": 64,
+          "duration_ms": 45,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_from_gt_to_400",
           "status": "passed",
-          "duration_ms": 2,
+          "duration_ms": 3,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_has_data_true",
           "status": "passed",
-          "duration_ms": 6,
+          "duration_ms": 26,
           "detail": ""
         }
       ],
-      "duration_ms": 182,
+      "duration_ms": 269,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-007",
@@ -449,38 +491,38 @@
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_health_after_restart",
           "status": "passed",
-          "duration_ms": 7446,
+          "duration_ms": 7743,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_list_unchanged_after_restart",
           "status": "passed",
-          "duration_ms": 7544,
+          "duration_ms": 7669,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_token_totals_unchanged_after_restart",
           "status": "passed",
-          "duration_ms": 7533,
+          "duration_ms": 7708,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_resync_idempotent_no_duplicates",
           "status": "passed",
-          "duration_ms": 162,
+          "duration_ms": 203,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_no_partial_records_after_resync",
           "status": "passed",
-          "duration_ms": 120,
+          "duration_ms": 107,
           "detail": ""
         }
       ],
-      "duration_ms": 22805,
+      "duration_ms": 23430,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.792573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     },
     {
       "uc_id": "UC-E2E-008",
@@ -505,50 +547,50 @@
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_requires_confirmation",
           "status": "passed",
-          "duration_ms": 87,
+          "duration_ms": 129,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_cancel_confirmation_leaves_data",
           "status": "passed",
-          "duration_ms": 61,
+          "duration_ms": 76,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_confirmed_empties_all_sections",
           "status": "passed",
-          "duration_ms": 60306,
+          "duration_ms": 60332,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_opencode_source_not_deleted",
           "status": "passed",
-          "duration_ms": 60139,
+          "duration_ms": 60234,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_again_empty_db_is_noop",
           "status": "passed",
-          "duration_ms": 60176,
+          "duration_ms": 60236,
           "detail": ""
         },
         {
           "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_reimport_after_delete_resets_data",
           "status": "passed",
-          "duration_ms": 60256,
+          "duration_ms": 60321,
           "detail": ""
         }
       ],
-      "duration_ms": 241025,
+      "duration_ms": 241328,
       "errors": [],
-      "timestamp": "2026-11-17T12:35:56.042267+00:00",
-      "base_url": "http://127.0.0.1:18080"
+      "timestamp": "2026-11-18T16:43:05.793573+00:00",
+      "base_url": "http://127.0.0.1:8080"
     }
   ],
   "summary": {
     "total": 8,
-    "pass": 8,
-    "fail": 0,
+    "pass": 7,
+    "fail": 1,
     "error": 0,
     "skipped": 0,
     "not_run": 0

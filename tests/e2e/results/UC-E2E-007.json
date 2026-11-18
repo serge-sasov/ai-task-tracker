@@ -21,36 +21,36 @@
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_health_after_restart",
       "status": "passed",
-      "duration_ms": 7446,
+      "duration_ms": 7743,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_list_unchanged_after_restart",
       "status": "passed",
-      "duration_ms": 7544,
+      "duration_ms": 7669,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_token_totals_unchanged_after_restart",
       "status": "passed",
-      "duration_ms": 7533,
+      "duration_ms": 7708,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_resync_idempotent_no_duplicates",
       "status": "passed",
-      "duration_ms": 162,
+      "duration_ms": 203,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_007_restart_idempotency.py::test_no_partial_records_after_resync",
       "status": "passed",
-      "duration_ms": 120,
+      "duration_ms": 107,
       "detail": ""
     }
   ],
-  "duration_ms": 22805,
+  "duration_ms": 23430,
   "errors": [],
-  "timestamp": "2026-11-17T12:35:56.042267+00:00",
-  "base_url": "http://127.0.0.1:18080"
+  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "base_url": "http://127.0.0.1:8080"
 }
