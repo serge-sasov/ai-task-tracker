@@ -19,7 +19,7 @@
 | base_commit | d4dde64 |
 | usage | in=82511 out=17279 cr=2997680 ratio=36.3x min=10 |
 | issues | - |
-| commit | 73a567b |
+| commit | 7d20ebc |
 
 ## Acceptance
 
@@ -56,3 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-1 approved (I-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=82511 out=17279 cr=2997680 ratio=36.3x min=10; reviewer auto (P2)
 - 73a567b: CP-1 snapshot
 - 2026-11-18: CP-F approved (I-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=82511 out=17279 cr=2997680 ratio=36.3x min=10; reviewer auto (explicit -AutoApprove)
+- 7d20ebc: CP-F snapshot

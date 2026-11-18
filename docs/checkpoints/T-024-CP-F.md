@@ -14,7 +14,7 @@
 | reviewed_at | 2026-11-18T14:09:05 |
 | reviewer | auto (explicit -AutoApprove) |
 | decision | approved |
-| snapshot_commit | - |
+| snapshot_commit | 7d20ebc |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-024-CP-F.checks.json |
 
