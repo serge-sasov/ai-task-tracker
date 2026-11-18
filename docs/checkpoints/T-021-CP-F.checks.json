@@ -1,0 +1,140 @@
+{
+    "task":  "T-021",
+    "workflow":  "feature",
+    "stage":  "U-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "e2ee9b2",
+    "generated_at":  "2026-11-18T10:12:17",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "14 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "PASS",
+                        "detail":  "14 artifact(s) match ledger"
+                    },
+                    {
+                        "id":  "wireframes-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "wireframe-syntax",
+                        "check":  "puml-syntax",
+                        "result":  "PASS",
+                        "detail":  "1 diagram(s)"
+                    },
+                    {
+                        "id":  "wireframe-svg",
+                        "check":  "svg-fresh",
+                        "result":  "PASS",
+                        "detail":  "1 SVG(s)"
+                    },
+                    {
+                        "id":  "wireframe-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "6 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "ui-spec-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "ui-spec-uc-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "proto-index",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "proto-page-count",
+                        "check":  "count-match",
+                        "result":  "PASS",
+                        "detail":  "8 = 8"
+                    },
+                    {
+                        "id":  "proto-structure",
+                        "check":  "html-structure",
+                        "result":  "PASS",
+                        "detail":  "8 page(s)"
+                    },
+                    {
+                        "id":  "proto-links",
+                        "check":  "index-pages-links",
+                        "result":  "PASS",
+                        "detail":  "1 index, 8 page(s)"
+                    },
+                    {
+                        "id":  "proto-local-links",
+                        "check":  "html-links-exist",
+                        "result":  "PASS",
+                        "detail":  "135 local link(s)"
+                    },
+                    {
+                        "id":  "proto-offline",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "7 pattern(s) absent in 11 file(s)"
+                    },
+                    {
+                        "id":  "proto-assets",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "ux-traceability",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 10 file(s)"
+                    },
+                    {
+                        "id":  "proto-ru-single-user",
+                        "check":  "manual",
+                        "result":  "MANUAL",
+                        "detail":  "Прототип: интерфейс и тексты на русском, один пользователь без логина, ролей и сетевых запросов"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s) within 80/200 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  19,
+                    "fail":  0,
+                    "manual":  1,
+                    "not_applicable":  0,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

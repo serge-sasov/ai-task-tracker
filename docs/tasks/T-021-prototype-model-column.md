@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-020 |
 | inputs | `docs/tasks/T-020-ux-model-column.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md` |
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | U-02 wireframes, prototype, UI spec | wireframes `.puml/.svg`, UI spec, prototype pages/assets | 18P/0F/1M | approved | docs/checkpoints/T-021-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-021-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 19P/0F/1M | awaiting_review | docs/checkpoints/T-021-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -54,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-2 awaiting_review (U-02); checks 18 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 55e1b32: CP-2 snapshot
 - 2026-11-18: CP-2 approved by user (MANUAL proto-ru-single-user accepted); continue to CP-F.
+- 2026-11-18: CP-F awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
