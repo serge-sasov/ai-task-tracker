@@ -17,7 +17,7 @@
 | chunks | `docs/chunks/T-026.json` (C1: e2e plan + requirement->UC->test matrix) |
 | budget | max_write 32 KB / session 64 KB; one chunk |
 | base_commit | 0ef0d3c |
-| usage | n/a |
+| usage | in=60511 out=9996 cr=1620588 ratio=26.8x min=103 |
 | issues | ISSUE-20261118-153622, ISSUE-20261118-185907 |
 | commit | - |
 
@@ -36,7 +36,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-task-list-model.md` | - | pending | docs/checkpoints/T-026-CP-1.md |
+| CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-task-list-model.md` | 7P/0F/0M | approved | docs/checkpoints/T-026-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | docs/checkpoints/T-026-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-026 started on base `0ef0d3c`; T-019 and T-025 are done. C1 (e2e plan + requirement->UC->test matrix) planned as `pending` in `docs/chunks/T-026.json`; QA will claim/complete it. Inputs include UC-E2E-003/S8 (use cases + YAML), the T-025 e2e test files, and ISSUE-20261118-153622 (live-run environment caveat).
 - 2026-11-18: `harness-qa` failed twice with SSE read timeouts (C1 was claimed but no plan was produced); recorded as ISSUE-20261118-185907. Lead fallback authored `docs/qa/e2e-plan-task-list-model.md` (all UC-E2E-001..008, focused UC-E2E-003 S8 / R-014 block, test-data validation, execution approach, ISSUE-20261118-153622 caveat, entry/exit criteria). YAML validator: 8 use cases, 25 requirement links, 0 errors, 0 warnings; `python -m py_compile` passes. C1 `done` with produced hash in `docs/chunks/T-026.json`.
+- 2026-11-18: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=60511 out=9996 cr=1620588 ratio=26.8x min=103; reviewer auto (P2)
