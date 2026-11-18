@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-02 |
 | role | qa |
-| status | awaiting_review |
+| status | in_progress |
 | hold | true |
 | depends_on | T-026, T-025, T-024, T-023, T-021 |
 | inputs | `docs/qa/e2e-plan-task-list-model.md`, `tests/e2e/uc_e2e_001_003/shared.py`, `tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py`, `docs/tasks/T-024-implement-model-column.md`, `docs/tasks/T-023-contracts-model-column.md`, `docs/architecture/contracts-ai-task-tracker.md` (§4.2), `docs/architecture/openapi-api-001-ai-task-tracker.yaml`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-003.html`, `docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md`, `docs/issues/ISSUE-20261118-185907-harness-qa-subagent-sse-read-timeout-during-t-026.md`, `docs/bugs/BUG-007-pre-existing-backend-test-failures.md` |
@@ -18,7 +18,7 @@
 | budget | max_write 32 KB / session 64 KB; two chunks |
 | base_commit | c8139c2 |
 | usage | n/a |
-| issues | ISSUE-20261118-153622, ISSUE-20261118-185907 |
+| issues | ISSUE-20261118-153622, ISSUE-20261118-185907, BUG-008 |
 | commit | 03c0894 |
 
 ## Acceptance
@@ -36,7 +36,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-task-list-model.md`, `docs/qa/review-T-027.md` | 8P/0F/0M | awaiting_review | docs/checkpoints/T-027-CP-2.md |
+| CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-task-list-model.md`, `docs/qa/review-T-027.md` | 8P/0F/0M | approved | docs/checkpoints/T-027-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | docs/checkpoints/T-027-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -54,3 +54,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: QA completed C1 and C2 (both `done` in `docs/chunks/T-027.json`). Targeted UC-E2E-003 24/24 PASS (S8 model cases; forward-slash pytest workaround per ISSUE-20261118-153622, after rebuilding the backend image with the T-024 code). Full suite 55 PASS / 4 FAIL — all four in UC-E2E-004 AI search (3× `_post_json` helper tuple contract + 1× HTTP 503), unrelated to R-014, recorded as a regression deviation. Dataset validator 0 errors (8 use cases, 25 links). Verdict: PASS for R-014 with the regression deviation documented (see `docs/qa/review-T-027.md`). BUG-007 and both issues accounted for; the run evidence JSONs committed separately as `9bdbaec`.
 - 2026-11-18: CP-2 awaiting_review (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 03c0894: CP-2 snapshot
+- 2026-11-18: CP-2 approved by the user (opencode question "Approve CP-2 and CP-F"); UC-E2E-004 deviation accepted as a separate follow-up and recorded as BUG-008 (`docs/bugs/BUG-008-uc-e2e-004-ai-search-failures.md`). Status back to in_progress; proceed to CP-F.
