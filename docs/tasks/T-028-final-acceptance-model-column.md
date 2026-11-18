@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | F-01 |
 | role | orchestrator + lead |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-027 |
 | inputs | `docs/tasks/T-017-task-list-model-planning.md`, `docs/tasks/T-018-requirements-model-column.md`, `docs/tasks/T-019-e2e-model-column.md`, `docs/tasks/T-020-ux-model-column.md`, `docs/tasks/T-021-prototype-model-column.md`, `docs/tasks/T-022-architecture-model-column.md`, `docs/tasks/T-023-contracts-model-column.md`, `docs/tasks/T-024-implement-model-column.md`, `docs/tasks/T-025-e2e-model-column.md`, `docs/tasks/T-026-e2e-plan-model-column.md`, `docs/tasks/T-027-qa-model-column.md`, `docs/checkpoints/T-027-CP-2.md`, `docs/checkpoints/T-027-CP-F.md`, `docs/qa/review-T-027.md`, `docs/qa/e2e-report-task-list-model.md`, `docs/bugs/BUG-007-pre-existing-backend-test-failures.md`, `docs/bugs/BUG-008-uc-e2e-004-ai-search-failures.md`, `docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md`, `docs/issues/ISSUE-20261118-185907-harness-qa-subagent-sse-read-timeout-during-t-026.md` |
@@ -35,7 +35,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-F | final acceptance and closure | `docs/plan.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/activity.puml`, `docs/activity.svg` | - | pending | docs/checkpoints/T-028-CP-F.md |
+| CP-F | final acceptance and closure | `docs/plan.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/activity.puml`, `docs/activity.svg` | 3P/1F/1M | awaiting_review | docs/checkpoints/T-028-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`. F-01 has no intermediate working checkpoint; its only checkpoint is `CP-F`, and `final-traceability-manual` is a manual check that always waits for the user.
@@ -47,3 +47,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-18: T-028 started on base `b4cbe04`; T-027 (Q-02) is `done`. C1 (final acceptance/closure) created `pending` in `docs/chunks/T-028.json` (owns = the four F-01 card artifacts, within the orchestrator write area; budget 16/32). `hold: false`, but CP-F always waits for the user because of `final-traceability-manual`. BUG-007 and BUG-008 remain `open` follow-ups, not absorbed.
+- 2026-11-18: CP-F awaiting_review (F-01); checks 3 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user

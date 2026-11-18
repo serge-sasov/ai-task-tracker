@@ -1,0 +1,56 @@
+{
+    "task":  "T-028",
+    "workflow":  "feature",
+    "stage":  "F-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "b4cbe04",
+    "generated_at":  "2026-11-18T22:47:57",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "4 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-028.md"
+                    },
+                    {
+                        "id":  "final-artifacts",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "4 file(s)"
+                    },
+                    {
+                        "id":  "final-board",
+                        "check":  "board-consistency",
+                        "result":  "PASS",
+                        "detail":  "board, card, checkpoints agree"
+                    },
+                    {
+                        "id":  "final-activity",
+                        "check":  "activity-derived",
+                        "result":  "FAIL",
+                        "detail":  "T-001 color=90EE90 expected=#90EE90; T-002 color=90EE90 expected=#90EE90; T-003 color=90EE90 expected=#90EE90; T-004 color=90EE90 expected=#90EE90; T-005 color=90EE90 expected=#90EE90; T-006 color=90EE90 expected=#90EE90; T-007 color=90EE90 expected=#90EE90; T-008 color=90EE90 expected=#90EE90"
+                    },
+                    {
+                        "id":  "final-traceability-manual",
+                        "check":  "manual",
+                        "result":  "MANUAL",
+                        "detail":  "semantic acceptance: requirements, UX, architecture, tests and QA evidence are consistent"
+                    }
+                ],
+    "summary":  {
+                    "pass":  3,
+                    "fail":  1,
+                    "manual":  1,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

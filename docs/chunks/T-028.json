@@ -782,8 +782,8 @@
                      "tests/regression/test_stack_health_prereqs.py"
                  ],
     "budget":  {
-                    "max_write_kb":  16,
-                    "max_session_kb":  32,
+                   "max_write_kb":  16,
+                   "max_session_kb":  32,
                    "context_stop_pct":  65,
                    "max_turns":  40,
                    "max_input_tokens":  60000,
@@ -797,14 +797,14 @@
                        "role":  "orchestrator",
                        "depth":  1,
                        "title":  "Final acceptance and closure: S-01 model column",
-                       "state":  "pending",
-                        "owns":  [
+                       "state":  "done",
+                       "owns":  [
                                     "docs/plan.md",
                                     "docs/tasks/T-028-final-acceptance-model-column.md",
                                     "docs/activity.puml",
                                     "docs/activity.svg"
                                 ],
-                        "inputs":  [
+                       "inputs":  [
                                       "docs/tasks/T-017-task-list-model-planning.md",
                                       "docs/tasks/T-024-implement-model-column.md",
                                       "docs/tasks/T-025-e2e-model-column.md",
@@ -821,10 +821,21 @@
                                           "all feature tasks T-018..T-027 done; board/card/checkpoint/activity consistent; R-014 traceability complete (requirements, use cases, UX, contracts, OpenAPI, tests, QA evidence); D-01 waiver recorded in T-017; BUG-007 and BUG-008 tracked as separate follow-ups, not absorbed; CP-F manual final-traceability review by the user; no second active task"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "docs/plan.md",
+                                            "sha256":  "5fd155d6e9872c16f89538006c8ed29307d841189e49349ba35a0a9fdad21014"
+                                        },
+                                        {
+                                            "path":  "docs/tasks/T-028-final-acceptance-model-column.md",
+                                            "sha256":  "e6f5a245bd899dc1a5208227bb75d35a3f4c2244b32d18c1c9a1ad492680328a"
+                                        },
+                                        {
+                                            "path":  "docs/activity.puml",
+                                            "sha256":  "3a933e7ef8d82b26647e83d57181bea6ca4da909cc851f2d36b5a7861c457cc8"
+                                        }
                                     ],
                        "base_commit":  "b4cbe04",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -837,9 +848,9 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-18T22:41:44",
+                       "finished":  "2026-11-18T22:46:55"
                    }
                ],
-    "updated":  "2026-11-18T21:52:57"
+    "updated":  "2026-11-18T22:46:55"
 }
