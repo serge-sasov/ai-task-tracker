@@ -9,11 +9,11 @@
 | role | architect |
 | stage | R-02 |
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-001-ai-task-tracker.yaml, docs/architecture/data-model-ai-task-tracker.puml, docs/architecture/data-model-ai-task-tracker.svg, docs/architecture/class-ai-task-tracker.puml, docs/architecture/class-ai-task-tracker.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-18T12:14:26 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-18T12:15:08 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | f675829 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-023-CP-F.checks.json |
@@ -100,7 +100,7 @@ docs/activity.puml                                 |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via opencode question: "Approve CP-2 and CP-F" (same zones-overlap-review manual, artifacts unchanged).
 
 ## User edits
 
@@ -112,4 +112,4 @@ docs/activity.puml                                 |   2 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
