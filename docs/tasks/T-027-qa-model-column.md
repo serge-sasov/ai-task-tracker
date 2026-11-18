@@ -19,7 +19,7 @@
 | base_commit | c8139c2 |
 | usage | n/a |
 | issues | ISSUE-20261118-153622, ISSUE-20261118-185907 |
-| commit | - |
+| commit | 03c0894 |
 
 ## Acceptance
 
@@ -53,3 +53,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: T-027 started on base `c8139c2`; T-026, T-025, T-024, T-023, T-021 are all done. C1 (run e2e + write report) and C2 (review + verdict) planned as `pending` in `docs/chunks/T-027.json`; QA will claim/complete them. `hold: true` — both checkpoints wait for the user. Note ISSUE-20261118-185907 (harness-qa SSE timeout on T-026): retry the `harness-qa` role and confirm it completes; if it times out again, the lead falls back.
 - 2026-11-18: QA completed C1 and C2 (both `done` in `docs/chunks/T-027.json`). Targeted UC-E2E-003 24/24 PASS (S8 model cases; forward-slash pytest workaround per ISSUE-20261118-153622, after rebuilding the backend image with the T-024 code). Full suite 55 PASS / 4 FAIL — all four in UC-E2E-004 AI search (3× `_post_json` helper tuple contract + 1× HTTP 503), unrelated to R-014, recorded as a regression deviation. Dataset validator 0 errors (8 use cases, 25 links). Verdict: PASS for R-014 with the regression deviation documented (see `docs/qa/review-T-027.md`). BUG-007 and both issues accounted for; the run evidence JSONs committed separately as `9bdbaec`.
 - 2026-11-18: CP-2 awaiting_review (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 03c0894: CP-2 snapshot
