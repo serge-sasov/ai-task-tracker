@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-01 |
 | role | qa |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | T-019, T-025 |
 | inputs | `docs/tasks/T-025-e2e-model-column.md`, `docs/tasks/T-019-e2e-model-column.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md` (UC-E2E-001..UC-E2E-008, UC-E2E-003 S8), `docs/analysis/e2e-test-data-ai-task-tracker.yaml` (UC-E2E-003 S8, `fixtures.sessions`), `tests/e2e/uc_e2e_001_003/shared.py`, `tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py`, `docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md` |
@@ -37,7 +37,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-task-list-model.md` | 7P/0F/0M | approved | docs/checkpoints/T-026-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | docs/checkpoints/T-026-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 8P/0F/0M | approved | docs/checkpoints/T-026-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -53,3 +53,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: `harness-qa` failed twice with SSE read timeouts (C1 was claimed but no plan was produced); recorded as ISSUE-20261118-185907. Lead fallback authored `docs/qa/e2e-plan-task-list-model.md` (all UC-E2E-001..008, focused UC-E2E-003 S8 / R-014 block, test-data validation, execution approach, ISSUE-20261118-153622 caveat, entry/exit criteria). YAML validator: 8 use cases, 25 requirement links, 0 errors, 0 warnings; `python -m py_compile` passes. C1 `done` with produced hash in `docs/chunks/T-026.json`.
 - 2026-11-18: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=60511 out=9996 cr=1620588 ratio=26.8x min=103; reviewer auto (P2)
 - 813579a: CP-1 snapshot
+- 2026-11-18: CP-F approved (Q-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=60511 out=9996 cr=1620588 ratio=26.8x min=103; reviewer auto (explicit -AutoApprove)
