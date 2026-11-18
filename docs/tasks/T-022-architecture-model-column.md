@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-018, T-019, T-021 |
 | inputs | `docs/tasks/T-018-requirements-model-column.md`, `docs/tasks/T-019-e2e-model-column.md`, `docs/tasks/T-021-prototype-model-column.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md` |
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 ADR, architecture, component and SCN-003 | ADR, architecture, components, sequence | 22P/0F/1M | approved | docs/checkpoints/T-022-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 23P/0F/1M | awaiting_review | docs/checkpoints/T-022-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 23P/0F/1M | approved | docs/checkpoints/T-022-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - b93fec1: CP-1 snapshot
 - 2026-11-18: CP-F awaiting_review (R-01); checks 23 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=48057 out=18854 cr=272822 ratio=5.7x min=34; reviewer user
 - a4899c2: CP-F snapshot
+- 2026-11-18: CP-F approved by user (zones-overlap-review accepted); T-022 done.

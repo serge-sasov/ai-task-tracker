@@ -9,11 +9,11 @@
 | role | architect |
 | stage | R-01 |
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/components-ai-task-tracker.puml, docs/architecture/components-ai-task-tracker.svg, docs/architecture/sequence-scn-003-ai-task-tracker.puml, docs/architecture/sequence-scn-003-ai-task-tracker.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-18T10:58:11 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-18T11:46:46 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | a4899c2 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-022-CP-F.checks.json |
@@ -102,7 +102,7 @@ docs/activity.puml                                 |   4 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via opencode question: "Approve CP-F" (zones-overlap-review accepted).
 
 ## User edits
 
@@ -114,4 +114,4 @@ docs/activity.puml                                 |   4 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
