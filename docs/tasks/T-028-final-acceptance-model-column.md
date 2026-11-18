@@ -19,7 +19,7 @@
 | base_commit | b4cbe04 |
 | usage | n/a |
 | issues | - |
-| commit | bb84a15 |
+| commit | 2dd00bd |
 
 ## Acceptance
 
@@ -50,3 +50,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-F awaiting_review (F-01); checks 3 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - bb84a15: CP-F snapshot
 - 2026-11-18: CP-F awaiting_review (F-01); checks 4 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- 2dd00bd: CP-F snapshot
