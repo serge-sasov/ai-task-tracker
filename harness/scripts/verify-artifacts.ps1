@@ -595,11 +595,12 @@ function Check-ActivityDerived {
     $bad = @()
     foreach ($row in $board.Rows) {
         $expected = Get-BoardStatusColor $row.status
+        $expectedHex = ([string]$expected).TrimStart('#').ToUpperInvariant()
         $line = ($text -split "`r?`n" | Where-Object { $_ -match ('^:' + [regex]::Escape($row.id) + '\s') } | Select-Object -First 1)
         if (-not $line) { $bad += "$($row.id) missing"; continue }
         $m = [regex]::Match($line, '<<#([0-9A-Fa-f]{6})>>')
         if (-not $m.Success) { $bad += "$($row.id) no color"; continue }
-        if ($m.Groups[1].Value.ToUpperInvariant() -ne $expected.ToUpperInvariant()) {
+        if ($m.Groups[1].Value.ToUpperInvariant() -ne $expectedHex) {
             $bad += "$($row.id) color=$($m.Groups[1].Value) expected=$expected"
         }
     }
