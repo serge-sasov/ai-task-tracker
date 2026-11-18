@@ -19,7 +19,7 @@
 | base_commit | e2ee9b2 |
 | usage | n/a |
 | issues | - |
-| commit | 55e1b32 |
+| commit | e5590d5 |
 
 ## Acceptance
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 55e1b32: CP-2 snapshot
 - 2026-11-18: CP-2 approved by user (MANUAL proto-ru-single-user accepted); continue to CP-F.
 - 2026-11-18: CP-F awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- e5590d5: CP-F snapshot
