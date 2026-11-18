@@ -9,11 +9,11 @@
 | role | orchestrator + lead |
 | stage | F-01 |
 | artifacts | docs/plan.md, docs/tasks/T-028-final-acceptance-model-column.md, docs/activity.puml, docs/activity.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-18T23:29:14 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-18T23:55:39 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 2dd00bd |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-028-CP-F.checks.json |
@@ -77,7 +77,7 @@ docs/activity.puml                                 |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via opencode question: Approve CP-F (final acceptance with BUG-007/BUG-008 as separate follow-ups).
 
 ## User edits
 
@@ -86,7 +86,8 @@ docs/activity.puml                                 |   2 +-
 ## Role response
 
 - Machine checks: 0 FAIL, 0 UNCHECKED, 1 MANUAL.
+- User approved the manual `final-traceability-manual` check; BUG-007 and BUG-008 remain separate open follow-ups.
 
 ## Next action
 
-- return to this checkpoint
+- accept task
