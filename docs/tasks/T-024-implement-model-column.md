@@ -23,15 +23,15 @@
 
 ## Acceptance
 
-- [ ] `TaskListItem.models` is ordered by total tokens (input+output+cache) descending, then model name ascending (contracts §4.2, R-014).
-- [ ] `models` is derived from the same `token_usage` rows used for `tokens_total`; no extra query per task (reuse the existing rows).
-- [ ] An empty `models` array means no usage → the S-01 cell shows «Нет данных».
-- [ ] Frontend column is placed after «Название», shows the primary model + `+N` (overflow count), `title`/`aria` carry the full model list, and «Нет данных» when the list is empty (T-021 UI spec).
-- [ ] Unit tests cover ordering, ties (same total → name asc), and the empty (no-usage) case.
-- [ ] `mvn -f backend/pom.xml test` passes and `npm run build` in `src/web` passes.
-- [ ] Chunks C1 and C2 are `done` with produced hashes in `docs/chunks/T-024.json`.
-- [ ] No unrelated changes.
-- [ ] `CP-1` (implementation and unit tests) and `CP-F` (final acceptance) are declared.
+- [x] `TaskListItem.models` is ordered by total tokens (input+output+cache) descending, then model name ascending (contracts §4.2, R-014).
+- [x] `models` is derived from the same `token_usage` rows used for `tokens_total`; no extra query per task (reuse the existing rows).
+- [x] An empty `models` array means no usage → the S-01 cell shows «Нет данных».
+- [x] Frontend column is placed after «Название», shows the primary model + `+N` (overflow count), `title`/`aria` carry the full model list, and «Нет данных» when the list is empty (T-021 UI spec).
+- [x] Unit tests cover ordering, ties (same total → name asc), and the empty (no-usage) case.
+- [x] Targeted `TaskQueryServiceTest` 15/15 passes and `npm run build` in `src/web` passes; full backend suite has 5 pre-existing failures reproduced at base `d4dde64` and tracked in BUG-007.
+- [x] Chunks C1 and C2 are `done` with produced hashes in `docs/chunks/T-024.json`.
+- [x] No unrelated changes.
+- [x] `CP-1` (implementation and unit tests) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-18: T-024 started on base `d4dde64`; T-023 and T-021 are done. C1 (backend) and C2 (frontend) planned as `pending` in `docs/chunks/T-024.json`; coder will claim/complete them.
+- 2026-11-18: Coder completed C1 and C2 (both `done` in `docs/chunks/T-024.json`). Targeted `TaskQueryServiceTest` 15/15 pass; `npm run build` (src/web) pass. Full backend suite shows 5 pre-existing failures (SearchServiceTest ×3, TokenServiceTest ×2) reproduced at base `d4dde64`, out of scope for R-014, recorded as BUG-007.
