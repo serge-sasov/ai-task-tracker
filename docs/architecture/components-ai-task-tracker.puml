@@ -1,0 +1,66 @@
+@startuml component-ai-task-tracker
+' T-022 R-01 — component diagram (ADR-0001 modular monolith; ADR-0002)
+' Screens S-01..S-06 (ui-spec), components per architecture-ai-task-tracker.md
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+title ai-task-tracker — components (modular monolith, no microservices)
+
+actor "User (local)" as user
+
+package "frontend container (nginx + Vue 3 SPA)" as web {
+  [SPA UI\nS-01 Tasks, S-02 Detail,\nS-03 Search, S-04 Calendar,\nS-05 Tokens, S-06 Manage] as spa
+  [Pinia store + typed API client] as client
+  spa --> client
+}
+
+package "backend container (one Spring Boot 3 JVM)" as backend {
+  package "api module (Spring REST)" as api {
+    [TaskService\n(list models, R-014)] as tasksvc
+    [SolutionService] as solsvc
+    [CalendarService] as calsvc
+    [TokenStatsService] as toksvc
+    [SearchService] as srchsvc
+    [HealthService] as hlthsvc
+  }
+  package "ingestion module" as ing {
+    [IngestionPoller\n(60 s cadence, idempotent upsert)] as poller
+  }
+  package "search module (AI)" as srch {
+    [pgvector recall\n+ Ollama re-rank\n+ RU snippets] as ai
+  }
+  [store module (JPA repositories)] as repos
+}
+
+database "postgres 16 + pgvector\n(tasks, steps, solutions,\ntoken_usage, ingest_state)" as pg
+database "redis 7\n(ingestion lock + watermark)" as redis
+node "Ollama localhost:11434\n(embed + chat, 15 s bound)" as llm
+folder "OPENCODE_DATA_DIR\n(read-only JSON files)" as src
+
+user --> spa
+client --> hlthsvc : API-004 GET /api/health
+client --> tasksvc : API-001 GET /api/tasks[,/{id}]
+client --> calsvc : API-002 GET /api/calendar
+client --> toksvc : API-002 GET /api/tokens
+client --> srchsvc : API-003 POST /api/search
+client ..> tasksvc : API-001 DELETE /api/history
+
+poller --> src : poll (read-only)
+poller --> redis : lock + watermark
+poller --> repos : upsert per session
+poller --> llm : extraction + re-embed (skip on failure)
+ai --> pg : vector(1024) recall
+ai --> llm : re-rank + snippets
+tasksvc --> repos
+solsvc --> repos
+calsvc --> repos
+toksvc --> repos
+hlthsvc --> pg : readiness
+hlthsvc --> redis : readiness
+repos --> pg
+
+note right of backend
+  ADR-0001: one backend process,
+  no inter-service network contract
+  (SVC catalog empty — swimlane waived)
+end note
+@enduml

@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Task | T-006, chunks R-01c / R-01d |
+| Task | T-006, T-022, chunks R-01 |
 | Stage | R-01 |
 | Inputs | requirements, questions, e2e-use-cases, e2e-test-data, screens, ui-spec, ADR-0001 |
 | Status | proposed |
@@ -11,9 +11,10 @@
 
 Local, single-user service that tracks AI coding tasks: ingests opencode session
 files, exposes tasks with their steps (R-003), proposed/chosen solutions (R-004,
-R-005), final status (R-006) and per-model token usage (R-012, R-013), plus AI
-search (R-010), calendar (R-008) and history deletion (R-029). In scope:
-R-001..R-013, R-020..R-030; screens S-01..S-06; use cases UC-E2E-001..UC-E2E-008.
+R-005), final status (R-006) and per-model token usage (R-012, R-013), the
+primary model and full model list in S-01 (R-014), plus AI search (R-010),
+calendar (R-008) and history deletion (R-029). In scope:
+R-001..R-014, R-020..R-030; screens S-01..S-06; use cases UC-E2E-001..UC-E2E-008.
 Out of scope: authentication, multi-user roles, remote/cloud operation, creating or
 editing tasks from the UI.
 
@@ -27,8 +28,10 @@ Redis 7. Frontend (R-021): Vue 3 SPA. One-command local stack via `docker compos
 read-only opencode JSON files (R-001, R-026); re-sync is idempotent (R-025).
 Domain: 1 task = 1 opencode session (R-002); duration = `finished_at - started_at`
 (R-009); token totals come only from source `usage`, never estimated (R-012,
-R-013). Error messages and UI copy are Russian (R-030); liveness/readiness and
-degradation are observable (R-028).
+R-013). The S-01 model list is derived from the same `token_usage` rows as
+`tokens_total`; it is ordered by total tokens desc with a model-name tie-break and
+needs no extra query or migration (R-014). Error messages and UI copy are Russian
+(R-030); liveness/readiness and degradation are observable (R-028).
 
 ## Decisions
 
@@ -43,8 +46,8 @@ API catalog (API) and the OpenAPI links; it does not re-litigate the ADR.
 
 | Component | Responsibility |
 |---|---|
-| web (nginx + Vue 3 SPA) | S-01..S-06 UI, REST client, polling |
-| api (Spring REST) | REST endpoints API-001..API-004, RU error envelope |
+| web (nginx + Vue 3 SPA) | S-01..S-06 UI, REST client, polling; S-01 model cell (primary + `+N`, «Нет данных») |
+| api (Spring REST) | REST endpoints API-001..API-004, RU error envelope; task-list `models` aggregation (R-014) |
 | ingestion (poller) | parse opencode JSON, idempotent upsert, re-embed |
 | search (AI) | pgvector recall + Ollama re-rank + RU snippets |
 | store (JPA / PG16) | tasks, steps, solutions, token_usage, ingest_state |
@@ -59,13 +62,38 @@ in a single `backend` container (ADR-0001); there is no inter-service network
 contract beyond the SPA → backend REST boundary. The SVC catalog is therefore
 empty and no swim-lane diagrams are required.
 
+## Responsibility zones
+
+### Components
+
+| Component | Owns | Does not own |
+|---|---|---|
+| web (nginx + Vue 3 SPA) | S-01..S-06 UI, REST client, polling, S-01 model cell rendering (primary + `+N`, tooltip/aria) | task aggregation, ingestion, storage, search ranking |
+| api (Spring REST) | API-001..API-004, RU error envelope, task-list `models` aggregation and ordering (R-014) | opencode file parsing, vector recall, database engine |
+| ingestion (poller) | opencode JSON parsing, idempotent upsert, re-embed scheduling | REST response shaping, S-01 rendering, token aggregation |
+| search (AI) | pgvector recall, Ollama re-rank, RU snippets | task list and detail endpoints, token accounting |
+| store (JPA / PG16) | tasks, steps, solutions, token_usage, ingest_state persistence | HTTP contracts, UI behavior, model ordering policy |
+| cache (Redis 7) | ingestion lock and watermark | task data storage, REST responses, UI state |
+| llm (Ollama client) | local embedding and chat calls with a 15 s bound | persistence, list aggregation, UI rendering |
+| obs (health) | `/api/health`, `source_status`, structured logs | task business logic, model aggregation, UI |
+
+### Modules
+
+| Module | Parent | Owns | Does not own |
+|---|---|---|---|
+| MOD-001 | api (Spring REST) | task query service, `TaskListItem.models` ordering, REST DTO mapping | opencode parsing, vector recall, database engine |
+| MOD-002 | web (nginx + Vue 3 SPA) | S-01 task table, model cell, tooltip/aria and no-usage state | API aggregation, ingestion, storage |
+| MOD-003 | ingestion (poller) | opencode session parsing, usage-row normalization, idempotent upsert | REST DTOs, UI state, model ordering |
+| MOD-004 | store (JPA / PG16) | task, step, solution, token_usage repositories | HTTP contracts, UI rendering, ingestion scheduling |
+| MOD-005 | search (AI) | vector recall, Ollama re-rank, snippet generation | task list aggregation, token statistics, persistence |
+
 ## Scenarios
 
 | SCN | Name | UC | APIs |
 |---|---|---|---|
 | SCN-001 | stack up + initial empty | UC-E2E-001 | API-001, API-002, API-003, API-004 |
 | SCN-002 | source unavailable state | UC-E2E-002 | API-004 |
-| SCN-003 | list + detail | UC-E2E-003 | API-001 |
+| SCN-003 | list + detail (primary model + `+N`, full list, «Нет данных») | UC-E2E-003 | API-001 |
 | SCN-004 | AI search | UC-E2E-004 | API-003 |
 | SCN-005 | calendar views | UC-E2E-005 | API-002 |
 | SCN-006 | token statistics | UC-E2E-006 | API-002 |
@@ -104,17 +132,17 @@ Base URL `http://localhost:8080` (nginx → `backend:8080`), JSON UTF-8, paginat
 | API-004 | GET /api/health | openapi-api-004-ai-task-tracker.yaml |
 
 Covers R-007 (list/detail), R-008 (calendar), R-010/R-011 (search + snippets),
-R-012/R-013 (tokens), R-028 (health), R-029 (deletion), R-023 (timings), R-024
-(pagination).
+R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
+(deletion), R-023 (timings), R-024 (pagination).
 
 ## Diagram index
 
 | Diagram | Stage | File |
 |---|---|---|
-| component | R-02 (T-007) | component-ai-task-tracker.puml |
+| component | R-01 (T-022) | components-ai-task-tracker.puml |
 | sequence SCN-001 | R-02 (T-007) | sequence-scn-001-ai-task-tracker.puml |
 | sequence SCN-002 | R-02 (T-007) | sequence-scn-002-ai-task-tracker.puml |
-| sequence SCN-003 | R-02 (T-007) | sequence-scn-003-ai-task-tracker.puml |
+| sequence SCN-003 | R-01 (T-022) | sequence-scn-003-ai-task-tracker.puml |
 | sequence SCN-004 | R-02 (T-007) | sequence-scn-004-ai-task-tracker.puml |
 | sequence SCN-005 | R-02 (T-007) | sequence-scn-005-ai-task-tracker.puml |
 | sequence SCN-006 | R-02 (T-007) | sequence-scn-006-ai-task-tracker.puml |
@@ -141,6 +169,7 @@ R-012/R-013 (tokens), R-028 (health), R-029 (deletion), R-023 (timings), R-024
 | R-011 | API-003 top-K + snippet |
 | R-012 | token_usage, API-002 |
 | R-013 | API-002, S-05 |
+| R-014 | API-001 `models`, SCN-003, S-01 |
 | R-020 | backend stack (Context) |
 | R-021 | Vue 3 SPA (Context) |
 | R-022 | docker compose (ADR-0001) |

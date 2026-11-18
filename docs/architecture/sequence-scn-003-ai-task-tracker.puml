@@ -1,6 +1,6 @@
 @startuml sequence-scn-003-ai-task-tracker
-' T-007 R-02 — SCN-003: list + detail
-' Trace: SCN-003 ↔ UC-E2E-003 | API: API-001
+' T-022 R-01 — SCN-003: list + detail
+' Trace: SCN-003 ↔ UC-E2E-003 | API: API-001 | R-014
 ' Source: contracts §4.2 (list), §4.3 (detail)
 autonumber
 title SCN-003 — list + detail (UC-E2E-003)
@@ -12,10 +12,10 @@ participant "store (JPA / PG16)" as pg
 
 user -> spa : open S-01 «Задачи»
 spa -> api : GET /api/tasks?page=1&size=50 (API-001)
-api -> pg : select tasks (filter from/to/status, page)
-pg --> api : TASK-001..TASK-005
-api --> spa : 200 {total:5, items:[{task_id,name,started_at,finished_at,status,duration_s,tokens_total}]}
-note over spa : S-01 table; durations 9000/7200/8100/4200/2400 s; load < 3 s (R-023)
+api -> pg : select tasks + token_usage rows (filter from/to/status, page)
+pg --> api : TASK-001..TASK-005 + usage by model
+api --> spa : 200 {total:5, items:[{task_id,name,started_at,finished_at,status,duration_s,tokens_total,models}]}
+note over spa : S-01 table; durations 9000/7200/8100/4200/2400 s; load < 3 s (R-023);\nmodel column: primary + «+N», full list in tooltip/aria; TASK-002 -> «Нет данных» (R-014)
 user -> spa : click TASK-001
 spa -> api : GET /api/tasks/TASK-001 (API-001)
 api -> pg : task + steps + solutions + token_usage

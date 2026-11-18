@@ -4,7 +4,8 @@
 |---|---|
 | Status | proposed |
 | Date | 2026-11-13 |
-| Task | T-006 |
+| Task | T-006, T-022 |
+| Updated | 2026-11-18 (T-022: R-014, S-01 model list) |
 | Related ADRs | ADR-0002 |
 
 ## Context
@@ -16,7 +17,7 @@ accounted per LLM model.
 
 Forces and constraints:
 
-- Requirements R-001..R-013 (functional) and R-020..R-030 (non-functional) in
+- Requirements R-001..R-014 (functional) and R-020..R-030 (non-functional) in
   `docs/analysis/requirements-ai-task-tracker.md`; the fixed stack (Docker, Java, Postgres,
   Redis backend; Vue.js web frontend) is recorded in `docs/tasks/T-001-ai-task-tracker-feature-planning.md`.
 - All open questions Q-001..Q-008 in `docs/analysis/questions-ai-task-tracker.md` were resolved
@@ -78,6 +79,9 @@ present they are stored as session-level rows and not double-counted. Aggregatio
 (SUM of input/output/cache per model, overall and per selected period) are computed in
 SQL over `token_usage` with a Redis read-through cache; this feeds the per-model widgets
 (R-012, R-013, S-05). Missing usage fields yield zero/absent rows, never fabricated numbers.
+The same rows feed the S-01 `models` array (R-014): total tokens desc, model name
+asc; an empty array means no usage and the UI shows «Нет данных». No schema change
+is needed.
 
 ### 5. AI search and solution extraction (Q-007, Q-008)
 
@@ -175,7 +179,7 @@ typical failure modes explicitly: opencode source unavailable/stale → S-01 ban
 
 | Endpoint | Purpose | Key response fields / behavior |
 |---|---|---|
-| `GET /api/tasks` (page, `from`, `to`, `status`) | task list, S-01 | `{ items: [{task_id, name, started_at, finished_at, status, duration_s, tokens_total}] }`; status ∈ `Завершена/Прервана/Не завершена` |
+| `GET /api/tasks` (page, `from`, `to`, `status`) | task list, S-01 | `{ items: [{task_id, name, started_at, finished_at, status, duration_s, tokens_total, models}] }`; `models` is ordered by total tokens desc, model name asc; empty array means no usage; status ∈ `Завершена/Прервана/Не завершена` |
 | `GET /api/tasks/{id}` | task detail, S-02 | steps (chronological, with timestamps), solutions (`proposed`/`chosen` + source message refs), token totals per model |
 | `POST /api/search` (body `{query, limit}`) | AI search, S-03 | top-K ≥ 5 `{task_id, snippet, score}`; 503 `AI_SEARCH_UNAVAILABLE` when Ollama is down |
 | `GET /api/calendar?view=day\|week\|month\|year&date=YYYY-MM-DD` | calendar, S-04 | tasks on dates by start/interval, with duration; `year` returns per-month task/duration/token stats |
@@ -223,6 +227,7 @@ Decision sections: 1 — architecture/deployment; 2 — ingestion; 3 — domain 
 | R-011 | 5, C |
 | R-012 | 4 |
 | R-013 | 4, C |
+| R-014 | 4, C |
 | R-020 | 1 |
 | R-021 | 1 |
 | R-022 | 1 |

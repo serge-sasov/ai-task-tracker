@@ -1,0 +1,156 @@
+{
+    "task":  "T-022",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  80,
+                   "max_session_kb":  160,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "ADR and architecture description for R-014",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/architecture-ai-task-tracker.md",
+                                    "docs/architecture/adr-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-022-architecture-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-022-architecture-model-column.md",
+                       "acceptance":  [
+                                          "ADR and architecture trace R-014, models ordering and no-usage behavior"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/architecture-ai-task-tracker.md",
+                                            "sha256":  "80b5f2819d7bc1448f1dbac9e8c431cb2123d19e52ac43af85bbe65c18b628f3"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/adr-ai-task-tracker.md",
+                                            "sha256":  "396f606779ce0c088fd810506cc102d92928350c3912aee4a70256908038fedf"
+                                        }
+                                    ],
+                       "base_commit":  "562f67e",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:21:09",
+                       "finished":  "2026-11-18T10:21:10"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "Component diagram with the task model aggregation",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/components-ai-task-tracker.puml",
+                                    "docs/architecture/components-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-022-architecture-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-022-architecture-model-column.md",
+                       "acceptance":  [
+                                          "Component diagram shows TaskService model aggregation and is rendered"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/components-ai-task-tracker.puml",
+                                            "sha256":  "cd8fa9c3872dd949c6db6fcd267d644a300da8aba8ad17aaf9d9ec96b7bfe626"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/components-ai-task-tracker.svg",
+                                            "sha256":  "3fdfa9fbcd74d1528a42638e84c44ebe250fc70a8b830b8d3fff1cfea574bed7"
+                                        }
+                                    ],
+                       "base_commit":  "562f67e",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:21:10",
+                       "finished":  "2026-11-18T10:21:10"
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "R-01",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "SCN-003 sequence with the models response",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/sequence-scn-003-ai-task-tracker.puml",
+                                    "docs/architecture/sequence-scn-003-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-022-architecture-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-022-architecture-model-column.md",
+                       "acceptance":  [
+                                          "SCN-003 sequence returns models and shows the S-01 model states"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-003-ai-task-tracker.puml",
+                                            "sha256":  "5075a9333dae1a23a6e40620134dfbb38d326baf383991834435e6b35d7fb7e5"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/sequence-scn-003-ai-task-tracker.svg",
+                                            "sha256":  "fa844965a950c4de29fe0fc70a771b7c61b90b67ff91aa2e917398aa6493e5e8"
+                                        }
+                                    ],
+                       "base_commit":  "562f67e",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:21:11",
+                       "finished":  "2026-11-18T10:21:11"
+                   }
+               ],
+    "updated":  "2026-11-18T10:21:11"
+}
