@@ -19,7 +19,7 @@
 | base_commit | 240a2fc |
 | usage | in=109818 out=26993 cr=6432125 ratio=58.6x min=16 |
 | issues | ISSUE-20261118-153622 |
-| commit | 0990a6b |
+| commit | fb9007b |
 
 ## Acceptance
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=109818 out=26993 cr=6432125 ratio=58.6x min=16; reviewer auto (P2)
 - 0990a6b: CP-2 snapshot
 - 2026-11-18: CP-F approved (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=109818 out=26993 cr=6432125 ratio=58.6x min=16; reviewer auto (explicit -AutoApprove)
+- fb9007b: CP-F snapshot
