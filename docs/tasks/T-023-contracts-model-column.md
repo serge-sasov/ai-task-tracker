@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | awaiting_review |
+| status | in_progress |
 | hold | false |
 | depends_on | T-022 |
 | inputs | `docs/tasks/T-022-architecture-model-column.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md` |
@@ -35,7 +35,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | R-02 contracts, OpenAPI, data/class model | contracts, OpenAPI, architecture, data/class diagrams | 21P/0F/1M | awaiting_review | docs/checkpoints/T-023-CP-2.md |
+| CP-2 | R-02 contracts, OpenAPI, data/class model | contracts, OpenAPI, architecture, data/class diagrams | 21P/0F/1M | approved | docs/checkpoints/T-023-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-023-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
