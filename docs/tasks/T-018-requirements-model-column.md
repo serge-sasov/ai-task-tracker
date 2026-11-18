@@ -19,7 +19,7 @@
 | base_commit | 8fab879 |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | 848442e |
 
 ## Acceptance
 
@@ -69,3 +69,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-018 started on base `8fab879`; T-017 CP-F is approved. Requirement R-014 and glossary terms added; traceability and summary updated. C1 recorded as done.
 - 2026-11-18: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
+- 848442e: CP-1 snapshot
