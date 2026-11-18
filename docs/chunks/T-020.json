@@ -1,0 +1,100 @@
+{
+    "task":  "T-020",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  32,
+                   "max_session_kb":  64,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "U-01",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "F-1 model-column flow",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/user-flows-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-020-ux-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-020-ux-model-column.md",
+                       "acceptance":  [
+                                          "F-1 covers the S-01 model column, +N, tooltip/aria and no-usage state"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/user-flows-ai-task-tracker.md",
+                                            "sha256":  "4b2ff5d0eda253f4fc006fb3e95afab0d336d724752f47506fdb630997844812"
+                                        }
+                                    ],
+                       "base_commit":  "aa9d8cb",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:05:12",
+                       "finished":  "2026-11-18T10:05:12"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "U-01",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "S-01 screen, states and a11y for the model column",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/screens-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-020-ux-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-020-ux-model-column.md",
+                       "acceptance":  [
+                                          "S-01 registry, states, a11y, copy and traceability cover R-014"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/screens-ai-task-tracker.md",
+                                            "sha256":  "28ec85a81e4ad283e3f612045d52f500673615fbc9f307048e8e8cf2c8efb29f"
+                                        }
+                                    ],
+                       "base_commit":  "aa9d8cb",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:05:13",
+                       "finished":  "2026-11-18T10:06:39"
+                   }
+               ],
+    "updated":  "2026-11-18T10:06:39"
+}
