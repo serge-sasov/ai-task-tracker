@@ -3,102 +3,112 @@
     "version":  1,
     "baseline":  [
 
-                  ],
+                 ],
     "budget":  {
-                    "max_write_kb":  32,
-                    "max_session_kb":  64,
-                    "context_stop_pct":  65,
-                    "max_turns":  40,
-                    "max_input_tokens":  60000,
-                    "max_wall_min":  45
-                },
+                   "max_write_kb":  32,
+                   "max_session_kb":  64,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
     "chunks":  [
-                    {
-                        "id":  "C1",
-                        "parent":  null,
-                        "stage":  "Q-02",
-                        "role":  "qa",
-                        "depth":  1,
-                        "title":  "Run UC-E2E-003 (S8) + full suite, write the e2e report",
-                        "state":  "pending",
-                        "owns":  [
-                                     "docs/qa/e2e-report-task-list-model.md"
-                                 ],
-                        "inputs":  [
-                                       "docs/tasks/T-027-qa-model-column.md",
-                                       "docs/qa/e2e-plan-task-list-model.md",
-                                       "tests/e2e/uc_e2e_001_003/shared.py",
-                                       "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py",
-                                       "docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md"
-                                   ],
-                        "brief":  "docs/chunks/T-027/C1.brief.md",
-                        "acceptance":  [
-                                           "targeted UC-E2E-003 S8 run (S8-API-1..8: models field, ordered list, empty [] TASK-002, ordering) via runner or forward-slash pytest workaround; full suite attempted; report has PASS and FAIL counts and evidence paths (UC-E2E-003.json, e2e-results.json, pytest log); BUG-007 and both issues accounted for"
-                                       ],
-                        "produced":  [
-
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Run UC-E2E-003 (S8) + full suite, write the e2e report",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/qa/e2e-report-task-list-model.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-027-qa-model-column.md",
+                                      "docs/qa/e2e-plan-task-list-model.md",
+                                      "tests/e2e/uc_e2e_001_003/shared.py",
+                                      "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py",
+                                      "docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md"
+                                  ],
+                       "brief":  "docs/chunks/T-027/C1.brief.md",
+                       "acceptance":  [
+                                          "targeted UC-E2E-003 S8 run (S8-API-1..8: models field, ordered list, empty [] TASK-002, ordering) via runner or forward-slash pytest workaround; full suite attempted; report has PASS and FAIL counts and evidence paths (UC-E2E-003.json, e2e-results.json, pytest log); BUG-007 and both issues accounted for"
                                       ],
-                        "base_commit":  "c8139c2",
-                        "attempts":  0,
-                        "usage":  {
-                                      "in":  0,
-                                      "out":  0,
-                                      "cr":  0,
-                                      "min":  0
-                                  },
-                        "issues":  [
+                       "produced":  [
+                                        {
+                                            "path":  "docs/qa/e2e-report-task-list-model.md",
+                                            "sha256":  "c56640cd1aaa095b014c63de6bd4fd5210c377a7240bf370eed461d79fd9c4c3"
+                                        }
+                                    ],
+                       "base_commit":  "c8139c2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
                                       "ISSUE-20261118-153622",
                                       "ISSUE-20261118-185907"
                                   ],
-                        "notes":  [
+                       "notes":  [
 
-                                  ]
-                    },
-                    {
-                        "id":  "C2",
-                        "parent":  null,
-                        "stage":  "Q-02",
-                        "role":  "qa",
-                        "depth":  1,
-                        "title":  "Code/UX/contract review and verdict",
-                        "state":  "pending",
-                        "owns":  [
-                                     "docs/qa/review-T-027.md"
                                  ],
-                        "inputs":  [
-                                       "docs/tasks/T-027-qa-model-column.md",
-                                       "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
-                                       "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
-                                       "src/web/src/api/types.ts",
-                                       "src/web/src/views/DashboardView.vue",
-                                       "docs/ux/ui-spec-ai-task-tracker.md",
-                                       "docs/ux/prototype/ai-task-tracker/uc-e2e-003.html",
-                                       "docs/architecture/contracts-ai-task-tracker.md",
-                                       "docs/architecture/openapi-api-001-ai-task-tracker.yaml",
-                                       "docs/bugs/BUG-007-pre-existing-backend-test-failures.md"
-                                   ],
-                        "brief":  "docs/chunks/T-027/C2.brief.md",
-                        "acceptance":  [
-                                           "review checks code (TaskListItem/TaskQueryService/types.ts/DashboardView), UX (S-01 cell vs prototype + ui-spec), contracts (contracts 4.2 + openapi-api-001); contains an explicit Verdict (PASS/FAIL); BUG-007 noted as out-of-scope, not a T-027 failure"
-                                       ],
-                        "produced":  [
-
+                       "started":  "2026-11-18T19:43:57",
+                       "finished":  "2026-11-18T19:43:57"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Code/UX/contract review and verdict",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/qa/review-T-027.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-027-qa-model-column.md",
+                                      "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
+                                      "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
+                                      "src/web/src/api/types.ts",
+                                      "src/web/src/views/DashboardView.vue",
+                                      "docs/ux/ui-spec-ai-task-tracker.md",
+                                      "docs/ux/prototype/ai-task-tracker/uc-e2e-003.html",
+                                      "docs/architecture/contracts-ai-task-tracker.md",
+                                      "docs/architecture/openapi-api-001-ai-task-tracker.yaml",
+                                      "docs/bugs/BUG-007-pre-existing-backend-test-failures.md"
+                                  ],
+                       "brief":  "docs/chunks/T-027/C2.brief.md",
+                       "acceptance":  [
+                                          "review checks code (TaskListItem/TaskQueryService/types.ts/DashboardView), UX (S-01 cell vs prototype + ui-spec), contracts (contracts 4.2 + openapi-api-001); contains an explicit Verdict (PASS/FAIL); BUG-007 noted as out-of-scope, not a T-027 failure"
                                       ],
-                        "base_commit":  "c8139c2",
-                        "attempts":  0,
-                        "usage":  {
-                                      "in":  0,
-                                      "out":  0,
-                                      "cr":  0,
-                                      "min":  0
-                                  },
-                        "issues":  [
+                       "produced":  [
+                                        {
+                                            "path":  "docs/qa/review-T-027.md",
+                                            "sha256":  "a826d289fc9b1014732e12d388310c4fb0f69eeee9326cfb1c3a2f7ff3a54aa8"
+                                        }
+                                    ],
+                       "base_commit":  "c8139c2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
                                       "BUG-007"
                                   ],
-                        "notes":  [
+                       "notes":  [
 
-                                  ]
-                    }
-                ],
-    "updated":  "2026-11-18T00:00:00"
+                                 ],
+                       "started":  "2026-11-18T19:43:57",
+                       "finished":  "2026-11-18T19:43:58"
+                   }
+               ],
+    "updated":  "2026-11-18T19:43:58"
 }
