@@ -1,0 +1,52 @@
+# T-026: Q-01 E2E plan and coverage: S-01 model column
+
+| Field | Value |
+|---|---|
+| id | T-026 |
+| title | Q-01 E2E plan and coverage: S-01 model column |
+| workflow | feature |
+| stage | Q-01 |
+| role | qa |
+| status | in_progress |
+| hold | false |
+| depends_on | T-019, T-025 |
+| inputs | `docs/tasks/T-025-e2e-model-column.md`, `docs/tasks/T-019-e2e-model-column.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md` (UC-E2E-001..UC-E2E-008, UC-E2E-003 S8), `docs/analysis/e2e-test-data-ai-task-tracker.yaml` (UC-E2E-003 S8, `fixtures.sessions`), `tests/e2e/uc_e2e_001_003/shared.py`, `tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py`, `docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md` |
+| artifacts | `docs/qa/e2e-plan-task-list-model.md` |
+| e2e | required - this is the e2e plan and coverage-matrix stage |
+| ux | required - the plan includes the S-01 model cell assertions (model column, `+N`, tooltip/aria, «Нет данных») |
+| chunks | `docs/chunks/T-026.json` (C1: e2e plan + requirement->UC->test matrix) |
+| budget | max_write 32 KB / session 64 KB; one chunk |
+| base_commit | 0ef0d3c |
+| usage | n/a |
+| issues | ISSUE-20261118-153622 |
+| commit | - |
+
+## Acceptance
+
+- [ ] The plan defines a requirement -> UC -> test matrix that covers ALL `UC-E2E-001`..`UC-E2E-008` (the `e2e-plan-uc-coverage` registry check requires every documented UC id to be present).
+- [ ] The matrix includes a focused UC-E2E-003 S8 / R-014 block covering the S-01 model column: per-task ordered `models` list (`qwen3.8:27b` then `llama3.1:8b`, total desc then name asc), empty state for TASK-002 (no usage -> «Нет данных»), `+N`, tooltip/aria full list, and API `GET /api/tasks` field.
+- [ ] Test data validation is described: how `scripts/validate-e2e-data.py --strict` is run against `docs/analysis/e2e-test-data-ai-task-tracker.yaml` and the pass criteria (0 errors).
+- [ ] The execution approach covers both a targeted UC run (e.g. `scripts/e2e.ps1 run -UC UC-E2E-003`) and the full suite, with the offline/skipped behavior noted.
+- [ ] An environment caveat is recorded for ISSUE-20261118-153622 (Docker Compose plugin missing + runner pytest backslash path) and the workaround (direct forward-slash pytest invocation).
+- [ ] Entry/exit criteria and evidence expectations are stated (which `tests/e2e/results/*.json` and log lines constitute pass evidence; FAIL/UNCHECKED must be 0).
+- [ ] Chunk C1 is `done` with a produced hash in `docs/chunks/T-026.json`.
+- [ ] `CP-1` (e2e plan and coverage) and `CP-F` (final acceptance) are declared.
+
+## Checkpoints
+
+| ID | Stage | Artifacts | Checks | Status | Review file |
+|---|---|---|---|---|---|
+| CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-task-list-model.md` | - | pending | docs/checkpoints/T-026-CP-1.md |
+| CP-F | final acceptance | all task artifacts | - | pending | docs/checkpoints/T-026-CP-F.md |
+
+Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
+
+## Chunk plan
+
+| Chunk | Stage | Role | Title | Owns | State |
+|---|---|---|---|---|---|
+| C1 | Q-01 | qa | E2E plan + requirement->UC->test matrix (all UC-E2E-001..008, S-01/R-014 focus) | `docs/qa/e2e-plan-task-list-model.md` | pending |
+
+## Log
+
+- 2026-11-18: T-026 started on base `0ef0d3c`; T-019 and T-025 are done. C1 (e2e plan + requirement->UC->test matrix) planned as `pending` in `docs/chunks/T-026.json`; QA will claim/complete it. Inputs include UC-E2E-003/S8 (use cases + YAML), the T-025 e2e test files, and ISSUE-20261118-153622 (live-run environment caveat).

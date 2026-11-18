@@ -1,0 +1,59 @@
+{
+    "task":  "T-026",
+    "version":  1,
+    "baseline":  [
+
+                  ],
+    "budget":  {
+                    "max_write_kb":  32,
+                    "max_session_kb":  64,
+                    "context_stop_pct":  65,
+                    "max_turns":  40,
+                    "max_input_tokens":  60000,
+                    "max_wall_min":  45
+                },
+    "chunks":  [
+                    {
+                        "id":  "C1",
+                        "parent":  null,
+                        "stage":  "Q-01",
+                        "role":  "qa",
+                        "depth":  1,
+                        "title":  "E2E plan + requirement->UC->test matrix (all UC-E2E-001..008, S-01/R-014 focus)",
+                        "state":  "pending",
+                        "owns":  [
+                                     "docs/qa/e2e-plan-task-list-model.md"
+                                 ],
+                        "inputs":  [
+                                       "docs/tasks/T-026-e2e-plan-model-column.md",
+                                       "docs/analysis/e2e-use-cases-ai-task-tracker.md",
+                                       "docs/analysis/e2e-test-data-ai-task-tracker.yaml",
+                                       "tests/e2e/uc_e2e_001_003/shared.py",
+                                       "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py",
+                                       "docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md"
+                                   ],
+                        "brief":  "docs/chunks/T-026/C1.brief.md",
+                        "acceptance":  [
+                                           "plan has a requirement->UC->test matrix covering ALL UC-E2E-001..UC-E2E-008; a focused UC-E2E-003 S8 / R-014 block (ordered models list, empty state TASK-002, +N, tooltip/aria, GET /api/tasks models field); test data validation via validate-e2e-data.py --strict; execution approach (targeted UC run + full suite); environment caveat for ISSUE-20261118-153622; entry/exit criteria and evidence expectations; CP-1 and CP-F declared"
+                                       ],
+                        "produced":  [
+
+                                      ],
+                        "base_commit":  "0ef0d3c",
+                        "attempts":  0,
+                        "usage":  {
+                                      "in":  0,
+                                      "out":  0,
+                                      "cr":  0,
+                                      "min":  0
+                                  },
+                        "issues":  [
+                                      "ISSUE-20261118-153622"
+                                  ],
+                        "notes":  [
+
+                                  ]
+                    }
+                ],
+    "updated":  "2026-11-18T00:00:00"
+}
