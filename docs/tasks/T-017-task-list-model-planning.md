@@ -19,7 +19,7 @@
 | base_commit | 5abdd53 |
 | usage | in=1341131 out=201058 cr=2551015 ratio=1.9x min=327 |
 | issues | ISSUE-20261117-232320 |
-| commit | c45792a |
+| commit | 5a28f17 |
 
 ## Acceptance
 
@@ -110,3 +110,4 @@ D-01 is waived and therefore has no row. T-010, T-011 and T-012 remain pending b
 - 2026-11-18: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=1341131 out=201058 cr=2551015 ratio=1.9x min=327; reviewer auto (P2)
 - c45792a: CP-1 snapshot
 - 2026-11-18: CP-F approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=1341131 out=201058 cr=2551015 ratio=1.9x min=327; reviewer auto (explicit -AutoApprove)
+- 5a28f17: CP-F snapshot
