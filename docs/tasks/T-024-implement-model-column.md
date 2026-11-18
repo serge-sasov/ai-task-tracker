@@ -17,7 +17,7 @@
 | chunks | `docs/chunks/T-024.json` (C1 backend DTO/service/tests, C2 frontend types/view) |
 | budget | max_write 32 KB / session 64 KB; two chunks |
 | base_commit | d4dde64 |
-| usage | n/a |
+| usage | in=82511 out=17279 cr=2997680 ratio=36.3x min=10 |
 | issues | - |
 | commit | - |
 
@@ -37,7 +37,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | I-01 DTO, service, tests, frontend column | TaskListItem, TaskQueryService, TaskQueryServiceTest, types.ts, DashboardView.vue | - | pending | `docs/checkpoints/T-024-CP-1.md` |
+| CP-1 | I-01 DTO, service, tests, frontend column | TaskListItem, TaskQueryService, TaskQueryServiceTest, types.ts, DashboardView.vue | 8P/0F/0M | approved | docs/checkpoints/T-024-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-024-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -53,3 +53,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-024 started on base `d4dde64`; T-023 and T-021 are done. C1 (backend) and C2 (frontend) planned as `pending` in `docs/chunks/T-024.json`; coder will claim/complete them.
 - 2026-11-18: Coder completed C1 and C2 (both `done` in `docs/chunks/T-024.json`). Targeted `TaskQueryServiceTest` 15/15 pass; `npm run build` (src/web) pass. Full backend suite shows 5 pre-existing failures (SearchServiceTest ×3, TokenServiceTest ×2) reproduced at base `d4dde64`, out of scope for R-014, recorded as BUG-007.
+- 2026-11-18: CP-1 approved (I-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=82511 out=17279 cr=2997680 ratio=36.3x min=10; reviewer auto (P2)

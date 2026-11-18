@@ -5,8 +5,8 @@
 
                  ],
     "budget":  {
-                    "max_write_kb":  32,
-                    "max_session_kb":  64,
+                   "max_write_kb":  32,
+                   "max_session_kb":  64,
                    "context_stop_pct":  65,
                    "max_turns":  40,
                    "max_input_tokens":  60000,
@@ -20,12 +20,12 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Backend: ordered models field and TaskQueryService tests",
-                       "state":  "pending",
-                        "owns":  [
-                                     "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
-                                     "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
-                                     "tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java"
-                                 ],
+                       "state":  "done",
+                       "owns":  [
+                                    "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
+                                    "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
+                                    "tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java"
+                                ],
                        "inputs":  [
                                       "docs/tasks/T-024-implement-model-column.md"
                                   ],
@@ -34,10 +34,21 @@
                                           "TaskListItem.models ordered total tokens desc / name asc; empty list when no usage; reuses existing token_usage rows (no extra query per task); unit tests cover ordering, ties, empty; mvn -f backend/pom.xml test passes"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
+                                            "sha256":  "817642c9d10ce2a0cf951d5969229a34630c17654547796c216b6f978da5ffdd"
+                                        },
+                                        {
+                                            "path":  "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
+                                            "sha256":  "3b0896f122f1f47209aadcfaf66ca162a951a8d71e84f222b86588a2f553ff45"
+                                        },
+                                        {
+                                            "path":  "tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java",
+                                            "sha256":  "ac1dcf3d2638e8a447aaa1033ed4871bb363143ef6c124f618543d832057f36e"
+                                        }
                                     ],
                        "base_commit":  "d4dde64",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -50,8 +61,8 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-18T13:26:53",
+                       "finished":  "2026-11-18T13:30:03"
                    },
                    {
                        "id":  "C2",
@@ -60,11 +71,11 @@
                        "role":  "coder",
                        "depth":  1,
                        "title":  "Frontend: S-01 model column (primary +N, tooltip/aria, empty state)",
-                       "state":  "pending",
-                        "owns":  [
-                                     "src/web/src/api/types.ts",
-                                     "src/web/src/views/DashboardView.vue"
-                                 ],
+                       "state":  "done",
+                       "owns":  [
+                                    "src/web/src/api/types.ts",
+                                    "src/web/src/views/DashboardView.vue"
+                                ],
                        "inputs":  [
                                       "docs/tasks/T-024-implement-model-column.md"
                                   ],
@@ -73,10 +84,17 @@
                                           "types.ts TaskListItem.models: string[]; column after Название with primary model + \u0027+N\u0027; title/aria full list; \u0027Нет данных\u0027 when empty; npm run build in src/web passes"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "src/web/src/api/types.ts",
+                                            "sha256":  "dc62594cdb3eac0f723ba1e320fbb50afbc2b11247eac8074ea5364fe1d448b5"
+                                        },
+                                        {
+                                            "path":  "src/web/src/views/DashboardView.vue",
+                                            "sha256":  "8cc6c5d1eb13bb4288da957b1a614c247b8bae95dedefe92d60189b95d1ac6e2"
+                                        }
                                     ],
                        "base_commit":  "d4dde64",
-                       "attempts":  0,
+                       "attempts":  1,
                        "usage":  {
                                      "in":  0,
                                      "out":  0,
@@ -89,9 +107,9 @@
                        "notes":  [
 
                                  ],
-                       "started":  null,
-                       "finished":  null
+                       "started":  "2026-11-18T13:30:45",
+                       "finished":  "2026-11-18T13:31:48"
                    }
                ],
-    "updated":  "2026-11-18T13:06:16"
+    "updated":  "2026-11-18T13:31:48"
 }

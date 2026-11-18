@@ -210,6 +210,101 @@ class TaskQueryServiceTest {
         assertFalse(resp.getTokens().hasData());
     }
 
+    @Test
+    void listEmptyUsageProducesEmptyModels() {
+        TaskEntity t = new TaskEntity("TASK-1", "SID-1", "Task 1",
+                LocalDateTime.of(2026, 11, 10, 9, 0),
+                LocalDateTime.of(2026, 11, 10, 10, 0), TaskStatus.NOT_COMPLETED);
+        when(taskRepository.filter(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of(t), PageRequest.of(0, 50), 1L));
+        when(tokenUsageRepository.findByTaskId("TASK-1"))
+                .thenReturn(List.of());
+
+        TaskListResponse resp = service().list(1, 50, null, null, null);
+
+        TaskListItem item = resp.getItems().get(0);
+        assertEquals(0L, item.getTokensTotal());
+        assertTrue(item.getModels().isEmpty());
+    }
+
+    @Test
+    void listOrdersModelsByTotalDescendingThenNameAsc() {
+        TaskEntity t = new TaskEntity("TASK-1", "SID-1", "Task 1",
+                LocalDateTime.of(2026, 11, 10, 9, 0),
+                LocalDateTime.of(2026, 11, 10, 10, 0), TaskStatus.NOT_COMPLETED);
+        when(taskRepository.filter(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of(t), PageRequest.of(0, 50), 1L));
+        // per-model totals: zzz=100, aaa=300, mmm=200
+        when(tokenUsageRepository.findByTaskId("TASK-1")).thenReturn(List.of(
+                new TokenUsageEntity("TASK-1", "m1", "zzz", 60L, 40L, 0L, "session"),
+                new TokenUsageEntity("TASK-1", "m2", "mmm", 120L, 80L, 0L, "session"),
+                new TokenUsageEntity("TASK-1", "m3", "aaa", 300L, 0L, 0L, "session")));
+
+        TaskListResponse resp = service().list(1, 50, null, null, null);
+
+        TaskListItem item = resp.getItems().get(0);
+        // aaa(300) -> mmm(200) -> zzz(100)
+        assertEquals(List.of("aaa", "mmm", "zzz"), item.getModels());
+        assertEquals(600L, item.getTokensTotal());
+    }
+
+    @Test
+    void listTiesAreOrderedByNameAscending() {
+        TaskEntity t = new TaskEntity("TASK-1", "SID-1", "Task 1",
+                LocalDateTime.of(2026, 11, 10, 9, 0),
+                LocalDateTime.of(2026, 11, 10, 10, 0), TaskStatus.NOT_COMPLETED);
+        when(taskRepository.filter(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of(t), PageRequest.of(0, 50), 1L));
+        // two models with equal total 500 -> name ascending
+        when(tokenUsageRepository.findByTaskId("TASK-1")).thenReturn(List.of(
+                new TokenUsageEntity("TASK-1", "m1", "llama3.1:8b", 300L, 200L, 0L, "session"),
+                new TokenUsageEntity("TASK-1", "m2", "qwen3.8:27b", 500L, 0L, 0L, "session"),
+                new TokenUsageEntity("TASK-1", "m3", "alpha", 0L, 500L, 0L, "session")));
+
+        TaskListResponse resp = service().list(1, 50, null, null, null);
+
+        TaskListItem item = resp.getItems().get(0);
+        assertEquals(List.of("alpha", "llama3.1:8b", "qwen3.8:27b"), item.getModels());
+    }
+
+    @Test
+    void listCountsCacheTokensInModelTotal() {
+        TaskEntity t = new TaskEntity("TASK-1", "SID-1", "Task 1",
+                LocalDateTime.of(2026, 11, 10, 9, 0),
+                LocalDateTime.of(2026, 11, 10, 10, 0), TaskStatus.NOT_COMPLETED);
+        when(taskRepository.filter(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of(t), PageRequest.of(0, 50), 1L));
+        // two rows, same model, differ by cache -> cache is summed into the total
+        when(tokenUsageRepository.findByTaskId("TASK-1")).thenReturn(List.of(
+                new TokenUsageEntity("TASK-1", "m1", "qwen3.8:27b", 100L, 50L, 0L, "session"),
+                new TokenUsageEntity("TASK-1", "m2", "qwen3.8:27b", 0L, 0L, 1000L, "session"),
+                new TokenUsageEntity("TASK-1", "m3", "llama3.1:8b", 1L, 1L, 1L, "session")));
+
+        TaskListResponse resp = service().list(1, 50, null, null, null);
+
+        TaskListItem item = resp.getItems().get(0);
+        // qwen3.8:27b = 1150 (incl. cache), llama3.1:8b = 3 -> qwen first
+        assertEquals(List.of("qwen3.8:27b", "llama3.1:8b"), item.getModels());
+        assertEquals(1153L, item.getTokensTotal());
+    }
+
+    @Test
+    void listModelsReturnIsDefensivelyImmutable() {
+        TaskEntity t = new TaskEntity("TASK-1", "SID-1", "Task 1",
+                LocalDateTime.of(2026, 11, 10, 9, 0),
+                LocalDateTime.of(2026, 11, 10, 10, 0), TaskStatus.NOT_COMPLETED);
+        when(taskRepository.filter(any(), any(), any(), any()))
+                .thenReturn(new PageImpl<>(List.of(t), PageRequest.of(0, 50), 1L));
+        when(tokenUsageRepository.findByTaskId("TASK-1")).thenReturn(List.of(
+                new TokenUsageEntity("TASK-1", "m1", "only", 10L, 0L, 0L, "session")));
+
+        TaskListItem item = service().list(1, 50, null, null, null).getItems().get(0);
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> item.getModels().add("injected"));
+        assertEquals(List.of("only"), item.getModels());
+    }
+
     private static void assertTrue(boolean b) {
         org.junit.jupiter.api.Assertions.assertTrue(b);
     }

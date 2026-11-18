@@ -53,6 +53,7 @@
         <thead>
           <tr>
             <th scope="col">Название</th>
+            <th scope="col">Модель</th>
             <th scope="col">Дата</th>
             <th scope="col">Продолжительность</th>
             <th scope="col">Статус</th>
@@ -66,6 +67,13 @@
           >
             <td>
               <router-link :to="`/tasks/${task.task_id}`">{{ task.name }}</router-link>
+            </td>
+            <td
+              :title="modelLabel(task)"
+              :aria-label="modelLabel(task)"
+            >
+              <span class="model__primary">{{ modelPrimary(task) }}</span>
+              <span v-if="modelMoreCount(task)" class="model__more">+{{ modelMoreCount(task) }}</span>
             </td>
             <td>{{ formatDate(task.started_at) }}</td>
             <td>{{ formatDuration(task.duration_s) }}</td>
@@ -144,12 +152,34 @@ export default {
       void health.probe();
     }
 
+    function modelList(task: { models?: string[] }): string[] {
+      return task.models ?? [];
+    }
+
+    function modelLabel(task: { models?: string[] }): string {
+      const models = modelList(task);
+      if (models.length === 0) {
+        return 'Модель: Нет данных';
+      }
+      return `Модели: ${models.join(', ')}`;
+    }
+
+    function modelPrimary(task: { models?: string[] }): string {
+      const models = modelList(task);
+      return models.length > 0 ? models[0] : 'Нет данных';
+    }
+
+    function modelMoreCount(task: { models?: string[] }): number {
+      const models = modelList(task);
+      return models.length > 1 ? models.length - 1 : 0;
+    }
+
     onMounted(() => {
       void tasks.load();
       void health.probe();
     });
 
-    return { tasks, health, updatedLabel, stats, banner, query, onSearch, onRetry, formatDuration, formatDate };
+    return { tasks, health, updatedLabel, stats, banner, query, onSearch, onRetry, formatDuration, formatDate, modelLabel, modelPrimary, modelMoreCount };
   },
 };
 </script>
@@ -224,6 +254,11 @@ export default {
 }
 .row--link a {
   font-weight: 600;
+}
+.model__more {
+  color: var(--muted);
+  font-size: 12px;
+  margin-left: var(--space-1);
 }
 .table-note,
 .panel__state,

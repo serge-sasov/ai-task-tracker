@@ -3,7 +3,9 @@ package ru.aitasktracker.api.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -113,10 +115,12 @@ public class TaskQueryService {
 
     private TaskListItem toListItem(TaskEntity task) {
         long durationS = duration(task);
-        long tokensTotal = tokensTotal(task.getTaskId());
+        List<TokenUsageEntity> rows = tokenUsageRepository.findByTaskId(task.getTaskId());
+        long tokensTotal = total(rows);
+        List<String> models = tokenModels(rows);
         String finished = task.getFinishedAt() == null ? null : iso(task.getFinishedAt());
         return new TaskListItem(task.getTaskId(), task.getName(), iso(task.getStartedAt()),
-                finished, task.getStatus().value(), durationS, tokensTotal);
+                finished, task.getStatus().value(), durationS, tokensTotal, models);
     }
 
     /** duration_s = seconds(startedAt, finishedAt or lastStepAt) (contracts section 2). */
@@ -125,14 +129,36 @@ public class TaskQueryService {
         return TaskDuration.seconds(task.getStartedAt(), task.getFinishedAt(), lastStep);
     }
 
-    /** Sum of input+output+cache across all token_usage rows of the task, 0 if none. */
-    private long tokensTotal(String taskId) {
-        List<TokenUsageEntity> rows = tokenUsageRepository.findByTaskId(taskId);
-        long total = 0L;
+    /** Sum of input+output+cache across all token_usage rows, 0 if none. */
+    private static long total(List<TokenUsageEntity> rows) {
+        long sum = 0L;
         for (TokenUsageEntity row : rows) {
-            total += row.getInputTokens() + row.getOutputTokens() + row.getCacheTokens();
+            sum += row.getInputTokens() + row.getOutputTokens() + row.getCacheTokens();
         }
-        return total;
+        return sum;
+    }
+
+    /**
+     * Ordered model list from the given rows (contracts §4.2): per model, the
+     * sum of input+output+cache, ordered by that total descending then by model
+     * name ascending for ties. Empty when there are no rows.
+     */
+    private static List<String> tokenModels(List<TokenUsageEntity> rows) {
+        Map<String, Long> byModel = new LinkedHashMap<>();
+        for (TokenUsageEntity row : rows) {
+            long modelTokens = row.getInputTokens() + row.getOutputTokens()
+                    + row.getCacheTokens();
+            byModel.merge(row.getModel(), modelTokens, Long::sum);
+        }
+        List<String> ordered = new ArrayList<>(byModel.keySet());
+        ordered.sort((a, b) -> {
+            int cmp = Long.compare(byModel.get(b), byModel.get(a));
+            if (cmp != 0) {
+                return cmp;
+            }
+            return a.compareTo(b);
+        });
+        return ordered;
     }
 
     /**

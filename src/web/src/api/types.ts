@@ -18,6 +18,7 @@ export interface TaskListItem {
   status: TaskStatus;
   duration_s: number;
   tokens_total: number | null;
+  models?: string[];
 }
 
 export interface TaskListResponse {
