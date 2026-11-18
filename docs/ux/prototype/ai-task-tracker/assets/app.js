@@ -146,9 +146,33 @@ var APP = (function () {
     return '<span class="status ' + statusClass(status) + '"><span class="dot" aria-hidden="true"></span>' + esc(status) + "</span>";
   }
 
+  function modelSummary(t) {
+    var usage = t.usage || [];
+    var models = usage.map(function (u) {
+      return { name: u.model, total: (u.input || 0) + (u.output || 0) };
+    });
+    models.sort(function (a, b) {
+      if (b.total !== a.total) return b.total - a.total;
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+    var names = models.map(function (m) { return m.name; });
+    return { primary: names[0] || "", more: names.length > 1 ? names.length - 1 : 0, list: names };
+  }
+
   function taskRow(t) {
+    var models = modelSummary(t);
+    var modelCell;
+    if (!models.primary) {
+      modelCell = '<td><span class="model-none" title="Нет данных" aria-label="Модель: Нет данных">Нет данных</span></td>';
+    } else {
+      var label = "Модели: " + models.list.join(", ");
+      modelCell = '<td><span class="model-cell" title="' + esc(label) + '" aria-label="' + esc(label) + '">' +
+        esc(models.primary) + (models.more ? ' <span class="model-more">+' + models.more + "</span>" : "") +
+        "</span></td>";
+    }
     return '<tr><td>' + esc(t.id) + "</td>" +
       '<td><a href="uc-e2e-003.html">' + esc(t.title) + "</a></td>" +
+      modelCell +
       "<td>" + esc(t.date) + "</td><td>" + esc(t.duration) + "</td>" +
       "<td>" + statusHtml(t.status) + "</td></tr>";
   }
@@ -156,7 +180,7 @@ var APP = (function () {
   function renderTaskTable(el, tasks) {
     el.innerHTML =
       '<table class="table" aria-label="Список задач">' +
-      "<thead><tr><th scope=\"col\">ID</th><th scope=\"col\">Название</th><th scope=\"col\">Дата</th><th scope=\"col\">Продолжительность</th><th scope=\"col\">Статус</th></tr></thead>" +
+      "<thead><tr><th scope=\"col\">ID</th><th scope=\"col\">Название</th><th scope=\"col\">Модель</th><th scope=\"col\">Дата</th><th scope=\"col\">Продолжительность</th><th scope=\"col\">Статус</th></tr></thead>" +
       "<tbody>" + tasks.map(taskRow).join("") + "</tbody></table>";
   }
 

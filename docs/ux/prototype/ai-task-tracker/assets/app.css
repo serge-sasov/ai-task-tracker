@@ -50,6 +50,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,di
 .table th,.table td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
 .table th{background:#f1f4f7;font-weight:600}
 .table a{text-decoration:none}
+.model-cell{white-space:nowrap}
+.model-more{color:var(--muted);font-size:13px}
+.model-none{color:var(--muted)}
 .status{white-space:nowrap}
 .status .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
 .status.done .dot{background:var(--success)}

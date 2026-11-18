@@ -1,0 +1,188 @@
+{
+    "task":  "T-021",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  80,
+                   "max_session_kb":  200,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "Salt wireframes with the S-01 model column",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/wireframes-ai-task-tracker.puml",
+                                    "docs/ux/wireframes-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-021-prototype-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-021-prototype-model-column.md",
+                       "acceptance":  [
+                                          "S-01 wireframe shows the model column and the SVG is re-rendered"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/wireframes-ai-task-tracker.puml",
+                                            "sha256":  "a21a8226226369fb33b5e4eeda69925286ee148a81f1ebcb13aaa9a47a8e1f37"
+                                        },
+                                        {
+                                            "path":  "docs/ux/wireframes-ai-task-tracker.svg",
+                                            "sha256":  "b4ad24e6d54e4bc5622caa4fc0c1699685b75210046c0c2cb72fdccc4da83281"
+                                        }
+                                    ],
+                       "base_commit":  "e2ee9b2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:10:12",
+                       "finished":  "2026-11-18T10:10:13"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "UI spec for the model cell",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/ui-spec-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-021-prototype-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-021-prototype-model-column.md",
+                       "acceptance":  [
+                                          "UI spec defines the model cell, ordering, a11y and no-usage state"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/ui-spec-ai-task-tracker.md",
+                                            "sha256":  "c77ad7124478a6525f702fdf5bb73073192cd2f3b0b8b6329b70758b999db14e"
+                                        }
+                                    ],
+                       "base_commit":  "e2ee9b2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:10:13",
+                       "finished":  "2026-11-18T10:10:13"
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "Offline prototype model column",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/prototype/ai-task-tracker/index.html",
+                                    "docs/ux/prototype/ai-task-tracker/uc-e2e-*.html",
+                                    "docs/ux/prototype/ai-task-tracker/assets/*"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-021-prototype-model-column.md"
+                                  ],
+                       "brief":  "docs/tasks/T-021-prototype-model-column.md",
+                       "acceptance":  [
+                                          "Offline prototype shows the model column with +1 and no-usage state"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/index.html",
+                                            "sha256":  "d5fd30abfe273b18fbb33af565d0af88a671b849824118ddaac02f7d412c2789"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-001.html",
+                                            "sha256":  "a72e542a0a05263ee277930ea2ca99cb2b9c2b4dd83567072755c72ea806061b"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-002.html",
+                                            "sha256":  "887c860d9c28be2ea0b049d6c7d7bcdff45be05841498a6356323560a5dd61d3"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-003.html",
+                                            "sha256":  "d109e9a6bb5753cf80687898b4958ea6b52c8cc1eec7363f2316926dcfdc0f77"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-004.html",
+                                            "sha256":  "1cd396d379838b511090c4036eb2ff0fd3c779c364ad09d568077b67130ea389"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-005.html",
+                                            "sha256":  "53f11fa42ba74c9c7b3185f4cda0b06f04f39aa29f3ec8c9579b170777d077af"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-006.html",
+                                            "sha256":  "b54e6c2a7d0d111e90fa02ba03a0e89a55945eec713aad13410cc29ec8db8ee1"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-007.html",
+                                            "sha256":  "9b6cfb559f91396643978f0e5e4781c98780d9935846be1e80f1e064748b670f"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-008.html",
+                                            "sha256":  "65edb1c8a296873b30c90721fe93f3d5fa7c171423acc7176c99b939ed51b879"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/assets/app.css",
+                                            "sha256":  "8ba2505c38817df71049719c26d0b5e182f9dd0bb3bf464b42319e69aedb2bd7"
+                                        },
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/assets/app.js",
+                                            "sha256":  "d7c43697a1b8c010a203c275a6710f962f913c944abbde769ce84430b833f516"
+                                        }
+                                    ],
+                       "base_commit":  "e2ee9b2",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T10:10:13",
+                       "finished":  "2026-11-18T10:10:14"
+                   }
+               ],
+    "updated":  "2026-11-18T10:10:14"
+}
