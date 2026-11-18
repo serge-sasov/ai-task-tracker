@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-01 |
 | role | ux-designer |
-| status | in_progress |
+| status | done |
 | hold | false |
 | depends_on | T-018, T-019 |
 | inputs | `docs/tasks/T-018-requirements-model-column.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` |
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | U-01 flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | 9P/0F/0M | approved | docs/checkpoints/T-020-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-020-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | approved | docs/checkpoints/T-020-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -51,3 +51,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: T-020 started on base `aa9d8cb`; T-018/T-019 are done. F-1 and S-01 updated for R-014; chunks recorded.
 - 2026-11-18: CP-1 approved (U-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - 61d91a4: CP-1 snapshot
+- 2026-11-18: CP-F approved (U-01); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
