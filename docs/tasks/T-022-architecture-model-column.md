@@ -19,7 +19,7 @@
 | base_commit | 562f67e |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | b93fec1 |
 
 ## Acceptance
 
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-022 started on base `562f67e`; T-018/T-019/T-021 are done. ADR, architecture, component and SCN-003 updated for R-014; diagrams rendered; chunks recorded.
 - 2026-11-18: CP-1 awaiting_review (R-01); checks 22 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- b93fec1: CP-1 snapshot
