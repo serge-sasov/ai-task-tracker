@@ -1,0 +1,69 @@
+{
+    "task":  "T-018",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  32,
+                   "max_session_kb":  64,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "A-01",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "Requirements and glossary for the model column",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/requirements-ai-task-tracker.md",
+                                    "docs/analysis/glossary.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-018-requirements-model-column.md",
+                                      "docs/tasks/T-017-task-list-model-planning.md",
+                                      "docs/analysis/requirements-ai-task-tracker.md",
+                                      "docs/analysis/glossary.md"
+                                  ],
+                       "brief":  "docs/tasks/T-018-requirements-model-column.md",
+                       "acceptance":  [
+                                          "R-014 is atomic and traceable",
+                                          "glossary defines primary model, model list, column and no-usage state",
+                                          "T-017 contract is preserved"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/requirements-ai-task-tracker.md",
+                                            "sha256":  "4c6b47e9164e8d6d2a0da1c70482253cedac9da8ea97d0996565c095900c01ec"
+                                        },
+                                        {
+                                            "path":  "docs/analysis/glossary.md",
+                                            "sha256":  "591b180c4c5c90e624ec3de05cb5c46962a3f1773374e3b319d66c5e8267458b"
+                                        }
+                                    ],
+                       "base_commit":  "8fab879",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-18T09:59:36",
+                       "finished":  "2026-11-18T09:59:37"
+                   }
+               ],
+    "updated":  "2026-11-18T09:59:37"
+}
