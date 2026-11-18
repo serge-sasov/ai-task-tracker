@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-022 |
 | inputs | `docs/tasks/T-022-architecture-model-column.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md` |
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | R-02 contracts, OpenAPI, data/class model | contracts, OpenAPI, architecture, data/class diagrams | 21P/0F/1M | approved | docs/checkpoints/T-023-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-023-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 22P/0F/1M | awaiting_review | docs/checkpoints/T-023-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -53,3 +53,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: T-023 started on base `6501cac`; T-022 is done. Contracts, OpenAPI, architecture and class model updated for R-014; class SVG rendered; chunks recorded.
 - 2026-11-18: CP-2 awaiting_review (R-02); checks 21 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - e99aacc: CP-2 snapshot
+- 2026-11-18: CP-F awaiting_review (R-02); checks 22 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
