@@ -19,7 +19,7 @@
 | base_commit | b4cbe04 |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | bb84a15 |
 
 ## Acceptance
 
@@ -48,3 +48,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-028 started on base `b4cbe04`; T-027 (Q-02) is `done`. C1 (final acceptance/closure) created `pending` in `docs/chunks/T-028.json` (owns = the four F-01 card artifacts, within the orchestrator write area; budget 16/32). `hold: false`, but CP-F always waits for the user because of `final-traceability-manual`. BUG-007 and BUG-008 remain `open` follow-ups, not absorbed.
 - 2026-11-18: CP-F awaiting_review (F-01); checks 3 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- bb84a15: CP-F snapshot
