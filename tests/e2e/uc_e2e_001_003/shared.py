@@ -158,3 +158,33 @@ def iter_solutions() -> Iterator[tuple]:
 
 def durations_by_task() -> dict:
     return {s["task_id"]: parse_duration_ru(s["duration"]) for s in sessions()}
+
+
+def models_by_task() -> dict:
+    """Expected ``models`` order per task from ``fixtures.sessions`` usage.
+
+    Covers UC-E2E-003 step S8 / contract §4.2 ``models``: aggregate each
+    session's ``usage`` rows by model, total = input + output (+ ``cache`` /
+    ``cache_tokens`` when present; the current dataset has no cache key), order
+    by total descending then model name ascending, return model names. A
+    session with ``usage: null`` or no rows yields ``[]``. Stdlib only.
+    """
+
+    result: dict[str, list[str]] = {}
+    for s in sessions():
+        usage = s.get("usage") or []
+        if not usage:
+            result[s["task_id"]] = []
+            continue
+        totals: dict[str, int] = {}
+        for row in usage:
+            model = row["model"]
+            input_tok = row.get("input_tokens", row.get("input")) or 0
+            output_tok = row.get("output_tokens", row.get("output")) or 0
+            cache = row.get("cache_tokens") or row.get("cache") or 0
+            total = input_tok + output_tok + cache
+            totals[model] = totals.get(model, 0) + total
+        result[s["task_id"]] = [
+            model for model, _ in sorted(totals.items(), key=lambda kv: (-kv[1], kv[0]))
+        ]
+    return result

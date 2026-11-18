@@ -17,7 +17,7 @@
 | chunks | `docs/chunks/T-025.json` (C1: e2e helper + UC-E2E-003 S8 model assertions) |
 | budget | max_write 24 KB / session 48 KB; one chunk |
 | base_commit | 240a2fc |
-| usage | n/a |
+| usage | in=109818 out=26993 cr=6432125 ratio=58.6x min=16 |
 | issues | ISSUE-20261118-153622 |
 | commit | - |
 
@@ -37,7 +37,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | I-02 e2e automation | shared.py, test_uc_e2e_003_task_list_detail.py | - | pending | `docs/checkpoints/T-025-CP-2.md` |
+| CP-2 | I-02 e2e automation | shared.py, test_uc_e2e_003_task_list_detail.py | 9P/0F/0M | approved | docs/checkpoints/T-025-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-025-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-025 started on base `240a2fc`; T-024, T-019, T-023 are done. C1 (e2e helper + UC-E2E-003 S8 model assertions) planned as `pending` in `docs/chunks/T-025.json`; coder will claim/complete it.
 - 2026-11-18: Coder completed C1 (`done` in `docs/chunks/T-025.json`). Added the `models_by_task()` helper and `test_list_models_field_order_and_empty_state` (parametrized TASK-001..005, incl. `[]` for TASK-002 and total-desc/name-asc order) plus an offline aggregation-math test. `python -m py_compile` passes; offline pytest 1 passed / 23 skipped (stack-dependent tests skip cleanly); YAML validator 0 errors. Targeted live run skipped: runner/environment issue tracked in ISSUE-20261118-153622 (`docker compose` plugin missing + runner pytest backslash path); `scripts/e2e.ps1` and test `__init__` files left unchanged per scope.
+- 2026-11-18: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=109818 out=26993 cr=6432125 ratio=58.6x min=16; reviewer auto (P2)

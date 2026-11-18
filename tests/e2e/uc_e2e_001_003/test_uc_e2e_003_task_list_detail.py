@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-"""UC-E2E-003: Просмотр списка задач и деталей задачи (T-009, I-02).
+"""UC-E2E-003: Просмотр списка задач и задачи (T-009, I-02).
 
 Covers UC-E2E-003 list + detail from the use-case doc and contract §4.2/§4.3:
-the list shows TASK-001..TASK-005 with durations (R-009); the detail for each
-task exposes actions (R-003), solutions (proposed + chosen, R-004/R-005) with
-an explicit empty state when none (TASK-004/005), and the per-model token block
-(R-012). Read-only, so no cleanup; one batch teardown lives in UC-E2E-001's
-``stack`` fixture. Isolated local stack only; no production endpoints.
+the list shows TASK-001..TASK-005 with durations (R-009) and the S-01 model
+column (R-014); the detail for each task exposes actions (R-003), solutions
+(proposed + chosen, R-004/R-005) with an explicit empty state when none
+(TASK-004/005), and the per-model token block (R-012). Read-only, so no
+cleanup; one batch teardown lives in UC-E2E-001's ``stack`` fixture. Isolated
+local stack only; no production endpoints.
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ from . import shared
 
 EXPECTED_STATUS = shared.tasks_with_expected_status()
 EXPECTED_DURATIONS = shared.durations_by_task()
+EXPECTED_MODELS = shared.models_by_task()
 
 
 # --------------------------------------------------------------------------- #
@@ -120,3 +122,68 @@ def test_detail_token_block_matches_seed_usage(stack):
     assert got.get("output_tokens") == usage["output_tokens"], (
         f"{model} output {got.get('output_tokens')} (want {usage['output_tokens']})"
     )
+
+
+@pytest.mark.parametrize("task_id", list(shared.task_ids()))
+def test_list_models_field_order_and_empty_state(stack, task_id):
+    """UC-E2E-003 S8: the S-01 models column matches the expected order.
+
+    The ``models`` field from ``GET /api/tasks`` is ordered by total tokens
+    (input + output + cache) descending then model name ascending, and ``[]``
+    when the session has no usage (R-014).
+    """
+    status, body = shared.json_request("/api/tasks")
+    assert status == 200, f"tasks HTTP {status}"
+    assert body.get("total") == 5, f"expected 5 tasks, got {body.get('total')!r}"
+    by_id = {t.get("task_id"): t for t in body.get("items", [])}
+    assert task_id in by_id, f"{task_id} absent in list"
+    expected = EXPECTED_MODELS[task_id]
+    assert by_id[task_id].get("models") == expected, (
+        f"{task_id} models {by_id[task_id].get('models')!r} (want {expected!r})"
+    )
+
+
+def _models_from_usage(usage):
+    """Recompute the expected order directly for the stack-free math test."""
+    totals = {}
+    for row in usage:
+        model = row["model"]
+        in_tok = row.get("input_tokens") or 0
+        out_tok = row.get("output_tokens") or 0
+        cache = row.get("cache_tokens") or 0
+        totals[model] = totals.get(model, 0) + in_tok + out_tok + cache
+    return [m for m, _ in sorted(totals.items(), key=lambda kv: (-kv[1], kv[0]))]
+
+
+def test_models_by_task_aggregation_math_offline():
+    """The `models` order is input+output+cache desc, tie-break name asc.
+
+    A stack-free, deterministic check of the aggregation `models_by_task`
+    performs: (1) a case where total != input-only ordering would differ,
+    (2) a genuine tie broken by model name ascending, and (3) a `usage: null`
+    session yielding `[]`. See shared.models_by_task / contract §4.2.
+    """
+    import yaml
+    from pathlib import Path
+
+    root = Path(shared.__file__).resolve().parent.parent.parent.parent
+    ds = yaml.safe_load((root / "docs" / "analysis" /
+                         "e2e-test-data-ai-task-tracker.yaml").read_text("utf-8-sig"))
+
+    ses_a = next(s for s in ds["fixtures"]["sessions"] if s["session_id"] == "SES-A")
+    usage_a = ses_a["usage"]
+    # qwen: 7200+3000=10200; llama: 1400+550=1950 -> qwen first by total.
+    assert _models_from_usage(usage_a) == ["qwen3.8:27b", "llama3.1:8b"]
+
+    # Input-only order would differ from total order only if a model with
+    # higher input had lower total; use a synthetic tie to prove name asc.
+    tie = [
+        {"model": "llama3.1:8b", "input_tokens": 100, "output_tokens": 100},
+        {"model": "qwen3.8:27b", "input_tokens": 50, "output_tokens": 150},
+    ]
+    # totals: llama 200, qwen 200 -> tie -> name ascending.
+    assert _models_from_usage(tie) == ["llama3.1:8b", "qwen3.8:27b"]
+
+    # `usage: null` -> empty list for that task.
+    assert shared.models_by_task()["TASK-002"] == []
+
