@@ -3,7 +3,7 @@ skinparam defaultFontName Segoe UI
 skinparam ActivityBackgroundColor #FFFFFF
 skinparam ActivityBorderColor #555555
 skinparam ArrowColor #555555
-title Local harness - task plan T-001..T-016
+title Local harness - task plan T-001..T-028
 
 start
 :T-001 P-00 Feature planning: scope, e2e/ux, task graph; <<#90EE90>>
@@ -22,6 +22,18 @@ start
 :T-014 Verify BUG-002: Dockerfile fix (B-03); <<#90EE90>>
 :T-015 Fix BUG-003: local stack functional health (B-01/B-02); <<#90EE90>>
 :T-016 Verify BUG-003: local stack (B-03); <<#90EE90>>
+:T-017 P-00 Feature planning: S-01 model column (D-01 waived); <<#FFE082>>
+:T-018 A-01 Requirements baseline for the model column; <<#D3D3D3>>
+:T-019 A-02 E2E use cases and dataset for the model column; <<#D3D3D3>>
+:T-020 U-01 UX flows and screens for S-01 model display; <<#D3D3D3>>
+:T-021 U-02 Wireframes, prototype and UI spec for the model column; <<#D3D3D3>>
+:T-022 R-01 Solution design for model aggregation and S-01 display; <<#D3D3D3>>
+:T-023 R-02 Contracts and OpenAPI for models; <<#D3D3D3>>
+:T-024 I-01 Implementation and unit tests; <<#D3D3D3>>
+:T-025 I-02 E2E automation for the model column; <<#D3D3D3>>
+:T-026 Q-01 E2E plan and coverage matrix; <<#D3D3D3>>
+:T-027 Q-02 QA, acceptance and verdict; <<#D3D3D3>>
+:T-028 F-01 Final acceptance and closure; <<#D3D3D3>>
 stop
 
 legend right
