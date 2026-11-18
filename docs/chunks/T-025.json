@@ -1,0 +1,57 @@
+{
+    "task":  "T-025",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                    "max_write_kb":  24,
+                    "max_session_kb":  48,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "E2E: S-01 model column (models field, order, empty state)",
+                       "state":  "pending",
+                        "owns":  [
+                                     "tests/e2e/uc_e2e_001_003/shared.py",
+                                     "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py"
+                                 ],
+                       "inputs":  [
+                                      "docs/tasks/T-025-e2e-model-column.md"
+                                  ],
+                       "brief":  "docs/chunks/T-025/C1.brief.md",
+                       "acceptance":  [
+                                          "shared.py helper computes expected models per task from YAML sessions usage (sum input+output+cache per model, total desc then name asc); test asserts response models for TASK-001..005 incl empty [] for TASK-002 and order; py_compile passes; no production endpoints; no new network/storage"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "240a2fc",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-18T14:35:32"
+}
