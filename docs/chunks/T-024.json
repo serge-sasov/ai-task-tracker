@@ -21,9 +21,11 @@
                        "depth":  1,
                        "title":  "Backend: ordered models field and TaskQueryService tests",
                        "state":  "pending",
-                       "owns":  [
-                                    "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java,src/main/java/ru/aitasktracker/api/service/TaskQueryService.java,tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java"
-                                ],
+                        "owns":  [
+                                     "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java",
+                                     "src/main/java/ru/aitasktracker/api/service/TaskQueryService.java",
+                                     "tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java"
+                                 ],
                        "inputs":  [
                                       "docs/tasks/T-024-implement-model-column.md"
                                   ],
@@ -59,9 +61,10 @@
                        "depth":  1,
                        "title":  "Frontend: S-01 model column (primary +N, tooltip/aria, empty state)",
                        "state":  "pending",
-                       "owns":  [
-                                    "src/web/src/api/types.ts,src/web/src/views/DashboardView.vue"
-                                ],
+                        "owns":  [
+                                     "src/web/src/api/types.ts",
+                                     "src/web/src/views/DashboardView.vue"
+                                 ],
                        "inputs":  [
                                       "docs/tasks/T-024-implement-model-column.md"
                                   ],
