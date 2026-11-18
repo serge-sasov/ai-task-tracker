@@ -9,11 +9,11 @@
 | role | qa |
 | stage | Q-02 |
 | artifacts | docs/qa/e2e-report-task-list-model.md, docs/qa/review-T-027.md |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-18T20:14:00 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-18T20:14:00 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 1e3ff88 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-027-CP-F.checks.json |
@@ -88,7 +88,7 @@ docs/activity.puml                                 |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via opencode question: Approve CP-2 and CP-F (same artifacts; UC-E4E-004 deviation tracked in BUG-008).
 
 ## User edits
 
@@ -100,4 +100,4 @@ docs/activity.puml                                 |   2 +-
 
 ## Next action
 
-- return to this checkpoint
+- accept task
