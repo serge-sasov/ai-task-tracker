@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-02 |
 | role | qa |
-| status | in_progress |
+| status | awaiting_review |
 | hold | true |
 | depends_on | T-026, T-025, T-024, T-023, T-021 |
 | inputs | `docs/qa/e2e-plan-task-list-model.md`, `tests/e2e/uc_e2e_001_003/shared.py`, `tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py`, `docs/tasks/T-024-implement-model-column.md`, `docs/tasks/T-023-contracts-model-column.md`, `docs/architecture/contracts-ai-task-tracker.md` (§4.2), `docs/architecture/openapi-api-001-ai-task-tracker.yaml`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-003.html`, `docs/issues/ISSUE-20261118-153622-e2e-runner-cannot-start-the-local-stack-and-invokes-pytest-w.md`, `docs/issues/ISSUE-20261118-185907-harness-qa-subagent-sse-read-timeout-during-t-026.md`, `docs/bugs/BUG-007-pre-existing-backend-test-failures.md` |
@@ -37,7 +37,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-task-list-model.md`, `docs/qa/review-T-027.md` | 8P/0F/0M | approved | docs/checkpoints/T-027-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | docs/checkpoints/T-027-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-027-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -55,3 +55,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-2 awaiting_review (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - 03c0894: CP-2 snapshot
 - 2026-11-18: CP-2 approved by the user (opencode question "Approve CP-2 and CP-F"); UC-E2E-004 deviation accepted as a separate follow-up and recorded as BUG-008 (`docs/bugs/BUG-008-uc-e2e-004-ai-search-failures.md`). Status back to in_progress; proceed to CP-F.
+- 2026-11-18: CP-F awaiting_review (Q-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer user

@@ -1,0 +1,74 @@
+{
+    "task":  "T-027",
+    "workflow":  "feature",
+    "stage":  "Q-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "c8139c2",
+    "generated_at":  "2026-11-18T20:14:00",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "PASS",
+                        "detail":  "2 artifact(s) match ledger"
+                    },
+                    {
+                        "id":  "e2e-report-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "qa-review-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "3 file(s)"
+                    },
+                    {
+                        "id":  "qa-verdict",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "1 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "qa-report-results",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "2 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s) within 32/64 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  9,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  0,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
