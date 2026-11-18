@@ -4,7 +4,7 @@
     "stage":  "F-01",
     "root":  "C:\\study\\ai\\research\\ai-task-tracker",
     "base_commit":  "b4cbe04",
-    "generated_at":  "2026-11-18T22:47:57",
+    "generated_at":  "2026-11-18T23:29:14",
     "results":  [
                     {
                         "id":  "artifacts-exist",
@@ -16,7 +16,7 @@
                         "id":  "artifact-hashes",
                         "check":  "hash-match",
                         "result":  "NOT_APPLICABLE",
-                        "detail":  "no ledger docs/evidence/T-028.md"
+                        "detail":  "ledger has only harness-managed artifacts"
                     },
                     {
                         "id":  "final-artifacts",
@@ -33,8 +33,8 @@
                     {
                         "id":  "final-activity",
                         "check":  "activity-derived",
-                        "result":  "FAIL",
-                        "detail":  "T-001 color=90EE90 expected=#90EE90; T-002 color=90EE90 expected=#90EE90; T-003 color=90EE90 expected=#90EE90; T-004 color=90EE90 expected=#90EE90; T-005 color=90EE90 expected=#90EE90; T-006 color=90EE90 expected=#90EE90; T-007 color=90EE90 expected=#90EE90; T-008 color=90EE90 expected=#90EE90"
+                        "result":  "PASS",
+                        "detail":  "28 node(s)"
                     },
                     {
                         "id":  "final-traceability-manual",
@@ -44,8 +44,8 @@
                     }
                 ],
     "summary":  {
-                    "pass":  3,
-                    "fail":  1,
+                    "pass":  4,
+                    "fail":  0,
                     "manual":  1,
                     "not_applicable":  1,
                     "unchecked":  0

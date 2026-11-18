@@ -35,7 +35,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-F | final acceptance and closure | `docs/plan.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/activity.puml`, `docs/activity.svg` | 3P/1F/1M | awaiting_review | docs/checkpoints/T-028-CP-F.md |
+| CP-F | final acceptance and closure | `docs/plan.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/activity.puml`, `docs/activity.svg` | 4P/0F/1M | awaiting_review | docs/checkpoints/T-028-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`. F-01 has no intermediate working checkpoint; its only checkpoint is `CP-F`, and `final-traceability-manual` is a manual check that always waits for the user.
@@ -49,3 +49,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: T-028 started on base `b4cbe04`; T-027 (Q-02) is `done`. C1 (final acceptance/closure) created `pending` in `docs/chunks/T-028.json` (owns = the four F-01 card artifacts, within the orchestrator write area; budget 16/32). `hold: false`, but CP-F always waits for the user because of `final-traceability-manual`. BUG-007 and BUG-008 remain `open` follow-ups, not absorbed.
 - 2026-11-18: CP-F awaiting_review (F-01); checks 3 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
 - bb84a15: CP-F snapshot
+- 2026-11-18: CP-F awaiting_review (F-01); checks 4 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user

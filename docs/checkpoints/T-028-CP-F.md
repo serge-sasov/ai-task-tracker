@@ -10,11 +10,11 @@
 | stage | F-01 |
 | artifacts | docs/plan.md, docs/tasks/T-028-final-acceptance-model-column.md, docs/activity.puml, docs/activity.svg |
 | status | awaiting_review |
-| requested_at | 2026-11-18T22:47:58 |
+| requested_at | 2026-11-18T23:29:14 |
 | reviewed_at | - |
 | reviewer | user |
 | decision | - |
-| snapshot_commit | bb84a15 |
+| snapshot_commit | - |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-028-CP-F.checks.json |
 
@@ -42,13 +42,13 @@ Ledger: `docs/chunks/T-028.json`
 | ID | Check | Result | Detail |
 |---|---|---|---|
 | artifacts-exist | file-exists | PASS | 4 file(s) |
-| artifact-hashes | hash-match | NOT_APPLICABLE | no ledger docs/evidence/T-028.md |
+| artifact-hashes | hash-match | NOT_APPLICABLE | ledger has only harness-managed artifacts |
 | final-artifacts | file-exists | PASS | 4 file(s) |
 | final-board | board-consistency | PASS | board, card, checkpoints agree |
-| final-activity | activity-derived | FAIL | T-001 color=90EE90 expected=#90EE90; T-002 color=90EE90 expected=#90EE90; T-003 color=90EE90 expected=#90EE90; T-004 color=90EE90 expected=#90EE90; T-005 color=90EE90 expected=#90EE90; T-006 color=90EE90 expected=#90EE90; T-007 color=90EE90 expected=#90EE90; T-008 color=90EE90 expected=#90EE90 |
+| final-activity | activity-derived | PASS | 28 node(s) |
 | final-traceability-manual | manual | MANUAL | semantic acceptance: requirements, UX, architecture, tests and QA evidence are consistent |
 
-Summary: 3 PASS, 1 FAIL, 1 MANUAL, 1 N/A, 0 UNCHECKED.
+Summary: 4 PASS, 0 FAIL, 1 MANUAL, 1 N/A, 0 UNCHECKED.
 
 ## Manual review
 
@@ -61,12 +61,18 @@ Summary: 3 PASS, 1 FAIL, 1 MANUAL, 1 N/A, 0 UNCHECKED.
 ## Diff stat
 
 ```
-docs/activity.puml                                |   2 +-
- docs/activity.svg                                 |   2 +-
- docs/chunks/T-028.json                            | 845 ++++++++++++++++++++++
- docs/plan.md                                      |   2 +-
- docs/tasks/T-028-final-acceptance-model-column.md |  49 ++
- 5 files changed, 897 insertions(+), 3 deletions(-)
+docs/activity.puml                                 |   2 +-
+ docs/activity.svg                                  |   2 +-
+ docs/checkpoints/T-028-CP-F.checks.json            |  56 ++
+ docs/checkpoints/T-028-CP-F.md                     |  87 +++
+ docs/chunks/T-028.json                             | 856 +++++++++++++++++++++
+ docs/evidence/T-028.md                             |  10 +
+ ...-activity-hex-colors-with-and-without-prefix.md |  95 +++
+ docs/issues/README.md                              |   1 +
+ docs/plan.md                                       |   2 +-
+ docs/tasks/T-028-final-acceptance-model-column.md  |  51 ++
+ harness/scripts/verify-artifacts.ps1               |   3 +-
+ 11 files changed, 1161 insertions(+), 4 deletions(-)
 ```
 
 ## User remarks
@@ -79,8 +85,7 @@ docs/activity.puml                                |   2 +-
 
 ## Role response
 
-- Machine checks: 1 FAIL, 0 UNCHECKED, 1 MANUAL.
-- Failed checks: final-activity
+- Machine checks: 0 FAIL, 0 UNCHECKED, 1 MANUAL.
 
 ## Next action
 
