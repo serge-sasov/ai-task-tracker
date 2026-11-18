@@ -19,7 +19,7 @@
 | base_commit | 33cd6b9 |
 | usage | n/a |
 | issues | - |
-| commit | f243632 |
+| commit | 2d0ed43 |
 
 ## Acceptance
 
@@ -53,3 +53,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-18: CP-2 approved (A-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (P2)
 - f243632: CP-2 snapshot
 - 2026-11-18: CP-F approved (A-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage n/a; reviewer auto (explicit -AutoApprove)
+- 2d0ed43: CP-F snapshot
