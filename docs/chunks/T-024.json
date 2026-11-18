@@ -1,0 +1,94 @@
+{
+    "task":  "T-024",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                    "max_write_kb":  32,
+                    "max_session_kb":  64,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "I-01",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Backend: ordered models field and TaskQueryService tests",
+                       "state":  "pending",
+                       "owns":  [
+                                    "src/main/java/ru/aitasktracker/api/dto/TaskListItem.java,src/main/java/ru/aitasktracker/api/service/TaskQueryService.java,tests/java/ru/aitasktracker/api/service/TaskQueryServiceTest.java"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-024-implement-model-column.md"
+                                  ],
+                       "brief":  "docs/chunks/T-024/C1.brief.md",
+                       "acceptance":  [
+                                          "TaskListItem.models ordered total tokens desc / name asc; empty list when no usage; reuses existing token_usage rows (no extra query per task); unit tests cover ordering, ties, empty; mvn -f backend/pom.xml test passes"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d4dde64",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "I-01",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Frontend: S-01 model column (primary +N, tooltip/aria, empty state)",
+                       "state":  "pending",
+                       "owns":  [
+                                    "src/web/src/api/types.ts,src/web/src/views/DashboardView.vue"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-024-implement-model-column.md"
+                                  ],
+                       "brief":  "docs/chunks/T-024/C2.brief.md",
+                       "acceptance":  [
+                                          "types.ts TaskListItem.models: string[]; column after Название with primary model + \u0027+N\u0027; title/aria full list; \u0027Нет данных\u0027 when empty; npm run build in src/web passes"
+                                      ],
+                       "produced":  [
+
+                                    ],
+                       "base_commit":  "d4dde64",
+                       "attempts":  0,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  null,
+                       "finished":  null
+                   }
+               ],
+    "updated":  "2026-11-18T13:06:16"
+}
