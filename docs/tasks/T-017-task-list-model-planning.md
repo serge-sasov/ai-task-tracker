@@ -19,7 +19,7 @@
 | base_commit | 5abdd53 |
 | usage | in=1341131 out=201058 cr=2551015 ratio=1.9x min=327 |
 | issues | ISSUE-20261117-232320 |
-| commit | - |
+| commit | c45792a |
 
 ## Acceptance
 
@@ -108,3 +108,4 @@ D-01 is waived and therefore has no row. T-010, T-011 and T-012 remain pending b
 - 2026-11-17: Harness card-parser bug fixed in 5abdd53 (digit-bearing field names and annotated `depends_on`), with regression self-tests and issue ISSUE-20261117-232320.
 - 2026-11-17: P-00 started. Registered T-017 as `in_progress` and T-018..T-028 as `pending`; recorded the S-01 model scope, e2e/UX applicability, D-01 waiver and task graph. CP-1 prepared.
 - 2026-11-18: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=1341131 out=201058 cr=2551015 ratio=1.9x min=327; reviewer auto (P2)
+- c45792a: CP-1 snapshot
