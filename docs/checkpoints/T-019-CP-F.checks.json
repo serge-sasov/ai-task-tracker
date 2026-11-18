@@ -1,0 +1,80 @@
+{
+    "task":  "T-019",
+    "workflow":  "feature",
+    "stage":  "A-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "33cd6b9",
+    "generated_at":  "2026-11-18T10:03:21",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "PASS",
+                        "detail":  "2 artifact(s) match ledger"
+                    },
+                    {
+                        "id":  "e2e-use-cases-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "e2e-yaml-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "e2e-yaml-valid",
+                        "check":  "python-validator",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "uc-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "8 unique id(s)"
+                    },
+                    {
+                        "id":  "requirement-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "25 id(s) covered by 2 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s) within 64/96 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  10,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  0,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
