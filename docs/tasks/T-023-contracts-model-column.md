@@ -19,7 +19,7 @@
 | base_commit | 6501cac |
 | usage | n/a |
 | issues | - |
-| commit | - |
+| commit | e99aacc |
 
 ## Acceptance
 
@@ -52,3 +52,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-18: T-023 started on base `6501cac`; T-022 is done. Contracts, OpenAPI, architecture and class model updated for R-014; class SVG rendered; chunks recorded.
 - 2026-11-18: CP-2 awaiting_review (R-02); checks 21 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage n/a; reviewer user
+- e99aacc: CP-2 snapshot
