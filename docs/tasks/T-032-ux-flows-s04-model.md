@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-01 |
 | role | ux-designer |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-030, T-031 |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-031-e2e-s04-model.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | c3a20d6 |
-| usage | in=155299 out=31633 cr=2581050 ratio=16.6x min=81 |
+| usage | in=240623 out=35379 cr=2662219 ratio=11.1x min=93 |
 | issues | - |
 | commit | 252e062 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | U-01 UX flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | 9P/0F/0M | approved | docs/checkpoints/T-032-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-032-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-032-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -59,3 +59,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-032 started (U-01 UX flows and screens); board set in_progress; base_commit c3a20d6; no role work started.
 - 2026-11-20: CP-1 approved (U-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=155299 out=31633 cr=2581050 ratio=16.6x min=81; reviewer auto (P2)
 - 252e062: CP-1 snapshot
+- 2026-11-20: CP-F awaiting_review (U-01); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=240623 out=35379 cr=2662219 ratio=11.1x min=93; reviewer user

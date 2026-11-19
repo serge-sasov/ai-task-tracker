@@ -1,0 +1,80 @@
+{
+    "task":  "T-032",
+    "workflow":  "feature",
+    "stage":  "U-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "c3a20d6",
+    "generated_at":  "2026-11-20T01:30:14",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "PASS",
+                        "detail":  "2 artifact(s) match ledger"
+                    },
+                    {
+                        "id":  "user-flows-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "screens-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "screen-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "6 unique id(s)"
+                    },
+                    {
+                        "id":  "flows-requirements",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "1 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "screens-states",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "4 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "2 chunk(s) within 48/48 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  10,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  0,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
