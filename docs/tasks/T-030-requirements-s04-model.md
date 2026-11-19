@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=211174 out=36975 cr=3154919 ratio=14.9x min=84 |
 | issues | - |
-| commit | - |
+| commit | 86a8c68 |
 
 ## Acceptance
 
@@ -60,3 +60,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19 (analyst, housekeeping): `chunk.ps1 add` collapsed comma-separated `-Owns/-Inputs/-Acceptance` values into single strings (ledger planning fields), repaired by direct edit; ledger budget aligned to the T-018 analyst precedent (32/64 KB) since produced files are pre-existing and large (actual new content ~2.6 KB, within §11.1 8 KB/write and 20 KB/session). Helper `docs/chunks/T-030/complete-A1.ps1` remains (Remove-Item denied by permission rules); it is inert. `verify-stage A-01`: 8 PASS / 0 FAIL.
 - 2026-11-19 (orchestrator): Recorded harness issue `ISSUE-20261119-184132` (type `permission`, severity `minor`, status `open`) for the shell file-removal denial that left the inert helper `docs/chunks/T-030/complete-A1.ps1` behind. Verified the helper breaks no A-01 check (untracked, not in `owns`/`produced`, not referenced by any check; not committed). Removal via the shell file-removal cmdlet is itself permission-denied, so the file is kept as recorded residue pending user/allow-listed removal.
 - 2026-11-19: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=211174 out=36975 cr=3154919 ratio=14.9x min=84; reviewer auto (P2)
+- 86a8c68: CP-1 snapshot
