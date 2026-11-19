@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-01 |
 | role | analyst |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-029 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/tasks/T-029-calendar-day-model-planning.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -23,19 +23,19 @@
 
 ## Acceptance
 
-- [ ] `R-015` is added as an atomic Must requirement: S-04 day view (`/calendar/:date`) shows a "Модель" column after "Задача" with the primary model, `+N` when more than one, the full ordered list in `title`/`aria-label`, and "Нет данных" when `models` is empty.
-- [ ] `R-015` traces to the S-04 source line and to UC-E2E-005; it is consistent with `R-014` (S-01) and reuses the same ordering/tie-break rule; no duplicate requirement is introduced.
-- [ ] The glossary is extended with the S-04 day-view context (day table, day-view model cell) and reuses the existing S-01 terms (primary model, `+N`, "Нет данных"); no new conflicting term is added.
-- [ ] No new blocking question is opened; assumptions (Russian UI, no backend change, `GET /api/tasks` already returns `models`) are preserved from T-029.
-- [ ] The requirement explicitly states no backend/API/schema change is required and the S-01 behavior is unchanged.
-- [ ] `CP-1` (requirements delta) and `CP-F` (final acceptance) are declared.
+- [x] `R-015` is added as an atomic Must requirement: S-04 day view (`/calendar/:date`) shows a "Модель" column after "Задача" with the primary model, `+N` when more than one, the full ordered list in `title`/`aria-label`, and "Нет данных" when `models` is empty.
+- [x] `R-015` traces to the S-04 source line and to UC-E2E-005; it is consistent with `R-014` (S-01) and reuses the same ordering/tie-break rule; no duplicate requirement is introduced.
+- [x] The glossary is extended with the S-04 day-view context (day table, day-view model cell) and reuses the existing S-01 terms (primary model, `+N`, "Нет данных"); no new conflicting term is added.
+- [x] No new blocking question is opened; assumptions (Russian UI, no backend change, `GET /api/tasks` already returns `models`) are preserved from T-029.
+- [x] The requirement explicitly states no backend/API/schema change is required and the S-01 behavior is unchanged.
+- [x] `CP-1` (requirements delta) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | A-01 requirements delta | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md` | 8P/0F/0M | approved | docs/checkpoints/T-030-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-030-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-030-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 86a8c68: CP-1 snapshot
 - 2026-11-19: CP-F awaiting_review (A-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=269947 out=41094 cr=3590810 ratio=13.3x min=116; reviewer user
 - e031a8f: CP-F snapshot
+- 2026-11-19T19:52:42 (orchestrator): CP-F approved by user (decision=approved, reviewer=user); T-030 set to `done`; T-031 (A-02) unblocked

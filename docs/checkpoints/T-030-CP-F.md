@@ -9,11 +9,11 @@
 | role | analyst |
 | stage | A-01 |
 | artifacts | docs/analysis/requirements-ai-task-tracker.md, docs/analysis/questions-ai-task-tracker.md, docs/analysis/glossary.md |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-19T18:52:19 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-19T19:52:42 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | e031a8f |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-030-CP-F.checks.json |
@@ -80,7 +80,8 @@ docs/checkpoints/T-030-CP-1.md                     |  2 +-
 ## Role response
 
 - Machine checks: 0 FAIL, 0 UNCHECKED, 0 MANUAL.
+- User approved CP-F (A-01 requirements delta for the S-04 calendar day model column); no user edits; T-030 accepted as `done`.
 
 ## Next action
 
-- return to this checkpoint
+- accept task; T-031 (A-02) is now unblocked
