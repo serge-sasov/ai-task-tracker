@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | n/a |
+| usage | in=211174 out=36975 cr=3154919 ratio=14.9x min=84 |
 | issues | - |
 | commit | - |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | A-01 requirements delta | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md` | - | pending | `docs/checkpoints/T-030-CP-1.md` |
+| CP-1 | A-01 requirements delta | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md` | 8P/0F/0M | approved | docs/checkpoints/T-030-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-030-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -56,3 +56,7 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-030 registered as a pending A-01 successor of T-029 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-19 (analyst, chunk A1): A-01 requirements delta authored — added `R-015` (Must, S-04 day view «Модель» column after «Задача», primary model + `+N` + full list in `title`/`aria-label` + «Нет данных», traces to ИТ:4 and UC-E2E-005, reuses R-014 ordering/tie-break, no backend/API/schema change, S-01 unchanged) in `docs/analysis/requirements-ai-task-tracker.md` incl. traceability (ИТ:4 rows) and section 6 summary; extended `docs/analysis/glossary.md` with day view / day-view model cell terms reusing S-01 terms; appended T-030 consistency note to `docs/analysis/questions-ai-task-tracker.md` (no new blocking question). Chunk A1 completed; stopping at CP-1.
+- 2026-11-19 (analyst, housekeeping): `chunk.ps1 add` collapsed comma-separated `-Owns/-Inputs/-Acceptance` values into single strings (ledger planning fields), repaired by direct edit; ledger budget aligned to the T-018 analyst precedent (32/64 KB) since produced files are pre-existing and large (actual new content ~2.6 KB, within §11.1 8 KB/write and 20 KB/session). Helper `docs/chunks/T-030/complete-A1.ps1` remains (Remove-Item denied by permission rules); it is inert. `verify-stage A-01`: 8 PASS / 0 FAIL.
+- 2026-11-19 (orchestrator): Recorded harness issue `ISSUE-20261119-184132` (type `permission`, severity `minor`, status `open`) for the shell file-removal denial that left the inert helper `docs/chunks/T-030/complete-A1.ps1` behind. Verified the helper breaks no A-01 check (untracked, not in `owns`/`produced`, not referenced by any check; not committed). Removal via the shell file-removal cmdlet is itself permission-denied, so the file is kept as recorded residue pending user/allow-listed removal.
+- 2026-11-19: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=211174 out=36975 cr=3154919 ratio=14.9x min=84; reviewer auto (P2)

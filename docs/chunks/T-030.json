@@ -1,0 +1,77 @@
+{
+    "task":  "T-030",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                    "max_write_kb":  32,
+                    "max_session_kb":  64,
+                    "context_stop_pct":  60,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "A1",
+                       "parent":  null,
+                       "stage":  "A-01",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "R-015 S-04 day-view model column requirements delta",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/requirements-ai-task-tracker.md",
+                                    "docs/analysis/glossary.md",
+                                    "docs/analysis/questions-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-030-requirements-s04-model.md",
+                                      "docs/tasks/T-029-calendar-day-model-planning.md",
+                                      "docs/analysis/requirements-ai-task-tracker.md",
+                                      "docs/analysis/glossary.md",
+                                      "docs/analysis/questions-ai-task-tracker.md",
+                                      "src/web/src/views/CalendarDayView.vue",
+                                      "src/web/src/views/DashboardView.vue"
+                                  ],
+                       "brief":  "docs/chunks/T-030/A1.brief.md",
+                       "acceptance":  [
+                                          "R-015 added as atomic Must with source and UC-E2E-005 trace",
+                                          "glossary extended with S-04 day-view terms reusing S-01 terms",
+                                          "questions file consistent, no new blocking question"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/requirements-ai-task-tracker.md",
+                                            "sha256":  "6fd0c276fa21488d939738c76728074f452e656a6da828eec4ef7f30068dc1c7"
+                                        },
+                                        {
+                                            "path":  "docs/analysis/glossary.md",
+                                            "sha256":  "c56d4fc98a385fd64ebb91db86d9502fd8ea96137fdb1ee92e7dbe5b08c07851"
+                                        },
+                                        {
+                                            "path":  "docs/analysis/questions-ai-task-tracker.md",
+                                            "sha256":  "a23c5fd19ba616409c3d478c1470f5b79839cab6806812a1c99bdc3f731593d1"
+                                        }
+                                    ],
+                       "base_commit":  "f0f1ffa",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "R-015 added (S-04 day-view model column), glossary extended, questions consistent; verify-stage A-01: 8 PASS / 0 FAIL"
+                                 ],
+                       "started":  "2026-11-19T18:00:00",
+                       "finished":  "2026-11-19T18:15:10"
+                   }
+               ],
+    "updated":  "2026-11-19T18:15:10"
+}
