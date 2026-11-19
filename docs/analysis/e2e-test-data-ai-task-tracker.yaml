@@ -240,6 +240,34 @@ fixtures:
       "2026-11-10": 2           # количество задач
       "2026-11-11": 3
 
+    # Колонка «Модель» в дневном виде S-04 (R-015; порядок и tie-break — те же, что R-014:
+    # models из GET /api/tasks = total tokens desc, tie-break по имени модели)
+    day_2026-11-11-models:
+      column_after: "Задача"
+      tasks:
+        - task: "TASK-003"
+          primary: "qwen3.8:27b"
+          plus_n: "+1"
+          full_list_in_title_aria: ["qwen3.8:27b", "llama3.1:8b"]   # 2900 > 700
+        - task: "TASK-004"
+          primary: "qwen3.8:27b"
+          plus_n: "+1"
+          full_list_in_title_aria: ["qwen3.8:27b", "llama3.1:8b"]   # 1570 > 270
+        - task: "TASK-005"
+          primary: "qwen3.8:27b"
+          plus_n: "+1"
+          full_list_in_title_aria: ["qwen3.8:27b", "llama3.1:8b"]   # 990 > 150
+    day_2026-11-10-models:
+      column_after: "Задача"
+      tasks:
+        - task: "TASK-001"
+          primary: "qwen3.8:27b"
+          plus_n: "+1"
+          full_list_in_title_aria: ["qwen3.8:27b", "llama3.1:8b"]   # 10200 > 1950
+        - task: "TASK-002"                                            # SES-B: usage: null
+          no_data: "Нет данных"
+          title_aria: "Модель: Нет данных"
+
   # AI-поиск (R-010, R-011)
   ai_search:
     semantic_queries:
@@ -490,13 +518,14 @@ use_cases:
 
   - id: "UC-E2E-005"
     title: "Календарный вид задач с продолжительностью"
-    source_requirements: ["R-008", "R-009", "R-023", "R-030"]
+    source_requirements: ["R-008", "R-009", "R-015", "R-023", "R-030"]
     actor: "пользователь-разработчик"
     priority: "P1"
     preconditions:
       - "стек поднят, импортированы 5 seed-сессий (UC-E2E-002)"
     test_data:
       calendar: "fixtures.calendar"
+      day_view_models: "fixtures.calendar.day_2026-11-10-models, fixtures.calendar.day_2026-11-11-models"
     steps:
       - id: "S1"
         action: "UI: открыть календарь, режим «Неделя» (09–15.11.2026)"
@@ -525,11 +554,26 @@ use_cases:
         action: "UI: клик по задаче в календаре"
         expected:
           navigates_to_task_details: true
+      - id: "S6"
+        action: "UI: режим «День» на 10.11.2026 — колонка «Модель» (проверка на собранном frontend / DOM-смак, не только API)"
+        expected:
+          models_column_after_task_column: true
+          TASK-001: {primary: "qwen3.8:27b", plus_n: "+1", title_aria_full_list: ["qwen3.8:27b", "llama3.1:8b"]}
+          TASK-002: {no_data: "Нет данных", title_aria: "Модель: Нет данных"}
+          order_rule: "R-014 (total tokens desc, tie-break по имени модели)"
+      - id: "S7"
+        action: "UI: режим «День» на 11.11.2026 — колонка «Модель»"
+        expected:
+          models_column_after_task_column: true
+          TASK-003: {primary: "qwen3.8:27b", plus_n: "+1", title_aria_full_list: ["qwen3.8:27b", "llama3.1:8b"]}
+          TASK-004: {primary: "qwen3.8:27b", plus_n: "+1", title_aria_full_list: ["qwen3.8:27b", "llama3.1:8b"]}
+          TASK-005: {primary: "qwen3.8:27b", plus_n: "+1", title_aria_full_list: ["qwen3.8:27b", "llama3.1:8b"]}
+          order_rule: "R-014 (total tokens desc, tie-break по имени модели)"
     expected_postcondition: "состояние не изменено (read-only)"
     cleanup:
       - "не требуется (read-only)"
     traceability:
-      test_ids: ["e2e/test_calendar.py::test_calendar_views"]
+      test_ids: ["e2e/test_calendar.py::test_calendar_views", "e2e/test_calendar.py::test_day_view_model_column"]
 
   - id: "UC-E2E-006"
     title: "Статистика потреблённых токенов по моделям"

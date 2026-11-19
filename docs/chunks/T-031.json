@@ -1,0 +1,101 @@
+{
+    "task":  "T-031",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                    "max_write_kb":  48,
+                    "max_session_kb":  48,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "B1",
+                       "parent":  null,
+                       "stage":  "A-02",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "UC-E2E-005 S-04 model column markdown extension",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/e2e-use-cases-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-031-e2e-s04-model.md"
+                                  ],
+                       "brief":  "docs/chunks/T-031/B1.brief.md",
+                       "acceptance":  [
+                                          "UC-E2E-005 extended with S-04 model column assertions, R-015 trace, coverage row, UC-E2E-003 unchanged"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/e2e-use-cases-ai-task-tracker.md",
+                                            "sha256":  "3980dc4332bba59d5096fb754a158dad538232c70835434f4063debba9fc5bc7"
+                                        }
+                                    ],
+                       "base_commit":  "7a5c143",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "UC-E2E-005 extended: R-015 in source requirements/preconditions, model-column assertions in main flow (step 2 + 2a: column after Задача, primary qwen3.8:27b +N=+1, full list in title/aria-label, Нет данных for TASK-002, reuse R-014 ordering, DOM check), coverage row R-015 added (32 reqs), header Обновлено. harness validator: 0 errors 1 warn (R-015 in md not yaml - cleared by B2). UC-E2E-003 untouched",
+                                     "hash refresh: Test data reference + Expected result + Traceability lines finalized in B1 scope"
+                                 ],
+                       "started":  "2026-11-19T22:54:26",
+                       "finished":  "2026-11-19T23:05:44"
+                   },
+                   {
+                       "id":  "B2",
+                       "parent":  null,
+                       "stage":  "A-02",
+                       "role":  "analyst",
+                       "depth":  1,
+                       "title":  "YAML dataset day-view model extensions + validation pass",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/analysis/e2e-test-data-ai-task-tracker.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/analysis/e2e-test-data-ai-task-tracker.yaml"
+                                  ],
+                       "brief":  "docs/chunks/T-031/B2.brief.md",
+                       "acceptance":  [
+                                          "YAML fixtures + UC-E2E-005 steps extended; validate-e2e-data.py passes; git diff limited to T-031 scope"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/analysis/e2e-test-data-ai-task-tracker.yaml",
+                                            "sha256":  "355adf069daeff29510e985d9bc8fc3bd15b33819f8a02aafe2b58e0bf6ced5c"
+                                        }
+                                    ],
+                       "base_commit":  "7a5c143",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "fixtures calendar.day_2026-11-10-models (TASK-001 multi-model +1; TASK-002 Нет данных) and day_2026-11-11-models (TASK-003/004/005 multi-model +1) added; UC-E2E-005 source_requirements += R-015, steps S6/S7 (day-view model column, DOM check), traceability += test_day_view_model_column. harness validator: 0 errors 0 warnings; project validator --strict: 0 errors 0 warnings. git diff: only UC-E2E-005/coverage/header (md) + UC-E2E-005 fixtures/steps (yaml); UC-E2E-003 untouched. chunk verify VALID (W_BUDGET_WRITE = pre-existing 43KB md, same as T-030 precedent)"
+                                 ],
+                       "started":  "2026-11-19T22:59:26",
+                       "finished":  "2026-11-19T23:25:53"
+                   }
+               ],
+    "updated":  "2026-11-19T23:25:53"
+}
