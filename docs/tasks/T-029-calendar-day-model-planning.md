@@ -19,7 +19,7 @@
 | base_commit | dfb9c15 |
 | usage | in=379281 out=53938 cr=2191589 ratio=5.8x min=220 |
 | issues | ISSUE-20261118-185907, ISSUE-20261118-153622 |
-| commit | 07dcead |
+| commit | 07a2f27 |
 
 ## Acceptance
 
@@ -75,3 +75,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=291770 out=44854 cr=1320477 ratio=4.5x min=189; reviewer auto (P2)
 - 07dcead: CP-1 snapshot
 - 2026-11-19: CP-F awaiting_review (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=379281 out=53938 cr=2191589 ratio=5.8x min=220; reviewer user
+- 07a2f27: CP-F snapshot
