@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-01 |
 | role | analyst |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-029 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/tasks/T-029-calendar-day-model-planning.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | in=211174 out=36975 cr=3154919 ratio=14.9x min=84 |
+| usage | in=269947 out=41094 cr=3590810 ratio=13.3x min=116 |
 | issues | - |
 | commit | 86a8c68 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | A-01 requirements delta | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md` | 8P/0F/0M | approved | docs/checkpoints/T-030-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-030-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-030-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19 (orchestrator): Recorded harness issue `ISSUE-20261119-184132` (type `permission`, severity `minor`, status `open`) for the shell file-removal denial that left the inert helper `docs/chunks/T-030/complete-A1.ps1` behind. Verified the helper breaks no A-01 check (untracked, not in `owns`/`produced`, not referenced by any check; not committed). Removal via the shell file-removal cmdlet is itself permission-denied, so the file is kept as recorded residue pending user/allow-listed removal.
 - 2026-11-19: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=211174 out=36975 cr=3154919 ratio=14.9x min=84; reviewer auto (P2)
 - 86a8c68: CP-1 snapshot
+- 2026-11-19: CP-F awaiting_review (A-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=269947 out=41094 cr=3590810 ratio=13.3x min=116; reviewer user
