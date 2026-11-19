@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=269947 out=41094 cr=3590810 ratio=13.3x min=116 |
 | issues | - |
-| commit | 86a8c68 |
+| commit | e031a8f |
 
 ## Acceptance
 
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: CP-1 approved (A-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=211174 out=36975 cr=3154919 ratio=14.9x min=84; reviewer auto (P2)
 - 86a8c68: CP-1 snapshot
 - 2026-11-19: CP-F awaiting_review (A-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=269947 out=41094 cr=3590810 ratio=13.3x min=116; reviewer user
+- e031a8f: CP-F snapshot
