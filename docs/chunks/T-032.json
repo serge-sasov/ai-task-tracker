@@ -1,0 +1,113 @@
+{
+    "task":  "T-032",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  48,
+                   "max_session_kb":  48,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "U-01",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "S-04 day-view journey in user-flows (R-015, UC-E2E-005)",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/user-flows-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/ux/user-flows-ai-task-tracker.md (F-3 lines 90-102, summary table 172-185, Ревизия line 13)",
+                                      "docs/analysis/requirements-ai-task-tracker.md (R-015 lines 153-168)",
+                                      "docs/analysis/e2e-use-cases-ai-task-tracker.md (UC-E2E-005 line 140)",
+                                      "docs/ux/screens-ai-task-tracker.md (S-01 Модель column lines 30-37)"
+                                  ],
+                       "brief":  "docs/chunks/T-032/C1.brief.md",
+                       "acceptance":  [
+                                          "F-3 covers /calendar/:date -\u003e day table -\u003e read Модель column (primary model, +N, title/aria full ordered list, Нет данных)",
+                                          "doc states S-04 day view is read-only and Модель adds no new interactions beyond S-01 tooltip/aria",
+                                          "F-3 Связь traces UC-E2E-005 + R-015",
+                                          "section 5 table F-3 row includes R-015"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/user-flows-ai-task-tracker.md",
+                                            "sha256":  "8746c3d5c57abcf2e8c05d4c52501afb6c1e04078a30c4fe0b0aeee3e7e474a9"
+                                        }
+                                    ],
+                       "base_commit":  "c3a20d6",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T01:04:51",
+                       "finished":  "2026-11-20T01:08:16"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "U-01",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "S-04 Модель column + states in screens (R-015, reuse S-01 labels)",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/screens-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/ux/screens-ai-task-tracker.md (S-04 row, S-01 Модель 30-37, states 45-58, a11y 60-73, UI copy 75-110, traceability 112-123)",
+                                      "docs/analysis/requirements-ai-task-tracker.md (R-014 140-151, R-015 153-168)",
+                                      "src/web/src/views/CalendarDayView.vue (lines 31-56 read-only confirmation)"
+                                  ],
+                       "brief":  "docs/chunks/T-032/C2.brief.md",
+                       "acceptance":  [
+                                          "S-04 registry lists Модель column after Задача + 4 states (primary only, primary+ N, title/aria full list, Нет данных)",
+                                          "note: cell rules identical to S-01 (R-014), reuse labels Модель / Нет данных",
+                                          "states table S-04 mentions Модель column; no conflicting state vs S-01",
+                                          "a11y: S-04 day-view model cell has title + aria-label full ordered list",
+                                          "UI copy: Модель header + Нет данных mapped to S-04",
+                                          "traceability S-04 row gains R-015"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/screens-ai-task-tracker.md",
+                                            "sha256":  "2cb4f6f5075fb3816b9934801d921d8b335a6ece25be377b295b1455e646f7a7"
+                                        }
+                                    ],
+                       "base_commit":  "c3a20d6",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T01:08:28",
+                       "finished":  "2026-11-20T01:12:48"
+                   }
+               ],
+    "updated":  "2026-11-20T01:12:48"
+}

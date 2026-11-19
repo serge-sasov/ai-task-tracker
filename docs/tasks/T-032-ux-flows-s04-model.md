@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-01 |
 | role | ux-designer |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-030, T-031 |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-031-e2e-s04-model.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -16,8 +16,8 @@
 | ux | required - the S-04 day view gets a visible model column with primary model, `+N`, tooltip/aria and "Нет данных" states |
 | chunks | - (to be planned at start) |
 | budget | - |
-| base_commit | - |
-| usage | n/a |
+| base_commit | c3a20d6 |
+| usage | in=155299 out=31633 cr=2581050 ratio=16.6x min=81 |
 | issues | - |
 | commit | - |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | U-01 UX flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | - | pending | `docs/checkpoints/T-032-CP-1.md` |
+| CP-1 | U-01 UX flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | 9P/0F/0M | approved | docs/checkpoints/T-032-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-032-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -56,3 +56,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-032 registered as a pending U-01 successor of T-030/T-031 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-19: T-032 started (U-01 UX flows and screens); board set in_progress; base_commit c3a20d6; no role work started.
+- 2026-11-20: CP-1 approved (U-01); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=155299 out=31633 cr=2581050 ratio=16.6x min=81; reviewer auto (P2)
