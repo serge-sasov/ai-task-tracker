@@ -9,11 +9,11 @@
 | role | analyst |
 | stage | A-02 |
 | artifacts | docs/analysis/e2e-use-cases-ai-task-tracker.md, docs/analysis/e2e-test-data-ai-task-tracker.yaml |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-19T23:48:16 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-20T00:16:16 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | f59ae41 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-031-CP-F.checks.json |
@@ -78,7 +78,7 @@ docs/analysis/e2e-test-data-ai-task-tracker.yaml |  48 ++++++++++-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- 2026-11-20: user approval in chat ("approve T-031").
 
 ## User edits
 
@@ -90,4 +90,4 @@ docs/analysis/e2e-test-data-ai-task-tracker.yaml |  48 ++++++++++-
 
 ## Next action
 
-- return to this checkpoint
+- closed

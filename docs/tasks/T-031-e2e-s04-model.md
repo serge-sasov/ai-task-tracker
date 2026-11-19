@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-02 |
 | role | analyst |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-030 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/tasks/T-030-requirements-s04-model.md`, `src/web/src/views/CalendarDayView.vue` |
@@ -23,19 +23,19 @@
 
 ## Acceptance
 
-- [ ] `UC-E2E-005` is extended so the S-04 day view (`/calendar/:date`) is asserted to show a "Модель" column after "Задача", with the primary model, `+N` when more than one, the full ordered list in `title`/`aria-label`, and "Нет данных" when `models` is empty.
-- [ ] The YAML dataset `e2e-test-data-ai-task-tracker.yaml` is extended with at least one task carrying multiple `models` (to exercise `+N`) and one task with an empty `models` list (to exercise "Нет данных"), for the day view.
-- [ ] `UC-E2E-005` traces to `R-015` and reuses the S-01 ordering/tie-break expectation (total tokens desc, name tie-break); no duplicate use case is introduced.
-- [ ] The scenario explicitly states the check runs against the actually built frontend (rebuilt image or DOM smoke), not only the API, and does not change the S-01 (UC-E2E-003) scenario.
-- [ ] The e2e scenario is validatable by the existing runner/validator and the dataset passes `validate-e2e-data.py`.
-- [ ] `CP-2` (e2e use cases and dataset) and `CP-F` (final acceptance) are declared.
+- [x] `UC-E2E-005` is extended so the S-04 day view (`/calendar/:date`) is asserted to show a "Модель" column after "Задача", with the primary model, `+N` when more than one, the full ordered list in `title`/`aria-label`, and "Нет данных" when `models` is empty.
+- [x] The YAML dataset `e2e-test-data-ai-task-tracker.yaml` is extended with at least one task carrying multiple `models` (to exercise `+N`) and one task with an empty `models` list (to exercise "Нет данных"), for the day view.
+- [x] `UC-E2E-005` traces to `R-015` and reuses the S-01 ordering/tie-break expectation (total tokens desc, name tie-break); no duplicate use case is introduced.
+- [x] The scenario explicitly states the check runs against the actually built frontend (rebuilt image or DOM smoke), not only the API, and does not change the S-01 (UC-E2E-003) scenario.
+- [x] The e2e scenario is validatable by the existing runner/validator and the dataset passes `validate-e2e-data.py`.
+- [x] `CP-2` (e2e use cases and dataset) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | A-02 e2e use cases and dataset | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` | 9P/0F/0M | approved | docs/checkpoints/T-031-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-031-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | approved | docs/checkpoints/T-031-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -64,3 +64,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 76e53b1: CP-2 snapshot
 - 2026-11-19: CP-F awaiting_review (A-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=281084 out=60015 cr=6797571 ratio=24.2x min=282; reviewer user
 - f59ae41: CP-F snapshot
+- 2026-11-20: CP-F approved by user (chat: "approve T-031"), task closed as done; checks 10 PASS / 0 FAIL / 0 MANUAL / 0 UNCHECKED; snapshot f59ae41.
