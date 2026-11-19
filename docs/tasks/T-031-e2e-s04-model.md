@@ -16,7 +16,7 @@
 | ux | required - the S-04 model cell states (primary, `+N`, tooltip/aria, "Нет данных") are exercised by the e2e scenario |
 | chunks | - (to be planned at start) |
 | budget | - |
-| base_commit | 535558c |
+| base_commit | 27434c9 |
 | usage | n/a |
 | issues | - |
 | commit | - |
@@ -56,4 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-031 registered as a pending A-02 successor of T-030 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
-- 2026-11-19 (orchestrator): T-030 leftovers committed as `535558c` (T-030 chunk-ledger residue + ISSUE-20261118-185907 mitigation note). T-031 set `pending -> in_progress` in plan/card; activity re-rendered (T-031 `#FFE082`); `base_commit` set to `535558c` (first commit of the task = diff baseline). No role work started.
+- 2026-11-19 (orchestrator): T-030 leftovers committed as `535558c` (T-030 chunk-ledger residue + ISSUE-20261118-185907 mitigation note). T-031 set `pending -> in_progress` in plan/card; activity re-rendered (T-031 `#FFE082`); start commit `27434c9`. Card `base_commit` = `27434c9` (first commit of the task = diff baseline). No role work started.
