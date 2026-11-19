@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-01 |
 | role | analyst |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-029 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/glossary.md`, `docs/analysis/questions-ai-task-tracker.md`, `docs/tasks/T-029-calendar-day-model-planning.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
