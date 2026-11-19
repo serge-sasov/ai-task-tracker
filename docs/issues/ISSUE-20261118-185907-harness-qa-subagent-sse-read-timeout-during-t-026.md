@@ -35,6 +35,8 @@ Not fixed. The `harness-qa` subagent transport (opencode `task` session) hit SSE
 
 Lead fallback: the lead (orchestrator) authored the plan at `docs/qa/e2e-plan-task-list-model.md` using the T-026 card, UC-E2E-003/S8 (use cases + YAML), the T-025 e2e test files, and ISSUE-20261118-153622. QA checks ran against the result: the YAML validator reports `8 use cases, 25 requirement links, 0 errors, 0 warnings`; `python -m py_compile` passes on the two e2e modules. The plan covers all of UC-E2E-001..008 with a dedicated UC-E2E-003 S8 / R-014 block, the test-data validation command, the execution approach (targeted + full suite), the ISSUE-20261118-153622 environment caveat, and entry/exit criteria with evidence expectations.
 
+Additional mitigation (2026-11-19): the `ollama-metrics` and `ollama` providers in `~/.config/opencode/opencode.jsonc` now set `chunkTimeout: 900000` and `headerTimeout: 600000` (defaults were 300000 each). This raises the SSE inter-chunk window from 5 to 15 minutes and the response-header window from 5 to 10 minutes. `opencode debug config` resolves the values; a new opencode process loaded the updated agent config and completed tool calls; a read-only `harness-qa` smoke run and the MTP benchmarks completed without transport errors. The currently running opencode process must be restarted to pick up the new provider timeouts. The root cause remains a transport stall, so the status stays `workaround` until a large Q-01/Q-02 generation is retried end-to-end.
+
 ## Verification
 
 - `docs/qa/e2e-plan-task-list-model.md` exists and lists every documented UC id: UC-E2E-001..UC-E2E-008 (satisfies `e2e-plan-uc-coverage`).
@@ -45,7 +47,7 @@ Lead fallback: the lead (orchestrator) authored the plan at `docs/qa/e2e-plan-ta
 
 ## Prevention / follow-up
 
-Retry the `harness-qa` role on the next QA task (T-027 / Q-02) and confirm it completes without SSE read timeouts. If the timeouts persist, treat the subagent transport as a harness defect (raise a dedicated issue and/or a follow-up task) rather than relying on lead fallback repeatedly. Keep the lead-fallback path as the recovery for the current task only.
+Retry the `harness-qa` role on the next QA task (T-027 / Q-02) and confirm it completes without SSE read timeouts. If the timeouts persist, treat the subagent transport as a harness defect (raise a dedicated issue and/or a follow-up task) rather than relying on lead fallback repeatedly. Keep the lead-fallback path as the recovery for the current task only. After the provider timeout change, retry a large Q-01/Q-02 generation end-to-end and keep the chunked-QA rule (split reports into 1-2 KB sections) as the primary prevention.
 
 ## Links
 
@@ -55,3 +57,4 @@ T-026 (Q-01); `docs/tasks/T-026-e2e-plan-model-column.md`; `docs/qa/e2e-plan-tas
 
 - 2026-11-18T18:59:07.2018446+03:00: detected (two SSE read timeouts; C1 claimed, no plan)
 - 2026-11-18: lead fallback wrote the plan; QA validator + py_compile passed; C1 marked `done`.
+- 2026-11-19: added `chunkTimeout: 900000` / `headerTimeout: 600000` to the `ollama` and `ollama-metrics` providers; config validated; read-only QA smoke passed. Large QA retry still pending.
