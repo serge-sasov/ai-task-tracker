@@ -19,7 +19,7 @@
 | base_commit | dfb9c15 |
 | usage | in=291770 out=44854 cr=1320477 ratio=4.5x min=189 |
 | issues | ISSUE-20261118-185907, ISSUE-20261118-153622 |
-| commit | - |
+| commit | 07dcead |
 
 ## Acceptance
 
@@ -73,3 +73,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-029 started (P-00 planning); previous orchestrator session cancelled with no artifacts.
 - 2026-11-19: CP-1 prepared: graph T-030..T-040 registered, 11 cards created, D-01 in scope (delta over T-012 baseline).
 - 2026-11-19: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=291770 out=44854 cr=1320477 ratio=4.5x min=189; reviewer auto (P2)
+- 07dcead: CP-1 snapshot
