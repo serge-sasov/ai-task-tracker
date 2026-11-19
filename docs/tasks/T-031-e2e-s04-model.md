@@ -19,7 +19,7 @@
 | base_commit | 27434c9 |
 | usage | in=280761 out=59856 cr=6740113 ratio=24x min=282 |
 | issues | - |
-| commit | - |
+| commit | 76e53b1 |
 
 ## Acceptance
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19 (analyst, chunk B2): A-02 YAML delta authored — added `fixtures.calendar.day_2026-11-10-models` (TASK-001 +1, TASK-002 «Нет данных») and `day_2026-11-11-models` (TASK-003/004/005 +1) to `docs/analysis/e2e-test-data-ai-task-tracker.yaml`; extended `UC-E2E-005` entry: `source_requirements` += R-015, steps S6/S7 (day-view model column, DOM check, R-014 ordering rule), `traceability.test_ids` += `test_day_view_model_column`. Both validators pass (harness: 0 errors 0 warnings; project `--strict`: 0 errors 0 warnings). `git diff` limited to T-031 scope; `UC-E2E-003` byte-identical. Chunk B2 completed.
 - 2026-11-19 (analyst, housekeeping): `verify-stage A-02` initial run FAILED only on `chunk-budget` because the check measures total produced-file size (43 KB md / 32 KB yaml) — both are pre-existing files edited incrementally (actual new content ~4 KB md / ~2.5 KB yaml, within §11.1 8 KB/write and 20 KB/session). Aligned ledger budget to 48/48 KB per the T-018/T-030 analyst precedent (budget is a planning field, not a machine field). Re-run: 9 PASS / 0 FAIL / 0 MANUAL / 1 N/A (`artifact-hashes` N/A = no evidence ledger yet, written by `stage-done.ps1` at CP-2).
 - 2026-11-19: CP-2 approved (A-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=280761 out=59856 cr=6740113 ratio=24x min=282; reviewer auto (P2)
+- 76e53b1: CP-2 snapshot
