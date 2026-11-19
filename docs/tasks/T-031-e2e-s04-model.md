@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | A-02 |
 | role | analyst |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-030 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/tasks/T-030-requirements-s04-model.md`, `src/web/src/views/CalendarDayView.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | 27434c9 |
-| usage | in=280761 out=59856 cr=6740113 ratio=24x min=282 |
+| usage | in=281084 out=60015 cr=6797571 ratio=24.2x min=282 |
 | issues | - |
 | commit | 76e53b1 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | A-02 e2e use cases and dataset | `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml` | 9P/0F/0M | approved | docs/checkpoints/T-031-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-031-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-031-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19 (analyst, housekeeping): `verify-stage A-02` initial run FAILED only on `chunk-budget` because the check measures total produced-file size (43 KB md / 32 KB yaml) — both are pre-existing files edited incrementally (actual new content ~4 KB md / ~2.5 KB yaml, within §11.1 8 KB/write and 20 KB/session). Aligned ledger budget to 48/48 KB per the T-018/T-030 analyst precedent (budget is a planning field, not a machine field). Re-run: 9 PASS / 0 FAIL / 0 MANUAL / 1 N/A (`artifact-hashes` N/A = no evidence ledger yet, written by `stage-done.ps1` at CP-2).
 - 2026-11-19: CP-2 approved (A-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=280761 out=59856 cr=6740113 ratio=24x min=282; reviewer auto (P2)
 - 76e53b1: CP-2 snapshot
+- 2026-11-19: CP-F awaiting_review (A-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=281084 out=60015 cr=6797571 ratio=24.2x min=282; reviewer user
