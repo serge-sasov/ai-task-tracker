@@ -34,7 +34,7 @@ start
 :T-026 Q-01 E2E plan and coverage matrix; <<#90EE90>>
 :T-027 Q-02 QA, acceptance and verdict; <<#90EE90>>
 :T-028 F-01 Final acceptance and closure: S-01 model column; <<#90EE90>>
-:T-029 P-00 Feature planning: S-04 calendar day model column; <<#87CEFA>>
+:T-029 P-00 Feature planning: S-04 calendar day model column; <<#90EE90>>
 :T-030 A-01 Requirements delta for S-04 calendar day model column; <<#D3D3D3>>
 :T-031 A-02 E2E use cases and dataset delta for S-04 model column; <<#D3D3D3>>
 :T-032 U-01 UX flows and screens for S-04 model column; <<#D3D3D3>>

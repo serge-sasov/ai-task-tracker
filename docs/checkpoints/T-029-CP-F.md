@@ -9,11 +9,11 @@
 | role | orchestrator |
 | stage | P-00 |
 | artifacts | docs/plan.md, docs/tasks/T-029-calendar-day-model-planning.md, docs/activity.puml, docs/activity.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-19T17:21:00 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-19T17:30:53 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 07a2f27 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-029-CP-F.checks.json |
@@ -76,7 +76,7 @@ docs/activity.puml                              | 14 ++++-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- Approved via chat: "decision: approved" (T-029 CP-F final acceptance).
 
 ## User edits
 

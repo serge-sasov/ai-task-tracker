@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | P-00 |
 | role | orchestrator |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-028 |
 | inputs | `docs/plan.md`, `harness/process.md`, `harness/workflows/feature.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/tasks/T-018-requirements-model-column.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/architecture/contracts-ai-task-tracker.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -23,22 +23,22 @@
 
 ## Acceptance
 
-- [ ] Scope fixed: S-04 day view (`/calendar/:date`) shows a visible "Модель" column immediately after "Задача"; it shows the primary model plus `+N`, the full ordered list in `title` and `aria-label`, and "Нет данных" when `models` is empty.
-- [ ] Reuse: no backend/API/schema change is expected; `GET /api/tasks` already returns `models` per task and `CalendarDayView.vue` already calls it. Confirm against contracts §4.2/§4.5 before planning.
-- [ ] Consistency: the S-04 cell follows the S-01 model-cell rules and does not change S-01 behavior; if a shared component or composable is introduced, the S-01 regression is covered.
-- [ ] e2e applicability recorded (`required`) with a concrete UC-E2E-005 delta and YAML dataset update; evidence must verify the actually built frontend (rebuilt image or DOM smoke), not only the offline prototype.
-- [ ] UX applicability recorded (`required`) with an S-04 screens/UI-spec/prototype delta; the UX deliverable includes the model-cell states and accessibility text.
-- [ ] Task graph is created with explicit dependencies and per-stage applicability; every waiver has a reason; no silent skip of required stages.
-- [ ] Launch protocol (anti-hang) is included in this card and copied into every successor card created at CP-1.
-- [ ] Existing pending baseline tasks T-010, T-011 and T-012 are untouched.
-- [ ] `CP-1` (plan and task graph) and `CP-F` (final acceptance) are declared.
+- [x] Scope fixed: S-04 day view (`/calendar/:date`) shows a visible "Модель" column immediately after "Задача"; it shows the primary model plus `+N`, the full ordered list in `title` and `aria-label`, and "Нет данных" when `models` is empty.
+- [x] Reuse: no backend/API/schema change is expected; `GET /api/tasks` already returns `models` per task and `CalendarDayView.vue` already calls it. Confirm against contracts §4.2/§4.5 before planning.
+- [x] Consistency: the S-04 cell follows the S-01 model-cell rules and does not change S-01 behavior; if a shared component or composable is introduced, the S-01 regression is covered.
+- [x] e2e applicability recorded (`required`) with a concrete UC-E2E-005 delta and YAML dataset update; evidence must verify the actually built frontend (rebuilt image or DOM smoke), not only the offline prototype.
+- [x] UX applicability recorded (`required`) with an S-04 screens/UI-spec/prototype delta; the UX deliverable includes the model-cell states and accessibility text.
+- [x] Task graph is created with explicit dependencies and per-stage applicability; every waiver has a reason; no silent skip of required stages.
+- [x] Launch protocol (anti-hang) is included in this card and copied into every successor card created at CP-1.
+- [x] Existing pending baseline tasks T-010, T-011 and T-012 are untouched.
+- [x] `CP-1` (plan and task graph) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | P-00 plan and task graph | `docs/plan.md`, this card, `docs/activity.puml/.svg` | 5P/0F/0M | approved | docs/checkpoints/T-029-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 5P/0F/0M | awaiting_review | docs/checkpoints/T-029-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 5P/0F/0M | approved | docs/checkpoints/T-029-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -76,3 +76,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 07dcead: CP-1 snapshot
 - 2026-11-19: CP-F awaiting_review (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=379281 out=53938 cr=2191589 ratio=5.8x min=220; reviewer user
 - 07a2f27: CP-F snapshot
+- 2026-11-19: CP-F approved by user ("decision: approved"); T-029 closed as done.
