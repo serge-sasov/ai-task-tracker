@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | P-00 |
 | role | orchestrator |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-028 |
 | inputs | `docs/plan.md`, `harness/process.md`, `harness/workflows/feature.md`, `docs/tasks/T-028-final-acceptance-model-column.md`, `docs/tasks/T-018-requirements-model-column.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `docs/architecture/contracts-ai-task-tracker.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (P-00 planning produces board, card and checkpoints; no ledger) |
 | budget | - |
 | base_commit | dfb9c15 |
-| usage | in=291770 out=44854 cr=1320477 ratio=4.5x min=189 |
+| usage | in=379281 out=53938 cr=2191589 ratio=5.8x min=220 |
 | issues | ISSUE-20261118-185907, ISSUE-20261118-153622 |
 | commit | 07dcead |
 
@@ -38,7 +38,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | P-00 plan and task graph | `docs/plan.md`, this card, `docs/activity.puml/.svg` | 5P/0F/0M | approved | docs/checkpoints/T-029-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-029-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 5P/0F/0M | awaiting_review | docs/checkpoints/T-029-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
@@ -74,3 +74,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: CP-1 prepared: graph T-030..T-040 registered, 11 cards created, D-01 in scope (delta over T-012 baseline).
 - 2026-11-19: CP-1 approved (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=291770 out=44854 cr=1320477 ratio=4.5x min=189; reviewer auto (P2)
 - 07dcead: CP-1 snapshot
+- 2026-11-19: CP-F awaiting_review (P-00); checks 5 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=379281 out=53938 cr=2191589 ratio=5.8x min=220; reviewer user
