@@ -19,7 +19,7 @@
 | base_commit | 1010367 |
 | usage | in=248949 out=74732 cr=7303374 ratio=29.3x min=194 |
 | issues | - |
-| commit | - |
+| commit | 4348cea |
 
 ## Acceptance
 
@@ -59,3 +59,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-034 registered as a pending R-01 successor of T-030/T-031/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-034 set in_progress; lead verified board invariant and deps (T-030/T-031/T-033 done); work delegated to harness-architect (R-01, CP-1 target).
 - 2026-11-20: CP-1 awaiting_review (R-01); checks 22 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=248949 out=74732 cr=7303374 ratio=29.3x min=194; reviewer user
+- 4348cea: CP-1 snapshot
