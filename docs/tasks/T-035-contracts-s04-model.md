@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | in=220874 out=72934 cr=4835343 ratio=21.9x min=165 |
+| usage | in=307266 out=99054 cr=5519740 ratio=18x min=234 |
 | issues | - |
 | commit | 6f613e9 |
 
@@ -35,8 +35,8 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | R-02 contracts and module handoff | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml/.svg`, `docs/architecture/class-*.puml/.svg`, `docs/architecture/swimlane-svc-*.puml` | 19P/2F/1M | awaiting_review | docs/checkpoints/T-035-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-035-CP-F.md` |
+| CP-2 | R-02 contracts and module handoff | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml/.svg`, `docs/architecture/class-*.puml/.svg`, `docs/architecture/swimlane-svc-*.puml` | 19P/2F/1M | approved | docs/checkpoints/T-035-CP-2.md |
+| CP-F | final acceptance | all task artifacts | 20P/2F/1M | awaiting_review | docs/checkpoints/T-035-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -61,3 +61,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-2 close-out. Fixed card `artifacts` row to include the `.svg` renders it mandates (added `docs/architecture/data-model-*.svg` and `docs/architecture/class-*.svg`), resolving the `chunk-coverage` `E_OWN_OUTSIDE_CARD` flagged in ISSUE-20261120-203629 (card omitted `.svg` while Acceptance line 29 requires them re-rendered). Re-ran verify-stage.
 - 2026-11-20: CP-2 awaiting_review (R-02); checks 19 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=220874 out=72934 cr=4835343 ratio=21.9x min=165; reviewer user
 - 6f613e9: CP-2 snapshot
+- 2026-11-20: CP-2 approved by user (in-session chat, 2026-11-20T22:09:32). The 2 FAILs (artifacts-exist swimlane conditional glob; chunk-budget ISSUE-20261120-113748) acknowledged and waived; MANUAL zones-overlap-review settled by user review (18 zones, no overlap). Task returned to in_progress to proceed to CP-F.
+- 2026-11-20: CP-F awaiting_review (R-02); checks 20 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=307266 out=99054 cr=5519740 ratio=18x min=234; reviewer user
