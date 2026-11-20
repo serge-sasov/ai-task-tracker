@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=540747 out=153084 cr=9652968 ratio=17.9x min=307 |
 | issues | ISSUE-20261121-005209 |
-| commit | - |
+| commit | a6bdf69 |
 
 ## Acceptance
 
@@ -59,3 +59,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: T-036 started: I-01 implementation for S-04 model column (coder). Board and card set in_progress by orchestrator.
 - 2026-11-20: Scope narrowed (Option A): card `artifacts` limited to the 8 produced frontend files — dropped repo-wide `tests/**` and unmodified `src/web/src/api/types.ts` (types.ts stays in `inputs`); chunk `owns` set to the same 8-file set. Root cause: card scope was not narrowed to the frontend-only task, so the CP-1 chunk-ledger gate (chunk-ownership-no-overlap / chunk-coverage) failed. See ISSUE-20261121-005209.
 - 2026-11-21: CP-1 awaiting_review (I-01); checks 7 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=540747 out=153084 cr=9652968 ratio=17.9x min=307; reviewer user
+- a6bdf69: CP-1 snapshot
