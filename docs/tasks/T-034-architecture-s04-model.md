@@ -19,7 +19,7 @@
 | base_commit | 1010367 |
 | usage | in=377315 out=104320 cr=8246608 ratio=21.9x min=249 |
 | issues | - |
-| commit | 4348cea |
+| commit | d9dd3f8 |
 
 ## Acceptance
 
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 4348cea: CP-1 snapshot
 - 2026-11-20: CP-1 approved by user (chat); task returned to in_progress; proceeding to CP-F final acceptance.
 - 2026-11-20: CP-F awaiting_review (R-01); checks 23 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=377315 out=104320 cr=8246608 ratio=21.9x min=249; reviewer user
+- d9dd3f8: CP-F snapshot

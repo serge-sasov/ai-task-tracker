@@ -14,7 +14,7 @@
 | reviewed_at | - |
 | reviewer | user |
 | decision | - |
-| snapshot_commit | - |
+| snapshot_commit | d9dd3f8 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-034-CP-F.checks.json |
 
