@@ -19,7 +19,7 @@
 | base_commit | 4e3f839 |
 | usage | in=644320 out=163073 cr=4571594 ratio=7.1x min=307 |
 | issues | ISSUE-20261120-113748 |
-| commit | e83c500 |
+| commit | 6dc0904 |
 
 ## Acceptance
 
@@ -64,3 +64,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-2 awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=485323 out=137483 cr=4079930 ratio=8.4x min=259; reviewer user
 - e83c500: CP-2 snapshot
 - 2026-11-20: CP-F awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=644320 out=163073 cr=4571594 ratio=7.1x min=307; reviewer user
+- 6dc0904: CP-F snapshot
