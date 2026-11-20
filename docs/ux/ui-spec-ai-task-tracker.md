@@ -10,7 +10,7 @@
 | Scenario pages | `docs/ux/prototype/ai-task-tracker/uc-e2e-*.html` |
 | Wireframes | `docs/ux/wireframes-ai-task-tracker.puml`, `.svg` |
 | Status | draft |
-| Ревизия | 2026-11-12: T-005 CP-F change request — календарь S-04: полная сетка месяца (Пн–Вс) + режим «Год» (12 месяцев со статистикой); 2026-11-18: T-021 — S-01, колонка «Модель» (R-014) |
+| Ревизия | 2026-11-12: T-005 CP-F change request — календарь S-04: полная сетка месяца (Пн–Вс) + режим «Год» (12 месяцев со статистикой); 2026-11-18: T-021 — S-01, колонка «Модель» (R-014); 2026-11-20: T-033 — S-04 дневной вид, колонка «Модель» (R-015) |
 
 ## 1. Personas and goals
 
@@ -41,7 +41,7 @@
 | S-01 «Задачи» | Список всех задач (задача = сессия opencode); колонка «Модель» (primary + `+N` / «Нет данных») | стартовый; сайдбар «Задачи» | loading (скелетон) / empty / success (таблица) / error («Повторить») / banner источника |
 | S-02 «Детали задачи» | Полная карточка: действия, решения, токены по моделям | клик из S-01/S-03/S-04 | loading (скелетон) / success / «Решений не зафиксировано» / error («Повторить» + «Назад к списку») |
 | S-03 «Поиск» | AI-поиск задач свободным текстом (top-K = 5) | сайдбар «Поиск» | validation (пустое поле) / loading («Ищем по задачам…») / success (список) / empty / error LLM |
-| S-04 «Календарь» | Задачи по датам с продолжительностью; режимы День/Неделя/Месяц/Год | сайдбар «Календарь» | loading (скелетон) / empty (период; в «Год» — «Нет данных» у пустых месяцев) / success (неделя 7 колонок; месяц — полная сетка Пн–Вс с приглушёнными смежными днями; год — 12 месяцев со статистикой) / error |
+| S-04 «Календарь» | Задачи по датам с продолжительностью; режимы День/Неделя/Месяц/Год; «День» — таблица с колонкой «Модель» (primary + `+N` / «Нет данных», R-015) | сайдбар «Календарь» | loading (скелетон) / empty (период; в «Год» — «Нет данных» у пустых месяцев) / success (неделя 7 колонок; месяц — полная сетка Пн–Вс с приглушёнными смежными днями; год — 12 месяцев со статистикой) / error |
 | S-05 «Токены» | Сводка потребления по моделям за период | сайдбар «Токены» | loading (скелетон) / empty (период) / success (таблица + итог) / error |
 | S-06 «Управление данными» | Удаление истории с подтверждением | сайдбар «Управление данными» | loading (кнопка) / empty (no-op) / success / error |
 
@@ -71,6 +71,13 @@
 - The cell `title` and `aria-label` contain the full ordered model list (`total tokens desc`, then model name ascending); the list is not hover-only.
 - No usage: the cell shows «Нет данных» and the accessible name is «Модель: Нет данных».
 - Long names use ellipsis; the full value remains in the tooltip/accessible name; the table does not overflow.
+
+### 3.3 S-04 day-view model cell (R-015)
+
+- S-04 day view (`/calendar/:date`) — table columns **Задача | Модель | Начало | Окончание | Продолжительность | Статус**; the «Модель» column is immediately after «Задача».
+- Cell behaviour is identical to S-01 (§3.2, R-014) and reused, not restated: primary model + visible `+N` badge when more than one model; `title` and `aria-label` carry the full ordered model list (ordering/tie-break = rule R-014: total tokens desc, then model name); «Нет данных» when `models` is empty. R-015 is limited to S-04 and introduces no new ordering rule.
+- Design tokens and labels are the same as the S-01 model cell (long names — ellipsis, full value in tooltip/accessible name); no new tokens.
+- Prototype states: 11.11.2026 — TASK-003/004/005 show «qwen3.8:27b» + «+1» (`title`/`aria-label`: «qwen3.8:27b, llama3.1:8b»); 10.11.2026 — TASK-001 «qwen3.8:27b» + «+1», TASK-002 «Нет данных» (no usage).
 
 ## 4. Wireframes
 
@@ -149,7 +156,7 @@
 | UC-E2E-002 | S-01 | баннер «Источник данных (opencode) недоступен», «Повторить» | `uc-e2e-002.html` |
 | UC-E2E-003 | S-01, S-02 | таблица задач с колонкой «Модель» (primary + `+N` / «Нет данных»), карточка (действия/решения/токены), «Решений не зафиксировано» | `uc-e2e-003.html` |
 | UC-E2E-004 | S-03 | поле + валидация, «Ищем по задачам…», top-K = 5, «Ничего не найдено…», ошибка LLM | `uc-e2e-004.html` |
-| UC-E2E-005 | S-04 | режимы День/Неделя/Месяц/Год, навигация периода, полная сетка месяца (Пн–Вс), год со статистикой по месяцам, полосы задач с продолжительностью | `uc-e2e-005.html` |
+| UC-E2E-005 | S-04 | режимы День/Неделя/Месяц/Год, навигация периода, полная сетка месяца (Пн–Вс), год со статистикой по месяцам, полосы задач с продолжительностью, ячейка «Модель» дневного вида (primary + `+N` / «Нет данных», R-015) | `uc-e2e-005.html` |
 | UC-E2E-006 | S-05 | выбор периода, таблица моделей, «Всего токенов» | `uc-e2e-006.html` |
 | UC-E2E-007 | S-01, S-05 | обновление без дублей, повторная синхронизация | `uc-e2e-007.html` |
 | UC-E2E-008 | S-06 | «Удалить историю», диалог, «История удалена.», no-op | `uc-e2e-008.html` |

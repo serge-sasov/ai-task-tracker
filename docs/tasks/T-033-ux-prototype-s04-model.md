@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-032 |
 | inputs | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-032-ux-flows-s04-model.md` |
@@ -17,7 +17,7 @@
 | chunks | `T-033-c1` UI spec S-04 section (owns `docs/ux/ui-spec-ai-task-tracker.md`); `T-033-c2` wireframe set + SVG re-render (owns `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`); `T-033-c3` prototype page model column (owns `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`) |
 | budget | `max_write_kb`: 8 (md, puml) / 12 (html); `max_session_kb`: 20 (md, puml) / 40 (html); `context_stop_pct`: 60 (md, puml) / 65 (html) — per harness/process.md 11.1 |
 | base_commit | 4e3f839 |
-| usage | n/a |
+| usage | in=292816 out=55044 cr=2166746 ratio=7.4x min=106 |
 | issues | - |
 | commit | - |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | - | pending | `docs/checkpoints/T-033-CP-2.md` |
+| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 17P/1F/1M | awaiting_review | docs/checkpoints/T-033-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-033-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -57,3 +57,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-19: T-033 registered as a pending U-02 successor of T-032 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-033 started (in_progress); base_commit 4e3f839; chunk plan recorded; routed to ux-designer.
+- 2026-11-20: CP-2 awaiting_review (U-02); checks 17 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage in=292816 out=55044 cr=2166746 ratio=7.4x min=106; reviewer user

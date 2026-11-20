@@ -1,0 +1,162 @@
+{
+    "task":  "T-033",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "T-033-c1",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "UI spec S-04 model cell section",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/ui-spec-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/analysis/requirements-ai-task-tracker.md:153-164",
+                                      "docs/analysis/e2e-use-cases-ai-task-tracker.md:133-151",
+                                      "docs/ux/ui-spec-ai-task-tracker.md:67-73",
+                                      "docs/analysis/glossary.md:28",
+                                      "docs/ux/screens-ai-task-tracker.md",
+                                      "docs/analysis/e2e-test-data-ai-task-tracker.yaml:235-260,519-535"
+                                  ],
+                       "brief":  "docs/chunks/T-033/T-033-c1.brief.md",
+                       "acceptance":  [
+                                          "S-04 day-view «Модель» cell section added (primary model, +N, full ordered list in title/aria-label, «Нет данных»); tokens/labels identical to S-01 (R-014 section)",
+                                          "traceability UC-E2E-005 + R-015 added to the UC trace table",
+                                          "no new conflicting tokens"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/ui-spec-ai-task-tracker.md",
+                                            "sha256":  "496edda93982287daed523c07c335d50aead325049bc5e41a3ae57b28c83692d"
+                                        }
+                                    ],
+                       "base_commit":  "51fca3c",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "S-04 day-view model cell section 3.3 added; S-04 inventory row + UC-E2E-005 trace row extended; revision note updated"
+                                 ],
+                       "started":  "2026-11-20T10:07:19",
+                       "finished":  "2026-11-20T10:09:48"
+                   },
+                   {
+                       "id":  "T-033-c2",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "Wireframes S-04 day view + SVG re-render",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/wireframes-ai-task-tracker.puml",
+                                    "docs/ux/wireframes-ai-task-tracker.svg"
+                                ],
+                       "inputs":  [
+                                      "docs/ux/ui-spec-ai-task-tracker.md",
+                                      "docs/ux/wireframes-ai-task-tracker.puml",
+                                      "docs/analysis/e2e-test-data-ai-task-tracker.yaml:235-260"
+                                  ],
+                       "brief":  "docs/chunks/T-033/T-033-c2.brief.md",
+                       "acceptance":  [
+                                          "S-04 day view screen added with the «Модель» column",
+                                          "plantuml check_syntax passes",
+                                          "SVG re-rendered from the same .puml"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/wireframes-ai-task-tracker.puml",
+                                            "sha256":  "667043e8a09d6c64afbfcf45744d4b83b5aec5ceab3f4e8a491bc34425226dcf"
+                                        },
+                                        {
+                                            "path":  "docs/ux/wireframes-ai-task-tracker.svg",
+                                            "sha256":  "7625d421c18bdc964b70a09daa96853177064616559206fb2e3bb12151a9734d"
+                                        }
+                                    ],
+                       "base_commit":  "51fca3c",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "S-04 day table wireframe (colony «Модель», R-015; UI spec §3.3) inserted; check_syntax valid; SVG re-rendered (71879 B)"
+                                 ],
+                       "started":  "2026-11-20T10:17:19",
+                       "finished":  "2026-11-20T10:30:25"
+                   },
+                   {
+                       "id":  "T-033-c3",
+                       "parent":  null,
+                       "stage":  "U-02",
+                       "role":  "ux-designer",
+                       "depth":  1,
+                       "title":  "Prototype uc-e2e-005.html day table with model column",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/ux/prototype/ai-task-tracker/uc-e2e-005.html"
+                                ],
+                       "inputs":  [
+                                      "docs/ux/ui-spec-ai-task-tracker.md",
+                                      "docs/analysis/e2e-test-data-ai-task-tracker.yaml:235-260",
+                                      "docs/ux/prototype/ai-task-tracker/assets/app.css",
+                                      "docs/ux/prototype/ai-task-tracker/assets/app.js"
+                                  ],
+                       "brief":  "docs/chunks/T-033/T-033-c3.brief.md",
+                       "acceptance":  [
+                                          "«День» state renders S-04 day TABLE with columns «Задача | Модель | Начало | Окончание | Продолжительность | Статус»",
+                                          "TASK-003/004/005 primary «qwen3.8:27b» + «+1», title/aria-label full list; «Нет данных» example",
+                                          "offline only (local assets app.css/app.js, no CDN); existing nav/links unchanged; Russian single-user text"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/ux/prototype/ai-task-tracker/uc-e2e-005.html",
+                                            "sha256":  "4ac8151da3e2cafec06d41c94f4356de52ede53e0cbc04a000a848843d883ffc"
+                                        }
+                                    ],
+                       "base_commit":  "51fca3c",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T10:38:27",
+                       "finished":  "2026-11-20T10:42:07"
+                   }
+               ],
+    "updated":  "2026-11-20T10:42:07"
+}
