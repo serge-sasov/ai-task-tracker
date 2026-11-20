@@ -7,16 +7,16 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-032 |
 | inputs | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-032-ux-flows-s04-model.md` |
 | artifacts | `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` |
 | e2e | required - the prototype page for UC-E2E-005 must render the S-04 model column states |
 | ux | required - the S-04 model cell (primary, `+N`, tooltip/aria, "Нет данных") must be specified and prototyped |
-| chunks | - (to be planned at start) |
-| budget | - |
-| base_commit | - |
+| chunks | `T-033-c1` UI spec S-04 section (owns `docs/ux/ui-spec-ai-task-tracker.md`); `T-033-c2` wireframe set + SVG re-render (owns `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`); `T-033-c3` prototype page model column (owns `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`) |
+| budget | `max_write_kb`: 8 (md, puml) / 12 (html); `max_session_kb`: 20 (md, puml) / 40 (html); `context_stop_pct`: 60 (md, puml) / 65 (html) — per harness/process.md 11.1 |
+| base_commit | 4e3f839 |
 | usage | n/a |
 | issues | - |
 | commit | - |
@@ -56,3 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-033 registered as a pending U-02 successor of T-032 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-20: T-033 started (in_progress); base_commit 4e3f839; chunk plan recorded; routed to ux-designer.
