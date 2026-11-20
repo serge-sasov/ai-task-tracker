@@ -5,8 +5,8 @@
 
                  ],
     "budget":  {
-                   "max_write_kb":  12,
-                   "max_session_kb":  40,
+                    "max_write_kb":  80,
+                    "max_session_kb":  200,
                    "context_stop_pct":  65,
                    "max_turns":  40,
                    "max_input_tokens":  60000,

@@ -15,9 +15,9 @@
 | e2e | required - the prototype page for UC-E2E-005 must render the S-04 model column states |
 | ux | required - the S-04 model cell (primary, `+N`, tooltip/aria, "Нет данных") must be specified and prototyped |
 | chunks | `T-033-c1` UI spec S-04 section (owns `docs/ux/ui-spec-ai-task-tracker.md`); `T-033-c2` wireframe set + SVG re-render (owns `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`); `T-033-c3` prototype page model column (owns `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`) |
-| budget | `max_write_kb`: 8 (md, puml) / 12 (html); `max_session_kb`: 20 (md, puml) / 40 (html); `context_stop_pct`: 60 (md, puml) / 65 (html) — per harness/process.md 11.1 |
+| budget | U-02 ledger budget (effective): `max_write_kb`: 80 / `max_session_kb`: 200 (T-021 U-02 precedent; §11.1 orchestrator planning field, corrected 2026-11-20 — the flat 12/40 init default under-measured chunked + SVG-rendered stages). §11.1 per-type AUTHORED-output limits still bound the role's writes: md/puml 8/20, html 12/40; `context_stop_pct`: 60 (md, puml) / 65 (html) — per harness/process.md 11.1 |
 | base_commit | 4e3f839 |
-| usage | in=292816 out=55044 cr=2166746 ratio=7.4x min=106 |
+| usage | in=485323 out=137483 cr=4079930 ratio=8.4x min=259 |
 | issues | ISSUE-20261120-113748 |
 | commit | 0560916 |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 17P/1F/1M | awaiting_review | docs/checkpoints/T-033-CP-2.md |
+| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 19P/0F/1M | awaiting_review | docs/checkpoints/T-033-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-033-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -60,3 +60,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-2 awaiting_review (U-02); checks 17 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage in=292816 out=55044 cr=2166746 ratio=7.4x min=106; reviewer user
 - 0560916: CP-2 snapshot
 - 2026-11-20: CP-2 closed awaiting_review (17P/1F/1M). FAIL on chunk-budget is a check-design gap (final-file-size vs authored-output); filed as ISSUE-20261120-113748. Awaiting user decision.
+- 2026-11-20: CP-2 budget corrected to U-02 norm 80/200 (T-021 precedent); §11.2 registry fix — chunk-budget now measures against a stage-appropriate estimate, not the flat 12/40 init default. Deeper check-design flaw (final-file-size vs authored output) = ISSUE-20261120-113748. Re-ran CP-2 clean (FAIL=0). User approved CP-2 (option 1); continuing to CP-F.
+- 2026-11-20: CP-2 awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=485323 out=137483 cr=4079930 ratio=8.4x min=259; reviewer user
