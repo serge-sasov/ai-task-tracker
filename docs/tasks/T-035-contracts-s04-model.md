@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=307266 out=99054 cr=5519740 ratio=18x min=234 |
 | issues | - |
-| commit | 6f613e9 |
+| commit | 57e2789 |
 
 ## Acceptance
 
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 6f613e9: CP-2 snapshot
 - 2026-11-20: CP-2 approved by user (in-session chat, 2026-11-20T22:09:32). The 2 FAILs (artifacts-exist swimlane conditional glob; chunk-budget ISSUE-20261120-113748) acknowledged and waived; MANUAL zones-overlap-review settled by user review (18 zones, no overlap). Task returned to in_progress to proceed to CP-F.
 - 2026-11-20: CP-F awaiting_review (R-02); checks 20 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=307266 out=99054 cr=5519740 ratio=18x min=234; reviewer user
+- 57e2789: CP-F snapshot
