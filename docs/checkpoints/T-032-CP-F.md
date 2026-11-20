@@ -9,11 +9,11 @@
 | role | ux-designer |
 | stage | U-01 |
 | artifacts | docs/ux/user-flows-ai-task-tracker.md, docs/ux/screens-ai-task-tracker.md |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-20T01:30:15 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-20T09:30:24 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 88742ba |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-032-CP-F.checks.json |
@@ -90,4 +90,4 @@ docs/activity.puml                      |   2 +-
 
 ## Next action
 
-- return to this checkpoint
+- close task

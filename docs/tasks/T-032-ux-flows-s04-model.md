@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-01 |
 | role | ux-designer |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-030, T-031 |
 | inputs | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-031-e2e-s04-model.md`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -23,19 +23,19 @@
 
 ## Acceptance
 
-- [ ] `docs/ux/screens-ai-task-tracker.md` is extended with the S-04 day view screen inventory and the new "Модель" column, including the four states: primary model only, primary + `+N`, tooltip/`aria-label` full ordered list, and "Нет данных".
-- [ ] `docs/ux/user-flows-ai-task-tracker.md` is extended with the S-04 day-view journey (open `/calendar/:date` -> view day table -> read the model column) and traces to UC-E2E-005 and `R-015`.
-- [ ] The S-04 screen states (success / loading / empty / error) are documented, and the model-cell states reuse the S-01 (S-01 list view) terminology and labels ("Модель", "Нет данных").
-- [ ] The screen inventory is consistent with the existing S-01 model-column UX (T-020) so the same cell rules apply in both views; no conflicting state is introduced.
-- [ ] The UX doc explicitly states the day view is read-only and the model column does not add new interactions beyond the S-01 tooltip/aria behavior.
-- [ ] `CP-1` (UX flows and screens) and `CP-F` (final acceptance) are declared.
+- [x] `docs/ux/screens-ai-task-tracker.md` is extended with the S-04 day view screen inventory and the new "Модель" column, including the four states: primary model only, primary + `+N`, tooltip/`aria-label` full ordered list, and "Нет данных".
+- [x] `docs/ux/user-flows-ai-task-tracker.md` is extended with the S-04 day-view journey (open `/calendar/:date` -> view day table -> read the model column) and traces to UC-E2E-005 and `R-015`.
+- [x] The S-04 screen states (success / loading / empty / error) are documented, and the model-cell states reuse the S-01 (S-01 list view) terminology and labels ("Модель", "Нет данных").
+- [x] The screen inventory is consistent with the existing S-01 model-column UX (T-020) so the same cell rules apply in both views; no conflicting state is introduced.
+- [x] The UX doc explicitly states the day view is read-only and the model column does not add new interactions beyond the S-01 tooltip/aria behavior.
+- [x] `CP-1` (UX flows and screens) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | U-01 UX flows and screens | `docs/ux/user-flows-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md` | 9P/0F/0M | approved | docs/checkpoints/T-032-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-032-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | approved | docs/checkpoints/T-032-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 252e062: CP-1 snapshot
 - 2026-11-20: CP-F awaiting_review (U-01); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=240623 out=35379 cr=2662219 ratio=11.1x min=93; reviewer user
 - 88742ba: CP-F snapshot
+- 2026-11-20: CP-F approved by user (explicit `approved` in chat); checks 10 PASS / 0 FAIL / 0 MANUAL / 0 N-A / 0 UNCHECKED; T-032 -> done; commit 88742ba.
