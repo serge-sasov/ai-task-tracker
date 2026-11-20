@@ -9,11 +9,11 @@
 | role | ux-designer |
 | stage | U-02 |
 | artifacts | docs/ux/wireframes-ai-task-tracker.puml, docs/ux/wireframes-ai-task-tracker.svg, docs/ux/ui-spec-ai-task-tracker.md, docs/ux/prototype/ai-task-tracker/uc-e2e-005.html |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-20T13:42:09 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-20T14:20:30 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 6dc0904 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-033-CP-F.checks.json |
@@ -97,7 +97,7 @@ docs/activity.puml                                 |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- approved (final) — S-04 day-view model column: wireframes (puml/svg), UI spec §3.3, and prototype uc-e2e-005.html accepted. proto-ru-single-user confirmed (Russian UI, single user, offline, no roles/network requests). T-033 closed as done.
 
 ## User edits
 

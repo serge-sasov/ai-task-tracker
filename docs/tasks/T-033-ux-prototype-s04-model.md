@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-032 |
 | inputs | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-032-ux-flows-s04-model.md` |
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 19P/0F/1M | approved | docs/checkpoints/T-033-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 19P/0F/1M | awaiting_review | docs/checkpoints/T-033-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 19P/0F/1M | approved | docs/checkpoints/T-033-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -65,3 +65,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - e83c500: CP-2 snapshot
 - 2026-11-20: CP-F awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=644320 out=163073 cr=4571594 ratio=7.1x min=307; reviewer user
 - 6dc0904: CP-F snapshot
+- 2026-11-20: CP-F approved by user (final acceptance; proto-ru-single-user confirmed). Task closed as done.
