@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-01 |
 | role | coder |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-035, T-033 |
 | inputs | `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue`, `src/web/src/api/types.ts`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `tests/**` |
@@ -56,3 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-036 registered as a pending I-01 successor of T-035/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-20: T-036 started: I-01 implementation for S-04 model column (coder). Board and card set in_progress by orchestrator.
