@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | U-02 |
 | role | ux-designer |
-| status | awaiting_review |
+| status | in_progress |
 | hold | false |
 | depends_on | T-032 |
 | inputs | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/screens-ai-task-tracker.md`, `docs/ux/prototype/ai-task-tracker/index.html`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/tasks/T-032-ux-flows-s04-model.md` |
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 19P/0F/1M | awaiting_review | docs/checkpoints/T-033-CP-2.md |
+| CP-2 | U-02 wireframes, prototype, UI spec | `docs/ux/ui-spec-ai-task-tracker.md`, `docs/ux/wireframes-ai-task-tracker.puml`, `docs/ux/wireframes-ai-task-tracker.svg`, `docs/ux/prototype/ai-task-tracker/uc-e2e-005.html` | 19P/0F/1M | approved | docs/checkpoints/T-033-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-033-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
