@@ -18,7 +18,7 @@
 | budget | `max_write_kb`: 8 (md, puml) / 12 (html); `max_session_kb`: 20 (md, puml) / 40 (html); `context_stop_pct`: 60 (md, puml) / 65 (html) — per harness/process.md 11.1 |
 | base_commit | 4e3f839 |
 | usage | in=292816 out=55044 cr=2166746 ratio=7.4x min=106 |
-| issues | - |
+| issues | ISSUE-20261120-113748 |
 | commit | 0560916 |
 
 ## Acceptance
@@ -59,3 +59,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: T-033 started (in_progress); base_commit 4e3f839; chunk plan recorded; routed to ux-designer.
 - 2026-11-20: CP-2 awaiting_review (U-02); checks 17 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage in=292816 out=55044 cr=2166746 ratio=7.4x min=106; reviewer user
 - 0560916: CP-2 snapshot
+- 2026-11-20: CP-2 closed awaiting_review (17P/1F/1M). FAIL on chunk-budget is a check-design gap (final-file-size vs authored-output); filed as ISSUE-20261120-113748. Awaiting user decision.
