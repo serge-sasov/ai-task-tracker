@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=220874 out=72934 cr=4835343 ratio=21.9x min=165 |
 | issues | - |
-| commit | - |
+| commit | 6f613e9 |
 
 ## Acceptance
 
@@ -60,3 +60,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: T-035 started in_progress by lead dispatch; R-02 architect role session will follow; no artifacts yet.
 - 2026-11-20: CP-2 close-out. Fixed card `artifacts` row to include the `.svg` renders it mandates (added `docs/architecture/data-model-*.svg` and `docs/architecture/class-*.svg`), resolving the `chunk-coverage` `E_OWN_OUTSIDE_CARD` flagged in ISSUE-20261120-203629 (card omitted `.svg` while Acceptance line 29 requires them re-rendered). Re-ran verify-stage.
 - 2026-11-20: CP-2 awaiting_review (R-02); checks 19 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=220874 out=72934 cr=4835343 ratio=21.9x min=165; reviewer user
+- 6f613e9: CP-2 snapshot
