@@ -19,7 +19,7 @@
 | base_commit | 4e3f839 |
 | usage | in=485323 out=137483 cr=4079930 ratio=8.4x min=259 |
 | issues | ISSUE-20261120-113748 |
-| commit | 0560916 |
+| commit | e83c500 |
 
 ## Acceptance
 
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-2 closed awaiting_review (17P/1F/1M). FAIL on chunk-budget is a check-design gap (final-file-size vs authored-output); filed as ISSUE-20261120-113748. Awaiting user decision.
 - 2026-11-20: CP-2 budget corrected to U-02 norm 80/200 (T-021 precedent); §11.2 registry fix — chunk-budget now measures against a stage-appropriate estimate, not the flat 12/40 init default. Deeper check-design flaw (final-file-size vs authored output) = ISSUE-20261120-113748. Re-ran CP-2 clean (FAIL=0). User approved CP-2 (option 1); continuing to CP-F.
 - 2026-11-20: CP-2 awaiting_review (U-02); checks 19 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=485323 out=137483 cr=4079930 ratio=8.4x min=259; reviewer user
+- e83c500: CP-2 snapshot
