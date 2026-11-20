@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-034 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `src/web/src/api/types.ts`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | R-02 contracts and module handoff | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml/.svg`, `docs/architecture/class-*.puml/.svg`, `docs/architecture/swimlane-svc-*.puml` | 19P/2F/1M | approved | docs/checkpoints/T-035-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 20P/2F/1M | awaiting_review | docs/checkpoints/T-035-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 20P/2F/1M | approved | docs/checkpoints/T-035-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -64,3 +64,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-2 approved by user (in-session chat, 2026-11-20T22:09:32). The 2 FAILs (artifacts-exist swimlane conditional glob; chunk-budget ISSUE-20261120-113748) acknowledged and waived; MANUAL zones-overlap-review settled by user review (18 zones, no overlap). Task returned to in_progress to proceed to CP-F.
 - 2026-11-20: CP-F awaiting_review (R-02); checks 20 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=307266 out=99054 cr=5519740 ratio=18x min=234; reviewer user
 - 57e2789: CP-F snapshot
+- 2026-11-20: CP-F approved by user (in-session chat, "approve CP-F"). Task T-035 closed done.

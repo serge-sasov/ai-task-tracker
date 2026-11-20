@@ -9,11 +9,11 @@
 | role | architect |
 | stage | R-02 |
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/contracts-ai-task-tracker.md, docs/architecture/openapi-api-*.yaml, docs/architecture/data-model-*.puml, docs/architecture/data-model-*.svg, docs/architecture/class-*.puml, docs/architecture/class-*.svg, docs/architecture/swimlane-svc-*.puml |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-20T22:13:50 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-20T22:42:47 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 57e2789 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-035-CP-F.checks.json |
@@ -94,7 +94,7 @@ docs/checkpoints/T-035-CP-2.md                     |  2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- approved (final) — User approved CP-F in-session (chat "approve CP-F"), 2026-11-20; the 2 FAILs (artifacts-exist swimlane conditional glob, chunk-budget ISSUE-20261120-113748) and MANUAL zones-overlap-review were already settled at CP-2 (user approved CP-2 with those waived).
 
 ## User edits
 
@@ -107,4 +107,4 @@ docs/checkpoints/T-035-CP-2.md                     |  2 +-
 
 ## Next action
 
-- return to this checkpoint
+- Task T-035 closed done; T-036 (I-01) unblocked.
