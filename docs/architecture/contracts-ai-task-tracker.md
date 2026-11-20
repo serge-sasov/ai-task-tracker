@@ -338,6 +338,7 @@ Requirement traceability (R-001..R-014, R-020..R-030):
 | R-012 | §2 `token_usage`, §4.6 |
 | R-013 | §4.6, S-05 mapping |
 | R-014 | §4.2 `models`, S-01/S-02 mapping, UC-E2E-003 |
+| R-015 | §4.2 `models` (unchanged), §9 S-04 model-cell boundary + handoff, UC-E2E-005 |
 | R-020 | ADR §1 (Java 21/Spring Boot 3, Postgres 16, Redis 7) |
 | R-021 | ADR §1, §7 (Vue 3 SPA) |
 | R-022 | ADR §1, §8 e2e `docker compose up` (one-command local stack) |
@@ -376,3 +377,51 @@ Requirement traceability (R-001..R-014, R-020..R-030):
 - Open items carried to QA/I-02 (no contract change): e2e test file names follow the
   `test_ids` recommended in the use-case traceability rows; no waiver needed since all
   UC-E2E-001..008 have web UI (ui-spec §3.1).
+
+## 9. S-04 model cell: module boundary and handoff (R-015, T-035)
+
+### 9.1 Module boundary (who owns what)
+
+Requirement R-015 (S-04 day view `/calendar/:date`) is **UI-only**: the API contract is
+**unchanged** — no new endpoint, no schema change. `GET /api/tasks` (API-001, §4.2) already
+returns the ordered `models` array (R-014); the day view consumes the same field.
+
+| Element | ID | Owns | Does not own |
+|---|---|---|---|
+| `ModelCell.vue` (shared model-cell element) | CLS-005 (MOD-002 `web`) | the `models: string[]` → display mapping: primary model (first element), visible `+N` when > 1, full ordered list in `title` and `aria-label`, «Нет данных» when empty; design tokens (ellipsis, full value in tooltip) per ui-spec §3.3 | S-01/S-04 row and table layout, task/calendar loading, API aggregation, ordering policy (consumes API-001 order, R-014) |
+| `DashboardView.vue` (S-01) | CLS-003 (MOD-002) | task-table layout, status/duration columns, navigation to S-02, search box | model-cell projection (delegates to CLS-005), API calls, ingestion |
+| `CalendarDayView.vue` (S-04) | MOD-002 (view layout; distinct from CLS-003) | day-view table layout: «Модель» column immediately after «Задача» (existing «Начало/Окончание/Продолжительность/Статус» columns preserved); hosts `ModelCell` in the «Модель» column | model-cell projection (delegates to CLS-005), calendar aggregation (API-002), ingestion |
+
+Exclusive per level: exactly one class (CLS-005) owns the model-cell display rules; the
+two views own only their own layouts. No two classes of the same level own the same
+function (see `architecture-ai-task-tracker.md` §Responsibility zones, Classes).
+
+Display contract (identical in S-01 and S-04, ui-spec §3.2–3.3):
+
+| `models` | Cell shows | `title` / `aria-label` |
+|---|---|---|
+| `[]` | «Нет данных» | «Модель: Нет данных» |
+| `[m1]` | `m1` | «Модель: m1» |
+| `[m1, m2, …]` | `m1` + `+N` badge | «Модель: m1, m2, …» (API-001 order: total tokens desc, model name asc) |
+
+### 9.2 Module handoff (coder, T-035 R-02)
+
+- **Shared element to create:** `src/web/src/components/ModelCell.vue` (CLS-005) — prop
+  `models: string[]` (optional, default `[]`); renders primary + `+N`, sets `title` and
+  `aria-label` to the full ordered list, renders «Нет данных» when empty.
+- **Files to touch:** `src/web/src/views/CalendarDayView.vue` (add the «Модель» column
+  immediately after «Задача», render `ModelCell :models="task.models"` per row);
+  `src/web/src/views/DashboardView.vue` (S-01: replace the inline
+  `modelLabel`/`modelPrimary`/`modelMoreCount` cell with `ModelCell` — visible and
+  accessible behavior must stay identical); `src/web/src/api/types.ts` —
+  `TaskListItem.models?: string[]` is already typed (verify only, no change expected).
+  No new fetch: `CalendarDayView` already loads its rows via API-001
+  `tasksApi.list({from,to})`, whose items already carry `models` (§4.2); API-002
+  (`GET /api/calendar`, §4.5) is unchanged by this decision.
+- **Test expectations (e2e, UC-E2E-005):** `/calendar/:date` — «Модель» column immediately
+  after «Задача»; multi-model task (TASK-001: 2 models) → first model + `+1`, full list in
+  `title`/`aria-label` in API order; no-usage task → «Нет данных»; suggested test id
+  `e2e/test_calendar.py::test_day_view_model_column`.
+- **S-01 must remain green (R-014):** existing S-01 cell tests (primary + `+N`, tooltip,
+  «Нет данных», UC-E2E-003) pass unchanged after the refactor to the shared element.
+- **Do not change:** backend, OpenAPI specs, `token_usage` schema, API-001/API-002 shapes.

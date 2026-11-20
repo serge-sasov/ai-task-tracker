@@ -52,6 +52,12 @@ entity "token_usage" as tokens {
   <<UNIQUE>> (task_id, message_id, model, scope)
 }
 
+note bottom of tokens
+  The API task-list «models» array (API-001, R-014) and the S-04 day-view cell
+  (R-015) are derived from this table (total tokens desc, model name asc).
+  No column or migration is added for R-014/R-015.
+end note
+
 entity "ingest_state" as state {
   * key : TEXT <<PK>> ' last_file_mtime | last_sync_at | last_file_count | parse_errors
   --

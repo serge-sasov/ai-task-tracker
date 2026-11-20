@@ -7,17 +7,17 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-034 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `src/web/src/api/types.ts`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
-| artifacts | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml`, `docs/architecture/class-*.puml`, `docs/architecture/swimlane-svc-*.puml` |
+| artifacts | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml`, `docs/architecture/data-model-*.svg`, `docs/architecture/class-*.puml`, `docs/architecture/class-*.svg`, `docs/architecture/swimlane-svc-*.puml` |
 | e2e | required - the S-04 contract must trace to UC-E2E-005 and the existing `GET /api/tasks` response shape |
 | ux | required - the S-04 model cell contract must match the UX spec states and accessibility text |
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | n/a |
+| usage | in=220874 out=72934 cr=4835343 ratio=21.9x min=165 |
 | issues | - |
 | commit | - |
 
@@ -35,7 +35,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | R-02 contracts and module handoff | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml/.svg`, `docs/architecture/class-*.puml/.svg`, `docs/architecture/swimlane-svc-*.puml` | - | pending | `docs/checkpoints/T-035-CP-2.md` |
+| CP-2 | R-02 contracts and module handoff | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/architecture/openapi-api-*.yaml`, `docs/architecture/data-model-*.puml/.svg`, `docs/architecture/class-*.puml/.svg`, `docs/architecture/swimlane-svc-*.puml` | 19P/2F/1M | awaiting_review | docs/checkpoints/T-035-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-035-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -58,3 +58,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-19: T-035 registered as a pending R-02 successor of T-034 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-035 started in_progress by lead dispatch; R-02 architect role session will follow; no artifacts yet.
+- 2026-11-20: CP-2 close-out. Fixed card `artifacts` row to include the `.svg` renders it mandates (added `docs/architecture/data-model-*.svg` and `docs/architecture/class-*.svg`), resolving the `chunk-coverage` `E_OWN_OUTSIDE_CARD` flagged in ISSUE-20261120-203629 (card omitted `.svg` while Acceptance line 29 requires them re-rendered). Re-ran verify-stage.
+- 2026-11-20: CP-2 awaiting_review (R-02); checks 19 PASS/2 FAIL/1 MANUAL/0 UNCHECKED; usage in=220874 out=72934 cr=4835343 ratio=21.9x min=165; reviewer user

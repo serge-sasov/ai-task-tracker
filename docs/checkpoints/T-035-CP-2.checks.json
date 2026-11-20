@@ -1,0 +1,170 @@
+{
+    "task":  "T-035",
+    "workflow":  "feature",
+    "stage":  "R-02",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "68a266460c75306d6ad2e017e41f5a00e1c942e0",
+    "generated_at":  "2026-11-20T21:32:30",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "FAIL",
+                        "detail":  "docs/architecture/swimlane-svc-*.puml (unresolved from card)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-035.md"
+                    },
+                    {
+                        "id":  "contracts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "contracts-requirement-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "27 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-sections",
+                        "check":  "headings-required",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-requirement-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "27 id(s) covered by 3 file(s)"
+                    },
+                    {
+                        "id":  "architecture-description-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "27 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "api-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "4 unique id(s)"
+                    },
+                    {
+                        "id":  "openapi-count",
+                        "check":  "count-match",
+                        "result":  "PASS",
+                        "detail":  "4 = 4"
+                    },
+                    {
+                        "id":  "openapi-ids",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "4 id(s) covered by 4 file(s)"
+                    },
+                    {
+                        "id":  "openapi-valid",
+                        "check":  "python-validator",
+                        "result":  "PASS",
+                        "detail":  "4 file(s)"
+                    },
+                    {
+                        "id":  "architecture-openapi-links",
+                        "check":  "reference-coverage",
+                        "result":  "PASS",
+                        "detail":  "4 file(s) referenced by 1 target(s)"
+                    },
+                    {
+                        "id":  "data-model-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "class-diagram-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "responsibility-zones",
+                        "check":  "zones-unique",
+                        "result":  "PASS",
+                        "detail":  "1 file(s), 18 zone(s)"
+                    },
+                    {
+                        "id":  "class-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "5 unique id(s)"
+                    },
+                    {
+                        "id":  "diagram-syntax",
+                        "check":  "puml-syntax",
+                        "result":  "PASS",
+                        "detail":  "2 diagram(s)"
+                    },
+                    {
+                        "id":  "diagram-svg",
+                        "check":  "svg-fresh",
+                        "result":  "PASS",
+                        "detail":  "2 SVG(s)"
+                    },
+                    {
+                        "id":  "swimlane-count",
+                        "check":  "count-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no source ids"
+                    },
+                    {
+                        "id":  "swimlane-ids",
+                        "check":  "id-coverage",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "source=1, target=0"
+                    },
+                    {
+                        "id":  "architecture-links",
+                        "check":  "reference-coverage",
+                        "result":  "PASS",
+                        "detail":  "17 file(s) referenced by 1 target(s)"
+                    },
+                    {
+                        "id":  "zones-overlap-review",
+                        "check":  "manual",
+                        "result":  "MANUAL",
+                        "detail":  "component, module, and class responsibility zones: no two elements of the same level own the same functions"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "FAIL",
+                        "detail":  "C1: docs/architecture/contracts-ai-task-tracker.md 28,8 KB \u003e 12 KB write; C2: docs/architecture/class-ai-task-tracker.svg 90,6 KB \u003e 12 KB write; C2: docs/architecture/data-model-ai-task-tracker.svg 19,5 KB \u003e 12 KB write; C2: 117,9 KB \u003e 40 KB session; C3: docs/architecture/architecture-ai-task-tracker.md 13,5 KB \u003e 12 KB write"
+                    }
+                ],
+    "summary":  {
+                    "pass":  19,
+                    "fail":  2,
+                    "manual":  1,
+                    "not_applicable":  3,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

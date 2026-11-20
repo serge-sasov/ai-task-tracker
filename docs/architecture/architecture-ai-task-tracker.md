@@ -2,8 +2,8 @@
 
 | Field | Value |
 |---|---|
-| Task | T-006, T-022, T-034, chunks R-01 |
-| Stage | R-01 |
+| Task | T-006, T-022, T-034 (R-01); T-035 (R-02) |
+| Stage | R-01 + R-02 (T-035 appended, S-04 interfaces/data model) |
 | Inputs | requirements, questions, e2e-use-cases, e2e-test-data, screens, ui-spec, ADR-0001 |
 | Status | proposed |
 
@@ -171,9 +171,34 @@ R-029 (deletion), R-023 (timings), R-024 (pagination).
 | sequence SCN-007 | R-02 (T-007) | sequence-scn-007-ai-task-tracker.puml |
 | sequence SCN-008 | R-02 (T-007) | sequence-scn-008-ai-task-tracker.puml |
 | sequence SCN-009 | R-01 (T-034) | sequence-scn-009-ai-task-tracker.puml |
-| data model | R-02 (T-023) | data-model-ai-task-tracker.puml |
-| class | R-02 (T-023) | class-ai-task-tracker.puml |
+| data model | R-02 (T-023, T-035) | data-model-ai-task-tracker.puml |
+| class | R-02 (T-023, T-035) | class-ai-task-tracker.puml |
 | OpenAPI API-001..API-004 | R-01/R-02 (T-022/T-023) | openapi-api-001-ai-task-tracker.yaml, openapi-api-002-ai-task-tracker.yaml, openapi-api-003-ai-task-tracker.yaml, openapi-api-004-ai-task-tracker.yaml |
+
+## Interfaces and data model (R-02, T-035 — S-04 model cell)
+
+- **No new REST API** for R-015: `GET /api/tasks` (API-001) already exposes the
+  ordered `models` array (R-014) and the S-04 day view consumes the same field.
+  Re-validated at R-02 (T-035): all four OpenAPI specs parse as valid YAML,
+  OpenAPI 3.0.3 (`x-harness-api-id` API-001..API-004); `TaskListItem.models` is
+  `array<string>` in `openapi-api-001-ai-task-tracker.yaml`. No spec file was
+  created or edited.
+- **Data model:** no schema change for R-014/R-015 — `models` is derived from the
+  existing `token_usage` table (total tokens desc, model name asc); the derivation
+  is noted in `data-model-ai-task-tracker.puml`.
+- **Class model:** `ModelCell` (CLS-005, MOD-002) is registered in
+  `class-ai-task-tracker.puml` (frontend package) as the single owner of the
+  `models` → display mapping (primary + `+N`, full list in `title`/`aria-label`,
+  «Нет данных»); `Screens` (S-01, S-04) and `TaskListItem.models` reference it.
+  See §Responsibility zones, Classes (zones stay exclusive: CLS-003 owns S-01 row
+  layout only, the S-04 day-view layout owns the table only, CLS-005 owns the cell
+  rules).
+- **Swimlanes:** unchanged — the SVC catalog is empty (see §Services: "No
+  microservices"), so no swimlane diagram exists or is required for this change.
+- **Module handoff for the coder:** `contracts-ai-task-tracker.md` §9 — S-04
+  module boundary (shared `ModelCell.vue` CLS-005; `CalendarDayView.vue` reuses
+  it; API contract unchanged) and the file/test list (S-01 R-014 stays green,
+  UC-E2E-005 `test_day_view_model_column`).
 
 ## Traceability
 

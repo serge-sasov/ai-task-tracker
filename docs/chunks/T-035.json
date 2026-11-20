@@ -1,0 +1,168 @@
+{
+    "task":  "T-035",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "contracts: S-04 module boundary + module handoff",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/contracts-ai-task-tracker.md"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-035-contracts-s04-model.md",
+                                      "docs/architecture/contracts-ai-task-tracker.md (4.2/4.5/7)",
+                                      "docs/architecture/adr-ai-task-tracker.md (145-169)",
+                                      "docs/ux/ui-spec-ai-task-tracker.md (3.2-3.3)"
+                                  ],
+                       "brief":  "docs/chunks/T-035/C1.brief.md",
+                       "acceptance":  [
+                                          "S-04 boundary section: shared ModelCell (CLS-005) owns models-\u003edisplay mapping, day view reuses it, API contract unchanged",
+                                          "module handoff section names ModelCell.vue, files to touch, test expectations, S-01 stays green",
+                                          "R-015 row added to requirement traceability table"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/contracts-ai-task-tracker.md",
+                                            "sha256":  "16f6070df811b7e484d172c9a405a393670d5ece5cf29ca7e863f6f5a47fcb70"
+                                        }
+                                    ],
+                       "base_commit":  "68a2664",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T20:11:48",
+                       "finished":  "2026-11-20T20:18:00"
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "class diagram: ModelCell CLS-005 + re-render; data model confirmed",
+                       "state":  "done",
+                        "owns":  [
+                                     "docs/architecture/class-*.puml",
+                                     "docs/architecture/class-*.svg",
+                                     "docs/architecture/data-model-*.puml",
+                                     "docs/architecture/data-model-*.svg"
+                                 ],
+                       "inputs":  [
+                                      "docs/architecture/class-ai-task-tracker.puml",
+                                      "docs/architecture/data-model-ai-task-tracker.puml",
+                                      "docs/architecture/architecture-ai-task-tracker.md (94-140)"
+                                  ],
+                       "brief":  "docs/chunks/T-035/C2.brief.md",
+                       "acceptance":  [
+                                          "class-*.puml has ModelCell (CLS-005) class with props/methods, used by S-01 and S-04 views, check_syntax passes, svg re-rendered",
+                                          "data model: no schema change for R-015 stated; note added if any; svg re-rendered; puml syntax valid"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/class-ai-task-tracker.puml",
+                                            "sha256":  "8639fdde851409559c435c2c1c0dbc47d3d64e07ac719b75c0db632fedef686b"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/class-ai-task-tracker.svg",
+                                            "sha256":  "1da21e5bccda21f36e28dfb54e1ae823fd29ed30cb57d477056eb0ac3e2449fc"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/data-model-ai-task-tracker.puml",
+                                            "sha256":  "d5f3050e1e08a90ad1096f4a31ee5c3b30d492db853acaee18c7851550ffe3e4"
+                                        },
+                                        {
+                                            "path":  "docs/architecture/data-model-ai-task-tracker.svg",
+                                            "sha256":  "cb5eeabd3c00375d6b73a1124e35768126c0c1b525eb09603ee7f26b83b9ff51"
+                                        }
+                                    ],
+                       "base_commit":  "68a2664",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T20:18:00",
+                       "finished":  "2026-11-20T20:25:43"
+                   },
+                   {
+                       "id":  "C3",
+                       "parent":  null,
+                       "stage":  "R-02",
+                       "role":  "architect",
+                       "depth":  1,
+                       "title":  "architecture description R-02 extension + OpenAPI re-validation",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/architecture/architecture-ai-task-tracker.md",
+                                    "docs/architecture/openapi-api-*.yaml"
+                                ],
+                       "inputs":  [
+                                      "docs/architecture/architecture-ai-task-tracker.md",
+                                      "docs/architecture/openapi-api-001-ai-task-tracker.yaml (85-115)",
+                                      "docs/tasks/T-035-contracts-s04-model.md (Acceptance)"
+                                  ],
+                       "brief":  "docs/chunks/T-035/C3.brief.md",
+                       "acceptance":  [
+                                          "description states \u0027No new REST API\u0027 for R-015; R-015 traced to API-001, SCN-009, CLS-005; CLS-005 zone registered; all artifacts linked",
+                                          "openapi-api-001 re-validated (yaml parse) and confirmed to expose models in TaskListItem; no spec file changed"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/architecture/architecture-ai-task-tracker.md",
+                                            "sha256":  "372a594fcbf8e1564a46eed164e3e4dba88f21ff87c1d677676623b73a1c53ea"
+                                        }
+                                    ],
+                       "base_commit":  "68a2664",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-20T20:24:53",
+                       "finished":  "2026-11-20T20:32:14"
+                   }
+               ],
+    "updated":  "2026-11-20T20:32:14"
+}

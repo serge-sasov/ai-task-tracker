@@ -1,5 +1,6 @@
 @startuml class-ai-task-tracker
 ' T-007 R-02 — class model (architecture-ai-task-tracker.md §Class model)
+' T-035 R-02 — S-04 shared ModelCell (CLS-005, R-014/R-015) added to frontend package
 skinparam classAttributeIconSize 0
 title ai-task-tracker — class model (Spring Boot 3 backend + Vue 3 SPA)
 
@@ -149,6 +150,19 @@ package "frontend (Vue 3 SPA)" {
     S-05 tokens
     S-06 manage
   }
+  class ModelCell <<CLS-005, MOD-002>> {
+    - models : string[] «prop, optional»
+    + primary() : string «models[0]»
+    + moreCount() : int «len(models) - 1 when > 0»
+    + fullLabel() : string «'Модель: ' + models.join(', ')»
+    {static} EMPTY = «Нет данных»
+  }
+  note bottom of ModelCell
+    shared model cell (R-014 S-01 + R-015 S-04 day view):
+    primary + visible «+N», full ordered list in title/aria-label,
+    «Нет данных» when models empty. Single owner of the display rules
+    (architecture §Responsibility zones / Classes, ADR-0001 §10)
+  end note
 }
 
 TaskService ..> TaskRepository
@@ -176,6 +190,8 @@ TokenStatsService ..> TokenStatsResponse
 HealthService ..> HealthResponse
 Screens --> PiniaStore
 Screens --> ApiClient
+Screens --> ModelCell : S-01 (R-014), S-04 day view (R-015)
+TaskListItem ..> ModelCell : models prop
 ApiClient ..> TaskService : API-001
 ApiClient ..> CalendarService : API-002
 ApiClient ..> TokenStatsService : API-002
