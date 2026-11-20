@@ -1,0 +1,41 @@
+@startuml sequence-scn-009-ai-task-tracker
+' T-034 R-01 — SCN-009: S-04 day-view model column
+' Trace: SCN-009 ↔ UC-E2E-005 | API: API-001 | R-015
+' Source: requirements R-015, ui-spec S-04 day view, UC-E2E-005
+autonumber
+title SCN-009 — S-04 day-view model column (UC-E2E-005)
+
+actor "User" as user
+participant "CalendarDayView (S-04)" as dayview
+participant "ModelCell (CLS-005)\nshared model cell" as cell
+participant "api (Spring REST)" as api
+participant "store (JPA / PG16)" as pg
+
+user -> dayview : open /calendar/2026-11-11 (S-04 «День»)
+dayview -> api : GET /api/tasks?from=2026-11-11&to=2026-11-11 (API-001)
+api -> pg : select tasks + token_usage rows (date, ordered models)
+pg --> api : TASK-003/004/005 + usage by model (qwen3.8:27b, llama3.1:8b)
+api --> dayview : 200 {items:[{task_id,name,started_at,finished_at,status,duration_s,tokens_total,models}]}
+note over dayview, cell
+  «Модель» column placed immediately after «Задача» (R-015);
+  data comes from the existing API-001 `models` array (R-014) —
+  no new endpoint, no schema change
+end note
+dayview -> cell : render(models) for each task row
+note over cell
+  ModelCell (CLS-005) shared by S-01 (R-014) + S-04 (R-015):
+  primary = models[0] «qwen3.8:27b»; `+N` = «+1» (2 models);
+  `title`/`aria-label` = full ordered list «qwen3.8:27b, llama3.1:8b»;
+  empty models → «Нет данных» (TASK-002 on 10.11)
+end note
+user -> dayview : navigate to 10.11 (day)
+dayview -> api : GET /api/tasks?from=2026-11-10&to=2026-11-10 (API-001)
+api --> dayview : 200 TASK-001 (models 2), TASK-002 (models [])
+dayview -> cell : render(models)
+note over cell
+  TASK-001: «qwen3.8:27b» + «+1», full list in title/aria;
+  TASK-002: `models` empty → «Нет данных» (R-015)
+end note
+user -> dayview : click TASK-004
+note over dayview : link → S-02 detail (UC-E2E-003)
+@enduml

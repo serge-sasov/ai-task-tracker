@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-030, T-031, T-033 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `src/web/src/views/DashboardView.vue`, `src/web/src/views/CalendarDayView.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | 1010367 |
-| usage | n/a |
+| usage | in=248949 out=74732 cr=7303374 ratio=29.3x min=194 |
 | issues | - |
 | commit | - |
 
@@ -35,7 +35,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | R-01 solution design | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/components-ai-task-tracker.puml/.svg`, `docs/architecture/sequence-scn-*.puml/.svg` | - | pending | `docs/checkpoints/T-034-CP-1.md` |
+| CP-1 | R-01 solution design | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/components-ai-task-tracker.puml/.svg`, `docs/architecture/sequence-scn-*.puml/.svg` | 22P/0F/1M | awaiting_review | docs/checkpoints/T-034-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-034-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -58,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-19: T-034 registered as a pending R-01 successor of T-030/T-031/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-034 set in_progress; lead verified board invariant and deps (T-030/T-031/T-033 done); work delegated to harness-architect (R-01, CP-1 target).
+- 2026-11-20: CP-1 awaiting_review (R-01); checks 22 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=248949 out=74732 cr=7303374 ratio=29.3x min=194; reviewer user

@@ -1,5 +1,6 @@
 @startuml component-ai-task-tracker
 ' T-022 R-01 — component diagram (ADR-0001 modular monolith; ADR-0002)
+' T-034 R-01 — S-04 day-view model column: shared ModelCell (CLS-005, R-014/R-015)
 ' Screens S-01..S-06 (ui-spec), components per architecture-ai-task-tracker.md
 skinparam componentStyle rectangle
 skinparam packageStyle rectangle
@@ -8,8 +9,15 @@ title ai-task-tracker — components (modular monolith, no microservices)
 actor "User (local)" as user
 
 package "frontend container (nginx + Vue 3 SPA)" as web {
-  [SPA UI\nS-01 Tasks, S-02 Detail,\nS-03 Search, S-04 Calendar,\nS-05 Tokens, S-06 Manage] as spa
+  [S-01 Tasks (DashboardView)] as s01
+  [S-04 Calendar day\n(CalendarDayView)] as s04
+  [S-02 Detail, S-03 Search,\nS-05 Tokens, S-06 Manage] as spa
+  [ModelCell (CLS-005)\nshared model cell\nS-01 (R-014) + S-04 (R-015)\nprimary + +N, «Нет данных»] as modelcell
   [Pinia store + typed API client] as client
+  s01 --> modelcell : models
+  s04 --> modelcell : models
+  s01 --> client
+  s04 --> client
   spa --> client
 }
 
@@ -36,6 +44,8 @@ database "redis 7\n(ingestion lock + watermark)" as redis
 node "Ollama localhost:11434\n(embed + chat, 15 s bound)" as llm
 folder "OPENCODE_DATA_DIR\n(read-only JSON files)" as src
 
+user --> s01
+user --> s04
 user --> spa
 client --> hlthsvc : API-004 GET /api/health
 client --> tasksvc : API-001 GET /api/tasks[,/{id}]

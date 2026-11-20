@@ -4,8 +4,8 @@
 |---|---|
 | Status | proposed |
 | Date | 2026-11-13 |
-| Task | T-006, T-022 |
-| Updated | 2026-11-18 (T-022: R-014, S-01 model list) |
+| Task | T-006, T-022, T-034 |
+| Updated | 2026-11-20 (T-022: R-014, S-01 model list; T-034: R-015, S-04 shared model cell) |
 | Related ADRs | ADR-0002 |
 
 ## Context
@@ -142,6 +142,32 @@ typical failure modes explicitly: opencode source unavailable/stale → S-01 ban
 - `web` — Vue 3 SPA (S-01..S-06), built and served by the `frontend` nginx container,
   with `/api` proxied to the backend.
 
+### 10. S-04 day-view model cell: one shared component (R-015, T-034)
+
+Requirement R-015 (S-04, Must): the calendar day view (`/calendar/:date`) shows a
+«Модель» column immediately after «Задача»; the cell shows the primary model
+(first element of `models` per the R-014 ordering) plus a visible `+N` when more
+than one model, the full ordered list in `title`/`aria-label`, and «Нет данных»
+when `models` is empty. The ordering, tie-break and copy must be identical to S-01.
+
+Decision: a **single shared model-cell element** — a Vue 3 component
+`ModelCell.vue` (class CLS-005, module MOD-002 `web`) — is extracted from the
+S-01 (R-014) cell and reused by both `DashboardView.vue` (S-01) and
+`CalendarDayView.vue` (S-04). It owns: the `models` projection (primary model,
+`+N` count), the tooltip/`aria-label` full-list text, and the «Нет данных»
+empty state. Both views pass the task's `models` array as a prop and keep
+their own row/table layout. Consequences for this design:
+
+- **No backend, API, or schema change**: `GET /api/tasks` (API-001) already
+  returns the ordered `models` array (R-014); R-015 consumes the same field.
+- **S-01 behavior is preserved**: the S-01 cell is replaced by the same visual
+  and accessibility contract rendered by the shared element (reuse, not
+  duplication); one owner for the ordering/tie-break/empty-state display rules
+  means R-014 and R-015 cannot drift apart.
+- Scenario SCN-009 (S-04 day-view model column, UC-E2E-005) is registered in
+  `architecture-ai-task-tracker.md` with its sequence diagram; the S-01
+  scenario SCN-003 remains unchanged.
+
 ## Alternatives
 
 | Option | Pros | Cons | Why rejected |
@@ -153,6 +179,8 @@ typical failure modes explicitly: opencode source unavailable/stale → S-01 ban
 | Pure Postgres FTS/`pg_trgm` without embeddings | zero extra dependency | weak semantic matching, fails R-010 acceptance ("semantically matching query finds the task") | embeddings + optional LLM ranking satisfy R-010/R-011 while staying local (R-027) |
 | Server-rendered Vue (Nuxt) or static-only UI | simpler pipeline | no SSR benefit for a localhost SPA; Nuxt adds a second runtime | Vue 3 SPA served by the backend is the simplest stack honoring R-021 |
 | Regex/heuristic extraction of proposed/chosen solutions | fast, no LLM needed | brittle across opencode output formats; cannot satisfy R-004/R-005 acceptance reliably | local LLM extraction with source-message links is auditable and format-tolerant; structured fields are still preferred when present (Q-008) |
+| S-04 model cell: copy-paste the S-01 cell into CalendarDayView (R-015) | no refactoring of S-01 | duplicates the projection/`+N`/tooltip/empty-state logic in two views; R-014 and R-015 can drift apart on ordering, tie-break or copy | one shared `ModelCell` (CLS-005) keeps a single owner of the display rules (section 10) |
+| S-04 model cell: a separate S-04-only component | isolated change surface | two components implementing the same R-014/R-015 contract; duplicated tests and future fixes | shared component is smaller and reuses the already-verified S-01 behavior |
 
 ## Consequences
 
@@ -228,6 +256,7 @@ Decision sections: 1 — architecture/deployment; 2 — ingestion; 3 — domain 
 | R-012 | 4 |
 | R-013 | 4, C |
 | R-014 | 4, C |
+| R-015 | 10, C (shared ModelCell, S-04; reuses API-001 `models`) |
 | R-020 | 1 |
 | R-021 | 1 |
 | R-022 | 1 |

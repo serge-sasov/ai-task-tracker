@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Task | T-006, T-022, chunks R-01 |
+| Task | T-006, T-022, T-034, chunks R-01 |
 | Stage | R-01 |
 | Inputs | requirements, questions, e2e-use-cases, e2e-test-data, screens, ui-spec, ADR-0001 |
 | Status | proposed |
@@ -12,11 +12,15 @@
 Local, single-user service that tracks AI coding tasks: ingests opencode session
 files, exposes tasks with their steps (R-003), proposed/chosen solutions (R-004,
 R-005), final status (R-006) and per-model token usage (R-012, R-013), the
-primary model and full model list in S-01 (R-014), plus AI search (R-010),
+primary model and full model list in S-01 (R-014), the shared model cell in the
+S-04 day view (R-015), plus AI search (R-010),
 calendar (R-008) and history deletion (R-029). In scope:
 R-001..R-014, R-020..R-030; screens S-01..S-06; use cases UC-E2E-001..UC-E2E-008.
 Out of scope: authentication, multi-user roles, remote/cloud operation, creating or
-editing tasks from the UI.
+editing tasks from the UI. R-015 (S-04 model column) is UI-only: `GET /api/tasks`
+(API-001) already returns the ordered `models` array (R-014), so no backend, API or
+schema change is required and the S-01 behavior (R-014) is preserved by reusing the
+same cell (ADR-0001 §10).
 
 ## Context and constraints
 
@@ -68,7 +72,7 @@ empty and no swim-lane diagrams are required.
 
 | Component | Owns | Does not own |
 |---|---|---|
-| web (nginx + Vue 3 SPA) | S-01..S-06 UI, REST client, polling, S-01 model cell rendering (primary + `+N`, tooltip/aria) | task aggregation, ingestion, storage, search ranking |
+| web (nginx + Vue 3 SPA) | S-01..S-06 UI, REST client, polling, shared model cell rendering for S-01 (R-014) and S-04 day view (R-015): primary + `+N`, tooltip/aria, «Нет данных» | task aggregation, ingestion, storage, search ranking |
 | api (Spring REST) | API-001..API-004, RU error envelope, task-list `models` aggregation and ordering (R-014) | opencode file parsing, vector recall, database engine |
 | ingestion (poller) | opencode JSON parsing, idempotent upsert, re-embed scheduling | REST response shaping, S-01 rendering, token aggregation |
 | search (AI) | pgvector recall, Ollama re-rank, RU snippets | task list and detail endpoints, token accounting |
@@ -82,7 +86,7 @@ empty and no swim-lane diagrams are required.
 | Module | Parent | Owns | Does not own |
 |---|---|---|---|
 | MOD-001 | api (Spring REST) | task query service, `TaskListItem.models` ordering, REST DTO mapping | opencode parsing, vector recall, database engine |
-| MOD-002 | web (nginx + Vue 3 SPA) | S-01 task table, model cell, tooltip/aria and no-usage state | API aggregation, ingestion, storage |
+| MOD-002 | web (nginx + Vue 3 SPA) | S-01 task table and S-04 day view layout, shared model cell (S-01 R-014 + S-04 R-015): primary + `+N`, tooltip/aria, no-usage state | API aggregation, ingestion, storage |
 | MOD-003 | ingestion (poller) | opencode session parsing, usage-row normalization, idempotent upsert | REST DTOs, UI state, model ordering |
 | MOD-004 | store (JPA / PG16) | task, step, solution, token_usage repositories | HTTP contracts, UI rendering, ingestion scheduling |
 | MOD-005 | search (AI) | vector recall, Ollama re-rank, snippet generation | task list aggregation, token statistics, persistence |
@@ -93,8 +97,9 @@ empty and no swim-lane diagrams are required.
 |---|---|---|---|
 | CLS-001 | MOD-001 | TaskService task-list query, total-token ordering and `models` projection (R-014) | ingestion parsing, UI rendering, persistence engine |
 | CLS-002 | MOD-001 | TaskListItem DTO including the ordered `models` array | aggregation logic, database queries, UI state |
-| CLS-003 | MOD-002 | S-01 task table and model-cell rendering (primary, `+N`, tooltip/aria, «Нет данных») | API aggregation, ingestion, storage |
+| CLS-003 | MOD-002 | S-01 task table: row layout, status, duration, navigation to S-02 | model-cell rendering (CLS-005), API aggregation, ingestion, storage |
 | CLS-004 | MOD-003 | TokenUsage parsing and normalization per model | DTO shape, model ordering policy, UI rendering |
+| CLS-005 | MOD-002 | shared model cell (S-01 R-014 + S-04 R-015): `models` projection — primary + `+N`, full ordered list in `title`/`aria-label`, «Нет данных» empty state | S-01/S-04 row and table layout, task loading, API aggregation, ingestion |
 
 ## Scenarios
 
@@ -108,6 +113,7 @@ empty and no swim-lane diagrams are required.
 | SCN-006 | token statistics | UC-E2E-006 | API-002 |
 | SCN-007 | restart + idempotent re-sync | UC-E2E-007 | API-001, API-004 |
 | SCN-008 | delete history | UC-E2E-008 | API-001 |
+| SCN-009 | S-04 day-view model column (shared cell, primary + `+N`, «Нет данных») | UC-E2E-005 | API-001 |
 
 ## Data model
 
@@ -129,7 +135,8 @@ R-014), `SolutionService`, `CalendarService`, `TokenStatsService`, `SearchServic
 five tables; DTOs `TaskListResponse`, `TaskListItem.models`,
 `TaskDetailResponse`, `SearchRequest`/`SearchResult`, `CalendarResponse`,
 `TokenStatsResponse`, `ErrorEnvelope`. Frontend: Pinia store, typed API client and
-S-01..S-06 screen components; S-01 renders the model cell. Class diagram is
+S-01..S-06 screen components; the shared model cell (CLS-005 `ModelCell`) renders
+the model column in S-01 (R-014) and S-04 (R-015). Class diagram is
 produced in R-02 (T-023).
 
 ## REST API
@@ -145,14 +152,15 @@ Base URL `http://localhost:8080` (nginx → `backend:8080`), JSON UTF-8, paginat
 | API-004 | GET /api/health | openapi-api-004-ai-task-tracker.yaml |
 
 Covers R-007 (list/detail), R-008 (calendar), R-010/R-011 (search + snippets),
-R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
-(deletion), R-023 (timings), R-024 (pagination).
+R-012/R-013/R-014 (tokens and the S-01 model list), R-015 (S-04 model column
+consumes the same API-001 `models` field, no new endpoint), R-028 (health),
+R-029 (deletion), R-023 (timings), R-024 (pagination).
 
 ## Diagram index
 
 | Diagram | Stage | File |
 |---|---|---|
-| component | R-01 (T-022) | components-ai-task-tracker.puml |
+| component | R-01 (T-022, T-034) | components-ai-task-tracker.puml |
 | component (legacy alias, superseded by components-ai-task-tracker.puml) | R-02 (T-007) | component-ai-task-tracker.puml |
 | sequence SCN-001 | R-02 (T-007) | sequence-scn-001-ai-task-tracker.puml |
 | sequence SCN-002 | R-02 (T-007) | sequence-scn-002-ai-task-tracker.puml |
@@ -162,6 +170,7 @@ R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
 | sequence SCN-006 | R-02 (T-007) | sequence-scn-006-ai-task-tracker.puml |
 | sequence SCN-007 | R-02 (T-007) | sequence-scn-007-ai-task-tracker.puml |
 | sequence SCN-008 | R-02 (T-007) | sequence-scn-008-ai-task-tracker.puml |
+| sequence SCN-009 | R-01 (T-034) | sequence-scn-009-ai-task-tracker.puml |
 | data model | R-02 (T-023) | data-model-ai-task-tracker.puml |
 | class | R-02 (T-023) | class-ai-task-tracker.puml |
 | OpenAPI API-001..API-004 | R-01/R-02 (T-022/T-023) | openapi-api-001-ai-task-tracker.yaml, openapi-api-002-ai-task-tracker.yaml, openapi-api-003-ai-task-tracker.yaml, openapi-api-004-ai-task-tracker.yaml |
@@ -184,6 +193,7 @@ R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
 | R-012 | token_usage, API-002 |
 | R-013 | API-002, S-05 |
 | R-014 | API-001 `models`, SCN-003, S-01 |
+| R-015 | shared ModelCell CLS-005 (MOD-002), SCN-009, S-01/S-04 views, API-001 `models` |
 | R-020 | backend stack (Context) |
 | R-021 | Vue 3 SPA (Context) |
 | R-022 | docker compose (ADR-0001) |
@@ -198,4 +208,4 @@ R-012/R-013/R-014 (tokens and the S-01 model list), R-028 (health), R-029
 
 Use-case trace: SCN-001↔UC-E2E-001, SCN-002↔UC-E2E-002, SCN-003↔UC-E2E-003,
 SCN-004↔UC-E2E-004, SCN-005↔UC-E2E-005, SCN-006↔UC-E2E-006, SCN-007↔UC-E2E-007,
-SCN-008↔UC-E2E-008.
+SCN-008↔UC-E2E-008, SCN-009↔UC-E2E-005.

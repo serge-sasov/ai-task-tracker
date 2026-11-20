@@ -1,0 +1,164 @@
+{
+    "task":  "T-034",
+    "workflow":  "feature",
+    "stage":  "R-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "1010367",
+    "generated_at":  "2026-11-20T16:18:56",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "22 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-034.md"
+                    },
+                    {
+                        "id":  "adr-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "adr-sections",
+                        "check":  "headings-required",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-sections",
+                        "check":  "headings-required",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "architecture-requirement-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "27 id(s) covered by 2 file(s)"
+                    },
+                    {
+                        "id":  "architecture-description-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "27 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "scenario-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "9 unique id(s)"
+                    },
+                    {
+                        "id":  "service-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "0 unique id(s)"
+                    },
+                    {
+                        "id":  "scenario-uc-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 1 file(s)"
+                    },
+                    {
+                        "id":  "component-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "responsibility-zones",
+                        "check":  "zones-unique",
+                        "result":  "PASS",
+                        "detail":  "1 file(s), 13 zone(s)"
+                    },
+                    {
+                        "id":  "module-ids",
+                        "check":  "ids-unique",
+                        "result":  "PASS",
+                        "detail":  "5 unique id(s)"
+                    },
+                    {
+                        "id":  "sequence-count",
+                        "check":  "count-match",
+                        "result":  "PASS",
+                        "detail":  "9 = 9"
+                    },
+                    {
+                        "id":  "sequence-ids",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "9 id(s) covered by 9 file(s)"
+                    },
+                    {
+                        "id":  "sequence-uc-trace",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 9 file(s)"
+                    },
+                    {
+                        "id":  "diagram-syntax",
+                        "check":  "puml-syntax",
+                        "result":  "PASS",
+                        "detail":  "10 diagram(s)"
+                    },
+                    {
+                        "id":  "diagram-svg",
+                        "check":  "svg-fresh",
+                        "result":  "PASS",
+                        "detail":  "10 SVG(s)"
+                    },
+                    {
+                        "id":  "architecture-links",
+                        "check":  "reference-coverage",
+                        "result":  "PASS",
+                        "detail":  "10 file(s) referenced by 1 target(s)"
+                    },
+                    {
+                        "id":  "zones-overlap-review",
+                        "check":  "manual",
+                        "result":  "MANUAL",
+                        "detail":  "component and module responsibility zones: no two elements of the same level own the same functions"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "3 chunk(s) within 80/160 KB"
+                    }
+                ],
+    "summary":  {
+                    "pass":  22,
+                    "fail":  0,
+                    "manual":  1,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}
