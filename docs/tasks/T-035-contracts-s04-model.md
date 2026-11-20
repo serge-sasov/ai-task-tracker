@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-02 |
 | role | architect |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-034 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `src/web/src/api/types.ts`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue` |
@@ -57,3 +57,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-035 registered as a pending R-02 successor of T-034 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-20: T-035 started in_progress by lead dispatch; R-02 architect role session will follow; no artifacts yet.
