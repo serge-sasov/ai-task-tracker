@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-030, T-031, T-033 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `src/web/src/views/DashboardView.vue`, `src/web/src/views/CalendarDayView.vue` |
@@ -23,20 +23,20 @@
 
 ## Acceptance
 
-- [ ] The ADR `adr-ai-task-tracker.md` is extended with a decision for the S-04 day-view model column: prefer one shared model-cell component/composable reused by both `DashboardView.vue` (S-01) and `CalendarDayView.vue` (S-04), with alternatives considered (copy-paste cell, separate component).
-- [ ] The architecture description `architecture-ai-task-tracker.md` (R-01 core) is extended with the S-04 scenario (`SCN-NNN`) and the shared model-cell component/module IDs (`MOD-NNN`), and traces `R-015` to components, `SCN-NNN`, and the S-01/S-04 views.
-- [ ] The component diagram `components-ai-task-tracker.puml` is updated to show the shared model-cell element and re-rendered to SVG; the diagram passes syntax and SVG checks.
-- [ ] A sequence diagram `sequence-scn-*.puml` (and SVG) is added/updated for the S-04 day-view scenario showing `GET /api/tasks` -> `CalendarDayView` -> shared model cell, and traces to UC-E2E-005.
-- [ ] The design confirms no backend/API/schema change is required (the `models` field is already returned by `GET /api/tasks`) and the S-01 behavior is preserved (reuse, not duplication).
-- [ ] Responsibility zones are registered for the new/changed component and module (owns/does-not-own) and no two elements of the same level own the same function.
-- [ ] `CP-1` (ADR, architecture core, component and per-scenario sequence diagrams) and `CP-F` (final acceptance) are declared.
+- [x] The ADR `adr-ai-task-tracker.md` is extended with a decision for the S-04 day-view model column: prefer one shared model-cell component/composable reused by both `DashboardView.vue` (S-01) and `CalendarDayView.vue` (S-04), with alternatives considered (copy-paste cell, separate component).
+- [x] The architecture description `architecture-ai-task-tracker.md` (R-01 core) is extended with the S-04 scenario (`SCN-NNN`) and the shared model-cell component/module IDs (`MOD-NNN`), and traces `R-015` to components, `SCN-NNN`, and the S-01/S-04 views.
+- [x] The component diagram `components-ai-task-tracker.puml` is updated to show the shared model-cell element and re-rendered to SVG; the diagram passes syntax and SVG checks.
+- [x] A sequence diagram `sequence-scn-*.puml` (and SVG) is added/updated for the S-04 day-view scenario showing `GET /api/tasks` -> `CalendarDayView` -> shared model cell, and traces to UC-E2E-005.
+- [x] The design confirms no backend/API/schema change is required (the `models` field is already returned by `GET /api/tasks`) and the S-01 behavior is preserved (reuse, not duplication).
+- [x] Responsibility zones are registered for the new/changed component and module (owns/does-not-own) and no two elements of the same level own the same function.
+- [x] `CP-1` (ADR, architecture core, component and per-scenario sequence diagrams) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 solution design | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/components-ai-task-tracker.puml/.svg`, `docs/architecture/sequence-scn-*.puml/.svg` | 22P/0F/1M | awaiting_review | docs/checkpoints/T-034-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 23P/0F/1M | awaiting_review | docs/checkpoints/T-034-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 23P/0F/1M | approved | docs/checkpoints/T-034-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: CP-1 approved by user (chat); task returned to in_progress; proceeding to CP-F final acceptance.
 - 2026-11-20: CP-F awaiting_review (R-01); checks 23 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=377315 out=104320 cr=8246608 ratio=21.9x min=249; reviewer user
 - d9dd3f8: CP-F snapshot
+- 2026-11-20: CP-F approved by user (chat); T-034 closed done. Acceptance verified; no bugs; issues index 13/13.

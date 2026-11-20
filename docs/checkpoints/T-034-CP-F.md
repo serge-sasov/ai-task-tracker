@@ -9,11 +9,11 @@
 | role | architect |
 | stage | R-01 |
 | artifacts | docs/architecture/architecture-ai-task-tracker.md, docs/architecture/adr-ai-task-tracker.md, docs/architecture/components-ai-task-tracker.puml, docs/architecture/components-ai-task-tracker.svg, docs/architecture/sequence-scn-*.puml, docs/architecture/sequence-scn-*.svg |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-20T17:15:26 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-20T18:05:00 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | d9dd3f8 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-034-CP-F.checks.json |
@@ -105,7 +105,7 @@ docs/activity.puml                                 |    2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- approved (final) — User approved CP-F in-session (chat "approved"), 2026-11-20; zones-overlap-review manual item settled by user review (CLS-003 S-01 table shell vs CLS-005 shared ModelCell — no overlap).
 
 ## User edits
 
@@ -117,4 +117,4 @@ docs/activity.puml                                 |    2 +-
 
 ## Next action
 
-- return to this checkpoint
+- Task T-034 closed done; proceed to T-035 (R-02, next unblocked) when scheduled.
