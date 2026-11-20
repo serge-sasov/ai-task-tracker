@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | R-01 |
 | role | architect |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-030, T-031, T-033 |
 | inputs | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `src/web/src/views/DashboardView.vue`, `src/web/src/views/CalendarDayView.vue` |
@@ -16,7 +16,7 @@
 | ux | required - the S-04 model cell (UX spec) is the input to the design and the reuse decision |
 | chunks | - (to be planned at start) |
 | budget | - |
-| base_commit | - |
+| base_commit | 1010367 |
 | usage | n/a |
 | issues | - |
 | commit | - |
@@ -57,3 +57,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-034 registered as a pending R-01 successor of T-030/T-031/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-20: T-034 set in_progress; lead verified board invariant and deps (T-030/T-031/T-033 done); work delegated to harness-architect (R-01, CP-1 target).
