@@ -68,12 +68,8 @@
             <td>
               <router-link :to="`/tasks/${task.task_id}`">{{ task.name }}</router-link>
             </td>
-            <td
-              :title="modelLabel(task)"
-              :aria-label="modelLabel(task)"
-            >
-              <span class="model__primary">{{ modelPrimary(task) }}</span>
-              <span v-if="modelMoreCount(task)" class="model__more">+{{ modelMoreCount(task) }}</span>
+            <td>
+              <ModelCell :models="task.models" />
             </td>
             <td>{{ formatDate(task.started_at) }}</td>
             <td>{{ formatDuration(task.duration_s) }}</td>
@@ -94,11 +90,12 @@ import { useTasksStore } from '@/stores/tasks';
 import { useHealthStore } from '@/stores/health';
 import StatCard from '@/components/dashboard/StatCard.vue';
 import StatusBadge from '@/components/dashboard/StatusBadge.vue';
+import ModelCell from '@/components/ModelCell.vue';
 import { formatDuration, formatDate } from '@/components/format';
 
 export default {
   name: 'DashboardView',
-  components: { StatCard, StatusBadge },
+  components: { StatCard, StatusBadge, ModelCell },
   setup() {
     const tasks = useTasksStore();
     const health = useHealthStore();
@@ -152,34 +149,12 @@ export default {
       void health.probe();
     }
 
-    function modelList(task: { models?: string[] }): string[] {
-      return task.models ?? [];
-    }
-
-    function modelLabel(task: { models?: string[] }): string {
-      const models = modelList(task);
-      if (models.length === 0) {
-        return 'Модель: Нет данных';
-      }
-      return `Модели: ${models.join(', ')}`;
-    }
-
-    function modelPrimary(task: { models?: string[] }): string {
-      const models = modelList(task);
-      return models.length > 0 ? models[0] : 'Нет данных';
-    }
-
-    function modelMoreCount(task: { models?: string[] }): number {
-      const models = modelList(task);
-      return models.length > 1 ? models.length - 1 : 0;
-    }
-
     onMounted(() => {
       void tasks.load();
       void health.probe();
     });
 
-    return { tasks, health, updatedLabel, stats, banner, query, onSearch, onRetry, formatDuration, formatDate, modelLabel, modelPrimary, modelMoreCount };
+    return { tasks, health, updatedLabel, stats, banner, query, onSearch, onRetry, formatDuration, formatDate };
   },
 };
 </script>
@@ -254,11 +229,6 @@ export default {
 }
 .row--link a {
   font-weight: 600;
-}
-.model__more {
-  color: var(--muted);
-  font-size: 12px;
-  margin-left: var(--space-1);
 }
 .table-note,
 .panel__state,

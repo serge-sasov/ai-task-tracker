@@ -7,18 +7,18 @@
 | workflow | feature |
 | stage | I-01 |
 | role | coder |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-035, T-033 |
 | inputs | `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue`, `src/web/src/api/types.ts`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `tests/**` |
-| artifacts | `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `src/web/src/api/types.ts`, `tests/**` |
+| artifacts | `src/web/src/components/ModelCell.vue`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue`, `src/web/tests/unit/ModelCell.spec.ts`, `src/web/tests/unit/views.spec.ts`, `src/web/vitest.config.ts`, `src/web/package.json`, `src/web/package-lock.json` |
 | e2e | required - the implemented S-04 model cell must be covered by the UC-E2E-005 scenario (I-02) |
 | ux | required - the implemented cell must match the UX spec states and accessibility text |
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | n/a |
-| issues | - |
+| usage | in=540747 out=153084 cr=9652968 ratio=17.9x min=307 |
+| issues | ISSUE-20261121-005209 |
 | commit | - |
 
 ## Acceptance
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | I-01 implementation and tests | `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `src/web/src/api/types.ts`, `tests/**` | - | pending | `docs/checkpoints/T-036-CP-1.md` |
+| CP-1 | I-01 implementation and tests | `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `src/web/src/api/types.ts`, `tests/**` | 7P/1F/0M | awaiting_review | docs/checkpoints/T-036-CP-1.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-036-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -57,3 +57,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-19: T-036 registered as a pending I-01 successor of T-035/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-036 started: I-01 implementation for S-04 model column (coder). Board and card set in_progress by orchestrator.
+- 2026-11-20: Scope narrowed (Option A): card `artifacts` limited to the 8 produced frontend files — dropped repo-wide `tests/**` and unmodified `src/web/src/api/types.ts` (types.ts stays in `inputs`); chunk `owns` set to the same 8-file set. Root cause: card scope was not narrowed to the frontend-only task, so the CP-1 chunk-ledger gate (chunk-ownership-no-overlap / chunk-coverage) failed. See ISSUE-20261121-005209.
+- 2026-11-21: CP-1 awaiting_review (I-01); checks 7 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=540747 out=153084 cr=9652968 ratio=17.9x min=307; reviewer user

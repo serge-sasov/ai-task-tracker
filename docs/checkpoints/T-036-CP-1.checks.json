@@ -1,0 +1,74 @@
+{
+    "task":  "T-036",
+    "workflow":  "feature",
+    "stage":  "I-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "da816bd71ca3e3bb6469fd3a5b4f166273094639",
+    "generated_at":  "2026-11-21T02:02:09",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "8 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-036.md"
+                    },
+                    {
+                        "id":  "src-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "122 file(s)"
+                    },
+                    {
+                        "id":  "tests-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "50 file(s)"
+                    },
+                    {
+                        "id":  "no-todo",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "3 pattern(s) absent in 8 file(s)"
+                    },
+                    {
+                        "id":  "no-secrets",
+                        "check":  "pattern-absent",
+                        "result":  "PASS",
+                        "detail":  "3 pattern(s) absent in 8 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "1 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "1 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "FAIL",
+                        "detail":  "C1: src/web/package-lock.json 98,3 KB \u003e 12 KB write; C1: 125,2 KB \u003e 40 KB session"
+                    }
+                ],
+    "summary":  {
+                    "pass":  7,
+                    "fail":  1,
+                    "manual":  0,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

@@ -33,6 +33,7 @@
           <thead>
             <tr>
               <th scope="col">Задача</th>
+              <th scope="col">Модель</th>
               <th scope="col">Начало</th>
               <th scope="col">Окончание</th>
               <th scope="col">Продолжительность</th>
@@ -43,6 +44,9 @@
             <tr v-for="task in tasks" :key="task.task_id">
               <td>
                 <router-link :to="`/tasks/${task.task_id}`">{{ task.name }}</router-link>
+              </td>
+              <td>
+                <ModelCell :models="task.models" />
               </td>
               <td>{{ timeOf(task.started_at) }}</td>
               <td>{{ task.finished_at ? timeOf(task.finished_at) : '—' }}</td>
@@ -64,6 +68,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { tasksApi, ApiError } from '@/api/client';
 import type { TaskListItem } from '@/api/types';
 import StatusBadge from '@/components/dashboard/StatusBadge.vue';
+import ModelCell from '@/components/ModelCell.vue';
 import { formatDuration } from '@/components/format';
 
 const MONTHS_GENITIVE = [
@@ -97,7 +102,7 @@ function plural(n: number, one: string, few: string, many: string): string {
 
 export default {
   name: 'CalendarDayView',
-  components: { StatusBadge },
+  components: { StatusBadge, ModelCell },
   setup() {
     const route = useRoute();
     const router = useRouter();
