@@ -19,7 +19,7 @@
 | base_commit | 4e3f839 |
 | usage | in=292816 out=55044 cr=2166746 ratio=7.4x min=106 |
 | issues | - |
-| commit | - |
+| commit | 0560916 |
 
 ## Acceptance
 
@@ -58,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-033 registered as a pending U-02 successor of T-032 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-20: T-033 started (in_progress); base_commit 4e3f839; chunk plan recorded; routed to ux-designer.
 - 2026-11-20: CP-2 awaiting_review (U-02); checks 17 PASS/1 FAIL/1 MANUAL/0 UNCHECKED; usage in=292816 out=55044 cr=2166746 ratio=7.4x min=106; reviewer user
+- 0560916: CP-2 snapshot
