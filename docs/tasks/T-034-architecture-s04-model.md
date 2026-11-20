@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | 1010367 |
-| usage | in=248949 out=74732 cr=7303374 ratio=29.3x min=194 |
+| usage | in=377315 out=104320 cr=8246608 ratio=21.9x min=249 |
 | issues | - |
 | commit | 4348cea |
 
@@ -36,7 +36,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | R-01 solution design | `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/architecture/components-ai-task-tracker.puml/.svg`, `docs/architecture/sequence-scn-*.puml/.svg` | 22P/0F/1M | awaiting_review | docs/checkpoints/T-034-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-034-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 23P/0F/1M | awaiting_review | docs/checkpoints/T-034-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -60,3 +60,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-20: T-034 set in_progress; lead verified board invariant and deps (T-030/T-031/T-033 done); work delegated to harness-architect (R-01, CP-1 target).
 - 2026-11-20: CP-1 awaiting_review (R-01); checks 22 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=248949 out=74732 cr=7303374 ratio=29.3x min=194; reviewer user
 - 4348cea: CP-1 snapshot
+- 2026-11-20: CP-1 approved by user (chat); task returned to in_progress; proceeding to CP-F final acceptance.
+- 2026-11-20: CP-F awaiting_review (R-01); checks 23 PASS/0 FAIL/1 MANUAL/0 UNCHECKED; usage in=377315 out=104320 cr=8246608 ratio=21.9x min=249; reviewer user
