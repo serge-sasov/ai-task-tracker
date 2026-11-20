@@ -1,0 +1,103 @@
+{
+    "task":  "T-036",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  12,
+                   "max_session_kb":  40,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "I-01",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Shared ModelCell component + S-01/S-04 integration and tests",
+                       "state":  "done",
+                       "owns":  [
+                                    "src/web/src/components/ModelCell.vue",
+                                    "src/web/src/views/CalendarDayView.vue",
+                                    "src/web/src/views/DashboardView.vue",
+                                    "src/web/tests/unit/ModelCell.spec.ts",
+                                    "src/web/tests/unit/views.spec.ts",
+                                    "src/web/vitest.config.ts",
+                                    "src/web/package.json",
+                                    "src/web/package-lock.json"
+                                ],
+                       "inputs":  [
+                                      "src/web/src/views/CalendarDayView.vue:1-277",
+                                      "src/web/src/views/DashboardView.vue:1-327",
+                                      "src/web/src/api/types.ts:13-22",
+                                      "docs/ux/ui-spec-ai-task-tracker.md:67-80",
+                                      "docs/architecture/contracts-ai-task-tracker.md:391-426"
+                                  ],
+                       "brief":  "placeholder",
+                       "acceptance":  [
+                                          "CalendarDayView renders a Модель column after Задача using shared ModelCell",
+                                          "Both DashboardView (S-01) and CalendarDayView (S-04) use one shared ModelCell component",
+                                          "ModelCell shows primary model, +N when more than one, title/aria-label full ordered list, Нет данных when empty",
+                                          "S-01 existing behavior preserved; S-04 model cell behaves per ui-spec R-015",
+                                          "frontend build succeeds (vitest + vue-tsc + vite build); tests pass",
+                                          "no TODO/FIXME in new code"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "src/web/src/components/ModelCell.vue",
+                                            "sha256":  "f71d3604f04e7b0851d7695821c2884c917d95daed171b6388d2f54b7850e221"
+                                        },
+                                        {
+                                            "path":  "src/web/src/views/CalendarDayView.vue",
+                                            "sha256":  "d4b9d910d10a301dc9997c084053250c144440c550ee80225015721f8a2badb6"
+                                        },
+                                        {
+                                            "path":  "src/web/src/views/DashboardView.vue",
+                                            "sha256":  "2ea55ce61d014edd27a8d22a401b1d2ac718ffa18d4d2f82a585d9a29453db55"
+                                        },
+                                        {
+                                            "path":  "src/web/tests/unit/ModelCell.spec.ts",
+                                            "sha256":  "22987024646d965a11b224430f96006ef1c6cb6631892734320ebb38bffba95c"
+                                        },
+                                        {
+                                            "path":  "src/web/tests/unit/views.spec.ts",
+                                            "sha256":  "885327bd3f854a2226d314575abedfa62cd6561775f6208cdca2d003b508e904"
+                                        },
+                                        {
+                                            "path":  "src/web/vitest.config.ts",
+                                            "sha256":  "4edcab03b57b232f2cd48f0ff89ce7e004e1a407970ed8775c0808940b4b1371"
+                                        },
+                                        {
+                                            "path":  "src/web/package.json",
+                                            "sha256":  "c639d982636aaf4788ff6553efde3498c4e9b39a1e96ef8e8fd2a47cba90dd90"
+                                        },
+                                        {
+                                            "path":  "src/web/package-lock.json",
+                                            "sha256":  "fd61d0df71da9c3154d4a387ccdbcf9fb83d9bbf7aae12d3d8d6c068e34b6411"
+                                        }
+                                    ],
+                       "base_commit":  "2a4afc5",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "produced re-recorded per T-024 canonical form: brief file is a planning file, excluded from produced (ISSUE-20261121-005209)"
+                                 ],
+                       "started":  "2026-11-20T23:16:32",
+                       "finished":  "2026-11-21T01:22:08"
+                   }
+               ],
+    "updated":  "2026-11-21T01:22:08"
+}
