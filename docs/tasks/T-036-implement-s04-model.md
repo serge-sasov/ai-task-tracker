@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-01 |
 | role | coder |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-035, T-033 |
 | inputs | `src/web/src/views/CalendarDayView.vue`, `src/web/src/views/DashboardView.vue`, `src/web/src/api/types.ts`, `docs/architecture/contracts-ai-task-tracker.md`, `docs/ux/ui-spec-ai-task-tracker.md`, `tests/**` |
@@ -34,8 +34,8 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-1 | I-01 implementation and tests | `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `src/web/src/api/types.ts`, `tests/**` | 7P/1F/0M | awaiting_review | docs/checkpoints/T-036-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-036-CP-F.md` |
+| CP-1 | I-01 implementation and tests | `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `src/web/src/api/types.ts`, `tests/**` | 7P/1F/0M | approved | docs/checkpoints/T-036-CP-1.md |
+| CP-F | final acceptance | all task artifacts | - | approved | `docs/checkpoints/T-036-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-21: CP-1 awaiting_review (I-01); checks 7 PASS/1 FAIL/0 MANUAL/0 UNCHECKED; usage in=540747 out=153084 cr=9652968 ratio=17.9x min=307; reviewer user
 - a6bdf69: CP-1 snapshot
 - 2026-11-20 (orchestrator): CP-1: 7 PASS / 1 FAIL (chunk-budget, package-lock.json) — known check-design gap [ISSUE-20261120-113748](../issues/ISSUE-20261120-113748-chunk-budget-measures-final-file-size-vs-authored-output.md); semantic acceptance green (build PASS, 8/8 tests); status awaiting_review pending user ruling.
+- 2026-11-21: User explicitly approved T-036 (CP-1 + CP-F). chunk-budget FAIL is known check-design gap ISSUE-20261120-113748. Task closed as done.
