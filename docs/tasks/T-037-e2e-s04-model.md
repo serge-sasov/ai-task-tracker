@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-02 |
 | role | coder |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-036, T-031, T-035 |
 | inputs | `tests/e2e/**`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue` |
@@ -56,3 +56,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-037 registered as a pending I-02 successor of T-036/T-031/T-035 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-21: T-037 started (I-02 E2E automation for S-04, coder). Dependencies T-036/T-031/T-035 all done.
