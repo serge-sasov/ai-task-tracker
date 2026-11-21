@@ -795,6 +795,24 @@ function Check-ChunkLedger {
 
     if ($rule -eq 'budget') {
         $ledger = (Read-Utf8 $ledgerPath) | ConvertFrom-Json
+        $mode = if ($ledger.budget -and $ledger.budget.mode) { [string]$ledger.budget.mode } else { 'legacy-final-size' }
+        if ($mode -eq 'authored-delta') {
+            $python = Get-Command python -ErrorAction SilentlyContinue
+            if (-not $python) { $python = Get-Command py -ErrorAction SilentlyContinue }
+            if (-not $python) { return New-Result $P.id 'chunk-ledger' 'NOT_APPLICABLE' 'python not found' }
+            $out = & $python.Source $validator $ledgerPath '--root' $Ctx.Root '--json' '--no-hash' 2>&1
+            $text = ($out | ForEach-Object { [string]$_ }) -join "`n"
+            $m = [regex]::Match($text, '(?s)\{.*\}')
+            if (-not $m.Success) { return New-Result $P.id 'chunk-ledger' 'FAIL' "validator output is not JSON: $($text.Trim())" }
+            try { $data = $m.Value | ConvertFrom-Json } catch { return New-Result $P.id 'chunk-ledger' 'FAIL' "validator JSON parse failed: $($_.Exception.Message)" }
+            $hits = @($data.errors | Where-Object { $_.code -eq 'E_BUDGET' })
+            if ($hits.Count -gt 0) {
+                $detail = ($hits | Select-Object -First 6 | ForEach-Object { $_.message }) -join '; '
+                return New-Result $P.id 'chunk-ledger' 'FAIL' $detail
+            }
+            $count = @($ledger.chunks).Count
+            return New-Result $P.id 'chunk-ledger' 'PASS' ("{0} chunk(s), authored-delta" -f $count)
+        }
         $maxWrite = [double]$ledger.budget.max_write_kb
         $maxSession = [double]$ledger.budget.max_session_kb
         if ($maxWrite -le 0) { $maxWrite = 12 }

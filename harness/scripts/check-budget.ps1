@@ -1,4 +1,9 @@
 #requires -Version 5.1
+<#
+.NOTES
+Legacy final-file-size helper. The authoritative harness chunk budget uses authored
+delta via chunk-validate.py / verify-artifacts.ps1 (`budget.mode=authored-delta`).
+#>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, ValueFromRemainingArguments = $true)]

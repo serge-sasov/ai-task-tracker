@@ -88,18 +88,24 @@ report that the project is not initialized (`/harness-init`).
    triage severity, scope, duplicate checks, linked tasks, root-cause/fix/
    verification sections, and P0/P1 postmortems.
 4. Build the task package: card, workflow file, input artifact links, bug card
-   for bugfix, acceptance criteria, checkpoint list, and a chunk plan. Estimate
-   the artifact size; if it exceeds the section 11.1 budget, record `chunks`,
-   `max_write_kb`, `max_session_kb`, and `context_stop_pct` in the card. A-02 is
+   for bugfix, acceptance criteria, checkpoint list, and a chunk plan. Classify
+   the task (`scope_class`: delta/new-screen/cross-cutting), estimate the
+   artifact size, choose a `budget_profile` from `harness/budgets.json`, and
+   initialize the ledger with
+   `chunk.ps1 init -Stage <stage> -ScopeClass <class>`; record `chunks`,
+   `scope_class`, `budget_profile`, and budget fields in the card. A-02 is
    chunked by default (2-3 use cases per Markdown/YAML chunk). For R-01/R-02,
    `card.artifacts` lists only unconditional architecture files; conditional
    `openapi-api-*` and `swimlane-svc-*` outputs are governed by the architecture
    description's `Scope and applicability` section and stage checks.
 5. Manage checkpoints with `harness/scripts/stage-done.ps1`: it runs the checks,
    writes the checks JSON/evidence ledger/checkpoint, applies P2, updates
-   plan/card/activity, and commits the snapshot. Preview with
-   `verify-stage.ps1`. Record user decisions/edits/role responses and resume
-   after approval or changes. For chunked stages, close one checkpoint after all
+   plan/card/activity, and commits the snapshot. After the last chunk and before
+   `stage-done`, run the mandatory
+   `harness/scripts/preflight.ps1 -Task T-XXX -Stage <stage> -Checkpoint CP-N`;
+   fix every FAIL/UNCHECKED before user review. Record user decisions with
+   `checkpoint-decision.ps1` (explicit user decision only), and resume after
+   approval or changes. For chunked stages, close one checkpoint after all
    chunks pass validation; record each failed attempt (time, error, token
    counts, context, artifact status) in the card log.
 6. Accept the task against `acceptance` and `CP-F`; on failure, set `failed` and

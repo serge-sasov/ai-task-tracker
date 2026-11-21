@@ -67,6 +67,7 @@ foreach ($id in $targets) {
     if ($cardStatus -notin @('blocked', 'failed')) {
         if ($cpFApproved) { $derived = 'done' }
         elseif ($cpStatuses -contains 'awaiting_review') { $derived = 'awaiting_review' }
+        elseif ($cpStatuses -contains 'rejected') { $derived = 'failed' }
         elseif ($cpStatuses -contains 'changes_requested') { $derived = 'in_progress' }
         elseif ($cardStatus -eq 'awaiting_review' -and $cpStatuses.Count -eq 0) { $derived = 'in_progress' }
     }

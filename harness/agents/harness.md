@@ -123,17 +123,20 @@ use this mode for ordinary tasks.
 3. If the task is `awaiting_review`, use the checkpoint resume flow:
    - read `docs/checkpoints/T-XXX-CP-N.md` and the user edits;
    - if the decision is missing, stop and ask the user; do not infer approval;
-   - if `approved`, finalize at `CP-F` or tell the orchestrator to set
-     `in_progress` and continue the role past an intermediate checkpoint;
-   - if `changes_requested`, continue the role to apply the changes and return
-     to the same checkpoint.
+   - record the explicit user decision with
+     `harness/scripts/checkpoint-decision.ps1 -Task T-XXX -Checkpoint CP-N
+     -Decision approved|changes_requested|rejected`;
+   - `approved` intermediate -> script sets `in_progress`; `CP-F` -> `done`;
+     `changes_requested` -> `in_progress` and return to the same checkpoint;
+     `rejected` -> `failed`.
 4. For a `pending` task: check `depends_on` (all `done`) and the board (no other
    active task). If either fails, stop and report; change nothing.
 5. Tell `harness-orchestrator` to set T-XXX `in_progress`, update plan/card,
    then re-render activity/SVG as derived artifacts.
 6. Give the role: task ID, card path, workflow file, `acceptance`, `inputs`,
    workflow applicability, checkpoint list, shared rules in
-   `harness/process.md`, and the `chunks`/`budget` fields. For bugfix, also give
+   `harness/process.md`, and the `chunks`, `scope_class`, `budget_profile`, and
+   `budget` fields. For bugfix, also give
    the `BUG-XXX` card and require reproduction/root cause/failing regression
    before the fix. Require the role to stop at the next checkpoint. A generator
    role (analyst, coder) may process the chunks in self-sub-sessions. The only
@@ -143,12 +146,15 @@ use this mode for ordinary tasks.
    checkpoints, never from `docs/activity.puml` or its derivatives.
 7. After each role call, check the session for `finish=length`, SSE timeouts,
    compaction, and context above the card's `context_stop_pct`. If any occurs,
-   stop the run and split the chunk; do not ask the role to repeat the same
-   oversized call.
-8. When the role reports a checkpoint: instruct `harness-orchestrator` to run
-   `harness/scripts/stage-done.ps1 -Task T-XXX -Checkpoint CP-N` (preview with
-   `verify-stage.ps1`). It runs the checks, writes the checks JSON/ledger/
-   checkpoint, applies P2, updates plan/card/activity, and commits the snapshot.
+   stop the run. If chunk artifacts exist, validate them and mark the chunk
+   complete/failed with a handoff; otherwise split the chunk. Never ask the role
+   to repeat the same oversized call.
+8. When the role reports a checkpoint: run the mandatory preflight
+   `harness/scripts/preflight.ps1 -Task T-XXX -Stage <stage> -Checkpoint CP-N`,
+   then instruct `harness-orchestrator` to run
+   `harness/scripts/stage-done.ps1 -Task T-XXX -Checkpoint CP-N`. It runs the
+   checks, writes the checks JSON/ledger/checkpoint, applies P2, updates
+   plan/card/activity, and commits the snapshot.
    Update the bug status in a separate `chore: bug ...` commit when applicable.
    Show the user: checkpoint ID, machine results, manual items, how to
    edit/comment, and resume command. End the run for a human checkpoint; do not

@@ -166,8 +166,8 @@ here; workflow-specific stages and task graphs live in
   `harness/templates/task-card-bugfix.md`; `task-card.md` is a deprecation
   pointer.
 - Shared card fields: `id, title, workflow, stage, role, status, depends_on,
-  inputs, artifacts, e2e, ux, chunks, budget, base_commit, usage, hold,
-  checkpoints, issues, commit`.
+  inputs, artifacts, e2e, ux, chunks, budget, scope_class, budget_profile,
+  manual_carryover, base_commit, usage, hold, checkpoints, issues, commit`.
 - Bugfix cards add `bug, severity, profile`; feature cards add e2e/UX
   applicability. `profile: hotfix` is allowed only for P0/P1.
 - `hold: true` forces human review at every checkpoint, including intermediate
@@ -208,12 +208,15 @@ here; workflow-specific stages and task graphs live in
 6. At a checkpoint, the role stops and reports `CHECKPOINT <ID> reached` with
    artifacts and a verification checklist. It must not continue past a
    checkpoint.
-7. Orchestrator runs
-   `harness/scripts/stage-done.ps1 -Task T-XXX -Checkpoint CP-N` (or
-   `verify-stage.ps1` first for a preview). The script runs the checks, writes
-   the checks JSON, records hashes, renders the checkpoint, applies policy P2
-   (section 11.2), updates the board/card machine fields, re-renders the derived
-   activity diagram, and commits the checkpoint snapshot.
+7. After the last chunk, orchestrator runs the mandatory preflight
+   `harness/scripts/preflight.ps1 -Task T-XXX -Stage <stage> -Checkpoint CP-N`.
+   Preflight fails on `FAIL`/`UNCHECKED` before a checkpoint or user review and
+   writes `docs/checkpoints/T-XXX-CP-N.preflight.json`; do not run `stage-done`
+   while preflight fails. Then run
+   `harness/scripts/stage-done.ps1 -Task T-XXX -Checkpoint CP-N`. The script runs
+   the checks, writes the checks JSON, records hashes, renders the checkpoint,
+   applies policy P2 (section 11.2), updates the board/card machine fields,
+   re-renders the derived activity diagram, and commits the checkpoint snapshot.
 8. A checkpoint with `FAIL=0`, `UNCHECKED=0`, and `MANUAL=0` on an intermediate
    stage is `approved` by `auto (P2)` and the task stays `in_progress`; any
    other result sets `awaiting_review`. `CP-F` always waits for the user unless
@@ -223,9 +226,14 @@ here; workflow-specific stages and task graphs live in
    manual items, how to edit/comment, and resume command. The run ends; no
    auto-continue for human checkpoints.
 10. On `/harness-run T-XXX` in `awaiting_review`: read the checkpoint file and
-    user edits. If no decision, stop and ask. If `approved`, finalize at `CP-F`
-    (step 11) or continue past an intermediate checkpoint. If
-    `changes_requested`, return to the same checkpoint after fixes.
+    user edits. If no decision, stop and ask. Record the user's explicit decision
+    with `harness/scripts/checkpoint-decision.ps1`:
+    - `approved` intermediate -> script sets `in_progress`; `CP-F` -> `done`;
+    - `changes_requested` -> script sets `in_progress`; return to the same
+      checkpoint after fixes;
+    - `rejected` -> script sets `failed`.
+    Do not infer approval and do not edit status/reviewer/decision machine fields
+    by hand.
 11. After the last role checkpoint and `CP-F` approval, verify acceptance, set
     `done`, log files/commands/results, update artifacts, update the linked bug
     status, and commit.
@@ -239,7 +247,8 @@ here; workflow-specific stages and task graphs live in
 - Checkpoint file: `docs/checkpoints/T-XXX-CP-N.md`, rendered by
   `stage-done.ps1` from machine data; machine check details live in
   `docs/checkpoints/T-XXX-CP-N.checks.json`.
-- Checkpoint statuses: `awaiting_review`, `approved`, `changes_requested`.
+- Checkpoint statuses: `awaiting_review`, `approved`, `changes_requested`,
+  `rejected`.
 - Required fields: task, workflow, bug, checkpoint, role, stage, artifacts,
   status, requested_at, reviewed_at, reviewer, decision, snapshot_commit,
   generated_by, checks_file, user remarks, user edits, role response,
@@ -447,14 +456,20 @@ stop and request decomposition instead of attempting a larger write.
 - An artifact larger than 40 KB must be split into parts or generated in several
   role sessions; above 80 KB, split it into separate files.
 - Do not use compaction as a decomposition tool. If compaction happens during
-  artifact generation, stop, record the state, and continue in a fresh session
-  with a handoff note.
+  artifact generation, stop, write `docs/chunks/T-XXX/<id>.handoff.md` from
+  `harness/templates/session-handoff.md`, record `handoff` with
+  `chunk.ps1 fail|complete -Handoff ...`, and continue in a fresh session from
+  the handoff only. Do not re-read completed chunks.
 - Use a deterministic script for arithmetic and fixtures; do not spend model
   reasoning re-deriving numbers a script can compute.
 - Read only the inputs needed for the chunk (grep/offset), not the whole corpus;
   after a handoff, do not re-read inputs that are already summarized.
-- The orchestrator estimates the artifact size at planning time and records
-  `chunks`, `max_write_kb`, `max_session_kb`, and `context_stop_pct` in the card.
+- The orchestrator classifies the task (`scope_class`: `delta`, `new-screen`,
+  `cross-cutting`), estimates the artifact size at planning time, records
+  `scope_class`, `budget_profile`, `chunks`, and budget fields in the card, and
+  initializes the ledger with
+  `chunk.ps1 init -Stage <stage> -ScopeClass <class>`. `harness/budgets.json`
+  maps stage/class to planning caps and per-type limits.
 - A chunk is the unit of work. A stage is not executed as one session: the role
   plans chunks and executes them one at a time. `docs/chunks/T-XXX.json` is the
   single source of truth for chunk progress; the card and the board carry a
@@ -473,26 +488,36 @@ stop and request decomposition instead of attempting a larger write.
   same-role split. The ceiling is 3. Children are sequential, one at a time,
   never parallel, never cross-role. The only cross-role child remains
   `ux-designer -> harness-coder` at depth 2, and that coder may not delegate.
-- Split only on budget overflow: more than `max_session_kb` of new content, more
-  than `max_input_tokens` of inputs, or more than one checkpoint-worthy
-  artifact. Convenience is not a reason to split, and a chunk that fits is never
-  re-split because a deeper level exists.
+- Split only on budget overflow: authored growth above the per-type
+  `max_session_kb`, more than `max_input_tokens` of inputs, or more than one
+  checkpoint-worthy artifact. Convenience is not a reason to split, and a chunk
+  that fits is never re-split because a deeper level exists.
 - A child returns at most ten lines: produced paths, resulting chunk state, and
   any issue id. It never returns artifact text. The parent validates with
   `chunk-validate.py`, a hash check, or a targeted read, and must not read the
   whole artifact into its own context.
 - Stop only at a chunk boundary: `chunk.ps1 complete` or `chunk.ps1 fail`, then
-  the next chunk resumes the loop. Compaction inside a chunk is a failure
+  the next chunk resumes the loop. `complete` records `elapsed_min`; token usage
+  is best-effort (`-CollectUsage` or `chunk.ps1 usage`). Compaction inside a chunk is a failure
   signal: stop, mark the chunk `failed` with a note, and let the next session
   continue. Do not re-read artifacts of chunks already marked `done`.
+- On a transport timeout/SSE abort, do not repeat the same oversized request.
+  Inspect the chunk ledger/working tree: if artifacts exist, validate and mark
+  the chunk complete/failed with a handoff; if not, mark it failed/blocked with an
+  issue and split. See `docs/plans/harness-transport-guard.md`.
 - `stage-done.ps1` refuses to close a checkpoint while a chunk of that stage is
   not `done`. Machine fields (`state`, `attempts`, `produced.sha256`, `usage`,
   `base_commit`) are written only by `chunk.ps1` and `stage-done.ps1`.
 - Chunk checks (type `chunk-ledger`): `chunk-ownership-no-overlap` (schema, ids,
   depth, state, `owns` overlap, produced-inside-owns, role write area),
   `chunk-coverage` (every existing file under the card artifacts is owned), and
-  `chunk-budget` (per-file `max_write_kb` and per-chunk `max_session_kb`). A task
-  without a ledger yields `NOT_APPLICABLE`, never `FAIL`.
+  `chunk-budget` (authored growth against per-type write/session limits).
+  `chunk-budget` excludes derived/generated paths (`*.svg`, lockfiles, build
+  outputs) and uses `budget.mode=authored-delta` for new ledgers;
+  `legacy-final-size` preserves historical final-file-size behavior. Stage caps
+  (for example U-02 80/200) are planning estimates, not a replacement for the
+  per-type limits. A task without a ledger yields `NOT_APPLICABLE`, never
+  `FAIL`.
 - The `ux-designer` may delegate prototype pages to one `harness-coder` child at
   a time: explicit page brief, non-overlapping files under
   `docs/ux/prototype/<slug>/`, and a return of paths plus a summary of at most
@@ -539,7 +564,10 @@ stop and request decomposition instead of attempting a larger write.
   for it in the current session, and only with `FAIL=0`, `UNCHECKED=0`,
   `MANUAL=0`, and `hold: false`.
 - Manual checks are review items, not failures. The user decides them; the role
-  must not set their result.
+  must not set their result. With `manual_carryover: true` on the card, a CP-F
+  manual item is marked `CARRIED` only when CP-2 is approved and the CP-F
+  artifacts are byte-identical to the CP-2 evidence; CP-F is still a user
+  checkpoint. The flag is opt-in per task.
 - Approval is never inferred from silence, file edits, an empty remarks section,
   or a passing exit code alone.
 

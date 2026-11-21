@@ -18,13 +18,22 @@ Validator: `harness/scripts/chunk-validate.py`. Management:
 | `version` | int | schema version, currently `1` |
 | `updated` | string | ISO timestamp, written by the script |
 | `baseline` | string[] | optional: paths that existed before the ledger was adopted; excluded from coverage |
-| `budget.max_write_kb` | number | `process.md` 11.1 limit per write |
-| `budget.max_session_kb` | number | new content per role session |
+| `budget.mode` | string | `authored-delta` (new ledgers) or `legacy-final-size` |
+| `budget.profile` | string | profile name from `harness/budgets.json` |
+| `budget.scope_class` | string | `delta`, `new-screen`, `cross-cutting`, or `default` |
+| `budget.per_type` | object | per-artifact-type `max_write_kb`/`max_session_kb` |
+| `budget.exclude` | string[] | derived/generated paths excluded from authored budget |
+| `budget.max_write_kb` | number | legacy/planning fallback write limit |
+| `budget.max_session_kb` | number | legacy/planning fallback session limit |
 | `budget.context_stop_pct` | number | stop at this percentage of the context window |
 | `budget.max_turns` | number | tool turns before a mandatory stop |
 | `budget.max_input_tokens` | number | input tokens before a mandatory split |
 | `budget.max_wall_min` | number | wall-clock minutes per chunk |
 | `chunks` | array | non-empty list of chunk records |
+
+`chunk-budget` compares **authored growth** against per-type limits; final file
+size is not the budget. Derived/generated paths (`*.svg`, lockfiles, build
+outputs) are excluded. `legacy-final-size` preserves historical behavior.
 
 ## Chunk record
 
@@ -49,6 +58,10 @@ Validator: `harness/scripts/chunk-validate.py`. Management:
 | `notes` | string[] | script | free notes from `complete`/`fail` |
 | `started` | string or null | script | ISO timestamp |
 | `finished` | string or null | script | ISO timestamp |
+| `elapsed_min` | number | script | wall-clock minutes from claim to complete |
+| `sessions` | number | script | attributed model sessions (best effort) |
+| `compactions` | number | script | context compactions observed |
+| `handoff` | string | script | `docs/chunks/T-XXX/<id>.handoff.md` when compaction/transport forced a fresh session |
 
 ## State machine
 
@@ -84,12 +97,19 @@ Only `done` chunks count as coverage. A partially written file makes a chunk
   "version": 1,
   "updated": "2026-11-14T12:00:00",
   "budget": {
-    "max_write_kb": 12,
-    "max_session_kb": 40,
+    "mode": "authored-delta",
+    "profile": "I-01/default",
+    "scope_class": "cross-cutting",
+    "max_write_kb": 80,
+    "max_session_kb": 200,
     "context_stop_pct": 65,
     "max_turns": 40,
     "max_input_tokens": 60000,
-    "max_wall_min": 45
+    "max_wall_min": 45,
+    "per_type": {
+      "code": {"max_write_kb": 12, "max_session_kb": 40}
+    },
+    "exclude": ["**/*.svg", "**/package-lock.json", "**/*.lock"]
   },
   "chunks": [
     {
@@ -134,7 +154,7 @@ without re-reading the corpus:
 | role | coder |
 | depth | 1 |
 | owns | backend/src/main/java/**/api/** |
-| budget | 12 KB write, 40 KB session, stop at 65% |
+| budget | authored-delta: 12 KB write, 40 KB session, stop at 65% |
 
 ## Goal
 
@@ -152,9 +172,9 @@ One sentence.
 
 ## Stop rule
 
-Stop when a produced file would exceed `max_write_kb`, when the context reaches
-`context_stop_pct`, or when the acceptance list is met. Record the state with
-`chunk.ps1 complete` or `chunk.ps1 fail`.
+Stop when authored growth would exceed the per-type `max_write_kb`, when the
+context reaches `context_stop_pct`, or when the acceptance list is met. Record
+the state with `chunk.ps1 complete` or `chunk.ps1 fail`.
 
 ## Return
 

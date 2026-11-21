@@ -9,16 +9,19 @@
 | role | coder / qa / analyst / architect / ux-designer / doc-writer / orchestrator |
 | status | pending |
 | hold | false (true forces human review at every checkpoint) |
+| manual_carryover | false (true carries CP-2 manual items to CP-F only when artifacts are byte-identical; CP-F is still user-reviewed) |
 | depends_on | T-YYY, T-ZZZ |
 | bug | BUG-XXX |
 | severity | P0 / P1 / P2 / P3 |
 | profile | - / hotfix (P0/P1 only) |
+| scope_class | delta / cross-cutting |
+| budget_profile | `default` / `R-01/default` / ... (from `harness/budgets.json`) |
 | inputs | bug card, affected code/tests, requirements/UC |
 | artifacts | regression test, code/tests, `docs/qa/review-T-XXX.md` |
 | e2e | required / not applicable (reason) |
 | ux | required / not applicable (reason) |
 | chunks | ledger path and granularity: `docs/chunks/T-XXX.json` (single source of truth for per-chunk state, `owns`, and usage); use it for large reproduction, fix, or test work |
-| budget | `max_write_kb` / `max_session_kb` / `context_stop_pct` / `max_turns` / `max_input_tokens` / `max_wall_min` (defaults: 8/20/60, code 12/40/65; the ledger `budget` object holds the effective values) |
+| budget | `budget_profile` selects per-type + authored-delta limits from `harness/budgets.json`; the ledger `budget` object holds the effective values |
 | base_commit | commit hash the first checkpoint diff is measured from |
 | usage | measured token usage (filled by stage-done) |
 | issues | ISSUE-... (links to docs/issues/ if problems occurred) |
@@ -48,7 +51,8 @@
 | CP-2 | fix/regression | code + tests | - | pending | `docs/checkpoints/T-XXX-CP-2.md` |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-XXX-CP-F.md` |
 
-Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
+Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`,
+`rejected`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
 
 ## Blockers

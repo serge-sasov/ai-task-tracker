@@ -20,6 +20,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -33,6 +34,18 @@ DEFAULT_BUDGET = {
     "max_input_tokens": 60000,
     "max_wall_min": 45,
 }
+DEFAULT_PER_TYPE = {
+    "md": {"max_write_kb": 8, "max_session_kb": 20},
+    "puml": {"max_write_kb": 8, "max_session_kb": 20},
+    "openapi": {"max_write_kb": 6, "max_session_kb": 15},
+    "yaml": {"max_write_kb": 6, "max_session_kb": 15},
+    "code": {"max_write_kb": 12, "max_session_kb": 40},
+    "html": {"max_write_kb": 12, "max_session_kb": 40},
+}
+DEFAULT_EXCLUDE = [
+    "**/*.svg", "**/package-lock.json", "**/*.lock",
+    "**/node_modules/**", "**/dist/**", "**/target/**",
+]
 REQUIRED_CHUNK = [
     "id", "parent", "stage", "role", "depth", "title", "state", "owns",
     "inputs", "brief", "acceptance", "produced", "base_commit", "attempts",
@@ -179,6 +192,52 @@ def norm_rel(root: str, path: str) -> str:
     return fwd(os.path.relpath(path, root))
 
 
+def artifact_kind(path: str) -> str:
+    p = fwd(path).lower()
+    if p.endswith(".md"):
+        return "md"
+    if p.endswith((".puml", ".plantuml")):
+        return "puml"
+    if p.endswith((".yaml", ".yml")):
+        return "openapi" if ("openapi" in p or "contracts" in p) else "yaml"
+    if p.endswith((".html", ".css", ".js", ".ts", ".vue")):
+        return "html"
+    return "code"
+
+
+def authored_delta(root: str, base_commit: str, path: str) -> int | None:
+    """Bytes added by the current worktree relative to base_commit."""
+    if not base_commit:
+        return None
+    probe = subprocess.run(
+        ["git", "-C", root, "cat-file", "-e", base_commit + "^{commit}"],
+        capture_output=True, text=True, errors="replace",
+    )
+    if probe.returncode != 0:
+        return None
+    tracked = subprocess.run(
+        ["git", "-C", root, "cat-file", "-e", base_commit + ":" + path],
+        capture_output=True, text=True, errors="replace",
+    )
+    absolute = os.path.join(root, path.replace("/", os.sep))
+    if not os.path.isfile(absolute):
+        return 0
+    current = os.path.getsize(absolute)
+    if tracked.returncode != 0:
+        return current
+    size_out = subprocess.run(
+        ["git", "-C", root, "cat-file", "-s", base_commit + ":" + path],
+        capture_output=True, text=True, errors="replace",
+    )
+    if size_out.returncode != 0:
+        return current
+    try:
+        base_size = int(size_out.stdout.strip())
+    except ValueError:
+        return current
+    return max(0, current - base_size)
+
+
 def validate(ledger_path: str, root: str | None, check_hash: bool = True) -> dict:
     errors: list[dict] = []
     warnings: list[dict] = []
@@ -231,6 +290,17 @@ def validate(ledger_path: str, root: str | None, check_hash: bool = True) -> dic
             if not isinstance(value, (int, float)) or value <= 0:
                 err("E_BUDGET", "budget.%s must be a positive number" % key)
 
+    budget_mode = str(budget.get("mode", "legacy-final-size")).strip().lower()
+    if budget_mode not in ("authored-delta", "legacy-final-size"):
+        warn("W_BUDGET_MODE", "unknown budget.mode %r; using legacy-final-size" % budget.get("mode"))
+        budget_mode = "legacy-final-size"
+    per_type = budget.get("per_type")
+    if not isinstance(per_type, dict):
+        per_type = DEFAULT_PER_TYPE
+    excludes = budget.get("exclude")
+    if not isinstance(excludes, list):
+        excludes = DEFAULT_EXCLUDE
+
     chunks = data.get("chunks")
     if not isinstance(chunks, list) or not chunks:
         err("E_SCHEMA", "chunks must be a non-empty list")
@@ -281,6 +351,23 @@ def validate(ledger_path: str, root: str | None, check_hash: bool = True) -> dic
         for key in ("in", "out", "cr"):
             if key not in chunk["usage"]:
                 err("E_SCHEMA", "usage.%s is required" % key, cid)
+        if "elapsed_min" in chunk:
+            value = chunk["elapsed_min"]
+            if not isinstance(value, (int, float)) or value < 0:
+                err("E_SCHEMA", "elapsed_min must be a non-negative number", cid)
+        for key in ("sessions", "compactions"):
+            if key in chunk:
+                value = chunk[key]
+                if not isinstance(value, int) or value < 0:
+                    err("E_SCHEMA", "%s must be a non-negative integer" % key, cid)
+        if "handoff" in chunk and not isinstance(chunk["handoff"], str):
+            err("E_SCHEMA", "handoff must be a path string", cid)
+        if int(chunk.get("compactions") or 0) > 0 and not str(chunk.get("handoff") or "").strip():
+            warn("W_HANDOFF_MISSING", "compaction occurred but no handoff file is recorded", cid)
+        elif str(chunk.get("handoff") or "").strip():
+            handoff_path = os.path.join(root, fwd(str(chunk["handoff"])).replace("/", os.sep))
+            if not os.path.isfile(handoff_path):
+                warn("W_HANDOFF_MISSING", "handoff file does not exist: %s" % chunk["handoff"], cid)
         if chunk["state"] == "done" and not chunk["produced"]:
             err("E_STATE", "a done chunk must list produced files", cid)
         if chunk["state"] in STATES_WITH_ISSUE and not chunk["issues"]:
@@ -371,16 +458,50 @@ def validate(ledger_path: str, root: str | None, check_hash: bool = True) -> dic
                     if expected != actual:
                         err("E_HASH_MISMATCH", "sha256 mismatch for %s (ledger %s, file %s)"
                             % (path, expected[:12] or "-", actual[:12]), cid)
-        limit = float(budget.get("max_write_kb", DEFAULT_BUDGET["max_write_kb"]))
-        for item in chunk["produced"] or []:
-            if not isinstance(item, dict) or "path" not in item:
-                continue
-            absolute = os.path.join(root, fwd(str(item["path"])).replace("/", os.sep))
-            if os.path.isfile(absolute):
-                size_kb = os.path.getsize(absolute) / 1024.0
-                if size_kb > limit:
-                    warn("W_BUDGET_WRITE", "%s is %.1f KB, above max_write_kb %.1f"
-                         % (item["path"], size_kb, limit), cid)
+        if budget_mode == "authored-delta":
+            totals: dict[str, float] = {}
+            base_commit = str(chunk.get("base_commit") or "")
+            for item in chunk["produced"] or []:
+                if not isinstance(item, dict) or "path" not in item:
+                    continue
+                path = fwd(str(item["path"]))
+                if any(path_matches(path, str(pattern)) for pattern in excludes):
+                    continue
+                kind = artifact_kind(path)
+                delta = authored_delta(root, base_commit, path)
+                if delta is None:
+                    absolute = os.path.join(root, path.replace("/", os.sep))
+                    if not os.path.isfile(absolute):
+                        continue
+                    delta = os.path.getsize(absolute)
+                    warn("W_BUDGET_FALLBACK",
+                         "authored delta unavailable for %s; using file size" % path, cid)
+                delta_kb = delta / 1024.0
+                limits = per_type.get(kind) or DEFAULT_PER_TYPE.get(kind) or {}
+                limit = float(limits.get("max_write_kb", DEFAULT_BUDGET["max_write_kb"]))
+                if delta_kb > limit:
+                    err("E_BUDGET",
+                        "%s authored %.1f KB > %s max_write_kb %.1f"
+                        % (path, delta_kb, kind, limit), cid)
+                totals[kind] = totals.get(kind, 0.0) + delta_kb
+            for kind, total in totals.items():
+                limits = per_type.get(kind) or DEFAULT_PER_TYPE.get(kind) or {}
+                limit = float(limits.get("max_session_kb", DEFAULT_BUDGET["max_session_kb"]))
+                if total > limit:
+                    err("E_BUDGET",
+                        "%s authored total %.1f KB > %s max_session_kb %.1f"
+                        % (cid, total, kind, limit), cid)
+        else:
+            limit = float(budget.get("max_write_kb", DEFAULT_BUDGET["max_write_kb"]))
+            for item in chunk["produced"] or []:
+                if not isinstance(item, dict) or "path" not in item:
+                    continue
+                absolute = os.path.join(root, fwd(str(item["path"])).replace("/", os.sep))
+                if os.path.isfile(absolute):
+                    size_kb = os.path.getsize(absolute) / 1024.0
+                    if size_kb > limit:
+                        warn("W_BUDGET_WRITE", "%s is %.1f KB, above max_write_kb %.1f"
+                             % (item["path"], size_kb, limit), cid)
 
     artifacts = read_card_artifacts(root, task) if task else None
     if artifacts is None:
@@ -513,8 +634,79 @@ def self_test() -> int:
         failures += 0 if ok else 1
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+    failures += self_test_authored()
     print("self-test: %d failure(s)" % failures)
     return 0 if failures == 0 else 1
+
+
+def self_test_authored() -> int:
+    """Authored-delta budget cases in a temporary git repository."""
+    failures = 0
+    tmp = tempfile.mkdtemp(prefix="chunk-budget-")
+    try:
+        for d in ("docs/tasks", "docs/chunks", "src"):
+            os.makedirs(os.path.join(tmp, d), exist_ok=True)
+        with open(os.path.join(tmp, "docs/tasks/T-902-test.md"), "w", encoding="utf-8") as fh:
+            fh.write("# T-902\n\n| Field | Value |\n|---|---|\n"
+                     "| title | test |\n| artifacts | `src/**` |\n")
+        legacy = os.path.join(tmp, "src", "legacy.md")
+        with open(legacy, "w", encoding="utf-8") as fh:
+            fh.write("x" * (20 * 1024))
+        for args in (("init", "-q"), ("config", "user.email", "harness@example.invalid"),
+                     ("config", "user.name", "harness"), ("add", "docs", "src"),
+                     ("commit", "-q", "-m", "base")):
+            subprocess.run(["git", "-C", tmp, *args], capture_output=True, text=True)
+        base = subprocess.run(["git", "-C", tmp, "rev-parse", "--short", "HEAD"],
+                              capture_output=True, text=True).stdout.strip()
+        with open(legacy, "a", encoding="utf-8") as fh:
+            fh.write("y" * 1024)
+        for name, size in (("new.md", 9 * 1024), ("pic.svg", 70 * 1024),
+                           ("package-lock.json", 20 * 1024)):
+            with open(os.path.join(tmp, "src", name), "w", encoding="utf-8") as fh:
+                fh.write("z" * size)
+
+        def payload(paths):
+            produced = [{"path": p, "sha256": ""} for p in paths]
+            return {
+                "task": "T-902", "version": 1,
+                "budget": {
+                    "mode": "authored-delta", "max_write_kb": 80,
+                    "max_session_kb": 200, "context_stop_pct": 65,
+                    "max_turns": 40, "max_input_tokens": 60000, "max_wall_min": 45,
+                    "per_type": DEFAULT_PER_TYPE, "exclude": DEFAULT_EXCLUDE,
+                },
+                "chunks": [{
+                    "id": "C1", "parent": None, "stage": "I-01", "role": "coder",
+                    "depth": 1, "title": "core", "state": "done",
+                    "owns": ["src/**"], "inputs": [],
+                    "brief": "docs/chunks/T-902/C1.brief.md",
+                    "acceptance": [], "produced": produced,
+                    "base_commit": base, "attempts": 1,
+                    "usage": {"in": 0, "out": 0, "cr": 0, "min": 0},
+                    "issues": [], "notes": [], "started": None, "finished": None,
+                }],
+            }
+
+        ledger = os.path.join(tmp, "docs", "chunks", "T-902.json")
+        with open(ledger, "w", encoding="utf-8") as fh:
+            json.dump(payload(["src/legacy.md", "src/new.md", "src/pic.svg",
+                               "src/package-lock.json"]), fh)
+        result = validate(ledger, tmp, check_hash=False)
+        ok = any(e["code"] == "E_BUDGET" for e in result["errors"])
+        print("%s authored new 9KB md fails" % ("PASS" if ok else "FAIL"))
+        failures += 0 if ok else 1
+
+        with open(ledger, "w", encoding="utf-8") as fh:
+            json.dump(payload(["src/legacy.md", "src/pic.svg", "src/package-lock.json"]), fh)
+        result = validate(ledger, tmp, check_hash=False)
+        ok = bool(result["valid"])
+        print("%s authored pre-existing md edit + exclusions pass" % ("PASS" if ok else "FAIL"))
+        if not ok:
+            print_human(result)
+        failures += 0 if ok else 1
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    return failures
 
 
 def main(argv: list[str]) -> int:

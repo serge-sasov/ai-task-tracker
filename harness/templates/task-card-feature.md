@@ -9,13 +9,16 @@
 | role | orchestrator / analyst / ux-designer / architect / coder / qa / doc-writer |
 | status | pending |
 | hold | false (true forces human review at every checkpoint) |
+| manual_carryover | false (true carries CP-2 manual items to CP-F only when artifacts are byte-identical; CP-F is still user-reviewed) |
+| scope_class | delta / new-screen / cross-cutting |
+| budget_profile | `default` / `U-02/new-screen` / `U-02/delta` / ... (from `harness/budgets.json`) |
 | depends_on | T-YYY, T-ZZZ |
 | inputs | comma-separated input artifact paths |
 | artifacts | comma-separated output artifact paths |
 | e2e | required / not applicable (reason) |
 | ux | required / not applicable (reason) |
 | chunks | ledger path and granularity: `docs/chunks/T-XXX.json` (single source of truth for per-chunk state, `owns`, and usage); the plan is written with `harness/scripts/chunk.ps1` before authoring |
-| budget | `max_write_kb` / `max_session_kb` / `context_stop_pct` / `max_turns` / `max_input_tokens` / `max_wall_min` (defaults: 8/20/60, YAML 6/15/60, code 12/40/65; the ledger `budget` object holds the effective values) |
+| budget | `budget_profile` selects per-type + authored-delta limits from `harness/budgets.json` (`max_write_kb`, `max_session_kb`, `context_stop_pct`, `max_turns`, `max_input_tokens`, `max_wall_min`); the ledger `budget` object holds the effective values |
 | base_commit | commit hash the first checkpoint diff is measured from |
 | usage | measured token usage (filled by stage-done; e.g. in=0 out=0 cr=0 ratio=0x min=0) |
 | issues | ISSUE-... (links to docs/issues/ if problems occurred) |
@@ -38,7 +41,8 @@ in scope), UX specs, and the architecture description; trace checks read
 | CP-1 | stage-specific | `docs/...` | - | pending | `docs/checkpoints/T-XXX-CP-1.md` |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-XXX-CP-F.md` |
 
-Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
+Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`,
+`rejected`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
 
 ## Blockers

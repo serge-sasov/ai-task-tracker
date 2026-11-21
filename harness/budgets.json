@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "default_mode": "authored-delta",
+  "exclude": [
+    "**/*.svg",
+    "**/package-lock.json",
+    "**/*.lock",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/target/**"
+  ],
+  "per_type": {
+    "md": { "max_write_kb": 8, "max_session_kb": 20 },
+    "puml": { "max_write_kb": 8, "max_session_kb": 20 },
+    "openapi": { "max_write_kb": 6, "max_session_kb": 15 },
+    "yaml": { "max_write_kb": 6, "max_session_kb": 15 },
+    "code": { "max_write_kb": 12, "max_session_kb": 40 },
+    "html": { "max_write_kb": 12, "max_session_kb": 40 }
+  },
+  "defaults": {
+    "context_stop_pct": 65,
+    "max_turns": 40,
+    "max_input_tokens": 60000,
+    "max_wall_min": 45,
+    "max_write_kb": 12,
+    "max_session_kb": 40
+  },
+  "profiles": {
+    "default": {
+      "mode": "authored-delta",
+      "scope_class": "default",
+      "max_write_kb": 12,
+      "max_session_kb": 40
+    },
+    "U-02/default": {
+      "mode": "authored-delta",
+      "scope_class": "new-screen",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "U-02/new-screen": {
+      "mode": "authored-delta",
+      "scope_class": "new-screen",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "U-02/delta": {
+      "mode": "authored-delta",
+      "scope_class": "delta",
+      "max_write_kb": 40,
+      "max_session_kb": 100
+    },
+    "A-02/default": {
+      "mode": "authored-delta",
+      "scope_class": "delta",
+      "max_write_kb": 40,
+      "max_session_kb": 100
+    },
+    "R-01/default": {
+      "mode": "authored-delta",
+      "scope_class": "cross-cutting",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "R-02/default": {
+      "mode": "authored-delta",
+      "scope_class": "cross-cutting",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "I-01/default": {
+      "mode": "authored-delta",
+      "scope_class": "cross-cutting",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "I-02/default": {
+      "mode": "authored-delta",
+      "scope_class": "cross-cutting",
+      "max_write_kb": 80,
+      "max_session_kb": 200
+    },
+    "Q-01/default": {
+      "mode": "authored-delta",
+      "scope_class": "delta",
+      "max_write_kb": 40,
+      "max_session_kb": 100
+    },
+    "Q-02/default": {
+      "mode": "authored-delta",
+      "scope_class": "delta",
+      "max_write_kb": 40,
+      "max_session_kb": 100
+    },
+    "D-01/default": {
+      "mode": "authored-delta",
+      "scope_class": "delta",
+      "max_write_kb": 40,
+      "max_session_kb": 100
+    }
+  }
+}

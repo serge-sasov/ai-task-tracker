@@ -9,7 +9,8 @@ The ledger is the single source of truth for per-chunk progress. Planning fields
 (state, attempts, produced.sha256, usage, base_commit) are written only here.
 
 .Actions
-  init     create the ledger skeleton and docs/chunks/T-XXX/
+  init     create the ledger skeleton and docs/chunks/T-XXX/; selects the
+           budget profile from -Profile or -Stage/-ScopeClass
   add      append one chunk
   plan     merge a plan file (array of chunks or {"chunks":[...]})
   claim    pending|failed|blocked -> in_progress
@@ -22,7 +23,8 @@ The ledger is the single source of truth for per-chunk progress. Planning fields
   verify   run chunk-validate.py
 
 .EXAMPLE
-.\chunk.ps1 init -Task T-008
+.\chunk.ps1 init -Task T-008 -Stage I-01 -ScopeClass cross-cutting
+.\chunk.ps1 init -Task T-033 -Stage U-02 -ScopeClass new-screen
 .\chunk.ps1 add -Task T-008 -Id C4a -Stage I-01 -Role coder -Title "API-001" -Owns "backend/src/main/java/**/api/**" -Inputs "docs/architecture/contracts-*.md"
 .\chunk.ps1 claim -Task T-008 -Id C4a
 .\chunk.ps1 complete -Task T-008 -Id C4a -Produced "backend/src/main/java/x/Api.java"
@@ -44,6 +46,7 @@ param(
     [string[]]$Inputs = @(),
     [string[]]$Acceptance = @(),
     [string]$Brief = '',
+    [string]$Handoff = '',
     [string[]]$Produced = @(),
     [string]$Note = '',
     [string]$Issue = '',
@@ -58,6 +61,10 @@ param(
     [switch]$Baseline,
     [switch]$Json,
     [switch]$Force,
+    [switch]$CollectUsage,
+    [string]$Profile = '',
+    [string]$ScopeClass = '',
+    [string]$BudgetMode = '',
     [string]$Root = ''
 )
 
@@ -69,6 +76,16 @@ $Root = (Resolve-Path -LiteralPath $Root).Path
 $ledgerRel = "docs/chunks/$Task.json"
 $ledgerPath = Join-Path $Root ($ledgerRel -replace '/', '\')
 $chunkDir = Join-Path $Root ("docs\chunks\$Task")
+
+if ($Action -eq 'init') {
+    $cardPath = Get-CardFile -Root $Root -Task $Task
+    if ($cardPath) {
+        $card = Get-CardFields -Path $cardPath
+        if (-not $Stage -and $card.ContainsKey('stage')) { $Stage = (($card['stage'] -split '/')[0].Trim()).Trim('`') }
+        if (-not $ScopeClass -and $card.ContainsKey('scope_class')) { $ScopeClass = $card['scope_class'].Trim().Trim('`') }
+        if (-not $Profile -and $card.ContainsKey('budget_profile')) { $Profile = $card['budget_profile'].Trim().Trim('`') }
+    }
+}
 
 function Read-Ledger {
     if (-not (Test-Path -LiteralPath $ledgerPath)) {
@@ -137,11 +154,73 @@ function New-ChunkRecord {
         notes      = @()
         started    = $null
         finished   = $null
+        elapsed_min = 0
+        sessions   = 0
+        compactions = 0
+        handoff    = ''
     }
 }
 
 function Assert-LedgerId {
     if ($Task -notmatch '^T-\d{3,}$') { throw "Task must look like T-XXX, got '$Task'" }
+}
+
+function Get-BudgetConfig {
+    $configPath = Join-Path (Split-Path $PSScriptRoot -Parent) 'budgets.json'
+    if (-not (Test-Path -LiteralPath $configPath)) {
+        throw "budget config not found: $configPath"
+    }
+    (Read-Utf8 $configPath) | ConvertFrom-Json
+}
+
+function Resolve-BudgetProfile {
+    $config = Get-BudgetConfig
+    $defaults = $config.defaults
+    $wantedScope = if ($ScopeClass) { $ScopeClass } else { 'default' }
+    $explicitProfile = [bool]$Profile
+    $profileName = if ($Profile) { $Profile } else { '' }
+    $profile = $null
+    $profiles = $config.profiles
+    if ($profileName -and $profiles.PSObject.Properties[$profileName]) {
+        $profile = $profiles.PSObject.Properties[$profileName].Value
+    }
+    if (-not $profile -and $Stage) {
+        $stageProfile = "$Stage/$wantedScope"
+        if ($profiles.PSObject.Properties[$stageProfile]) {
+            $profileName = $stageProfile
+            $profile = $profiles.PSObject.Properties[$stageProfile].Value
+        }
+        elseif ($profiles.PSObject.Properties["$Stage/default"]) {
+            $profileName = "$Stage/default"
+            $profile = $profiles.PSObject.Properties["$Stage/default"].Value
+        }
+    }
+    if (-not $profile) {
+        if ($explicitProfile) { throw "budget profile not found: $Profile" }
+        $profileName = 'default'
+        $profile = $profiles.PSObject.Properties['default'].Value
+    }
+    $mode = if ($BudgetMode) { $BudgetMode }
+        elseif ($profile.mode) { [string]$profile.mode }
+        elseif ($config.default_mode) { [string]$config.default_mode }
+        else { 'authored-delta' }
+    $scope = if ($ScopeClass) { $ScopeClass }
+        elseif ($profile.scope_class) { [string]$profile.scope_class }
+        else { 'default' }
+    $budget = [ordered]@{
+        mode             = $mode
+        profile          = $profileName
+        scope_class      = $scope
+        per_type         = $config.per_type
+        exclude          = @($config.exclude)
+        max_write_kb     = if ($null -ne $profile.max_write_kb) { [double]$profile.max_write_kb } else { [double]$defaults.max_write_kb }
+        max_session_kb   = if ($null -ne $profile.max_session_kb) { [double]$profile.max_session_kb } else { [double]$defaults.max_session_kb }
+        context_stop_pct = if ($null -ne $profile.context_stop_pct) { [double]$profile.context_stop_pct } else { [double]$defaults.context_stop_pct }
+        max_turns        = if ($null -ne $profile.max_turns) { [int]$profile.max_turns } else { [int]$defaults.max_turns }
+        max_input_tokens = if ($null -ne $profile.max_input_tokens) { [int]$profile.max_input_tokens } else { [int]$defaults.max_input_tokens }
+        max_wall_min     = if ($null -ne $profile.max_wall_min) { [int]$profile.max_wall_min } else { [int]$defaults.max_wall_min }
+    }
+    [pscustomobject]@{ Name = $profileName; Budget = $budget }
 }
 
 Assert-LedgerId
@@ -157,23 +236,18 @@ switch ($Action) {
         if ($Baseline) {
             $baselineFiles = @(Get-AllFiles -Root $Root | Where-Object { $_ -notmatch '(^|/)(target|dist|node_modules)(/|$)' })
         }
+        $resolved = Resolve-BudgetProfile
         $ledger = [ordered]@{
             task    = $Task
             version = 1
             updated = (Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')
             baseline = @($baselineFiles)
-            budget  = [ordered]@{
-                max_write_kb     = 12
-                max_session_kb   = 40
-                context_stop_pct = 65
-                max_turns        = 40
-                max_input_tokens = 60000
-                max_wall_min     = 45
-            }
+            budget  = $resolved.Budget
             chunks  = @()
         }
         Write-Utf8NoBom $ledgerPath (($ledger | ConvertTo-Json -Depth 100) + "`n")
         Write-Host "ledger: $ledgerRel"
+        Write-Host "budget: $($resolved.Name) mode=$($resolved.Budget.mode) scope=$($resolved.Budget.scope_class)"
         Write-Host "next: chunk.ps1 add|plan -Task $Task"
         exit 0
     }
@@ -232,6 +306,10 @@ switch ($Action) {
                 notes       = @()
                 started     = $null
                 finished    = $null
+                elapsed_min = 0
+                sessions    = 0
+                compactions = 0
+                handoff     = ''
             }
             $data.chunks = @($data.chunks) + @([pscustomobject]$record)
             $existing += $record.id
@@ -254,6 +332,7 @@ switch ($Action) {
         $chunk.attempts = [int]$chunk.attempts + 1
         $chunk.started = (Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')
         $chunk.finished = $null
+        $chunk | Add-Member -NotePropertyName elapsed_min -NotePropertyValue 0 -Force
         Write-Ledger $data
         Write-Host "claimed $Id (attempt $($chunk.attempts), depth $($chunk.depth))"
         exit 0
@@ -284,10 +363,40 @@ switch ($Action) {
         $chunk.produced = @($records)
         $chunk.state = 'done'
         $chunk.finished = (Get-Date -Format 'yyyy-MM-ddTHH:mm:ss')
+        $elapsed = 0
+        if ($chunk.started) {
+            try {
+                $start = [datetime]::ParseExact([string]$chunk.started, 'yyyy-MM-ddTHH:mm:ss', [System.Globalization.CultureInfo]::InvariantCulture)
+                $elapsed = [math]::Max(0, [math]::Round(((Get-Date) - $start).TotalMinutes))
+            }
+            catch { $elapsed = 0 }
+        }
+        $chunk | Add-Member -NotePropertyName elapsed_min -NotePropertyValue $elapsed -Force
         $chunk.usage = [ordered]@{ in = $In; out = $Out; cr = $CacheRead; min = $Minutes }
         if ($Note) { $chunk.notes = @($chunk.notes) + $Note }
+        if ($Handoff) { $chunk | Add-Member -NotePropertyName handoff -NotePropertyValue $Handoff -Force }
         Write-Ledger $data
-        Write-Host "completed ${Id}: $($records.Count) produced file(s)"
+        if ($CollectUsage) {
+            try {
+                $rows = @(Get-ChunkUsage -Task $Task -ProjectPath $Root)
+                $match = @($rows | Where-Object { $_.chunk -eq $chunk.id }) | Select-Object -First 1
+                if ($match) {
+                    $chunk | Add-Member -NotePropertyName sessions -NotePropertyValue ([int]$match.sessions) -Force
+                    if ($Minutes -eq 0) {
+                        $chunk.usage = [ordered]@{
+                            in = [int]$match.input
+                            out = [int]$match.output
+                            cr = [int]$match.cache_read
+                            min = [int][math]::Round($match.minutes)
+                        }
+                    }
+                    Write-Ledger $data
+                }
+            }
+            catch { Write-Host "[warn] usage collection failed: $($_.Exception.Message)" -ForegroundColor Yellow }
+        }
+        Write-Host "completed ${Id}: $($records.Count) produced file(s), elapsed $elapsed min"
+        Write-Host "next: preflight before stage-done: harness/scripts/preflight.ps1 -Task $Task -Stage $($chunk.stage) -Checkpoint CP-N"
         exit 0
     }
     'fail' {
@@ -297,6 +406,7 @@ switch ($Action) {
         $chunk.state = if ($Blocked) { 'blocked' } else { 'failed' }
         if ($Note) { $chunk.notes = @($chunk.notes) + $Note }
         if ($Issue) { $chunk.issues = @($chunk.issues) + $Issue }
+        if ($Handoff) { $chunk | Add-Member -NotePropertyName handoff -NotePropertyValue $Handoff -Force }
         if ($Blocked -and -not $Issue) { throw "a blocked chunk needs -Issue I-YYYYMMDD-HHMMSS" }
         Write-Ledger $data
         Write-Host "marked $Id as $($chunk.state)"
@@ -355,6 +465,7 @@ switch ($Action) {
                 $minV = [int][math]::Round($match.minutes)
             }
             $c.usage = [ordered]@{ in = $inV; out = $outV; cr = $crV; min = $minV }
+            $c | Add-Member -NotePropertyName sessions -NotePropertyValue $(if ($match) { [int]$match.sessions } else { 0 }) -Force
             $text = if ($match) { "in=$inV out=$outV cr=$crV min=$minV ratio=$($match.ratio)x" } else { 'no sessions' }
             Write-Host ('{0,-10} {1}' -f $c.id, $text)
         }

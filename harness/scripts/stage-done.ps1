@@ -76,6 +76,21 @@ $checksRel = "docs/checkpoints/$Task-$Checkpoint.checks.json"
 $checksPath = if ($DryRun) { Join-Path ([System.IO.Path]::GetTempPath()) "$Task-$Checkpoint.checks.json" } else { Join-Path $Root $checksRel }
 $ledgerRel = "docs/evidence/$Task.md"
 $ledgerPath = Join-Path $Root $ledgerRel
+$preflightRel = "docs/checkpoints/$Task-$Checkpoint.preflight.json"
+$preflightPath = Join-Path $Root ($preflightRel -replace '/', '\')
+if (-not (Test-Path -LiteralPath $preflightPath) -and -not $Force) {
+    Write-Host "[warn] no preflight marker: $preflightRel; run harness/scripts/preflight.ps1 before stage-done" -ForegroundColor Yellow
+}
+elseif (Test-Path -LiteralPath $preflightPath) {
+    $preflight = (Read-Utf8 $preflightPath) | ConvertFrom-Json
+    $preflightFail = [int]$preflight.summary.fail
+    $preflightUnchecked = [int]$preflight.summary.unchecked
+    if ($preflightFail -gt 0 -or $preflightUnchecked -gt 0) {
+        $message = "preflight has $preflightFail FAIL / $preflightUnchecked UNCHECKED; rerun preflight.ps1"
+        if ($Force) { Write-Host "[warn] $message" -ForegroundColor Yellow }
+        else { throw $message }
+    }
+}
 
 if ((Test-Path -LiteralPath $cpPath) -and -not $Force) {
     $existingStatus = Get-CheckpointField -Path $cpPath -Name 'status'
@@ -106,8 +121,10 @@ if (Test-Path -LiteralPath $chunkLedgerPath) {
         throw "chunk '$Chunk' is not part of stage $stage"
     }
     foreach ($c in $stageChunks) {
-        $chunkSummary += ('| {0} | {1} | d{2} | {3} | {4} | {5} |' -f `
-                $c.id, $c.state, $c.depth, $c.role, @($c.produced).Count, $c.title)
+        $elapsed = if ($null -ne $c.elapsed_min) { [int]$c.elapsed_min } else { 0 }
+        $usageMin = if ($c.usage -and $null -ne $c.usage.min) { [int]$c.usage.min } else { 0 }
+        $chunkSummary += ('| {0} | {1} | d{2} | {3} | {4} | {5} | {6} | {7} |' -f `
+                $c.id, $c.state, $c.depth, $c.role, @($c.produced).Count, $elapsed, $usageMin, $c.title)
     }
 }
 elseif ($Chunk) {
@@ -148,6 +165,45 @@ foreach ($a in $artifacts) {
 }
 
 $isFinal = ($Checkpoint -eq 'CP-F')
+$carriedManual = @()
+$manualCarryover = ($card.ContainsKey('manual_carryover') -and $card['manual_carryover'].Trim().ToLowerInvariant() -eq 'true')
+if ($isFinal -and $manualCarryover) {
+    $cp2Path = Join-Path $Root "docs\checkpoints\$Task-CP-2.md"
+    $cp2Status = if (Test-Path -LiteralPath $cp2Path) { Get-CheckpointField -Path $cp2Path -Name 'status' } else { '' }
+    $cp2Hashes = @{}
+    if (Test-Path -LiteralPath $ledgerPath) {
+        foreach ($line in ((Read-Utf8 $ledgerPath) -split "`r?`n")) {
+            if ($line -match '^\|\s*CP-2\s*\|') {
+                $cells = @($line.Trim().Trim('|').Split('|') | ForEach-Object { $_.Trim() })
+                if ($cells.Count -ge 4) { $cp2Hashes[$cells[2]] = $cells[3].ToLowerInvariant() }
+            }
+        }
+    }
+    $currentHashes = @{}
+    foreach ($h in $hashes) { $currentHashes[$h.Path] = $h.Hash.ToLowerInvariant() }
+    $unchanged = ($cp2Status -eq 'approved' -and $cp2Hashes.Count -eq $currentHashes.Count -and $cp2Hashes.Count -gt 0)
+    if ($unchanged) {
+        foreach ($path in $currentHashes.Keys) {
+            if (-not $cp2Hashes.ContainsKey($path) -or $cp2Hashes[$path] -ne $currentHashes[$path]) {
+                $unchanged = $false
+                break
+            }
+        }
+    }
+    if ($unchanged) {
+        foreach ($r in @($results | Where-Object { $_.result -eq 'MANUAL' })) {
+            $r.result = 'PASS'
+            $r.detail = ([string]$r.detail) + ' [CARRIED from CP-2; artifacts byte-identical]'
+            $carriedManual += [string]$r.id
+        }
+        if ($carriedManual.Count -gt 0) {
+            $checks.summary.manual = [int]$checks.summary.manual - $carriedManual.Count
+            $checks.summary.pass = [int]$checks.summary.pass + $carriedManual.Count
+            $manual = [int]$checks.summary.manual
+            Write-Utf8NoBom $checksPath (($checks | ConvertTo-Json -Depth 30) + "`n")
+        }
+    }
+}
 $hold = ($card.ContainsKey('hold') -and $card['hold'].Trim().ToLowerInvariant() -eq 'true')
 $machineOk = ($fail -eq 0 -and $unchecked -eq 0)
 $autoOk = ($machineOk -and $manual -eq 0)
@@ -225,8 +281,8 @@ $lines.Add('')
 if ($chunkSummary.Count -gt 0) {
     $lines.Add('## Chunks')
     $lines.Add('')
-    $lines.Add('| Chunk | State | Depth | Role | Produced | Title |')
-    $lines.Add('|---|---|---|---|---|---|')
+    $lines.Add('| Chunk | State | Depth | Role | Produced | Elapsed | Usage min | Title |')
+    $lines.Add('|---|---|---|---|---|---|---|---|')
     foreach ($row in $chunkSummary) { $lines.Add($row) }
     $lines.Add('')
     $lines.Add("Ledger: ``$chunkLedgerRel``")
@@ -246,6 +302,14 @@ if ($manualItems.Count -gt 0) {
     $lines.Add('## Manual review')
     $lines.Add('')
     foreach ($m in $manualItems) { $lines.Add('- ' + (Format-Cell $m.id) + ': ' + (Format-Cell $m.detail)) }
+    $lines.Add('')
+}
+if ($carriedManual.Count -gt 0) {
+    $lines.Add('## Manual carryover')
+    $lines.Add('')
+    foreach ($id in $carriedManual) {
+        $lines.Add("- ${id}: CARRIED from CP-2; artifacts byte-identical; CP-F is still user-reviewed")
+    }
     $lines.Add('')
 }
 $lines.Add('## Usage')
@@ -334,7 +398,7 @@ if ($NoCommit) {
 
 $commitPaths = New-Object System.Collections.Generic.List[string]
 foreach ($p in $artifacts) { $commitPaths.Add($p) }
-foreach ($p in @('docs/plan.md', $cpRel, $checksRel, $ledgerRel, $chunkLedgerRel, 'docs/activity.puml', 'docs/activity.svg')) {
+foreach ($p in @('docs/plan.md', $cpRel, $checksRel, $preflightRel, $ledgerRel, $chunkLedgerRel, 'docs/activity.puml', 'docs/activity.svg')) {
     if (Test-Path -LiteralPath (Join-Path $Root $p)) { $commitPaths.Add($p) }
 }
 $cardRel = ConvertTo-ForwardSlash ((Resolve-Path -LiteralPath $cardPath).Path.Substring($Root.TrimEnd('\').Length + 1))
