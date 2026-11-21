@@ -46,7 +46,8 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - Read only the card inputs and the specific line ranges; do not scan the whole repository or re-read completed artifacts.
 - For chunked stages, run `chunk.ps1 init/add/plan` before authoring; execute one chunk per session; stop at the chunk boundary.
 - Budgets: Markdown 8 KB/write and 20 KB/session; code 12 KB/write and 40 KB/session; stop at 60% context (65% for code); QA final message <=10 lines.
-- If no artifact is produced within 15 minutes or after 2 attempts, stop and escalate: mark the chunk `failed`/`blocked` with the error; do not repeat the same oversized call.
+- Command execution (process.md 11.4): foreground commands must finish within 60 seconds; the bash timeout is at most 120 seconds. Start `docker compose up/build`, live pytest, and long builds with `harness/scripts/run-monitored.ps1 start`; poll `status`/`tail`/`wait -WaitSec 30`. `e2e.ps1 run` is detached by default and already uses the wrapper; use `e2e.ps1 status` and `e2e.ps1 abort`. Use `e2e.ps1 up -Reset -Build` when a clean DB and fresh frontend are required; otherwise `up` is idempotent. Never use `Start-Process -Wait`, `Out-File`, `Tee-Object`, or dot-source `e2e.ps1` without `-NoExit`; read the first exit code/log tail instead of waiting for a timeout.
+- If no artifact is produced within 15 minutes or after 2 failed attempts, stop and escalate: mark the chunk `failed`/`blocked` with the error; do not repeat the same oversized or blocking call.
 - At the start of every role session, emit only `START T-XXX <stage> chunk <id>` and proceed with the first tool call; avoid long free-form reasoning.
 
 ## Blockers
@@ -57,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 
 - 2026-11-19: T-037 registered as a pending I-02 successor of T-036/T-031/T-035 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-21: T-037 started (I-02 E2E automation for S-04, coder). Dependencies T-036/T-031/T-035 all done.
+- 2026-11-21: Launch protocol updated with process.md 11.4 command guard (run-monitored, detached e2e, status/abort, no Start-Process -Wait/Out-File/dot-source). Scope and chunk ledger unchanged; see ISSUE-20261121-224809.

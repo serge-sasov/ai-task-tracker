@@ -57,6 +57,8 @@ $requiredGlobal = @(
     (Join-Path $GlobalHarness "templates\architecture-description.md"),
     (Join-Path $GlobalHarness "templates\openapi.yaml"),
     (Join-Path $GlobalHarness "scripts\new-issue.ps1"),
+    (Join-Path $GlobalHarness "scripts\run-monitored.ps1"),
+    (Join-Path $GlobalHarness "scripts\run-monitored-child.ps1"),
     (Join-Path $GlobalHarness "scripts\check-budget.ps1"),
     (Join-Path $GlobalHarness "scripts\validate-e2e-data.py"),
     (Join-Path $GlobalHarness "scripts\validate-openapi.py"),

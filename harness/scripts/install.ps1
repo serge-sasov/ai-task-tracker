@@ -163,6 +163,8 @@ $requiredSource = @(
     (Join-Path $SourceRoot "templates\openapi.yaml"),
     (Join-Path $SourceRoot "templates\plan-row.md"),
     (Join-Path $SourceRoot "scripts\new-issue.ps1"),
+    (Join-Path $SourceRoot "scripts\run-monitored.ps1"),
+    (Join-Path $SourceRoot "scripts\run-monitored-child.ps1"),
     (Join-Path $SourceRoot "scripts\check-budget.ps1"),
     (Join-Path $SourceRoot "scripts\validate-e2e-data.py"),
     (Join-Path $SourceRoot "scripts\validate-openapi.py"),

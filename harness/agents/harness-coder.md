@@ -105,6 +105,7 @@ permission:
     "*scripts/build*": "allow"
     "*scripts/test*": "allow"
     "*scripts/deploy*": "allow"
+    "*scripts/e2e*": "allow"
     "*docker build*": "allow"
     "*docker compose build*": "allow"
     "*docker compose up*": "allow"
@@ -120,6 +121,7 @@ permission:
     "*git show*": "allow"
     "*Test-Path*": "allow"
     "*new-issue.ps1*": "allow"
+    "*run-monitored.ps1*": "allow"
     "*git push*": "deny"
     "*git commit*": "deny"
     "*git tag*": "deny"
@@ -194,6 +196,13 @@ Before starting, verify `harness/process.md`, the workflow file, and the card; i
   session; one module/file group per chunk. Stop at 65% of `limit.context` and
   continue in a fresh session with a short handoff. If a module or test file is
   larger, split it into stages; do not repeat an output-limit failure.
+- Command execution: follow `harness/process.md` 11.4. Foreground commands must
+  finish within 60 seconds; the bash timeout is at most 120 seconds. Start
+  `docker compose up/build`, e2e runs, live pytest, and long builds with
+  `harness/scripts/run-monitored.ps1 start`, then poll `status`/`wait -WaitSec
+  30`. Never use `Start-Process -Wait`, `Out-File`, `Tee-Object`, or a
+  dot-sourced dispatching script without `-NoExit`; react to the first exit code
+  and log tail instead of waiting for a timeout.
 - In UX prototype mode (called by `harness-ux-designer`), write only
   `docs/ux/prototype/<slug>/**`, one page or shared asset per step, follow the
   UX brief and UI spec, use relative links and local assets, and do not edit

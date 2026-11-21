@@ -103,6 +103,8 @@ A task is closed only by the card's `acceptance` criteria and `CP-F` approval. O
 
 Generation is budgeted per `process.md` 11.1: A-02 and large code stages are chunked, artifacts are written incrementally, and a role stops at the context threshold with a handoff. `harness-analyst` and `harness-coder` may spawn self-sub-sessions of their own role for chunks (depth 2, sequential, no grandchildren). The single cross-role exception is `harness-ux-designer -> harness-coder` for prototype pages: one child at a time, same UX task, coder writes only `docs/ux/prototype/**`; all other cross-role calls are forbidden.
 
+Command execution follows `process.md` 11.4. Foreground commands are limited to 60 seconds; the bash timeout is at most 120 seconds. Long jobs (`docker compose up/build`, e2e runs, live pytest, long builds) start with `harness/scripts/run-monitored.ps1 start` and are monitored with `status`/`tail`/`wait -WaitSec 30`. `Start-Process -Wait`, `Out-File`/`Tee-Object` progress capture, and dot-sourcing a dispatching script without `-NoExit` are forbidden. React to the first exit code, log tail, or stall; do not wait for a timeout and do not repeat the same blocking command.
+
 For any harness problem, blocker, or workaround, use the `harness-issues` skill and create a record in `docs/issues/`; the orchestrator updates the index and includes the issue in the task commit. `/harness-doctor` verifies that every issue file is indexed and that no issue lives in a root `harness-issues/` directory.
 
 ## Global installation and versions

@@ -43,6 +43,14 @@
 - [ ] No unrelated behavior or files changed.
 - [ ] QA verifies fail-before/pass-after independently.
 
+## Launch protocol (anti-hang)
+
+- Start with a 5-line plan and the first tool call; do not spend more than 60 seconds or 2k output tokens in analysis before writing the first artifact.
+- Foreground commands must finish within 60 seconds; the bash timeout is at most 120 seconds.
+- Start `docker compose up/build`, live pytest, and long builds with `harness/scripts/run-monitored.ps1 start`; poll `status`/`tail`/`wait -WaitSec 30`. The project e2e runner `run` is detached by default and already uses the wrapper; use its `status`/`abort`.
+- Never use `Start-Process -Wait`, `Out-File`, `Tee-Object`, or dot-source a dispatching script without `-NoExit`; react to the first exit code/log tail, not to a timeout.
+- If no artifact is produced within 15 minutes or after 2 failed attempts, stop and mark the chunk `failed`/`blocked` with the error; do not repeat the same blocking command.
+
 ## Checkpoints
 
 | ID | Stage | Artifacts | Checks | Status | Review file |

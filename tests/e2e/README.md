@@ -20,13 +20,22 @@ From the repo root:
 # List the use cases from the YAML (no stack required)
 .\scripts\e2e.ps1 list
 
-# Bring up the isolated local stack (clean slate, rebuild optional)
+# Bring up the isolated local stack (bounded health; -Reset for clean slate,
+# -Build to rebuild images)
 .\scripts\e2e.ps1 up
+.\scripts\e2e.ps1 up -Reset -Build
 
-# Run the full suite against the local stack, results -> tests/e2e/results/
+# Start the full suite detached; results -> tests/e2e/results/
 .\scripts\e2e.ps1 run
 
-# Or: list + run in one command
+# Monitor and stop the detached run
+.\scripts\e2e.ps1 status
+.\scripts\e2e.ps1 abort
+
+# Run in the foreground (CI/QA short checks only)
+.\scripts\e2e.ps1 run -Wait
+
+# List + run in one command
 .\scripts\e2e.ps1 all
 
 # Restrict to one or more use cases
@@ -38,7 +47,12 @@ From the repo root:
 
 Environment variables: `E2E_BASE_URL` (default `http://127.0.0.1:8080`),
 `E2E_OLLAMA_URL` (default `http://127.0.0.1:11434`),
-`E2E_STACK_TIMEOUT` (default `300s`), `E2E_HEALTH_TIMEOUT` (default `30s`).
+`E2E_STACK_TIMEOUT` (default `90s`), `E2E_HEALTH_TIMEOUT` (default `10s`).
+`run` starts pytest through `harness/scripts/run-monitored.ps1`; the agent must
+poll `status`/`tail` instead of blocking a tool call. `up` has a bounded health
+wait (`-StackTimeoutSec`, default 90) and fails with `docker compose ps` plus
+service logs instead of silently continuing to pytest. Set `E2E_KEEP_STACK=1`
+to skip the session-end `docker compose down -v` during iterative runs.
 
 ### Direct pytest
 
@@ -113,10 +127,10 @@ all `skipped` -> `skipped`; else `pass`; no tests -> `not_run`.
 
 - The runner uses **only** `docker compose` against the local
   `docker-compose.yml` on `127.0.0.1`. All containers bind loopback.
-- `scripts/e2e.ps1 run` brings the stack up from a clean slate
-  (`docker compose down -v` then `up -d`) when the health check fails; if the
-  stack cannot be started it logs a warning and still runs pytest, so results
-  are recorded (stack-dependent tests skip or error honestly).
+- `scripts/e2e.ps1 run` checks the backend and frontend health; if either is
+  down it starts the stack with a bounded health wait. A failed stack start is a
+  hard error with `docker compose ps` and service logs, not a silent pytest run.
+  `-Reset` performs `docker compose down -v`; `-Build`/`-Force` rebuild images.
 - On a real `pytest` run, `pytest_sessionfinish` tears the stack down with
   `docker compose down -v` (local volumes only). **Production is never touched.**
   `--collect-only` performs no teardown.

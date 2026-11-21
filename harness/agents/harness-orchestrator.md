@@ -58,6 +58,7 @@ permission:
     "*stage-done.ps1*": "allow"
     "*board-update.ps1*": "allow"
     "*measure-tokens.ps1*": "allow"
+    "*run-monitored.ps1*": "allow"
     "git push*": "deny"
     "git tag*": "deny"
     "git reset*": "deny"
@@ -100,7 +101,9 @@ report that the project is not initialized (`/harness-init`).
    description's `Scope and applicability` section and stage checks.
 5. Manage checkpoints with `harness/scripts/stage-done.ps1`: it runs the checks,
    writes the checks JSON/evidence ledger/checkpoint, applies P2, updates
-   plan/card/activity, and commits the snapshot. After the last chunk and before
+   plan/card/activity, and commits the snapshot. When reviewing a chunk, compare
+   `elapsed_min` with `max_wall_min`; an over-budget or stalled chunk is recorded
+   as a blocker, not accepted silently. After the last chunk and before
    `stage-done`, run the mandatory
    `harness/scripts/preflight.ps1 -Task T-XXX -Stage <stage> -Checkpoint CP-N`;
    fix every FAIL/UNCHECKED before user review. Record user decisions with

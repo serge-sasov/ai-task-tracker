@@ -51,6 +51,7 @@ permission:
     "*stage-done.ps1*": "allow"
     "*board-update.ps1*": "allow"
     "*measure-tokens.ps1*": "allow"
+    "*run-monitored.ps1*": "allow"
     "git add *": "deny"
     "git commit *": "deny"
     "git push*": "deny"
@@ -145,10 +146,12 @@ use this mode for ordinary tasks.
    must not run role work inline. Status comes from the plan, card, and
    checkpoints, never from `docs/activity.puml` or its derivatives.
 7. After each role call, check the session for `finish=length`, SSE timeouts,
-   compaction, and context above the card's `context_stop_pct`. If any occurs,
+   compaction, context above the card's `context_stop_pct`, and any bash call
+   longer than 120 seconds or a command with no new log output. If any occurs,
    stop the run. If chunk artifacts exist, validate them and mark the chunk
    complete/failed with a handoff; otherwise split the chunk. Never ask the role
-   to repeat the same oversized call.
+   to repeat the same oversized call. Require `harness/scripts/run-monitored.ps1`
+   for reruns of long commands; do not accept "still waiting" as progress.
 8. When the role reports a checkpoint: run the mandatory preflight
    `harness/scripts/preflight.ps1 -Task T-XXX -Stage <stage> -Checkpoint CP-N`,
    then instruct `harness-orchestrator` to run

@@ -46,10 +46,10 @@ COMPOSE_FILE = ROOT.parent / "docker-compose.yml"
 DEFAULT_BASE_URL = os.environ.get("E2E_BASE_URL", "http://127.0.0.1:8080").rstrip("/")
 DEFAULT_OLLAMA_URL = os.environ.get("E2E_OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
 HEALTH_PATH = "/api/health"
-HEALTH_TIMEOUT_SECONDS = int(os.environ.get("E2E_HEALTH_TIMEOUT", "30"))
+HEALTH_TIMEOUT_SECONDS = int(os.environ.get("E2E_HEALTH_TIMEOUT", "10"))
 
-STACK_HEALTH_TIMEOUT_SECONDS = int(os.environ.get("E2E_STACK_TIMEOUT", "300"))
-STACK_HEALTH_POLL_SECONDS = 5
+STACK_HEALTH_TIMEOUT_SECONDS = int(os.environ.get("E2E_STACK_TIMEOUT", "90"))
+STACK_HEALTH_POLL_SECONDS = 2
 
 
 # --------------------------------------------------------------------------- #
@@ -110,7 +110,7 @@ def _docker(args, timeout=60):
 
 def stack_is_up(base_url):
     try:
-        status, _ = _http_request("GET", f"{base_url}{HEALTH_PATH}", timeout=10)
+        status, _ = _http_request("GET", f"{base_url}{HEALTH_PATH}", timeout=2)
     except Exception:
         return False
     return status == 200
@@ -339,7 +339,8 @@ def pytest_sessionfinish(session, exitstatus):
     try:
         write_all_results(session)
     finally:
-        _teardown_stack()
+        if os.environ.get("E2E_KEEP_STACK") != "1":
+            _teardown_stack()
         _UC_REPORTS.clear()
 
 

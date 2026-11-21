@@ -590,6 +590,41 @@ stop and request decomposition instead of attempting a larger write.
 - Token budgets in section 11.1 remain process limits; usage evidence never
   overrides a failed check or an acceptance criterion.
 
+### 11.4 Command execution and long-running processes
+
+The bash tool timeout is a safety net, not a job timeout; on Windows it may not
+terminate the whole process tree. A role must never block a session while a
+command runs or waits for a failed command to time out.
+
+- Foreground only when the expected duration is at most 60 seconds. Set the
+  bash timeout explicitly (default 60 s, absolute maximum 120 s). Do not raise
+  it to 300-900 s to wait for a job.
+- Anything that can run longer (`docker compose up/build`, an e2e run, live
+  pytest, `npm ci/build/test`, Java/Gradle/Maven builds, `uvicorn` or
+  `java -jar` servers) must be started with
+  `harness/scripts/run-monitored.ps1 start`. It returns the PID, log path, and
+  status path in under 2 seconds and keeps the job detached.
+- Monitor with `status`, `tail`, and `wait -WaitSec 30`; poll every 15-30
+  seconds. Never wait for the job inside a single tool call.
+- First check after start: after 1-2 seconds read `status`. If the job already
+  exited, read `exit_code` and the log tail and react immediately. An immediate
+  failure (bad argument, missing tool, Docker unavailable, port busy) is not a
+  reason to wait or to repeat the same command.
+- Forbidden: `Start-Process -Wait`, `Out-File`, `Tee-Object`, `Select-Object
+  -Last` on a long-running native command, and dot-sourcing a script that
+  dispatches work without its `-NoExit` switch. These buffer output and hide
+  the current result.
+- A job is stalled when the log has not grown for two consecutive polls or
+  `elapsed_min` exceeds the chunk `max_wall_min`. Run `stop`, record the
+  evidence, and mark the chunk `failed` or `blocked` with `chunk.ps1 fail`.
+- Two timeouts or two identical immediate failures are the limit. Do not retry
+  the same command a third time; split the command, fix the environment, or
+  escalate with an issue.
+- Report: command, PID, log path, status path, exit code, elapsed, and the last
+  20 log lines. A claim of progress without one of these is not evidence.
+- The `e2e.ps1` runner follows the same rule: `run` starts pytest detached and
+  returns a status handle; `status` and `abort` are the monitoring commands.
+
 ## 12. Role artifacts
 
 | Role | Write area |
@@ -644,8 +679,11 @@ roles never edit them.
   `FAIL`/`UNCHECKED` result with prose; setting a checkpoint `status` without a
   decision or a P2 all-zero result.
 - Deleting or rewriting evidence ledger rows or checkpoint snapshots.
-- Broadening harness `allow` patterns to `*`, `git*`, or `Remove-Item`; the five
+- Broadening harness `allow` patterns to `*`, `git*`, or `Remove-Item`; the
   approved script patterns are exact and doctor-checked.
+- Blocking command patterns: `Start-Process -Wait`, `Out-File`/`Tee-Object` for
+  progress, dot-sourcing a dispatching script without `-NoExit`, or raising the
+  bash timeout above 120 seconds to wait for a long job. Use section 11.4.
 - Mixing product bugs (`docs/bugs/`) with harness problems (`docs/issues/`).
 - Access outside drive `C:` (see agent permissions).
 

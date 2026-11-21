@@ -76,11 +76,21 @@ function Get-ConfiguredContextValues {
 
 function Get-OllamaNumCtx {
     param([Parameter(Mandatory = $true)][string]$Model)
-    $output = @(& ollama show $Model 2>$null)
-    if ($LASTEXITCODE -ne 0 -or $output.Count -eq 0) { return $null }
-    $match = [regex]::Match(($output -join "`n"), '(?m)^\s*num_ctx\s+(\d+)\s*$')
-    if ($match.Success) { return [int]$match.Groups[1].Value }
-    return $null
+    $prev = $ErrorActionPreference
+    $ErrorActionPreference = 'SilentlyContinue'
+    try {
+        $output = @(& ollama show $Model 2>$null)
+        if ($LASTEXITCODE -ne 0 -or $output.Count -eq 0) { return $null }
+        $match = [regex]::Match(($output -join "`n"), '(?m)^\s*num_ctx\s+(\d+)\s*$')
+        if ($match.Success) { return [int]$match.Groups[1].Value }
+        return $null
+    }
+    catch {
+        return $null
+    }
+    finally {
+        $ErrorActionPreference = $prev
+    }
 }
 
 $UserProfile = [Environment]::GetFolderPath("UserProfile")
@@ -131,6 +141,8 @@ $globalFiles = @(
     (Join-Path $GlobalHarness "templates\architecture-description.md"),
     (Join-Path $GlobalHarness "templates\openapi.yaml"),
     (Join-Path $GlobalHarness "scripts\new-issue.ps1"),
+    (Join-Path $GlobalHarness "scripts\run-monitored.ps1"),
+    (Join-Path $GlobalHarness "scripts\run-monitored-child.ps1"),
     (Join-Path $GlobalHarness "scripts\check-budget.ps1"),
     (Join-Path $GlobalHarness "scripts\validate-e2e-data.py"),
     (Join-Path $GlobalHarness "scripts\validate-openapi.py"),
@@ -161,6 +173,13 @@ if (Test-Path -LiteralPath $engineScript) {
     & powershell -NoProfile -ExecutionPolicy Bypass -File $engineScript -SelfTest | Out-Null
     if ($LASTEXITCODE -eq 0) { Write-Ok "verification engine self-test passed" }
     else { Write-Err "verification engine self-test failed; fix harness/scripts before running checkpoints" }
+}
+
+$monitorScript = Join-Path $GlobalHarness "scripts\run-monitored.ps1"
+if (Test-Path -LiteralPath $monitorScript) {
+    & powershell -NoProfile -ExecutionPolicy Bypass -File $monitorScript -SelfTest | Out-Null
+    if ($LASTEXITCODE -eq 0) { Write-Ok "monitored-run self-test passed" }
+    else { Write-Err "monitored-run self-test failed; fix harness/scripts/run-monitored.ps1" }
 }
 
 $checksRoot = Join-Path $GlobalHarness "checks"
@@ -208,9 +227,9 @@ foreach ($workflowName in @("feature", "bugfix")) {
 $leadAgentPath = Join-Path $GlobalRoot "agents\harness.md"
 if (Test-Path -LiteralPath $leadAgentPath) {
     $leadText = Get-Content -LiteralPath $leadAgentPath -Raw
-    $scriptPatterns = @("*stage-done.ps1*", "*board-update.ps1*", "*measure-tokens.ps1*", "*verify-artifacts.ps1*", "*verify-stage.ps1*")
+    $scriptPatterns = @("*stage-done.ps1*", "*board-update.ps1*", "*measure-tokens.ps1*", "*verify-artifacts.ps1*", "*verify-stage.ps1*", "*run-monitored.ps1*")
     $missingPatterns = @($scriptPatterns | Where-Object { $leadText -notmatch [regex]::Escape($_) })
-    if ($missingPatterns.Count -eq 0) { Write-Ok "lead agent allows the five harness scripts" }
+    if ($missingPatterns.Count -eq 0) { Write-Ok "lead agent allows the harness scripts" }
     else { Write-Warn "lead agent is missing allow patterns: $($missingPatterns -join ', ')" }
     if ($leadText -match '"git\*"\s*:\s*"allow"') {
         Write-Warn "lead agent has a broad git allow pattern; review permission.bash manually"
@@ -582,7 +601,7 @@ if ((Test-Path -LiteralPath $marker) -and (Test-Path -LiteralPath $plan)) {
     else {
         Write-Warn "missing harness/checks: $($missingChecks -join ', '); run /harness-init -Force"
     }
-    $projectScripts = @("harness-lib.ps1", "verify-artifacts.ps1", "verify-stage.ps1", "stage-done.ps1", "board-update.ps1", "measure-tokens.ps1", "validate-openapi.py")
+    $projectScripts = @("harness-lib.ps1", "verify-artifacts.ps1", "verify-stage.ps1", "stage-done.ps1", "board-update.ps1", "measure-tokens.ps1", "validate-openapi.py", "run-monitored.ps1", "run-monitored-child.ps1")
     $missingScripts = @($projectScripts | Where-Object {
         -not (Test-Path -LiteralPath (Join-Path $Project "harness\scripts\$_"))
     })
@@ -591,6 +610,20 @@ if ((Test-Path -LiteralPath $marker) -and (Test-Path -LiteralPath $plan)) {
     }
     else {
         Write-Warn "missing harness/scripts: $($missingScripts -join ', '); run /harness-init -Force"
+    }
+    $e2eRunnerPath = Join-Path $Project "scripts\e2e.ps1"
+    if (Test-Path -LiteralPath $e2eRunnerPath) {
+        $runnerText = Get-Content -LiteralPath $e2eRunnerPath -Raw
+        $blocking = @()
+        if ($runnerText -match 'AddMinutes\(\s*15\s*\)') { $blocking += '15-minute health wait' }
+        if ($runnerText -match 'Start-Process\s+-Wait') { $blocking += 'Start-Process -Wait' }
+        if ($runnerText -match 'Tee-Object') { $blocking += 'Tee-Object progress capture' }
+        if ($blocking.Count -gt 0) {
+            Write-Warn "e2e runner has blocking patterns: $($blocking -join ', '); use run-monitored.ps1 and bounded health waits"
+        }
+        else {
+            Write-Ok "e2e runner uses bounded/detached commands"
+        }
     }
     $missingEvidenceDirs = @(@("evidence", "metrics") | Where-Object {
         -not (Test-Path -LiteralPath (Join-Path $Project "docs\$_"))
