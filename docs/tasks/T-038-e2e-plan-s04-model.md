@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-01 |
 | role | qa |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-031, T-037 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `tests/e2e/**`, `docs/qa/e2e-plan-task-list-model.md` |
@@ -19,7 +19,7 @@
 | budget_profile | Q-01/default (Markdown 8 KB/write, 20 KB/session, stop 60% context) |
 | budget | mode=authored-delta scope=delta max_write_kb=40 max_session_kb=100 (per_type md 8/20 KB) |
 | base_commit | d8b3de2 |
-| usage | in=113955 out=19669 cr=1086588 ratio=9.5x min=27 |
+| usage | in=166571 out=24297 cr=1283572 ratio=7.7x min=35 |
 | issues | - |
 | commit | 564a328 |
 
@@ -37,7 +37,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-s04-model.md` | 7P/0F/0M | approved | docs/checkpoints/T-038-CP-1.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-038-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 8P/0F/0M | awaiting_review | docs/checkpoints/T-038-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: CP-1 budget md max_write_kb raised 8→12 KB to accommodate the single QA e2e plan document (9.75 KB); T-037 precedent.
 - 2026-11-22: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=113955 out=19669 cr=1086588 ratio=9.5x min=27; reviewer auto (P2)
 - 564a328: CP-1 snapshot
+- 2026-11-22: CP-F awaiting_review (Q-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=166571 out=24297 cr=1283572 ratio=7.7x min=35; reviewer user
