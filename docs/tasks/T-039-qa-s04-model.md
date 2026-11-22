@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | n/a |
+| usage | in=312905 out=64703 cr=5106899 ratio=16.3x min=156 |
 | issues | - |
 | commit | - |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-s04-model.md`, `docs/qa/review-T-039.md` | - | pending | `docs/checkpoints/T-039-CP-2.md` |
+| CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-s04-model.md`, `docs/qa/review-T-039.md` | 8P/0F/0M | approved | docs/checkpoints/T-039-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-039-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -58,3 +58,6 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-039 registered as a pending Q-02 successor of T-038/T-037/T-036/T-035/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-22: started via `/harness-run` — status `in_progress`; board invariant verified (no other active task; dependencies T-038/T-037/T-036/T-035/T-033 all `done`); stage Q-02, role qa.
 - 2026-11-22: `scope_class` and `budget_profile` to be classified at chunk planning (`harness/scripts/chunk.ps1 init`); QA role granularity per `harness/process.md` 11.1; self-delegation `d2` only; budget profile from `harness/budgets.json`.
+- 2026-11-22: Q-02 chunk plan done (`chunk.ps1 init` + C1/C2 added with briefs). **C1 done**: S-04 e2e 7/7 PASS, S-01 regression e2e 24/24 PASS, S-01 unit/component 8/8 PASS (final combined run with `E2E_KEEP_STACK=1`; evidence `tests/e2e/results/UC-E2E-005.json`, `UC-E2E-003.json`); report `docs/qa/e2e-report-s04-model.md` written; no defects. CP-2 reported; C2 (code review + verdict) pending next session.
+- 2026-11-22: **C2 done**: code/text review of `ModelCell.vue`, `DashboardView.vue` (S-01 unchanged), `CalendarDayView.vue` (S-04, R-015) + cross-view consistency; no product defects (2 informational notes); **verdict ACCEPT**; `docs/qa/review-T-039.md` written; `verify-stage.ps1 -Stage Q-02` = 8 PASS/0 FAIL; chunk ledger 2/2 done. **CHECKPOINT CP-2 reached** — ready for lead preflight + stage-done.
+- 2026-11-22: CP-2 approved (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=312905 out=64703 cr=5106899 ratio=16.3x min=156; reviewer auto (P2)

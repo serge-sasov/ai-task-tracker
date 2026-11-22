@@ -1,0 +1,160 @@
+{
+    "task":  "T-039",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "mode":  "authored-delta",
+                   "profile":  "Q-02/default",
+                   "scope_class":  "delta",
+                   "per_type":  {
+                                    "md":  {
+                                               "max_write_kb":  8,
+                                               "max_session_kb":  20
+                                           },
+                                    "puml":  {
+                                                 "max_write_kb":  8,
+                                                 "max_session_kb":  20
+                                             },
+                                    "openapi":  {
+                                                    "max_write_kb":  6,
+                                                    "max_session_kb":  15
+                                                },
+                                    "yaml":  {
+                                                 "max_write_kb":  6,
+                                                 "max_session_kb":  15
+                                             },
+                                    "code":  {
+                                                 "max_write_kb":  12,
+                                                 "max_session_kb":  40
+                                             },
+                                    "html":  {
+                                                 "max_write_kb":  12,
+                                                 "max_session_kb":  40
+                                             }
+                                },
+                   "exclude":  [
+                                   "**/*.svg",
+                                   "**/package-lock.json",
+                                   "**/*.lock",
+                                   "**/node_modules/**",
+                                   "**/dist/**",
+                                   "**/target/**"
+                               ],
+                   "max_write_kb":  40,
+                   "max_session_kb":  100,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "E2E execution + report",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/qa/e2e-report-s04-model.md"
+                                ],
+                       "inputs":  [
+                                      "docs/qa/e2e-plan-s04-model.md",
+                                      "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py",
+                                      "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py",
+                                      "scripts/e2e.ps1",
+                                      "src/web/tests/unit/ModelCell.spec.ts",
+                                      "src/web/tests/unit/views.spec.ts"
+                                  ],
+                       "brief":  "docs/chunks/T-039/C1.brief.md",
+                       "acceptance":  [
+                                          "e2e-report-s04-model.md exists with per-test PASS/FAIL and observed cell states",
+                                          "S-01 regression re-run and reported green (or defect recorded)",
+                                          "unit/component tests reported"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/qa/e2e-report-s04-model.md",
+                                            "sha256":  "e31ff1672e4c7890f0af2c24a18924de4de5a000b2efd883f1267003132f8113"
+                                        }
+                                    ],
+                       "base_commit":  "e18ca65",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "S-04 e2e 7/7 + S-01 e2e 24/24 + unit 8/8 pass; final run E2E_KEEP_STACK=1; results UC-E2E-005.json/UC-E2E-003.json pass; report written",
+                                     "report trimmed to 7.7 KB (within md 8 KB write budget); sha256 refreshed; content unchanged in meaning"
+                                 ],
+                       "started":  "2026-11-22T15:41:17",
+                       "finished":  "2026-11-22T16:19:24",
+                       "sessions":  0,
+                       "compactions":  0,
+                       "handoff":  "",
+                       "elapsed_min":  38
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "Q-02",
+                       "role":  "qa",
+                       "depth":  1,
+                       "title":  "Code review + verdict",
+                       "state":  "done",
+                       "owns":  [
+                                    "docs/qa/review-T-039.md"
+                                ],
+                       "inputs":  [
+                                      "src/web/src/components/ModelCell.vue",
+                                      "src/web/src/views/DashboardView.vue",
+                                      "src/web/src/views/CalendarDayView.vue",
+                                      "docs/ux/ui-spec-ai-task-tracker.md",
+                                      "docs/analysis/requirements-ai-task-tracker.md",
+                                      "docs/qa/e2e-report-s04-model.md"
+                                  ],
+                       "brief":  "docs/chunks/T-039/C2.brief.md",
+                       "acceptance":  [
+                                          "review-T-039.md covers ModelCell.vue, both views, S-01 unchanged, S-04 matches UX spec and R-015",
+                                          "final verdict accept/reject with evidence",
+                                          "defects noted for BUG-XXX, CP-2 and CP-F declared"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "docs/qa/review-T-039.md",
+                                            "sha256":  "b0363c8670032c1584223eaf8ab8aacbdeb46e5143873654faaf5220f4c39180"
+                                        }
+                                    ],
+                       "base_commit":  "e18ca65",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+
+                                 ],
+                       "started":  "2026-11-22T16:29:49",
+                       "finished":  "2026-11-22T16:33:37",
+                       "sessions":  0,
+                       "compactions":  0,
+                       "handoff":  "",
+                       "elapsed_min":  4
+                   }
+               ],
+    "updated":  "2026-11-22T16:33:37"
+}
