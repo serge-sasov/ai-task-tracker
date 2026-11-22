@@ -1,0 +1,17 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0
+rootdir: C:\study\ai\research\ai-task-tracker
+plugins: anyio-4.16.0
+collected 7 items
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py sssssss             [100%]
+
+=========================== short test summary info ===========================
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:56: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:80: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:115: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:148: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:187: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:222: local stack unhealthy - live E2E requires docker compose up
+SKIPPED [1] tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:277: local stack unhealthy - live E2E requires docker compose up
+============================= 7 skipped in 2.23s ==============================

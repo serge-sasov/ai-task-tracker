@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="U-02 deep dive: почему T-033 занял 3 ч 49 мин, chunk-budget FAIL, approval loop и как сократить время.">
+<title>U-02 deep dive: почему T-033 занял 3 ч 49 мин</title>
+<style>
+:root{
+  --font: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#f8fafb;
+  --border:#d8dde4; --border-strong:#b9c2cd;
+  --text:#1c2530; --muted:#5a6675;
+  --primary:#2f6f4f; --primary-weak:#eef4f1;
+  --done:#1e6b34; --done-bg:#e6f4ea;
+  --progress:#8a5b00; --progress-bg:#fff3cd;
+  --pending:#4b5563; --pending-bg:#eceff3;
+  --danger:#b3261e; --danger-bg:#fdecea;
+  --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.55}
+a{color:var(--primary)}
+a:focus-visible, summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--surface);padding:10px 14px;z-index:10}
+.skip:focus{left:12px;top:12px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+header.hero{background:linear-gradient(135deg,#ffffff 0%,#eef4f1 100%);border:1px solid var(--border);border-radius:14px;padding:28px 30px;box-shadow:var(--shadow);margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);font-weight:700;margin:0 0 8px}
+h1{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.lede{max-width:900px;margin:0;color:var(--muted);font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:650}
+.section{margin-top:26px}
+.section > h2{font-size:21px;margin:0 0 6px;letter-spacing:-.01em}
+.section > .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:30px;font-weight:750;line-height:1.05;letter-spacing:-.03em}
+.kpi .l{font-size:13px;font-weight:650;margin-top:4px}
+.kpi .d{font-size:12.5px;color:var(--muted);margin-top:3px}
+.kpi.done .n{color:var(--done)} .kpi.progress .n{color:var(--progress)} .kpi.pending .n{color:var(--pending)} .kpi.danger .n{color:var(--danger)}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.callout h3{margin:0 0 8px;font-size:15px}
+.callout ul{margin:0;padding-left:20px}
+.callout li{margin:5px 0}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.panel-head h3{margin:0;font-size:15px}
+.panel-head .hint{font-size:12.5px;color:var(--muted)}
+.graph-scroll{overflow:visible;background:#fff;padding:12px;display:flex;justify-content:center}
+.graph-scroll .plantuml-svg{display:block;width:auto;max-width:100%;height:auto}
+.graph-scroll svg{display:block;width:auto;max-width:100%;height:auto;min-width:0}
+figcaption{padding:12px 16px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;background:var(--surface-2)}
+.table-wrap{overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px}
+caption{text-align:left;padding:14px 16px;font-weight:650;border-bottom:1px solid var(--border);background:var(--surface-2)}
+th,td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}
+th{position:sticky;top:0;z-index:1;background:#eef1f4;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:#3f4b59}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+tbody tr:last-child td{border-bottom:none}
+td.phase{min-width:150px}
+.phase-id{font-weight:750;white-space:nowrap}
+.phase-name{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.role{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:650;white-space:nowrap;border:1px solid transparent}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st-done{color:var(--done);background:var(--done-bg);border-color:#c4e3cd}
+.st-progress{color:var(--progress);background:var(--progress-bg);border-color:#f0d99a}
+.st-pending{color:var(--pending);background:var(--pending-bg);border-color:#d5dbe2}
+.st-open{color:var(--danger);background:var(--danger-bg);border-color:#f3c3bf}
+.artifacts{margin:0;padding:0;list-style:none}
+.artifacts li{margin:0 0 6px;padding-left:17px;position:relative}
+.artifacts li::before{content:"•";position:absolute;left:0;color:var(--primary);font-weight:700}
+.artifacts li:last-child{margin-bottom:0}
+code{font-family:var(--mono);font-size:12.5px;background:#f1f4f7;border:1px solid #e2e7ed;border-radius:4px;padding:1px 5px;white-space:nowrap}
+.muted{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.18)}
+.sources{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:4px 0}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){
+  .wrap{padding:16px 12px 40px}
+  header.hero{padding:20px 18px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{max-width:100%}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  header.hero,.panel,.table-wrap,.sources,.callout{box-shadow:none}
+  .graph-scroll{max-height:none;overflow:visible}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{min-width:0;width:100%}
+  th{position:static}
+  a{color:inherit;text-decoration:none}
+}
+
+:root{
+  --series-16:#8a5b00; --series-20:#2f6f4f;
+  --series-64k:#8a5b00; --series-text:#b3261e; --series-mtp2:#2f6f4f;
+  --series-blue:#2b5c8a; --series-gray:#8a94a3;
+}
+.btn{border:1px solid var(--primary);background:var(--primary);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:13px;font-weight:650;cursor:pointer}
+.btn:hover{background:#24583e;border-color:#24583e}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.toc a{font-size:12.5px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 10px;text-decoration:none;color:var(--muted)}
+.toc a:hover{border-color:var(--primary);color:var(--primary)}
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px;margin-top:14px;align-items:start}
+.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.chart-card{margin:0;break-inside:avoid}
+.chart-wide{grid-column:1/-1}
+.chart-card .chart-body{padding:12px 12px 4px;background:#fff}
+.chart-body svg{display:block;width:100%;height:auto}
+.chart-card .legend{border-top:0;padding-top:6px;padding-bottom:10px}
+.chart-card figcaption{border-top:1px solid var(--border);padding:10px 16px;font-size:12.5px;color:var(--muted);background:var(--surface-2)}
+.chart-card .panel-head h3{font-size:15px}
+.chart-card .hint{font-size:12px}
+.legend .swatch{width:13px;height:13px;border-radius:3px;border:1px solid rgba(0,0,0,.15);display:inline-block;margin-right:6px;vertical-align:-2px}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+.highlight-row td{background:var(--primary-weak)!important;font-weight:600}
+.callout.ok{border-left-color:var(--done)}
+.callout.warn{border-left-color:var(--progress)}
+.callout.danger{border-left-color:var(--danger)}
+.callout h3{font-size:15px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.json-details{margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.json-details summary{cursor:pointer;font-weight:650}
+.json-details pre{overflow:auto;max-height:520px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;font:12px/1.5 var(--mono);margin:12px 0 0}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:5px 0;overflow-wrap:anywhere}
+.sources code{white-space:normal;word-break:break-word}
+.mono{font-family:var(--mono);font-size:12.5px}
+.small-note{font-size:12.5px;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px}
+.panel-pad{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.panel-pad h3{margin:0 0 8px;font-size:15px}
+.panel-pad ul{margin:0;padding-left:20px}
+.panel-pad li{margin:5px 0}
+.tag{display:inline-block;border:1px solid var(--border);background:var(--surface-2);border-radius:6px;padding:1px 6px;font-size:12px;white-space:nowrap}
+@media (max-width:720px){
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card .chart-body{padding:8px 6px 2px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media print{
+  .btn,.toc{display:none}
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card{page-break-inside:avoid;break-inside:avoid}
+  .chart-body svg{width:100%;height:auto}
+  details{display:block}
+  details > summary{display:none}
+  .json-details pre{max-height:none}
+}
+
+.u02-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;margin-top:14px}
+.pair-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;break-inside:avoid}
+.pair-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.pair-head h3{margin:0;font-size:17px}
+.pair-sub{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.pair-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.metric{border:1px solid var(--border);background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.metric .v{font-size:15px;font-weight:700;line-height:1.2}
+.metric .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+.bar-row{display:grid;grid-template-columns:46px 1fr 64px;gap:7px;align-items:center;margin:5px 0;font-size:12px}
+.bar-track{height:10px;background:#edf0f3;border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px}
+.bar-row .b2{background:#8a94a3}.bar-row .b3{background:#2f6f4f}
+.bar-row .num{font-size:11.5px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.quote{margin:10px 0;padding:10px 12px;border-left:3px solid var(--primary);background:var(--primary-weak);border-radius:0 7px 7px 0;font-size:12.5px;color:#33404d}
+.quote code{white-space:normal;word-break:break-word}
+.cause-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:14px}
+.cause-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+.cause-card h3{margin:0 0 8px;font-size:15px;padding-right:34px}
+.cause-card p{margin:7px 0}.cause-card ul{margin:7px 0 0;padding-left:20px}.cause-card li{margin:4px 0}
+.rank{position:absolute;right:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:750;display:flex;align-items:center;justify-content:center}
+.cause-card.hot{border-left:4px solid var(--danger)}.cause-card.hot .rank{background:var(--danger)}
+.cause-card.negative{border-left:4px solid var(--muted)}.cause-card.negative .rank{background:var(--muted)}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tag.issue{border-color:#f3c3bf;background:var(--danger-bg);color:var(--danger)}
+.legend-swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.breakdown-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:7px 16px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface-2);font-size:12.5px;color:var(--muted)}
+.breakdown-legend b{color:var(--text)}
+table.timeline-table{font-size:13px}
+table.timeline-table th,table.timeline-table td{padding:8px 9px}
+table.timeline-table td{white-space:normal}
+table.timeline-table td.num{white-space:nowrap}
+.timeline-table td.desc{white-space:normal}
+@media (max-width:720px){.pair-metrics{grid-template-columns:1fr}.bar-row{grid-template-columns:40px 1fr 58px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">AI Task Tracker · U-02 deep dive · Phase 2 → Phase 3</p>
+  <h1>Почему U-02 занял 3 ч 49 мин</h1>
+  <p class="lede">T-021 (Phase 2, S-01) vs T-033 (Phase 3, S-04): что реально делали, сколько заняли chunk’и, где ушло время и что дало chunk-budget FAIL. Главный ответ: не вёрстка, а process overhead вокруг checkpoint.</p>
+  <div class="meta">
+    <span class="chip">T-021: <b>5 мин</b></span>
+    <span class="chip">T-033: <b>3 ч 49 мин</b></span>
+    <span class="chip">Авторинг chunks: <b>19 мин 15 сек</b></span>
+    <span class="chip">Process/context: <b>2 ч 11 мин</b></span>
+    <span class="chip">Calendar: <b>4 ч 26 мин</b></span>
+    <button class="btn" type="button" onclick="window.print()">Печать / PDF</button>
+  </div>
+  <nav class="toc" aria-label="Содержание">
+    <a href="#summary">Сводка</a>
+    <a href="#done">Что делали</a>
+    <a href="#chunks">Chunks</a>
+    <a href="#timeline">Таймлайн</a>
+    <a href="#breakdown">Куда ушло время</a>
+    <a href="#causes">Причины</a>
+    <a href="#compare">Сравнение</a>
+    <a href="#ideas">Как сократить</a>
+    <a href="#caveats">Оговорки</a>
+    <a href="#sources">Источники</a>
+  </nav>
+</header>
+<main id="main">
+
+<section class="section" id="summary" aria-labelledby="summary-h">
+  <h2 id="summary-h">Сводка</h2>
+  <p class="sub">T-021 — delta к существующему S-01; T-033 — новый S-04 day-view. Authoring chunks у T-033 всего 19 мин, но task — 3 ч 49 мин.</p>
+  <div class="kpis">
+    <div class="kpi danger"><div class="n">5 мин → 3 ч 49</div><div class="l">work time</div><div class="d">T-021 → T-033; 45.8×</div></div>
+    <div class="kpi done"><div class="n">19 мин 15 сек</div><div class="l">authoring chunks</div><div class="d">c1 2м29 + c2 13м06 + c3 3м40</div></div>
+    <div class="kpi progress"><div class="n">2 ч 11 мин</div><div class="l">process/context</div><div class="d">triage 46 + approval 62 + context 17 + fix 6</div></div>
+    <div class="kpi progress"><div class="n">4 ч 26 мин</div><div class="l">calendar</div><div class="d">4:26:40; review 39 мин</div></div>
+  </div>
+  <div class="callout danger" style="margin-top:14px">
+    <h3>Короткий ответ</h3>
+    <ul>
+      <li><b>Вёрстка/UI-спека заняли 19 мин</b> (3 chunk’а). Это не главная причина 3 ч 49 мин.</li>
+      <li><b>2 ч 11 мин — process/context:</b> chunk-budget FAIL (46 мин triage), approval/precedent (62 мин), context/compaction (17 мин), budget correction (6 мин).</li>
+      <li><b>Причина FAIL — check-design + неверный бюджет:</b> T-033 стартовал с flat 12/40 KB, T-021 — с U-02 80/200 KB. SVG считается как authored output; issue ISSUE-20261120-113748.</li>
+      <li><b>T-021 5 мин — delta/outlier, не baseline.</b> Полный U-02 T-005 — 8 ч 06 мин; T-033 — 47% от него.</li>
+      <li><b>45.8× не like-for-like:</b> delta 5 мин vs новый экран + process FAIL. Сравнивать надо T-033 с T-005/T-033-классом.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="done" aria-labelledby="done-h">
+  <h2 id="done-h">Что делали</h2>
+  <p class="sub">Обе задачи — U-02: wireframes + UI spec + offline prototype. Но S-01 был delta, S-04 — новый day-view.</p>
+  <div class="u02-grid">
+    <article class="pair-card">
+      <div class="pair-head"><div><h3>T-021 · Phase 2 · S-01</h3><p class="pair-sub">U-02 · ux-designer · budget 80/200</p></div><span class="badge st-done">5 мин</span></div>
+      <div class="pair-metrics">
+        <div class="metric"><div class="v">3 chunks</div><div class="l">C1 wireframes, C2 UI spec, C3 prototype</div></div>
+        <div class="metric"><div class="v">14 produced</div><div class="l">11 prototype files + wireframes + UI spec</div></div>
+        <div class="metric"><div class="v">15/583 diff</div><div class="l">delta поверх существующего S-01</div></div>
+        <div class="metric"><div class="v">без FAIL</div><div class="l">CP-2 10:10→10:12; CP-F 10:12→10:13</div></div>
+      </div>
+      <p class="small-note">Модель-колонка добавлена в существующий S-01: Salt wireframe, UI spec model cell, offline prototype (index + 8 UC pages + assets) с `+1` и «Нет данных».</p>
+    </article>
+    <article class="pair-card">
+      <div class="pair-head"><div><h3>T-033 · Phase 3 · S-04</h3><p class="pair-sub">U-02 · ux-designer · budget 12/40 → 80/200</p></div><span class="badge st-open">3 ч 49 мин</span></div>
+      <div class="pair-metrics">
+        <div class="metric"><div class="v">3 chunks · 19 мин</div><div class="l">c1 UI spec 2м29, c2 wireframes+SVG 13м06, c3 prototype 3м40</div></div>
+        <div class="metric"><div class="v">4 produced</div><div class="l">UI spec, wireframes .puml/.svg, uc-e2e-005.html</div></div>
+        <div class="metric"><div class="v">14/583 diff</div><div class="l">новый S-04 day-view/table</div></div>
+        <div class="metric"><div class="v">ISSUE-20261120-113748</div><div class="l">chunk-budget check-design gap</div></div>
+      </div>
+      <p class="small-note">S-04 day-view: UI spec §3.3, wireframe day table + SVG re-render, prototype uc-e2e-005.html с колонкой «Модель», четырьмя состояниями и a11y.</p>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="chunks" aria-labelledby="chunks-h">
+  <h2 id="chunks-h">Chunk-by-chunk</h2>
+  <p class="sub">Ledger-времена показывают авторинг, а не полный task time. У T-021 это буквально секунды; у T-033 — 19 мин.</p>
+  <div class="table-wrap"><table class="timeline-table">
+    <caption>Chunks T-021 и T-033: что делали, что произвели, когда, сколько.</caption>
+    <thead><tr><th>Phase</th><th>Chunk</th><th>Что делали</th><th>Артефакт</th><th class="num">Produced</th><th>Started–finished</th><th class="num">Dur</th><th>Note</th></tr></thead>
+    <tbody><tr><td><b>T-021</b></td><td><code>C1</code></td><td>Salt wireframes with the S-01 model column</td><td>wireframes .puml + .svg</td><td class="num">2</td><td>10:10:12–10:10:13</td><td class="num">~1 сек</td><td class="small-note">delta к существующему S-01</td></tr><tr><td><b>T-021</b></td><td><code>C2</code></td><td>UI spec for the model cell</td><td>UI spec section</td><td class="num">1</td><td>10:10:13</td><td class="num"><1 сек</td><td class="small-note">модель-ячейка, a11y, no-usage</td></tr><tr><td><b>T-021</b></td><td><code>C3</code></td><td>Offline prototype model column</td><td>index + 8 UC pages + assets</td><td class="num">11</td><td>10:10:13–10:10:14</td><td class="num">~1 сек</td><td class="small-note">model column в существующем прототипе</td></tr><tr><td><b>T-033</b></td><td><code>c1</code></td><td>UI spec S-04 model cell section</td><td>ui-spec §3.3</td><td class="num">1</td><td>10:07:19–10:09:48</td><td class="num">2 м 29</td><td class="small-note">S-04 day-view, R-015, reuse S-01 tokens</td></tr><tr><td><b>T-033</b></td><td><code>c2</code></td><td>Wireframes S-04 day view + SVG re-render</td><td>wireframes .puml + .svg</td><td class="num">2</td><td>10:17:19–10:30:25</td><td class="num">13 м 06</td><td class="small-note">новая day-view таблица + SVG</td></tr><tr><td><b>T-033</b></td><td><code>c3</code></td><td>Prototype uc-e2e-005.html day table</td><td>uc-e2e-005.html</td><td class="num">1</td><td>10:38:27–10:42:07</td><td class="num">3 м 40</td><td class="small-note">day table с «Модель» и четырьмя состояниями</td></tr></tbody>
+  </table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Что это значит</h3>
+    <p>T-033 c1–c3 — это <b>19 мин 15 сек</b>. Остальные <b>3 ч 30 мин</b> task time — setup/analysis между chunks, evidence, chunk-budget/approval process, context/compaction, CP-F work и review. У T-021 chunk ledger тоже не равен task time, но там task занял 5 мин и не было FAIL.</p>
+  </div>
+</section>
+
+<section class="section" id="timeline" aria-labelledby="timeline-h">
+  <h2 id="timeline-h">Таймлайн T-033</h2>
+  <p class="sub">Wall-clock от старта 09:53:50 до CP-F reviewed 14:20:30. Сессии экспортированы в UTC; времена ниже — MSK (+03:00).</p>
+  <figure class="panel chart-card chart-wide">
+    <div class="panel-head"><h3>09:53 → 14:20</h3><span class="hint">4 ч 26 мин; сегменты — wall-clock</span></div>
+    <div class="chart-body"><svg viewBox="0 0 1000 250" role="img" aria-label="Таймлайн T-033: 4 ч 26 мин" font-family="Segoe UI, Arial, sans-serif"><title>Таймлайн T-033</title><desc>Wall-clock сегменты T-033 от старта 09:53 до CP-F reviewed 14:20.</desc><rect x="40.00" y="86" width="166.02" height="46" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>Chunks + analysis · 48 мин · 09:53–10:42</title></rect><text x="123.01" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">48</text><rect x="206.02" y="86" width="44.96" height="46" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>Evidence · 13 мин · 10:42–10:55</title></rect><rect x="250.98" y="86" width="17.29" height="46" fill="#b08a4a" stroke="#fff" stroke-width="1.5"><title>Context · 5 мин · 10:55–11:00</title></rect><rect x="268.27" y="86" width="159.10" height="46" fill="#b3261e" stroke="#fff" stroke-width="1.5"><title>Budget triage · 46 мин · 11:00–11:46</title></rect><text x="347.82" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">46</text><rect x="427.37" y="86" width="48.42" height="46" fill="#2b5c8a" stroke="#fff" stroke-width="1.5"><title>Report + user wait · 14 мин · 11:46–12:00</title></rect><text x="451.58" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">14</text><rect x="475.79" y="86" width="41.50" height="46" fill="#b08a4a" stroke="#fff" stroke-width="1.5"><title>Context · 12 мин · 12:00–12:12</title></rect><rect x="517.29" y="86" width="214.44" height="46" fill="#8a5b00" stroke="#fff" stroke-width="1.5"><title>Approval/precedent · 1 ч 02 мин · 12:12–13:14</title></rect><text x="624.51" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">62</text><rect x="731.73" y="86" width="17.29" height="46" fill="#d06b64" stroke="#fff" stroke-width="1.5"><title>Budget fix · 5 мин · 13:14–13:19</title></rect><rect x="749.02" y="86" width="3.46" height="46" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>CP-2 approval · 1 мин · 13:19–13:20</title></rect><rect x="752.48" y="86" width="76.09" height="46" fill="#1e6b34" stroke="#fff" stroke-width="1.5"><title>CP-F work · 22 мин · 13:20–13:42</title></rect><text x="790.53" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">22</text><rect x="828.57" y="86" width="131.43" height="46" fill="#4a7fae" stroke="#fff" stroke-width="1.5"><title>CP-F review · 38 мин · 13:42–14:20</title></rect><text x="894.29" y="113.0" text-anchor="middle" font-size="10" fill="#fff" font-weight="650">38</text><line x1="40" y1="144" x2="960" y2="144" stroke="#b9c2cd" stroke-width="1.2"/><line x1="40.00" y1="144" x2="40.00" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="40.00" y="166" text-anchor="middle" font-size="10" fill="#5a6675">09:53</text><line x1="206.02" y1="144" x2="206.02" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="206.02" y="166" text-anchor="middle" font-size="10" fill="#5a6675">10:42</text><line x1="427.37" y1="144" x2="427.37" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="427.37" y="166" text-anchor="middle" font-size="10" fill="#5a6675">11:46</text><line x1="475.79" y1="144" x2="475.79" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="475.79" y="166" text-anchor="middle" font-size="10" fill="#5a6675">12:00</text><line x1="731.73" y1="144" x2="731.73" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="731.73" y="166" text-anchor="middle" font-size="10" fill="#5a6675">13:14</text><line x1="752.48" y1="144" x2="752.48" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="752.48" y="166" text-anchor="middle" font-size="10" fill="#5a6675">13:20</text><line x1="828.57" y1="144" x2="828.57" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="828.57" y="166" text-anchor="middle" font-size="10" fill="#5a6675">13:42</text><line x1="960.00" y1="144" x2="960.00" y2="150" stroke="#b9c2cd" stroke-width="1"/><text x="960.00" y="166" text-anchor="middle" font-size="10" fill="#5a6675">14:20</text><text x="40" y="30" font-size="12" fill="#5a6675">T-033: wall-clock 4 ч 26 мин (09:53:50 → 14:20:30)</text></svg></div>
+    <figcaption>Красный — chunk-budget triage; коричневый — approval/precedent; зелёный — authoring/CP-F work; синий — review/user wait.</figcaption>
+  </figure>
+  <div class="table-wrap"><table class="timeline-table">
+    <caption>Сегменты таймлайна и что происходило.</caption>
+    <thead><tr><th>Сегмент</th><th class="num">Длительность</th><th>Окно</th><th>Что происходило</th><th class="num">Доля</th></tr></thead>
+    <tbody><tr><td><span class="legend-swatch" style="background:#2f6f4f"></span><b>Chunks + analysis</b></td><td class="num">48 мин</td><td>09:53–10:42</td><td class="desc">c1 2м29 + c2 13м06 + c3 3м40; между ними setup/analysis</td><td class="num">18.0%</td></tr><tr><td><span class="legend-swatch" style="background:#8a94a3"></span><b>Evidence</b></td><td class="num">13 мин</td><td>10:42–10:55</td><td class="desc">artifact hashes, handoff</td><td class="num">4.9%</td></tr><tr><td><span class="legend-swatch" style="background:#b08a4a"></span><b>Context</b></td><td class="num">5 мин</td><td>10:55–11:00</td><td class="desc">переход к triage</td><td class="num">1.9%</td></tr><tr><td><span class="legend-swatch" style="background:#b3261e"></span><b>Budget triage</b></td><td class="num">46 мин</td><td>11:00–11:46</td><td class="desc">проверка check, Git-дельт, prior issue, evidence</td><td class="num">17.3%</td></tr><tr><td><span class="legend-swatch" style="background:#2b5c8a"></span><b>Report + user wait</b></td><td class="num">14 мин</td><td>11:46–12:00</td><td class="desc">отчёт CP-2 и approval</td><td class="num">5.3%</td></tr><tr><td><span class="legend-swatch" style="background:#b08a4a"></span><b>Context</b></td><td class="num">12 мин</td><td>12:00–12:12</td><td class="desc">переход к approval/precedent</td><td class="num">4.5%</td></tr><tr><td><span class="legend-swatch" style="background:#8a5b00"></span><b>Approval/precedent</b></td><td class="num">1 ч 02 мин</td><td>12:12–13:14</td><td class="desc">как записать approval; T-021 precedent 80/200</td><td class="num">23.3%</td></tr><tr><td><span class="legend-swatch" style="background:#d06b64"></span><b>Budget fix</b></td><td class="num">5 мин</td><td>13:14–13:19</td><td class="desc">коррекция 12/40→80/200 и re-run CP-2</td><td class="num">1.9%</td></tr><tr><td><span class="legend-swatch" style="background:#8a94a3"></span><b>CP-2 approval</b></td><td class="num">1 мин</td><td>13:19–13:20</td><td class="desc">повторный CP-2 clean</td><td class="num">0.4%</td></tr><tr><td><span class="legend-swatch" style="background:#1e6b34"></span><b>CP-F work</b></td><td class="num">22 мин</td><td>13:20–13:42</td><td class="desc">подготовка CP-F</td><td class="num">8.3%</td></tr><tr><td><span class="legend-swatch" style="background:#4a7fae"></span><b>CP-F review</b></td><td class="num">38 мин</td><td>13:42–14:20</td><td class="desc">user review CP-F</td><td class="num">14.3%</td></tr></tbody>
+  </table></div>
+</section>
+
+<section class="section" id="breakdown" aria-labelledby="breakdown-h">
+  <h2 id="breakdown-h">Куда ушли 4 ч 26 мин</h2>
+  <p class="sub">Разбивка по причинам. Process/context = 131 мин (49%); authoring/setup = 48 мин (18%); review/user wait = 52 мин (20%).</p>
+  <figure class="panel chart-card chart-wide">
+    <div class="panel-head"><h3>Стек причин</h3><span class="hint">T-033, wall-clock</span></div>
+    <div class="chart-body"><svg viewBox="0 0 1000 175" role="img" aria-label="Куда ушли 4 ч 26 мин T-033" font-family="Segoe UI, Arial, sans-serif"><title>Куда ушли 4 ч 26 мин T-033</title><desc>Стек причин: authoring, setup, evidence, chunk-budget process, user wait, CP-F work и review.</desc><rect x="40.00" y="44" width="65.71" height="42" fill="#2f6f4f" stroke="#fff" stroke-width="1.2"><title>Chunks authoring · 19 мин · 7.1%</title></rect><rect x="105.71" y="44" width="100.30" height="42" fill="#5f8f73" stroke="#fff" stroke-width="1.2"><title>Setup/analysis/gaps · 29 мин · 10.9%</title></rect><rect x="206.02" y="44" width="44.96" height="42" fill="#8a94a3" stroke="#fff" stroke-width="1.2"><title>Evidence/handoff · 13 мин · 4.9%</title></rect><rect x="250.98" y="44" width="159.10" height="42" fill="#b3261e" stroke="#fff" stroke-width="1.2"><title>Budget triage · 46 мин · 17.3%</title></rect><rect x="410.08" y="44" width="48.42" height="42" fill="#2b5c8a" stroke="#fff" stroke-width="1.2"><title>User wait · 14 мин · 5.3%</title></rect><rect x="458.50" y="44" width="214.44" height="42" fill="#8a5b00" stroke="#fff" stroke-width="1.2"><title>Approval/precedent · 1 ч 02 мин · 23.3%</title></rect><rect x="672.93" y="44" width="58.80" height="42" fill="#b08a4a" stroke="#fff" stroke-width="1.2"><title>Context/compaction · 17 мин · 6.4%</title></rect><rect x="731.73" y="44" width="20.75" height="42" fill="#d06b64" stroke="#fff" stroke-width="1.2"><title>Correction + CP-2 · 6 мин · 2.3%</title></rect><rect x="752.48" y="44" width="76.09" height="42" fill="#1e6b34" stroke="#fff" stroke-width="1.2"><title>CP-F work · 22 мин · 8.3%</title></rect><rect x="828.57" y="44" width="131.43" height="42" fill="#4a7fae" stroke="#fff" stroke-width="1.2"><title>CP-F review · 38 мин · 14.3%</title></rect></svg></div>
+    <div class="breakdown-legend"><div><span class="legend-swatch" style="background:#2f6f4f"></span>Chunks authoring · <b>19 мин</b> · 7.1%</div><div><span class="legend-swatch" style="background:#5f8f73"></span>Setup/analysis/gaps · <b>29 мин</b> · 10.9%</div><div><span class="legend-swatch" style="background:#8a94a3"></span>Evidence/handoff · <b>13 мин</b> · 4.9%</div><div><span class="legend-swatch" style="background:#b3261e"></span>Budget triage · <b>46 мин</b> · 17.3%</div><div><span class="legend-swatch" style="background:#2b5c8a"></span>User wait · <b>14 мин</b> · 5.3%</div><div><span class="legend-swatch" style="background:#8a5b00"></span>Approval/precedent · <b>1 ч 02 мин</b> · 23.3%</div><div><span class="legend-swatch" style="background:#b08a4a"></span>Context/compaction · <b>17 мин</b> · 6.4%</div><div><span class="legend-swatch" style="background:#d06b64"></span>Correction + CP-2 · <b>6 мин</b> · 2.3%</div><div><span class="legend-swatch" style="background:#1e6b34"></span>CP-F work · <b>22 мин</b> · 8.3%</div><div><span class="legend-swatch" style="background:#4a7fae"></span>CP-F review · <b>38 мин</b> · 14.3%</div></div>
+    <figcaption>Красный/оранжевый — process/context; зелёный — authoring/CP-F work; синий — review/user wait; серый — evidence/CP-2.</figcaption>
+  </figure>
+  <div class="callout danger" style="margin-top:14px">
+    <h3>Главный вывод</h3>
+    <p><b>131 мин (49%)</b> — chunk-budget/approval/context, а не UX-работа. Если убрать process/context, T-033 был бы ближе к <b>~2 ч 15 мин</b> wall-clock (authoring 19 + setup 29 + evidence 13 + CP-F 22 + review 38 + user wait 14), что гораздо ближе к нормальному U-02 new-screen.</p>
+  </div>
+</section>
+
+<section class="section" id="causes" aria-labelledby="causes-h">
+  <h2 id="causes-h">Причины, по убыванию</h2>
+  <div class="cause-grid">
+    <article class="cause-card hot"><span class="rank">1</span><h3>Chunk-budget check + неверный бюджет</h3>
+      <p>T-033 ledger стартовал с flat <b>12/40 KB</b>, T-021 — с U-02 <b>80/200 KB</b>. CP-2 дал FAIL: ui-spec 21.8 KB, SVG 70.2 KB, session 79.8 KB, html 18 KB. Авторские дельты — 1.3/0.8/2.3 KB, SVG — derived 8.6 KB.</p>
+      <ul><li>46 мин triage: check implementation, Git-дельты, prior issue, evidence ledger.</li><li>62 мин approval/precedent: как записать approval и почему T-021 прошёл.</li><li>6 мин correction/re-run CP-2; issue ISSUE-20261120-113748.</li></ul>
+    </article>
+    <article class="cause-card hot"><span class="rank">2</span><h3>Approval/precedent без playbook</h3>
+      <p>После approval пользователя lead потратил <b>62 мин</b> на изучение механизма записи approval и precedent T-021. В сессии видно повторяющиеся «decisive finding»/«user chose option 1».</p>
+      <ul><li>Нет one-page checklist: «intermediate CP approved → in_progress → CP-F».</li><li>Нет быстрого пути для known check-design FAIL.</li><li>Context compaction добавил ещё 17 мин.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">3</span><h3>New-screen vs delta</h3>
+      <p>T-021 был delta к существующему S-01: ledger 2 сек, total 5 мин. T-033 — новый S-04 day-view/table: authoring 19 мин + setup/analysis 29 мин.</p>
+      <ul><li>c2 wireframes+SVG — 13 мин, самый дорогой chunk.</li><li>c3 prototype day table — 3 мин 40.</li><li>Но даже весь authoring/setup — 48 мин (18%), не главная причина.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">4</span><h3>Контекст и сессии</h3>
+      <p>11 сессий, 644 320 input, 4 573 594 cache, 307 usage-мин. Основная сессия — 28 сообщений, continuation — 5; часть времени — чтение/повторное чтение check/process/Git/prior issue.</p>
+      <ul><li>17 мин context/compaction.</li><li>Lead-сессии: triage + approval loop.</li><li>UX-сессии: c1–c3, authoring 19 мин.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">5</span><h3>Review/approval waits</h3>
+      <p><b>14 мин</b> — отчёт CP-2 + user wait; <b>38 мин</b> — CP-F review. Это 52 мин (20%) календаря, но не work time.</p>
+      <ul><li>CP-2: 11:46–12:00.</li><li>CP-F: 13:42–14:20.</li><li>В T-021 review — 2 мин, потому что процесс был мгновенным.</li></ul>
+    </article>
+    <article class="cause-card negative"><span class="rank">∅</span><h3>Что не объясняет задержку</h3>
+      <ul><li><b>Retries:</b> по 1 attempt на chunk.</li><li><b>Chunks:</b> 3 vs 3.</li><li><b>Produced:</b> 14 vs 4 — у Phase 2 даже больше.</li><li><b>Diff:</b> 15/583 vs 14/583 — почти одинаково.</li><li><b>Модель/латентность:</b> не измерялась как причина; время ушло в process/context.</li></ul>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="compare" aria-labelledby="compare-h">
+  <h2 id="compare-h">Сравнение с полным U-02</h2>
+  <div class="table-wrap"><table>
+    <caption>T-021 (delta), T-033 (new screen), T-005 (полный U-02 baseline).</caption>
+    <thead><tr><th>Задача</th><th>Scope</th><th class="num">Work</th><th class="num">Chunks</th><th class="num">Produced</th><th>Budget</th><th>Process</th><th class="num">Calendar</th></tr></thead>
+    <tbody>
+      <tr><td><b>T-021</b></td><td>delta к S-01</td><td class="num">5 мин</td><td class="num">3</td><td class="num">14</td><td>80/200</td><td>—</td><td class="num">6 мин</td></tr>
+      <tr class="highlight-row"><td><b>T-033</b></td><td>новый S-04 day-view</td><td class="num">3 ч 49 мин</td><td class="num">3</td><td class="num">4</td><td>12/40 → 80/200</td><td>2 ч 11 мин</td><td class="num">4 ч 26 мин</td></tr>
+      <tr><td><b>T-005</b></td><td>полный U-02 (S-01..S-06)</td><td class="num">8 ч 06 мин</td><td class="num">4</td><td class="num">—</td><td>—</td><td>ревизии</td><td class="num">12–13 ноя</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout" style="margin-top:14px">
+    <h3>Как читать</h3>
+    <ul><li>T-033 / T-005 = <b>47%</b>: для нового экрана это не «медленно».</li><li>T-021 / T-005 ≈ 1%: delta, не baseline.</li><li>45.8× = 5 мин delta vs 3 ч 49 new-screen + process FAIL; не использовать как planning norm.</li></ul>
+  </div>
+</section>
+
+<section class="section" id="ideas" aria-labelledby="ideas-h">
+  <h2 id="ideas-h">Как сократить</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Процесс</h3>
+      <ul>
+        <li><b>Бюджет U-02 на planning:</b> 80/200 KB, SVG — derived, authored delta. Не flat 12/40.</li>
+        <li><b>Pre-flight stage-done preview</b> после последнего chunk: поймать budget mismatch до CP-2.</li>
+        <li><b>Approval/budget playbook:</b> one-page checklist/script для intermediate CP approved и known check-design FAIL.</li>
+        <li><b>Дешёвый известный FAIL:</b> если issue уже в registry — auto-classify, не 46 мин triage.</li>
+        <li><b>Review-окна:</b> CP-2/CP-F ближе; не переспрашивать manual item, если артефакты не менялись.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Работа</h3>
+      <ul>
+        <li><b>Классифицировать U-02:</b> delta vs new-screen; разные оценки и acceptance.</li>
+        <li><b>Reuse S-01 model-cell</b> токены/состояния/a11y — уже сделано; закрепить как template.</li>
+        <li><b>Day-table snippet</b> для прототипа и wireframe: одна заготовка вместо повторной сборки.</li>
+        <li><b>SVG re-render — один раз в конце</b> c2, не после каждой правки.</li>
+        <li><b>Per-chunk elapsed time</b> в ledger; сейчас `usage.min=0` и authoring 19 мин не виден.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="caveats" aria-labelledby="caveats-h">
+  <h2 id="caveats-h">Оговорки</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Данные</h3>
+      <ul>
+        <li>Session export timestamps — UTC; checkpoint/card — MSK (+03:00). Времена в отчёте приведены к MSK.</li>
+        <li>Chunk ledger `usage.min=0`; длительности chunk’ов — из `started`/`finished`.</li>
+        <li>T-021 usage n/a; его ledger-времена — моменты авторинга, не полный task time.</li>
+        <li>Timeline реконструирован по сообщениям сессий и checkpoint’ам; ±несколько минут.</li>
+        <li>T-033 calendar <b>4:26:40</b> от старта 09:53:50; 4:50 включало 23 мин inter-task idle.</li>
+        <li>ISSUE-20261120-113748 открыт: это check-design gap, не budget breach роли.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Границы сравнения</h3>
+      <ul>
+        <li>T-021 — delta, T-033 — new screen; 45.8× не like-for-like.</li>
+        <li>T-005 — полный U-02 baseline, но с другим scope (S-01..S-06) и ревизиями.</li>
+        <li>Process/context 131 мин включает triage/approval/context/fix; границы между ними приблизительны.</li>
+        <li>Review/user wait не входят в work time, но входят в calendar.</li>
+        <li>Независимого QA S-04 на момент T-033 ещё не было; CP-F — user checkpoint.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Источники</h2>
+  <div class="sources">
+    <h3>Данные и артефакты</h3>
+    <ul>
+      <li><code>../tasks/T-021-prototype-model-column.md</code>, <code>../tasks/T-033-ux-prototype-s04-model.md</code> — scope/acceptance.</li>
+      <li><code>../checkpoints/T-021-CP-2.md</code>, <code>../checkpoints/T-021-CP-F.md</code>, <code>../checkpoints/T-033-CP-2.md</code>, <code>../checkpoints/T-033-CP-F.md</code> — timestamps, checks, usage, diff.</li>
+      <li><code>../chunks/T-021.json</code>, <code>../chunks/T-033.json</code> — chunk titles, produced, started/finished.</li>
+      <li><code>../evidence/T-033.md</code> — artifact hashes; <code>../issues/ISSUE-20261120-113748-chunk-budget-measures-final-file-size-vs-authored-output.md</code> — check-design gap.</li>
+      <li><code>../tasks/T-005-ux-wireframes-prototype.md</code> — полный U-02 baseline.</li>
+      <li><code>../diagrams/activity/atomic/phase2-s01-atomic-swimlane.svg</code>, <code>../diagrams/activity/atomic/phase3-s04-atomic-swimlane.svg</code> — атомарные диаграммы.</li>
+      <li><code>../../data/opencode-export/ses_e084c505fffe5VUP1GLTyfLktG.json</code>, <code>../../data/opencode-export/ses_e077a1c89ffefg1Vp0QygHG47q.json</code> — session timeline (UTC +03:00).</li>
+      <li><a href="2026-11-21-phase2-vs-phase3-time-analysis.html">2026-11-21-phase2-vs-phase3-time-analysis.html</a> — основной Phase 2 vs Phase 3 отчёт.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer>
+  <span>U-02 deep dive · T-021 / T-033 · 21.11.2026</span>
+  <span>Данные read-only; отчёт не меняет задачи, чекпоинты и диаграммы.</span>
+</footer>
+</div>
+</body>
+</html>

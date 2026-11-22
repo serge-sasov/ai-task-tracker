@@ -1,0 +1,167 @@
+@startuml
+' Generated from docs/tasks, docs/checkpoints, docs/chunks; do not edit by hand.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 72
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title Phase 2 - S-01 model column (T-017..T-028) · work 7 ч 40 мин · date 18 ноя 09:50–23:55
+
+|Lead|
+|Orchestrator|
+|Analyst|
+|UX|
+|Architect|
+|Coder|
+|QA|
+|Doc-writer|
+|Child (d2)|
+|Orchestrator|
+start
+partition "T-017 · P-00 Планирование S-01\nwork 5 мин · date 18 ноя · done" {
+|Orchestrator|
+:CP-1 · scope, e2e/ux, task graph\nCP 5 мин; <<#90EE90>>
+|Orchestrator|
+:CP-F · final acceptance\nCP 5 мин; <<#90EE90>>
+}
+partition "T-018 · A-01 Требования S-01\nwork 5 мин · date 18 ноя · done" {
+|Analyst|
+:C1 · Requirements and glossary for the model column\nwork n/a (входит в CP); <<#90EE90>>
+|Analyst|
+:CP-1 gate · requirements analysis\nCP 5 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-019 · A-02 E2E-сценарии S-01\nwork 3 мин · date 18 ноя · done" {
+|Analyst|
+:C1 · UC-E2E-003 model-column use case\nwork n/a (входит в CP); <<#90EE90>>
+|Analyst|
+:C2 · YAML dataset S8 model assertions\nwork n/a (входит в CP); <<#90EE90>>
+|Analyst|
+:CP-2 gate · e2e use cases + dataset\nCP 3 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-020 · U-01 UX-потоки S-01\nwork 4 мин · date 18 ноя · done" {
+|UX|
+:C1 · F-1 model-column flow\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C2 · S-01 screen, states and a11y for the model column\nwork 1 мин (ledger); <<#90EE90>>
+|UX|
+:CP-1 gate · ux flows + screens\nCP 3 мин; <<#90EE90>>
+|UX|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-021 · U-02 Прототип S-01\nwork 5 мин · date 18 ноя · done" {
+|UX|
+:C1 · Salt wireframes with the S-01 model column\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C2 · UI spec for the model cell\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C3 · Offline prototype model column\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:CP-2 gate · wireframes + prototype + UI spec\nCP 3 мин · rev 2 мин; <<#90EE90>>
+|Lead|
+:CP-2 review · user\nrev 2 мин; <<#87CEFA>>
+|UX|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-022 · R-01 Проектирование S-01\nwork 42 мин · date 18 ноя · done" {
+|Architect|
+:C1 · ADR and architecture description for R-014\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C2 · Component diagram with the task model aggregation\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C3 · SCN-003 sequence with the models response\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:CP-1 gate · architecture + ADR\nCP 8 мин; <<#90EE90>>
+|Architect|
+:CP-F · final acceptance\nCP 36 мин · rev 49 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 49 мин; <<#87CEFA>>
+}
+partition "T-023 · R-02 Контракты S-01\nwork 18 мин · date 18 ноя · done" {
+|Architect|
+:C1 · Contracts and OpenAPI for models\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C2 · Architecture trace and class model\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C3 · Data model confirmation (derived models, no migration)\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:CP-2 gate · diagram set\nCP 1 ч 3 мин · rev 10 мин; <<#90EE90>>
+|Lead|
+:CP-2 review · user\nrev 10 мин; <<#87CEFA>>
+|Architect|
+:CP-F · final acceptance\nCP 4 мин; <<#90EE90>>
+}
+partition "T-024 · I-01 Реализация S-01\nwork 53 мин · date 18 ноя · done" {
+|Coder|
+:C1 · Backend: ordered models field and TaskQueryService tests\nwork 3 мин (ledger); <<#90EE90>>
+|Coder|
+:C2 · Frontend: S-01 model column (primary +N, tooltip/aria, empty state)\nwork 1 мин (ledger); <<#90EE90>>
+|Coder|
+:CP-1 gate · implementation + unit tests\nCP 1 ч 54 мин; <<#90EE90>>
+|Coder|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-025 · I-02 E2E S-01\nwork 1 ч 06 мин · date 18 ноя · done" {
+|Coder|
+:C1 · E2E: S-01 model column (models field, order, empty state)\nwork 13 мин (ledger); <<#90EE90>>
+|Coder|
+:CP-2 gate · UC batches + full run\nCP 1 ч 41 мин; <<#90EE90>>
+|Coder|
+:CP-F · final acceptance\nCP 4 мин; <<#90EE90>>
+}
+partition "T-026 · Q-01 План E2E S-01\nwork 2 ч 45 мин · date 18 ноя · done" {
+|QA|
+:C1 · E2E plan + requirement→UC→test matrix (all UC-E2E-001..008, S-01/R-014 focus)\nwork 133 мин (ledger); <<#90EE90>>
+|QA|
+:CP-1 gate · e2e plan + coverage\nCP 3 ч 14 мин; <<#90EE90>>
+|QA|
+:CP-F · final acceptance\nCP 1 мин; <<#90EE90>>
+}
+partition "T-027 · Q-02 QA и вердикт S-01\nwork 44 мин · date 18 ноя · done" {
+|QA|
+:C1 · Run UC-E2E-003 (S8) + full suite, write the e2e report\nwork n/a (входит в CP); <<#90EE90>>
+|QA|
+:C2 · Code/UX/contract review and verdict\nwork n/a (входит в CP); <<#90EE90>>
+|QA|
+:CP-2 gate · QA findings + verdict\nCP 44 мин · rev 5 мин; <<#90EE90>>
+|Lead|
+:CP-2 review · user\nrev 5 мин; <<#87CEFA>>
+|QA|
+:CP-F · final acceptance\nCP 16 мин; <<#90EE90>>
+}
+partition "T-028 · F-01 Финальная приёмка S-01\nwork 50 мин · date 18 ноя · done" {
+|Orchestrator|
+:C1 · Final acceptance and closure: S-01 model column\nwork 5 мин (ledger); <<#90EE90>>
+|Lead|
+:CP-F gate · final acceptance\nCP 50 мин · rev 26 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 26 мин; <<#87CEFA>>
+note right
+  Orchestrator + Lead
+  final acceptance.
+end note
+}
+stop
+legend bottom
+|= Обозначение |= Значение |
+| work | рабочее время: task total / recorded chunk |
+| CP | календарный CP-интервал |
+| rev | ожидание review |
+| date | дата/диапазон |
+| n/a | время chunk не записано; входит в CP |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+|<#87CEFA>| review |
+| T-028 | final acceptance; review wait 26 мин |
+endlegend
+
+@enduml

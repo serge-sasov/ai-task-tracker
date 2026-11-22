@@ -23,41 +23,41 @@
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_semantic_query_top_k",
       "status": "failed",
-      "duration_ms": 183,
+      "duration_ms": 157,
       "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:90: TypeError"
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_unrelated_query_empty",
       "status": "failed",
-      "duration_ms": 34,
+      "duration_ms": 40,
       "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:111: AttributeError"
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_empty_query_client_validation",
       "status": "passed",
-      "duration_ms": 9,
+      "duration_ms": 51,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_response_time_bound",
       "status": "failed",
-      "duration_ms": 39,
+      "duration_ms": 34,
       "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:132: AttributeError"
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_english_query_valid_200",
       "status": "failed",
-      "duration_ms": 21,
+      "duration_ms": 28,
       "detail": "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:138: AssertionError"
     }
   ],
-  "duration_ms": 286,
+  "duration_ms": 310,
   "errors": [
     "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:90: TypeError",
     "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:111: AttributeError",
     "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:132: AttributeError",
     "tests\\e2e\\uc_e2e_004_006\\test_uc_e2e_004_ai_search.py:138: AssertionError"
   ],
-  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "timestamp": "2026-11-21T23:43:56.852850+00:00",
   "base_url": "http://127.0.0.1:8080"
 }

@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-02 |
 | role | qa |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-038, T-037, T-036, T-035, T-033 |
 | inputs | `docs/qa/e2e-plan-s04-model.md`, `tests/e2e/**`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md` |
@@ -56,3 +56,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-039 registered as a pending Q-02 successor of T-038/T-037/T-036/T-035/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-22: started via `/harness-run` — status `in_progress`; board invariant verified (no other active task; dependencies T-038/T-037/T-036/T-035/T-033 all `done`); stage Q-02, role qa.
+- 2026-11-22: `scope_class` and `budget_profile` to be classified at chunk planning (`harness/scripts/chunk.ps1 init`); QA role granularity per `harness/process.md` 11.1; self-delegation `d2` only; budget profile from `harness/budgets.json`.

@@ -1,0 +1,179 @@
+@startuml
+' AI Task Tracker - harness <-> subagent lifecycle.
+' Compact swimlane view: core ping-pong Harness <-> Role/Child.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 84
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title AI Task Tracker - harness <-> subagent: цикл выполнения задачи
+
+|User|
+|Harness|
+|Role|
+|Child|
+|Orchestrator|
+|Scripts|
+|QA/Vision|
+|User|
+start
+:/harness-run T-XXX;
+
+|Harness|
+:прочитать plan + card;
+:проверить workflow,\nstage, deps;
+if (active task или deps?) then (да)
+  :blocked / wait;
+  stop
+else (нет)
+endif
+:делегировать in_progress\nоркестратору;
+
+|Orchestrator|
+:set T-XXX in_progress;
+:перерендерить activity;
+
+|Scripts|
+:plan/card обновлены;
+
+|Harness|
+:вызвать одну роль-subagent;
+:передать card, workflow,\nacceptance, inputs,\ncheckpoints, chunks/budget;
+
+|Role|
+:прочитать card + inputs;
+if (stage with chunks?) then (да)
+  :chunk.ps1 init/add/plan;
+  repeat
+    :выполнить следующий chunk;
+    if (UX prototype page?) then (да)
+      :UX делегирует страницу\nharness-coder;
+      |Child|
+      :coder пишет\ndocs/ux/prototype/...;
+      :вернуть paths + summary;
+      |Role|
+      :UX валидирует страницы,\nостаётся accountable;
+    else (нет)
+    endif
+    if (chunk over budget?) then (да)
+      |Child|
+      :same-role child d2/d3;
+      :выполнить chunk;
+      :вернуть paths + state\n(до 10 строк);
+      |Role|
+      :валидировать результат\n(hash/targeted read);
+    else (нет)
+    endif
+    if (chunk failed?) then (да)
+      :attempts++;
+      if (attempts >= 3?) then (да)
+        :chunk blocked;
+        |Harness|
+        :эскалировать / issue;
+        stop
+      else (нет)
+        :повторить меньшим chunk;
+      endif
+    else (нет)
+      :chunk.ps1 complete;
+    endif
+  repeat while (more chunks?) is (да)
+else (нет)
+  :выполнить stage work;
+endif
+:CHECKPOINT CP-N reached;
+:вернуть artifacts +\nverification checklist;
+
+|Harness|
+if (QA stage visual?) then (да)
+  :вызвать QA + QA-Vision\n(две проверки);
+  |QA/Vision|
+  :text/code review;
+  :visual review;
+  :вернуть отчёты;
+  |Orchestrator|
+  :объединить отчёты\nв один verdict;
+else (нет)
+endif
+:поручить закрыть checkpoint;
+
+|Orchestrator|
+:verify-stage.ps1 (preview);
+:stage-done.ps1\n-Task T-XXX\n-Checkpoint CP-N;
+
+|Scripts|
+:registry checks;
+:checks JSON + evidence;
+:checkpoint + P2;
+:plan/card/activity;
+:commit snapshot;
+:вернуть PASS/FAIL/\nMANUAL/UNCHECKED;
+
+|Orchestrator|
+if (P2 auto-approved?) then (да)
+  |Harness|
+  :задача in_progress;
+  :продолжить роль со\nследующего chunk/stage;
+else (нет)
+  :задача awaiting_review;
+  |User|
+  :ревью checkpoint + правки;
+  |Harness|
+  if (decision?) then (approved)
+    if (CP-F?) then (да)
+      |Orchestrator|
+      :set done;
+      |Scripts|
+      :финальный commit;
+      stop
+    else (нет)
+      |Orchestrator|
+      :set in_progress;
+      |Harness|
+      :продолжить роль после\ncheckpoint;
+    endif
+  elseif (changes_requested) then
+    |Role|
+    :внести правки;
+    :вернуться в тот же checkpoint;
+  else (rejected)
+    |Orchestrator|
+    :set failed;
+    stop
+  endif
+endif
+
+|Harness|
+:отчитаться о run /\nследующей задаче;
+:текущее: T-037 in_progress,\nT-038..T-040 pending;
+stop
+
+legend right
+|= Роль / пример / правило |= Детали |
+| **Дорожки** | |
+| User | запускает run и принимает checkpoint-решения |
+| Harness | lead: маршрутизация, делегирование, отчёт; файлы не редактирует |
+| Role | subagent: stage work + chunks; останавливается на CHECKPOINT |
+| Child | d2/d3 same-role или UX->coder; возвращает до 10 строк |
+| Orchestrator | board/card/commit, stage-done |
+| Scripts | checks, P2, evidence, checkpoint, git |
+| QA/Vision | две независимые проверки; orchestrator объединяет |
+| **Примеры** | |
+| T-005 | 4 chunks; UX->coder prototype (depth 2); CP-2 rev 2 |
+| T-009 | 7 chunks; C1=5, C3/C4=3, C5-C7=2 attempts; ISSUE-20261117-131059 |
+| T-036 | 1 chunk d1; CP-1 1 FAIL (chunk-budget) -> user; CP-F approved |
+| **Правила** | |
+| one active task | максимум одна задача in_progress/awaiting_review |
+| deps | зависимость не done -> blocked |
+| P2 | промежуточный CP, FAIL=0, UNCHECKED=0, MANUAL=0, hold=false |
+| CP-F / MANUAL | только решение user |
+| stage-done | отказывает, если chunks не done |
+| attempts | 3 неудачи -> chunk blocked |
+endlegend
+
+@enduml

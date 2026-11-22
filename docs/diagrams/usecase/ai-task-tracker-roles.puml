@@ -1,0 +1,94 @@
+@startuml
+' AI Task Tracker - overall role collaboration scheme (use case diagram).
+' Actors = harness roles; use cases = feature workflow stages plus checkpoints.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam usecaseBackgroundColor #FFFFFF
+skinparam usecaseBorderColor #555555
+skinparam actorBorderColor #555555
+skinparam ArrowColor #555555
+title AI Task Tracker - общая схема работы ролей (use case)
+
+actor "Пользователь\n(владелец проекта)" as User
+actor "Lead (harness)" as Lead
+actor "Оркестратор" as Orch
+actor "Аналитик" as Analyst
+actor "UX-дизайнер" as UX
+actor "Архитектор" as Arch
+actor "Кодер" as Coder
+actor "QA" as QA
+actor "QA-Vision" as QAV
+actor "Техписатель" as Doc
+
+rectangle "Процесс реализации AI Task Tracker" {
+  usecase "P-00 Планирование\nи декомпозиция" as P00
+  usecase "A-01 Требования\nFR/NFR, R-NNN" as A01
+  usecase "A-02 E2E-сценарии\nи датасет" as A02
+  usecase "U-01 UX-потоки\nи экраны" as U01
+  usecase "U-02 Прототип\nи UI-спека" as U02
+  usecase "R-01 Проектирование\nADR, архитектура" as R01
+  usecase "R-02 Контракты\nOpenAPI, модели" as R02
+  usecase "I-01 Реализация\nи unit-тесты" as I01
+  usecase "I-02 E2E-автоматизация" as I02
+  usecase "Q-01 План E2E\nи покрытие" as Q01
+  usecase "Q-02 QA\nи вердикт" as Q02
+  usecase "D-01 Документация" as D01
+  usecase "F-01 Финальная\nприёмка" as F01
+  usecase "CP-1..CP-F\nЧекпоинты" as CP
+}
+
+rectangle "Bugfix-петля" {
+  usecase "Fix BUG-XXX\n(воспроизведение,\nрегрессия)" as BFIX
+  usecase "Verify BUG-XXX\n(независимая\nпроверка)" as BVER
+}
+
+User --> CP : утверждает
+Lead --> Orch : маршрутизация
+Lead --> CP : отчёт
+Orch --> P00
+Orch --> F01
+Orch --> CP
+Analyst --> A01
+Analyst --> A02
+UX --> U01
+UX --> U02
+Arch --> R01
+Arch --> R02
+Coder --> I01
+Coder --> I02
+Coder --> BFIX
+QA --> Q01
+QA --> Q02
+QA --> BVER
+QAV --> Q02 : визуальная проверка
+Doc --> D01
+
+P00 --> A01
+A01 --> A02
+A02 --> U01
+U01 --> U02
+U02 --> R01
+R01 --> R02
+R02 --> I01
+I01 --> I02
+I02 --> Q01
+Q01 --> Q02
+Q02 --> D01
+D01 --> F01
+Q02 --> BFIX : дефект
+BFIX --> BVER
+BVER --> Q02 : возврат
+
+note right of CP
+  Каждый этап завершается
+  чекпоинтом CP-N.
+  CP-F утверждает пользователь.
+end note
+note bottom of BVER
+  Bugfix-петля запускается
+  при обнаружении дефекта
+  и возвращает работу в Q-02/F-01.
+end note
+@enduml

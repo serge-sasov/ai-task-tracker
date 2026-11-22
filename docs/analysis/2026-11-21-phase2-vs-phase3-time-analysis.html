@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Phase 2 S-01 vs Phase 3 S-04: почему аналогичные задачи заняли больше времени. Work time, calendar time, review waits, chunks, context и рекомендации.">
+<title>Phase 2 vs Phase 3: почему S-04 занял больше времени</title>
+<style>
+:root{
+  --font: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#f8fafb;
+  --border:#d8dde4; --border-strong:#b9c2cd;
+  --text:#1c2530; --muted:#5a6675;
+  --primary:#2f6f4f; --primary-weak:#eef4f1;
+  --done:#1e6b34; --done-bg:#e6f4ea;
+  --progress:#8a5b00; --progress-bg:#fff3cd;
+  --pending:#4b5563; --pending-bg:#eceff3;
+  --danger:#b3261e; --danger-bg:#fdecea;
+  --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.55}
+a{color:var(--primary)}
+a:focus-visible, summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--surface);padding:10px 14px;z-index:10}
+.skip:focus{left:12px;top:12px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+header.hero{background:linear-gradient(135deg,#ffffff 0%,#eef4f1 100%);border:1px solid var(--border);border-radius:14px;padding:28px 30px;box-shadow:var(--shadow);margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);font-weight:700;margin:0 0 8px}
+h1{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.lede{max-width:900px;margin:0;color:var(--muted);font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:650}
+.section{margin-top:26px}
+.section > h2{font-size:21px;margin:0 0 6px;letter-spacing:-.01em}
+.section > .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:30px;font-weight:750;line-height:1.05;letter-spacing:-.03em}
+.kpi .l{font-size:13px;font-weight:650;margin-top:4px}
+.kpi .d{font-size:12.5px;color:var(--muted);margin-top:3px}
+.kpi.done .n{color:var(--done)} .kpi.progress .n{color:var(--progress)} .kpi.pending .n{color:var(--pending)} .kpi.danger .n{color:var(--danger)}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.callout h3{margin:0 0 8px;font-size:15px}
+.callout ul{margin:0;padding-left:20px}
+.callout li{margin:5px 0}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.panel-head h3{margin:0;font-size:15px}
+.panel-head .hint{font-size:12.5px;color:var(--muted)}
+.graph-scroll{overflow:visible;background:#fff;padding:12px;display:flex;justify-content:center}
+.graph-scroll .plantuml-svg{display:block;width:auto;max-width:100%;height:auto}
+.graph-scroll svg{display:block;width:auto;max-width:100%;height:auto;min-width:0}
+figcaption{padding:12px 16px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;background:var(--surface-2)}
+.table-wrap{overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px}
+caption{text-align:left;padding:14px 16px;font-weight:650;border-bottom:1px solid var(--border);background:var(--surface-2)}
+th,td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}
+th{position:sticky;top:0;z-index:1;background:#eef1f4;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:#3f4b59}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+tbody tr:last-child td{border-bottom:none}
+td.phase{min-width:150px}
+.phase-id{font-weight:750;white-space:nowrap}
+.phase-name{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.role{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:650;white-space:nowrap;border:1px solid transparent}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st-done{color:var(--done);background:var(--done-bg);border-color:#c4e3cd}
+.st-progress{color:var(--progress);background:var(--progress-bg);border-color:#f0d99a}
+.st-pending{color:var(--pending);background:var(--pending-bg);border-color:#d5dbe2}
+.st-open{color:var(--danger);background:var(--danger-bg);border-color:#f3c3bf}
+.artifacts{margin:0;padding:0;list-style:none}
+.artifacts li{margin:0 0 6px;padding-left:17px;position:relative}
+.artifacts li::before{content:"•";position:absolute;left:0;color:var(--primary);font-weight:700}
+.artifacts li:last-child{margin-bottom:0}
+code{font-family:var(--mono);font-size:12.5px;background:#f1f4f7;border:1px solid #e2e7ed;border-radius:4px;padding:1px 5px;white-space:nowrap}
+.muted{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.18)}
+.sources{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:4px 0}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){
+  .wrap{padding:16px 12px 40px}
+  header.hero{padding:20px 18px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{max-width:100%}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  header.hero,.panel,.table-wrap,.sources,.callout{box-shadow:none}
+  .graph-scroll{max-height:none;overflow:visible}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{min-width:0;width:100%}
+  th{position:static}
+  a{color:inherit;text-decoration:none}
+}
+
+:root{
+  --series-16:#8a5b00; --series-20:#2f6f4f;
+  --series-64k:#8a5b00; --series-text:#b3261e; --series-mtp2:#2f6f4f;
+  --series-blue:#2b5c8a; --series-gray:#8a94a3;
+}
+.btn{border:1px solid var(--primary);background:var(--primary);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:13px;font-weight:650;cursor:pointer}
+.btn:hover{background:#24583e;border-color:#24583e}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.toc a{font-size:12.5px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 10px;text-decoration:none;color:var(--muted)}
+.toc a:hover{border-color:var(--primary);color:var(--primary)}
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px;margin-top:14px;align-items:start}
+.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.chart-card{margin:0;break-inside:avoid}
+.chart-wide{grid-column:1/-1}
+.chart-card .chart-body{padding:12px 12px 4px;background:#fff}
+.chart-body svg{display:block;width:100%;height:auto}
+.chart-card .legend{border-top:0;padding-top:6px;padding-bottom:10px}
+.chart-card figcaption{border-top:1px solid var(--border);padding:10px 16px;font-size:12.5px;color:var(--muted);background:var(--surface-2)}
+.chart-card .panel-head h3{font-size:15px}
+.chart-card .hint{font-size:12px}
+.legend .swatch{width:13px;height:13px;border-radius:3px;border:1px solid rgba(0,0,0,.15);display:inline-block;margin-right:6px;vertical-align:-2px}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+.highlight-row td{background:var(--primary-weak)!important;font-weight:600}
+.callout.ok{border-left-color:var(--done)}
+.callout.warn{border-left-color:var(--progress)}
+.callout.danger{border-left-color:var(--danger)}
+.callout h3{font-size:15px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.json-details{margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.json-details summary{cursor:pointer;font-weight:650}
+.json-details pre{overflow:auto;max-height:520px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;font:12px/1.5 var(--mono);margin:12px 0 0}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:5px 0;overflow-wrap:anywhere}
+.sources code{white-space:normal;word-break:break-word}
+.mono{font-family:var(--mono);font-size:12.5px}
+.small-note{font-size:12.5px;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px}
+.panel-pad{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.panel-pad h3{margin:0 0 8px;font-size:15px}
+.panel-pad ul{margin:0;padding-left:20px}
+.panel-pad li{margin:5px 0}
+.tag{display:inline-block;border:1px solid var(--border);background:var(--surface-2);border-radius:6px;padding:1px 6px;font-size:12px;white-space:nowrap}
+@media (max-width:720px){
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card .chart-body{padding:8px 6px 2px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media print{
+  .btn,.toc{display:none}
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card{page-break-inside:avoid;break-inside:avoid}
+  .chart-body svg{width:100%;height:auto}
+  details{display:block}
+  details > summary{display:none}
+  .json-details pre{max-height:none}
+}
+
+:root{--series-work:#2f6f4f;--series-review:#2b5c8a;--series-other:#d8dde4;--series-p2:#8a94a3;--series-p3:#2f6f4f;--series-hot:#b3261e}
+.pair-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(390px,1fr));gap:16px;margin-top:14px}
+.pair-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;break-inside:avoid}
+.pair-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.pair-head h3{margin:0;font-size:17px}
+.pair-sub{font-size:12.5px;color:var(--muted);margin:2px 0 0}
+.pair-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.metric{border:1px solid var(--border);background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.metric .v{font-size:15px;font-weight:700;line-height:1.2}
+.metric .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+.bar-row{display:grid;grid-template-columns:46px 1fr 62px;gap:7px;align-items:center;margin:5px 0;font-size:12px}
+.bar-track{height:10px;background:#edf0f3;border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px}
+.bar-row .b2{background:var(--series-p2)}
+.bar-row .b3{background:var(--series-p3)}
+.bar-row .num{font-size:11.5px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.quote{margin:10px 0;padding:10px 12px;border-left:3px solid var(--primary);background:var(--primary-weak);border-radius:0 7px 7px 0;font-size:12.5px;color:#33404d}
+.quote code{white-space:normal;word-break:break-word}
+#compare table{font-size:13px}
+#compare th,#compare td{padding:9px 10px}
+#compare table td:first-child,#compare table th:first-child{white-space:nowrap}
+.cause-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:14px}
+.cause-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+.cause-card h3{margin:0 0 8px;font-size:15px;padding-right:34px}
+.cause-card p{margin:7px 0}
+.cause-card ul{margin:7px 0 0;padding-left:20px}
+.cause-card li{margin:4px 0}
+.rank{position:absolute;right:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:750;display:flex;align-items:center;justify-content:center}
+.cause-card.negative{border-left:4px solid var(--muted)}
+.cause-card.negative .rank{background:var(--muted)}
+.cause-card.hot{border-left:4px solid var(--danger)}
+.cause-card.hot .rank{background:var(--danger)}
+.incomplete-table td{vertical-align:top}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tag.issue{border-color:#f3c3bf;background:var(--danger-bg);color:var(--danger)}
+.small-bar{display:inline-block;height:7px;border-radius:4px;vertical-align:middle;margin-left:4px}
+.kpi .n .unit{font-size:16px;font-weight:650;margin-left:2px}
+.report-note{font-size:12.5px;color:var(--muted);margin-top:8px}
+@media (max-width:720px){.pair-metrics{grid-template-columns:1fr}.bar-row{grid-template-columns:40px 1fr 56px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">AI Task Tracker · Phase 2 S-01 vs Phase 3 S-04 · аналитический отчёт</p>
+  <h1>Почему аналогичные задачи Phase 3 заняли больше времени</h1>
+  <p class="lede">Сравнение 8 завершённых пар S-01 → S-04: work time, calendar time, review waits, chunks, briefs, sessions, diff и issues. Отчёт отвечает на вопрос «что именно выросло» и отделяет реальную работу от ожиданий review.</p>
+  <div class="meta">
+    <span class="chip">Данные на <b>21.11.2026</b></span>
+    <span class="chip">Пар: <b>8</b></span>
+    <span class="chip">Work: <b>2 ч 15 мин → 15 ч 52 мин</b></span>
+    <span class="chip">Ratio: <b>7.05×</b></span>
+    <span class="chip">Chunks: <b>16 → 15</b></span>
+    <button class="btn" type="button" onclick="window.print()">Печать / PDF</button>
+  </div>
+  <nav class="toc" aria-label="Содержание">
+    <a href="#summary">Сводка</a>
+    <a href="#method">Методика</a>
+    <a href="#compare">Сравнение</a>
+    <a href="#context">Контекст</a>
+    <a href="#causes">Причины</a>
+    <a href="#pairs">Пары</a>
+    <a href="#incomplete">Незавершённые</a>
+    <a href="#recommendations">Рекомендации</a>
+    <a href="#caveats">Оговорки</a>
+    <a href="#sources">Источники</a>
+  </nav>
+</header>
+<main id="main">
+
+<section class="section" id="summary" aria-labelledby="summary-h">
+  <h2 id="summary-h">Сводка</h2>
+  <p class="sub">8 завершённых аналогичных этапов Phase 2 и Phase 3. Основная метрика — work time; calendar time и review wait показаны отдельно.</p>
+  <div class="kpis">
+    <div class="kpi danger"><div class="n">7.05×</div><div class="l">work time</div><div class="d">2 ч 15 мин → 15 ч 52 мин</div></div>
+    <div class="kpi done"><div class="n">16 → 15</div><div class="l">chunks</div><div class="d">attempts: 16 → 15; produced: 38 → 31</div></div>
+    <div class="kpi progress"><div class="n">4 625 → 34 643 B</div><div class="l">chunk briefs</div><div class="d">≈7.5× — proxy scope/context</div></div>
+    <div class="kpi progress"><div class="n">4 ч 23 мин → 47 ч 10 мин</div><div class="l">calendar time</div><div class="d">review: 1 ч 02 мин → 26 ч 25 мин</div></div>
+  </div>
+  <div class="callout danger" style="margin-top:14px">
+    <h3>Короткий ответ</h3>
+    <ul>
+      <li><b>Рост не из-за retries, числа chunk’ов или объёма выдачи.</b> Chunk’ов почти столько же (16 → 15), попыток по одной на chunk, produced-файлов даже меньше (38 → 31).</li>
+      <li><b>Главный драйвер — scope/complexity S-04.</b> Day-view, month/year-календарь, общий <code>ModelCell</code>, built-frontend e2e и больше cross-cutting артефактов. Это видно по chunk titles и по U-02/R-01/R-02/I-01.</li>
+      <li><b>Второй драйвер — контекст и сессии.</b> Brief-файлы выросли с 4 625 до 34 643 B; у R/I-задач input/cache/сессии в 4–7× выше.</li>
+      <li><b>Третий драйвер — verification/re-render/build/test.</b> SVG re-render, OpenAPI re-validation, class/components/sequence diagrams, package-lock/vitest/build.</li>
+      <li><b>Review waits усилили календарный разрыв:</b> 1 ч 02 мин → 26 ч 25 мин; T-036 — 13 ч 37 мин, T-032 — 8 ч.</li>
+      <li><b>Осторожно с U-02:</b> 5 мин Phase 2 — outlier быстрого delta; ratio 45.8× чувствителен к этой базе.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="method" aria-labelledby="method-h">
+  <h2 id="method-h">Методика</h2>
+  <p class="sub">Сравниваются только завершённые аналогичные этапы. Незавершённые I-02/Q-01/Q-02/D-01 вынесены отдельно.</p>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Пары</h3>
+      <ul>
+        <li><b>P-00:</b> T-017 → T-029</li>
+        <li><b>A-01:</b> T-018 → T-030</li>
+        <li><b>A-02:</b> T-019 → T-031</li>
+        <li><b>U-01:</b> T-020 → T-032</li>
+        <li><b>U-02:</b> T-021 → T-033</li>
+        <li><b>R-01:</b> T-022 → T-034</li>
+        <li><b>R-02:</b> T-023 → T-035</li>
+        <li><b>I-01:</b> T-024 → T-036</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Определения</h3>
+      <ul>
+        <li><b>Work time</b> — рабочее время роли из текущей activity/atomic-диаграмм, до последнего рабочего checkpoint.</li>
+        <li><b>Calendar time</b> — старт задачи → CP-F reviewed; включает work, review и idle/model-паузы.</li>
+        <li><b>Review wait</b> — сумма интервалов CP requested → reviewed.</li>
+        <li><b>Chunks / attempts / produced</b> — из <code>docs/chunks/T-XXX.json</code>; attempts — сумма попыток chunk’ов.</li>
+        <li><b>Usage</b> — sessions/input/cache/minutes из checkpoint usage table; где n/a, не подставляем оценки.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Что не сравнивается количественно</h3>
+    <p><b>I-02</b> (T-025 done vs T-037 in_progress), <b>Q-01</b> (T-026 vs T-038 pending), <b>Q-02</b> (T-027 vs T-039 pending), <b>F-01</b> (T-028; Phase 3 counterpart ещё нет), <b>D-01</b> (T-012 baseline pending / T-040 pending; Phase 2 D-01 waived). Поэтому Phase 2 total 7 ч 40 мин нельзя сравнивать с Phase 3 total напрямую: 8 пар покрывают только аналогичные завершённые этапы.</p>
+  </div>
+</section>
+
+<section class="section" id="compare" aria-labelledby="compare-h">
+  <h2 id="compare-h">Сравнение по этапам</h2>
+  <p class="sub">Work time вырос в 7.05×, calendar time — в 10.75×. Chunks, attempts и produced почти не изменились.</p>
+  <div class="table-wrap"><table>
+    <caption>8 аналогичных пар. Work/calendar/review — минуты; chunks/produced/briefs — P2/P3.</caption>
+    <thead><tr><th>Этап</th><th>P2</th><th>P3</th><th class="num">Work P2</th><th class="num">Work P3</th><th class="num">Δ</th><th class="num">Ratio</th><th class="num">Calendar P2</th><th class="num">Calendar P3</th><th class="num">Review P2</th><th class="num">Review P3</th><th class="num">Chunks</th><th class="num">Produced</th><th class="num">Briefs, B</th></tr></thead>
+    <tbody><tr><td><b>P-00</b></td><td><code>T-017</code></td><td><code>T-029</code></td><td class="num">5 мин</td><td class="num">26 мин</td><td class="num">+21 мин</td><td class="num"><b>5.20×</b></td><td class="num">9 мин</td><td class="num">1 ч 01 мин</td><td class="num">0 мин</td><td class="num">9 мин</td><td class="num">0 / 0</td><td class="num">0 / 0</td><td class="num">0 / 0</td></tr><tr><td><b>A-01</b></td><td><code>T-018</code></td><td><code>T-030</code></td><td class="num">5 мин</td><td class="num">58 мин</td><td class="num">+53 мин</td><td class="num"><b>11.60×</b></td><td class="num">4 мин</td><td class="num">2 ч 05 мин</td><td class="num">0 мин</td><td class="num">1 ч</td><td class="num">1 / 1</td><td class="num">2 / 3</td><td class="num">0 / 2 308</td></tr><tr class="highlight-row"><td><b>A-02</b></td><td><code>T-019</code></td><td><code>T-031</code></td><td class="num">3 мин</td><td class="num">1 ч 35 мин</td><td class="num">+1 ч 32 мин</td><td class="num"><b>31.67×</b></td><td class="num">2 мин</td><td class="num">2 ч 03 мин</td><td class="num">0 мин</td><td class="num">28 мин</td><td class="num">2 / 2</td><td class="num">2 / 2</td><td class="num">0 / 8 330</td></tr><tr><td><b>U-01</b></td><td><code>T-020</code></td><td><code>T-032</code></td><td class="num">4 мин</td><td class="num">1 ч 10 мин</td><td class="num">+1 ч 06 мин</td><td class="num"><b>17.50×</b></td><td class="num">3 мин</td><td class="num">9 ч 17 мин</td><td class="num">0 мин</td><td class="num">8 ч</td><td class="num">2 / 2</td><td class="num">2 / 2</td><td class="num">0 / 4 147</td></tr><tr class="highlight-row"><td><b>U-02</b></td><td><code>T-021</code></td><td><code>T-033</code></td><td class="num">5 мин</td><td class="num">3 ч 49 мин</td><td class="num">+3 ч 44 мин</td><td class="num"><b>45.80×</b></td><td class="num">6 мин</td><td class="num">4 ч 26 мин</td><td class="num">2 мин</td><td class="num">39 мин</td><td class="num">3 / 3</td><td class="num">14 / 4</td><td class="num">0 / 4 933</td></tr><tr><td><b>R-01</b></td><td><code>T-022</code></td><td><code>T-034</code></td><td class="num">42 мин</td><td class="num">2 ч 41 мин</td><td class="num">+1 ч 59 мин</td><td class="num"><b>3.83×</b></td><td class="num">1 ч 33 мин</td><td class="num">3 ч 44 мин</td><td class="num">49 мин</td><td class="num">1 ч 24 мин</td><td class="num">3 / 3</td><td class="num">6 / 6</td><td class="num">0 / 5 542</td></tr><tr><td><b>R-02</b></td><td><code>T-023</code></td><td><code>T-035</code></td><td class="num">18 мин</td><td class="num">2 ч 17 мин</td><td class="num">+1 ч 59 мин</td><td class="num"><b>7.61×</b></td><td class="num">1 ч 16 мин</td><td class="num">3 ч 27 мин</td><td class="num">10 мин</td><td class="num">1 ч 05 мин</td><td class="num">3 / 3</td><td class="num">7 / 6</td><td class="num">0 / 6 108</td></tr><tr><td><b>I-01</b></td><td><code>T-024</code></td><td><code>T-036</code></td><td class="num">53 мин</td><td class="num">2 ч 56 мин</td><td class="num">+2 ч 03 мин</td><td class="num"><b>3.32×</b></td><td class="num">1 ч 53 мин</td><td class="num">16 ч 32 мин</td><td class="num">0 мин</td><td class="num">13 ч 37 мин</td><td class="num">2 / 1</td><td class="num">5 / 8</td><td class="num">4 625 / 3 275</td></tr></tbody>
+  </table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Главное наблюдение</h3>
+    <p>Phase 3 сделал <b>столько же chunk’ов</b> и <b>не больше produced-файлов</b>, но каждый chunk стал заметно дороже по контексту, проверке и переработке. Особенно показательны <b>U-02</b> (15/583 vs 14/583 строк diff, но 5 мин vs 3 ч 49) и <b>R-02</b> (Phase 2 diff больше, но время меньше).</p>
+  </div>
+  <figure class="panel chart-card chart-wide" id="chart-work">
+    <div class="panel-head"><h3>Work time по этапам</h3><span class="hint">Phase 2 vs Phase 3, минуты</span></div>
+    <div class="chart-body"><svg viewBox="0 0 900 360" role="img" aria-label="Work time Phase 2 vs Phase 3 по этапам" font-family="Segoe UI, Arial, sans-serif"><title>Work time Phase 2 vs Phase 3 по этапам</title><desc>Сгруппированные столбцы рабочего времени в минутах для 8 аналогичных этапов.</desc><line x1="58" y1="296.0" x2="882" y2="296.0" stroke="#e2e7ed" stroke-width="1"/><text x="48" y="300.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="58" y1="230.5" x2="882" y2="230.5" stroke="#e2e7ed" stroke-width="1"/><text x="48" y="234.5" text-anchor="end" font-size="11" fill="#5a6675">60</text><line x1="58" y1="165.0" x2="882" y2="165.0" stroke="#e2e7ed" stroke-width="1"/><text x="48" y="169.0" text-anchor="end" font-size="11" fill="#5a6675">120</text><line x1="58" y1="99.5" x2="882" y2="99.5" stroke="#e2e7ed" stroke-width="1"/><text x="48" y="103.5" text-anchor="end" font-size="11" fill="#5a6675">180</text><line x1="58" y1="34.0" x2="882" y2="34.0" stroke="#e2e7ed" stroke-width="1"/><text x="48" y="38.0" text-anchor="end" font-size="11" fill="#5a6675">240</text><line x1="58" y1="34" x2="58" y2="296" stroke="#b9c2cd" stroke-width="1.2"/><rect x="79.5" y="290.5" width="27" height="5.5" rx="3" fill="#8a94a3"><title>P-00: 5 мин</title></rect><text x="93.0" y="285.5" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">5</text><rect x="112.5" y="267.6" width="27" height="28.4" rx="3" fill="#2f6f4f"><title>P-00: 26 мин</title></rect><text x="126.0" y="262.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">26</text><text x="109.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">P-00</text><rect x="182.5" y="290.5" width="27" height="5.5" rx="3" fill="#8a94a3"><title>A-01: 5 мин</title></rect><text x="196.0" y="285.5" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">5</text><rect x="215.5" y="232.7" width="27" height="63.3" rx="3" fill="#2f6f4f"><title>A-01: 58 мин</title></rect><text x="229.0" y="227.7" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">58</text><text x="212.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">A-01</text><rect x="285.5" y="292.7" width="27" height="3.3" rx="3" fill="#8a94a3"><title>A-02: 3 мин</title></rect><text x="299.0" y="287.7" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">3</text><rect x="318.5" y="192.3" width="27" height="103.7" rx="3" fill="#2f6f4f"><title>A-02: 1 ч 35 мин</title></rect><text x="332.0" y="187.3" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">95</text><text x="315.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">A-02</text><rect x="388.5" y="291.6" width="27" height="4.4" rx="3" fill="#8a94a3"><title>U-01: 4 мин</title></rect><text x="402.0" y="286.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">4</text><rect x="421.5" y="219.6" width="27" height="76.4" rx="3" fill="#2f6f4f"><title>U-01: 1 ч 10 мин</title></rect><text x="435.0" y="214.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">70</text><text x="418.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">U-01</text><rect x="491.5" y="290.5" width="27" height="5.5" rx="3" fill="#8a94a3"><title>U-02: 5 мин</title></rect><text x="505.0" y="285.5" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">5</text><rect x="524.5" y="46.0" width="27" height="250.0" rx="3" fill="#2f6f4f"><title>U-02: 3 ч 49 мин</title></rect><text x="538.0" y="41.0" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">229</text><text x="521.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">U-02</text><rect x="594.5" y="250.2" width="27" height="45.8" rx="3" fill="#8a94a3"><title>R-01: 42 мин</title></rect><text x="608.0" y="245.2" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">42</text><rect x="627.5" y="120.2" width="27" height="175.8" rx="3" fill="#2f6f4f"><title>R-01: 2 ч 41 мин</title></rect><text x="641.0" y="115.2" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">161</text><text x="624.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">R-01</text><rect x="697.5" y="276.4" width="27" height="19.6" rx="3" fill="#8a94a3"><title>R-02: 18 мин</title></rect><text x="711.0" y="271.4" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">18</text><rect x="730.5" y="146.4" width="27" height="149.6" rx="3" fill="#2f6f4f"><title>R-02: 2 ч 17 мин</title></rect><text x="744.0" y="141.4" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">137</text><text x="727.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">R-02</text><rect x="800.5" y="238.1" width="27" height="57.9" rx="3" fill="#8a94a3"><title>I-01: 53 мин</title></rect><text x="814.0" y="233.1" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">53</text><rect x="833.5" y="103.9" width="27" height="192.1" rx="3" fill="#2f6f4f"><title>I-01: 2 ч 56 мин</title></rect><text x="847.0" y="98.9" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">176</text><text x="830.5" y="322" text-anchor="middle" font-size="11.5" fill="#1c2530" font-weight="600">I-01</text><text x="20" y="165.0" text-anchor="middle" font-size="11" fill="#5a6675" transform="rotate(-90 20 165.0)">work, мин</text></svg></div>
+    <div class="legend"><span><i class="swatch" style="background:#8a94a3"></i>Phase 2</span><span><i class="swatch" style="background:#2f6f4f"></i>Phase 3</span><span>значения — work time, мин</span></div>
+    <figcaption>Сгруппированные столбцы. U-02, A-02 и U-01 — самые большие относительные скачки; R-01/I-01 — меньше, но абсолютно дороже.</figcaption>
+  </figure>
+  <div class="chart-grid">
+    <figure class="panel chart-card" id="chart-ratio">
+      <div class="panel-head"><h3>Ratio Phase 3 / Phase 2</h3><span class="hint">work time</span></div>
+      <div class="chart-body"><svg viewBox="0 0 900 410" role="img" aria-label="Во сколько раз выросло work time в Phase 3" font-family="Segoe UI, Arial, sans-serif"><title>Во сколько раз выросло work time в Phase 3</title><desc>Горизонтальные полосы: отношение work time Phase 3 к Phase 2 по каждому этапу.</desc><line x1="76.0" y1="22" x2="76.0" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="76.0" y="14" text-anchor="middle" font-size="10" fill="#5a6675">0×</text><line x1="224.8" y1="22" x2="224.8" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="224.8" y="14" text-anchor="middle" font-size="10" fill="#5a6675">10×</text><line x1="373.6" y1="22" x2="373.6" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="373.6" y="14" text-anchor="middle" font-size="10" fill="#5a6675">20×</text><line x1="522.4" y1="22" x2="522.4" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="522.4" y="14" text-anchor="middle" font-size="10" fill="#5a6675">30×</text><line x1="671.2" y1="22" x2="671.2" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="671.2" y="14" text-anchor="middle" font-size="10" fill="#5a6675">40×</text><line x1="820.0" y1="22" x2="820.0" y2="376" stroke="#e2e7ed" stroke-width="1"/><text x="820.0" y="14" text-anchor="middle" font-size="10" fill="#5a6675">50×</text><text x="66" y="41.0" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">P-00</text><rect x="76" y="28.0" width="77.4" height="20" rx="4" fill="#8a94a3"><title>P-00: 5.20×</title></rect><text x="160.4" y="42.0" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">5.2×</text><text x="66" y="85.2" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">A-01</text><rect x="76" y="72.2" width="172.6" height="20" rx="4" fill="#2b5c8a"><title>A-01: 11.60×</title></rect><text x="255.6" y="86.2" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">11.6×</text><text x="66" y="129.5" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">A-02</text><rect x="76" y="116.5" width="471.2" height="20" rx="4" fill="#b3261e"><title>A-02: 31.67×</title></rect><text x="554.2" y="130.5" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">31.7×</text><text x="66" y="173.8" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">U-01</text><rect x="76" y="160.8" width="260.4" height="20" rx="4" fill="#2b5c8a"><title>U-01: 17.50×</title></rect><text x="343.4" y="174.8" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">17.5×</text><text x="66" y="218.0" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">U-02</text><rect x="76" y="205.0" width="681.5" height="20" rx="4" fill="#b3261e"><title>U-02: 45.80×</title></rect><text x="764.5" y="219.0" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">45.8×</text><text x="66" y="262.2" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">R-01</text><rect x="76" y="249.2" width="57.0" height="20" rx="4" fill="#8a94a3"><title>R-01: 3.83×</title></rect><text x="140.0" y="263.2" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">3.8×</text><text x="66" y="306.5" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">R-02</text><rect x="76" y="293.5" width="113.3" height="20" rx="4" fill="#8a94a3"><title>R-02: 7.61×</title></rect><text x="196.3" y="307.5" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">7.6×</text><text x="66" y="350.8" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">I-01</text><rect x="76" y="337.8" width="49.4" height="20" rx="4" fill="#8a94a3"><title>I-01: 3.32×</title></rect><text x="132.4" y="351.8" text-anchor="start" font-size="11" font-weight="650" fill="#1c2530">3.3×</text></svg></div>
+      <figcaption>U-02 (45.8×) и A-02 (31.7×) — самые высокие ratio; U-02 чувствителен к 5-минутной базе Phase 2.</figcaption>
+    </figure>
+    <figure class="panel chart-card" id="chart-scatter">
+      <div class="panel-head"><h3>Chunks vs work time</h3><span class="hint">каждая точка — этап</span></div>
+      <div class="chart-body"><svg viewBox="0 0 900 400" role="img" aria-label="Chunk count и work time: Phase 2 vs Phase 3" font-family="Segoe UI, Arial, sans-serif"><title>Chunk count и work time: Phase 2 vs Phase 3</title><desc>Точки показывают число chunk-шагов и рабочее время; при похожем числе chunk-шагов Phase 3 намного выше.</desc><line x1="60" y1="348.0" x2="878" y2="348.0" stroke="#e2e7ed" stroke-width="1"/><text x="50" y="352.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="60" y1="267.5" x2="878" y2="267.5" stroke="#e2e7ed" stroke-width="1"/><text x="50" y="271.5" text-anchor="end" font-size="11" fill="#5a6675">60</text><line x1="60" y1="187.0" x2="878" y2="187.0" stroke="#e2e7ed" stroke-width="1"/><text x="50" y="191.0" text-anchor="end" font-size="11" fill="#5a6675">120</text><line x1="60" y1="106.5" x2="878" y2="106.5" stroke="#e2e7ed" stroke-width="1"/><text x="50" y="110.5" text-anchor="end" font-size="11" fill="#5a6675">180</text><line x1="60" y1="26.0" x2="878" y2="26.0" stroke="#e2e7ed" stroke-width="1"/><text x="50" y="30.0" text-anchor="end" font-size="11" fill="#5a6675">240</text><line x1="60.0" y1="26" x2="60.0" y2="348" stroke="#f0f2f5" stroke-width="1"/><text x="60.0" y="367" text-anchor="middle" font-size="11" fill="#5a6675">0</text><line x1="293.7" y1="26" x2="293.7" y2="348" stroke="#f0f2f5" stroke-width="1"/><text x="293.7" y="367" text-anchor="middle" font-size="11" fill="#5a6675">1</text><line x1="527.4" y1="26" x2="527.4" y2="348" stroke="#f0f2f5" stroke-width="1"/><text x="527.4" y="367" text-anchor="middle" font-size="11" fill="#5a6675">2</text><line x1="761.1" y1="26" x2="761.1" y2="348" stroke="#f0f2f5" stroke-width="1"/><text x="761.1" y="367" text-anchor="middle" font-size="11" fill="#5a6675">3</text><text x="18" y="187.0" text-anchor="middle" font-size="11" fill="#5a6675" transform="rotate(-90 18 187.0)">work, мин</text><text x="469.0" y="390" text-anchor="middle" font-size="11" fill="#5a6675">chunks</text><circle cx="60.0" cy="341.3" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>P-00 · Phase 2: 0 chunks, 5 мин</title></circle><text x="50.0" y="333.3" font-size="9.5" fill="#40505f">P-00</text><circle cx="293.7" cy="341.3" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>A-01 · Phase 2: 1 chunks, 5 мин</title></circle><text x="300.7" y="335.3" font-size="9.5" fill="#40505f">A-01</text><circle cx="527.4" cy="344.0" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>A-02 · Phase 2: 2 chunks, 3 мин</title></circle><text x="519.4" y="357.0" font-size="9.5" fill="#40505f">A-02</text><circle cx="527.4" cy="342.6" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>U-01 · Phase 2: 2 chunks, 4 мин</title></circle><text x="534.4" y="354.6" font-size="9.5" fill="#40505f">U-01</text><circle cx="761.1" cy="341.3" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>U-02 · Phase 2: 3 chunks, 5 мин</title></circle><text x="745.1" y="333.3" font-size="9.5" fill="#40505f">U-02</text><circle cx="761.1" cy="291.6" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>R-01 · Phase 2: 3 chunks, 42 мин</title></circle><text x="768.1" y="283.6" font-size="9.5" fill="#40505f">R-01</text><circle cx="761.1" cy="323.9" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>R-02 · Phase 2: 3 chunks, 18 мин</title></circle><text x="768.1" y="335.9" font-size="9.5" fill="#40505f">R-02</text><circle cx="527.4" cy="276.9" r="5.5" fill="#8a94a3" stroke="#fff" stroke-width="1.5"><title>I-01 · Phase 2: 2 chunks, 53 мин</title></circle><text x="509.4" y="289.9" font-size="9.5" fill="#40505f">I-01</text><circle cx="60.0" cy="313.1" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>P-00 · Phase 3: 0 chunks, 26 мин</title></circle><text x="52.0" y="305.1" font-size="9.5" fill="#40505f">P-00</text><circle cx="293.7" cy="270.2" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>A-01 · Phase 3: 1 chunks, 58 мин</title></circle><text x="302.7" y="264.2" font-size="9.5" fill="#40505f">A-01</text><circle cx="527.4" cy="220.5" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>A-02 · Phase 3: 2 chunks, 1 ч 35 мин</title></circle><text x="521.4" y="233.5" font-size="9.5" fill="#40505f">A-02</text><circle cx="527.4" cy="254.1" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>U-01 · Phase 3: 2 chunks, 1 ч 10 мин</title></circle><text x="536.4" y="266.1" font-size="9.5" fill="#40505f">U-01</text><circle cx="761.1" cy="40.8" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>U-02 · Phase 3: 3 chunks, 3 ч 49 мин</title></circle><text x="747.1" y="32.8" font-size="9.5" fill="#40505f">U-02</text><circle cx="761.1" cy="132.0" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>R-01 · Phase 3: 3 chunks, 2 ч 41 мин</title></circle><text x="770.1" y="124.0" font-size="9.5" fill="#40505f">R-01</text><circle cx="761.1" cy="164.2" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>R-02 · Phase 3: 3 chunks, 2 ч 17 мин</title></circle><text x="770.1" y="176.2" font-size="9.5" fill="#40505f">R-02</text><circle cx="293.7" cy="111.9" r="5.5" fill="#2f6f4f" stroke="#fff" stroke-width="1.5"><title>I-01 · Phase 3: 1 chunks, 2 ч 56 мин</title></circle><text x="277.7" y="124.9" font-size="9.5" fill="#40505f">I-01</text></svg></div>
+      <figcaption>При x≈2–3 chunks Phase 3 точки намного выше по work time. Это не эффект количества chunk’ов.</figcaption>
+    </figure>
+  </div>
+  <figure class="panel chart-card chart-wide" id="chart-phase">
+    <div class="panel-head"><h3>Work / review / прочее по фазам</h3><span class="hint">сумма 8 пар; календарный интервал</span></div>
+    <div class="chart-body"><svg viewBox="0 0 900 240" role="img" aria-label="Work, review и календарное время по фазам" font-family="Segoe UI, Arial, sans-serif"><title>Work, review и календарное время по фазам</title><desc>Стек: рабочее время, ожидание review и прочее/идл; Phase 3 существенно больше по календарю.</desc><text x="98" y="54.0" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">Phase 2 · 8 пар</text><rect x="110.0" y="34.0" width="36.3" height="28" fill="#2f6f4f"><title>Phase 2 · 8 пар · work: 2 ч 15 мин</title></rect><rect x="146.3" y="34.0" width="16.7" height="28" fill="#2b5c8a"><title>Phase 2 · 8 пар · review: 1 ч 02 мин</title></rect><rect x="162.9" y="34.0" width="17.7" height="28" fill="#d8dde4"><title>Phase 2 · 8 пар · прочее: 1 ч 06 мин</title></rect><text x="490.0" y="78.0" text-anchor="middle" font-size="10.5" fill="#5a6675">итого 4 ч 23 мин · work 2 ч 15 мин · review 1 ч 02 мин · прочее 1 ч 06 мин</text><text x="98" y="135.0" text-anchor="end" font-size="12" font-weight="600" fill="#1c2530">Phase 3 · 8 пар</text><rect x="110.0" y="115.0" width="255.6" height="28" fill="#2f6f4f"><title>Phase 3 · 8 пар · work: 15 ч 52 мин</title></rect><rect x="365.6" y="115.0" width="425.8" height="28" fill="#2b5c8a"><title>Phase 3 · 8 пар · review: 26 ч 25 мин</title></rect><rect x="791.4" y="115.0" width="78.6" height="28" fill="#d8dde4"><title>Phase 3 · 8 пар · прочее: 4 ч 52 мин</title></rect><text x="490.0" y="159.0" text-anchor="middle" font-size="10.5" fill="#5a6675">итого 47 ч 10 мин · work 15 ч 52 мин · review 26 ч 25 мин · прочее 4 ч 52 мин</text><text x="110" y="230" font-size="11" fill="#5a6675">Длина полосы — календарный интервал; цвета — вклад work / review / прочее.</text></svg></div>
+    <div class="legend"><span><i class="swatch" style="background:#2f6f4f"></i>work</span><span><i class="swatch" style="background:#2b5c8a"></i>review</span><span><i class="swatch" style="background:#d8dde4"></i>прочее / idle</span></div>
+    <figcaption>Phase 2: 4 ч 23 мин календарь, из них 1 ч 02 мин review. Phase 3: 47 ч 10 мин календарь, из них 26 ч 25 мин review. Work time вырос в 7.05×, review — в 25.53×.</figcaption>
+  </figure>
+</section>
+
+<section class="section" id="context" aria-labelledby="context-h">
+  <h2 id="context-h">Контекст, сессии и артефакты</h2>
+  <p class="sub">Usage доступен не для всех Phase 2 задач; где n/a — не подставляем оценки. Для R/I-пар рост input/cache/сессий наиболее выражен.</p>
+  <div class="table-wrap"><table>
+    <caption>Context & verification. Sessions/input/cache/min — из checkpoint usage; diff — snapshot CP-F. P2/P3.</caption>
+    <thead><tr><th>Этап</th><th class="num">Sessions P2→P3</th><th class="num">Input P2→P3</th><th class="num">Cache P2→P3</th><th class="num">Usage min P2→P3</th><th class="num">Diff files/lines P2→P3</th><th>Issues P2</th><th>Issues P3</th></tr></thead>
+    <tbody><tr><td><b>P-00</b></td><td class="num">2 → 5</td><td class="num">1 341 131 → 379 281</td><td class="num">2 551 015 → 2 191 589</td><td class="num">5 ч 27 мин → 3 ч 40 мин</td><td class="num">7/281 → 18/885</td><td><div class="tag-row"><span class="tag issue">ISSUE-20261117-232320</span></div></td><td><div class="tag-row"><span class="tag issue">ISSUE-20261118-153622</span><span class="tag issue">ISSUE-20261118-185907</span></div></td></tr><tr><td><b>A-01</b></td><td class="num">— → 5</td><td class="num">— → 269 947</td><td class="num">— → 3 590 810</td><td class="num">— → 1 ч 56 мин</td><td class="num">10/340 → 5/61</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="muted">—</span></div></td></tr><tr><td><b>A-02</b></td><td class="num">— → 3</td><td class="num">— → 281 084</td><td class="num">— → 6 797 571</td><td class="num">— → 4 ч 42 мин</td><td class="num">10/366 → 10/477</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="muted">—</span></div></td></tr><tr><td><b>U-01</b></td><td class="num">— → 5</td><td class="num">— → 240 623</td><td class="num">— → 2 662 219</td><td class="num">— → 1 ч 33 мин</td><td class="num">10/435 → 10/346</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="muted">—</span></div></td></tr><tr><td><b>U-02</b></td><td class="num">— → 11</td><td class="num">— → 644 320</td><td class="num">— → 4 571 594</td><td class="num">— → 5 ч 07 мин</td><td class="num">15/583 → 14/583</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="tag issue">ISSUE-20261120-113748</span></div></td></tr><tr><td><b>R-01</b></td><td class="num">1 → 5</td><td class="num">48 057 → 377 315</td><td class="num">272 822 → 8 246 608</td><td class="num">34 мин → 4 ч 09 мин</td><td class="num">14/643 → 17/1614</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="muted">—</span></div></td></tr><tr><td><b>R-02</b></td><td class="num">— → 5</td><td class="num">— → 307 266</td><td class="num">— → 5 519 740</td><td class="num">— → 3 ч 54 мин</td><td class="num">13/573 → 5/101</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="muted">—</span></div></td></tr><tr><td><b>I-01</b></td><td class="num">1 → 7</td><td class="num">82 511 → 540 747</td><td class="num">2 997 680 → 9 652 968</td><td class="num">10 мин → 5 ч 07 мин</td><td class="num">15/645 → n/a</td><td><div class="tag-row"><span class="muted">—</span></div></td><td><div class="tag-row"><span class="tag issue">ISSUE-20261121-005209</span><span class="tag issue">ISSUE-20261120-113748</span></div></td></tr></tbody>
+  </table></div>
+  <div class="callout" style="margin-top:14px">
+    <h3>Что видно</h3>
+    <ul>
+      <li><b>R-01:</b> input 48 057 → 377 315, cache 272 822 → 8 246 608, sessions 1 → 5.</li>
+      <li><b>R-02:</b> Phase 2 usage n/a; Phase 3 — 5 сессий, 307 266 input, 5 519 740 cache, 3 ч 54 мин.</li>
+      <li><b>I-01:</b> 1 → 7 сессий; input 82 511 → 540 747; cache 2 997 680 → 9 652 968; 8 файлов incl package-lock/vitest.</li>
+      <li><b>P-00:</b> T-017 имел очень большой input (1 341 131) и 2 сессии, но всего 5 мин work; T-029 — 5 сессий и 26 мин. Это про процесс/скоуп, не про объём токенов.</li>
+      <li><b>U-02:</b> output-объём Phase 2 был даже выше (14 produced, 15/583 diff), но время — 5 мин. Это главный контрапункт к гипотезе «время = объём выдачи».</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="causes" aria-labelledby="causes-h">
+  <h2 id="causes-h">Почему выросло время: ранжированные причины</h2>
+  <p class="sub">Причины упорядочены по силе evidence. Это observational comparison: scope S-04 отличается по дизайну, а не случайно.</p>
+  <div class="cause-grid">
+    <article class="cause-card hot"><span class="rank">1</span><h3>Scope и сложность S-04</h3>
+      <p>S-04 — не «ещё одна колонка», а новое day-view с month/year-календарём, общим <code>ModelCell</code> и built-frontend e2e. S-01 был меньшим delta к существующему списку.</p>
+      <ul><li>T-033: wireframes + SVG re-render, UI spec, prototype day table.</li><li>T-034: ADR shared model-cell + components + SVG + SCN-009 + SVG.</li><li>T-035: ModelCell CLS-005 + class diagram + OpenAPI re-validation.</li><li>T-036: shared ModelCell + S-01/S-04 integration + 8 файлов incl package-lock/vitest.</li></ul>
+    </article>
+    <article class="cause-card hot"><span class="rank">2</span><h3>Контекст, briefs и сессии</h3>
+      <p>Brief-файлы выросли 4 625 → 34 643 B; роли Phase 3 читали больше артефактов и работали в большем числе сессий.</p>
+      <ul><li>T-034: 5 сессий, 377 315 input, 8 246 608 cache.</li><li>T-036: 7 сессий, 540 747 input, 9 652 968 cache.</li><li>Phase 2 T-022: 1 сессия, 48 057 input, 272 822 cache.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">3</span><h3>Verification / re-render / build</h3>
+      <p>Phase 3 добавил проверки, которые не видны в diff: SVG re-render, OpenAPI re-validation, cross-check components/class/sequence, built-frontend и frontend build/test.</p>
+      <ul><li>T-033-c2 и T-034-c2/c3 — явные SVG re-render шаги.</li><li>T-035-c3 — OpenAPI re-validation.</li><li>T-036 — package-lock/vitest/build, 8 produced файлов.</li><li>T-037 — built-frontend DOM smoke (in progress) — ещё впереди.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">4</span><h3>Rework и check-design gaps</h3>
+      <p>Часть времени ушла на переоткрытие/сужение scope и ложные budget FAIL, а не на новую функциональность.</p>
+      <ul><li>T-029: previous orchestrator session cancelled; 18 файлов / 885 строк snapshot.</li><li>T-033: budget corrected to U-02 norm; ISSUE-20261120-113748.</li><li>T-036: scope narrowing + chunk-budget FAIL (ISSUE-20261121-005209, ISSUE-20261120-113748); known check-design gap.</li></ul>
+    </article>
+    <article class="cause-card"><span class="rank">5</span><h3>Review waits и календарные паузы</h3>
+      <p>Work time и calendar time — разные вещи. Phase 3 review waits выросли с 1 ч 02 мин до 26 ч 25 мин; это объясняет большую часть calendar gap.</p>
+      <ul><li>T-036: CP-1 13 ч 37 мин.</li><li>T-032: CP-F 8 ч.</li><li>T-034: CP-1 35 мин + CP-F 50 мин; T-035: 37 + 29 мин.</li><li>Phase 2 review почти весь в T-022 CP-F 48 мин.</li></ul>
+    </article>
+    <article class="cause-card negative"><span class="rank">∅</span><h3>Что не объясняет рост</h3>
+      <ul><li><b>Retries:</b> attempts 16 → 15; по 1 на chunk.</li><li><b>Число chunk’ов:</b> 16 → 15.</li><li><b>Produced-файлы:</b> 38 → 31.</li><li><b>Diff volume:</b> U-02 15/583 → 14/583; R-02 13/573 → 5/101, но время выросло.</li><li><b>Acceptance checklist:</b> avg 7.5 → 6.6; artifacts avg 4.2 → 4.6 — почти без изменений.</li></ul>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="pairs" aria-labelledby="pairs-h">
+  <h2 id="pairs-h">Пары подробно</h2>
+  <p class="sub">Для каждой пары: work/calendar/review, chunks/attempts/produced, briefs, sessions/input/cache, evidence и краткое объяснение.</p>
+  <div class="pair-grid">
+<article class="pair-card" id="pair-p-00">
+  <div class="pair-head">
+    <div><h3>P-00 · Планирование S-04</h3>
+    <p class="pair-sub"><code>T-017</code> → <code>T-029</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-done">5.2× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:2.1%"></div></div><span class="num">5 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:10.8%"></div></div><span class="num">26 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">9 мин → 1 ч 01 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">0 мин → 9 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">0 → 0 chunks</div><div class="l">attempts: 0 → 0; produced: 0 → 0</div></div>
+    <div class="metric"><div class="v">0 → 0 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: 2 → 5; input: 1 341 131 → 379 281; cache: 2 551 015 → 2 191 589; tasks usage min: 5 ч 27 мин → 3 ч 40 мин.</div>
+  <div class="quote"><code>T-029 acceptance: built-frontend e2e / stale-frontend guard; 18 файлов / 885 строк snapshot.</code></div>
+  <p class="small-note">S-04 planning: graph T-030..T-040, 11 cards, built-frontend acceptance; T-029 prior orchestrator session cancelled. Diff 18 файлов / 885 строк против 7 / 281.</p>
+  
+  <div class="tag-row"><span class="tag issue">ISSUE-20261117-232320</span><span class="tag issue">ISSUE-20261118-153622</span><span class="tag issue">ISSUE-20261118-185907</span></div>
+</article>
+<article class="pair-card" id="pair-a-01">
+  <div class="pair-head">
+    <div><h3>A-01 · Требования S-04</h3>
+    <p class="pair-sub"><code>T-018</code> → <code>T-030</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-progress">11.6× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:2.1%"></div></div><span class="num">5 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:24.2%"></div></div><span class="num">58 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">4 мин → 2 ч 05 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">0 мин → 1 ч</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">1 → 1 chunks</div><div class="l">attempts: 1 → 1; produced: 2 → 3</div></div>
+    <div class="metric"><div class="v">0 → 2 308 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: — → 5; input: — → 269 947; cache: — → 3 590 810; tasks usage min: — → 1 ч 56 мин.</div>
+  <div class="quote"><code>A1 · R-015 S-04 day-view model column requirements delta</code></div>
+  <p class="small-note">S-04 requirements delta: day-view model column, states, a11y; 3 produced vs 2; 4 sessions / 116 мин. Phase 2 usage n/a.</p>
+  
+  <div class="tag-row"><span class="muted">issues: —</span></div>
+</article>
+<article class="pair-card" id="pair-a-02">
+  <div class="pair-head">
+    <div><h3>A-02 · E2E-сценарии S-04</h3>
+    <p class="pair-sub"><code>T-019</code> → <code>T-031</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-open">31.7× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:2.0%"></div></div><span class="num">3 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:39.6%"></div></div><span class="num">1 ч 35 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">2 мин → 2 ч 03 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">0 мин → 28 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">2 → 2 chunks</div><div class="l">attempts: 2 → 2; produced: 2 → 2</div></div>
+    <div class="metric"><div class="v">0 → 8 330 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: — → 3; input: — → 281 084; cache: — → 6 797 571; tasks usage min: — → 4 ч 42 мин.</div>
+  <div class="quote"><code>B2 · YAML dataset day-view model extensions + validation pass</code></div>
+  <p class="small-note">S-04 UC-E2E-005 + YAML day-view extensions/validation; 2 chunks both; briefs 8.3 KB; 3 sessions / 282 мин.</p>
+  
+  <div class="tag-row"><span class="muted">issues: —</span></div>
+</article>
+<article class="pair-card" id="pair-u-01">
+  <div class="pair-head">
+    <div><h3>U-01 · UX-потоки S-04</h3>
+    <p class="pair-sub"><code>T-020</code> → <code>T-032</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-progress">17.5× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:2.0%"></div></div><span class="num">4 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:29.2%"></div></div><span class="num">1 ч 10 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">3 мин → 9 ч 17 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">0 мин → 8 ч</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">2 → 2 chunks</div><div class="l">attempts: 2 → 2; produced: 2 → 2</div></div>
+    <div class="metric"><div class="v">0 → 4 147 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: — → 5; input: — → 240 623; cache: — → 2 662 219; tasks usage min: — → 1 ч 33 мин.</div>
+  <div class="quote"><code>C2 · S-04 Модель column + states in screens (R-015, reuse S-01 labels)</code></div>
+  <p class="small-note">S-04 day-view journey + screens; 2 chunks both; briefs 4.1 KB; 5 sessions / 93 мин; CP-F review 8 ч.</p>
+  
+  <div class="tag-row"><span class="muted">issues: —</span></div>
+</article>
+<article class="pair-card" id="pair-u-02">
+  <div class="pair-head">
+    <div><h3>U-02 · Прототип S-04</h3>
+    <p class="pair-sub"><code>T-021</code> → <code>T-033</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-open">45.8× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:2.1%"></div></div><span class="num">5 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:95.4%"></div></div><span class="num">3 ч 49 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">6 мин → 4 ч 26 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">2 мин → 39 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">3 → 3 chunks</div><div class="l">attempts: 3 → 3; produced: 14 → 4</div></div>
+    <div class="metric"><div class="v">0 → 4 933 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: — → 11; input: — → 644 320; cache: — → 4 571 594; tasks usage min: — → 5 ч 07 мин.</div>
+  <div class="quote"><code>T-033-c2 · Wireframes S-04 day view + SVG re-render; T-033-c3 · Prototype uc-e2e-005.html day table with model column</code></div>
+  <p class="small-note">S-04 wireframes + SVG re-render, UI spec, prototype day table with model column; 3 chunks both; 9–11 sessions / 307 мин. T-021 5 мин — outlier быстрого delta.</p>
+  <p class="small-note">Calendar 4 ч 26 мин (4:26:40) от фактического старта 09:53:50; +23 мин inter-task idle не включены. <a href="2026-11-21-u02-delay-deep-dive.html">Deep dive →</a></p>
+  <div class="tag-row"><span class="tag issue">ISSUE-20261120-113748</span></div>
+</article>
+<article class="pair-card" id="pair-r-01">
+  <div class="pair-head">
+    <div><h3>R-01 · Проектирование S-04</h3>
+    <p class="pair-sub"><code>T-022</code> → <code>T-034</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-done">3.8× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:17.5%"></div></div><span class="num">42 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:67.1%"></div></div><span class="num">2 ч 41 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">1 ч 33 мин → 3 ч 44 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">49 мин → 1 ч 24 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">3 → 3 chunks</div><div class="l">attempts: 3 → 3; produced: 6 → 6</div></div>
+    <div class="metric"><div class="v">0 → 5 542 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: 1 → 5; input: 48 057 → 377 315; cache: 272 822 → 8 246 608; tasks usage min: 34 мин → 4 ч 09 мин.</div>
+  <div class="quote"><code>T-034-c1 · ADR-0001 S-04 shared model-cell decision + architecture description core extension; T-034-c3 · sequence SCN-009</code></div>
+  <p class="small-note">S-04 ADR shared ModelCell + components + SVG + SCN-009 + SVG; diff 17 / 1614 против 14 / 643; 5 sessions / 249 мин; review 85 мин.</p>
+  
+  <div class="tag-row"><span class="muted">issues: —</span></div>
+</article>
+<article class="pair-card" id="pair-r-02">
+  <div class="pair-head">
+    <div><h3>R-02 · Контракты S-04</h3>
+    <p class="pair-sub"><code>T-023</code> → <code>T-035</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-done">7.6× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:7.5%"></div></div><span class="num">18 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:57.1%"></div></div><span class="num">2 ч 17 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">1 ч 16 мин → 3 ч 27 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">10 мин → 1 ч 05 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">3 → 3 chunks</div><div class="l">attempts: 3 → 3; produced: 7 → 6</div></div>
+    <div class="metric"><div class="v">0 → 6 108 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: — → 5; input: — → 307 266; cache: — → 5 519 740; tasks usage min: — → 3 ч 54 мин.</div>
+  <div class="quote"><code>C2 · class diagram: ModelCell CLS-005 + re-render; data model confirmed; C3 · OpenAPI re-validation</code></div>
+  <p class="small-note">S-04 contracts/module handoff + ModelCell CLS-005 + class diagram + OpenAPI re-validation; 5 sessions / 234 мин; Phase 2 diff был больше, но время меньше.</p>
+  
+  <div class="tag-row"><span class="muted">issues: —</span></div>
+</article>
+<article class="pair-card" id="pair-i-01">
+  <div class="pair-head">
+    <div><h3>I-01 · Реализация S-04</h3>
+    <p class="pair-sub"><code>T-024</code> → <code>T-036</code> · Phase 2 → Phase 3</p></div>
+    <span class="badge st-done">3.3× work</span>
+  </div>
+  <div class="bar-row"><span>P2</span><div class="bar-track"><div class="bar-fill b2" style="width:22.1%"></div></div><span class="num">53 мин</span></div>
+  <div class="bar-row"><span>P3</span><div class="bar-track"><div class="bar-fill b3" style="width:73.3%"></div></div><span class="num">2 ч 56 мин</span></div>
+  <div class="pair-metrics">
+    <div class="metric"><div class="v">1 ч 53 мин → 16 ч 32 мин</div><div class="l">calendar time (start → CP-F)</div></div>
+    <div class="metric"><div class="v">0 мин → 13 ч 37 мин</div><div class="l">review wait</div></div>
+    <div class="metric"><div class="v">2 → 1 chunks</div><div class="l">attempts: 2 → 1; produced: 5 → 8</div></div>
+    <div class="metric"><div class="v">4 625 → 3 275 B</div><div class="l">chunk briefs</div></div>
+  </div>
+  <div class="small-note">sessions: 1 → 7; input: 82 511 → 540 747; cache: 2 997 680 → 9 652 968; tasks usage min: 10 мин → 5 ч 07 мин.</div>
+  <div class="quote"><code>C1 · Shared ModelCell component + S-01/S-04 integration and tests; 8 files incl package-lock.json</code></div>
+  <p class="small-note">S-04 shared ModelCell + S-01/S-04 integration + 8 файлов incl package-lock/vitest; 7 sessions / 541k input / 9.65M cache; chunk-budget FAIL + scope narrowing; CP-1 review 13 ч 37 мин.</p>
+  
+  <div class="tag-row"><span class="tag issue">ISSUE-20261121-005209</span><span class="tag issue">ISSUE-20261120-113748</span></div>
+</article></div>
+</section>
+
+<section class="section" id="incomplete" aria-labelledby="incomplete-h">
+  <h2 id="incomplete-h">Незавершённые задачи: пока не сравнимы</h2>
+  <p class="sub">I-02/Q-01/Q-02/D-01 Phase 3 ещё не завершены; F-01 не имеет Phase 3 counterpart. Числовые ratio для них не считаем.</p>
+  <div class="table-wrap"><table class="incomplete-table">
+    <caption>Что осталось за пределами 8 пар.</caption>
+    <thead><tr><th>Этап</th><th>Phase 2</th><th>Phase 3</th><th>Статус / комментарий</th></tr></thead>
+    <tbody>
+      <tr><td><b>I-02</b></td><td>T-025 · 1 ч 06 мин · done</td><td>T-037 · in progress</td><td>C1 started 16:24; built-frontend DOM smoke для S-04. Сравнение времени будет после CP-F.</td></tr>
+      <tr><td><b>Q-01</b></td><td>T-026 · 2 ч 45 мин · done</td><td>T-038 · pending</td><td>План/покрытие S-04 ещё впереди.</td></tr>
+      <tr><td><b>Q-02</b></td><td>T-027 · 44 мин · done</td><td>T-039 · pending</td><td>QA/verdict S-04 ещё впереди; BUG-008 в Phase 2 был отдельным follow-up.</td></tr>
+      <tr><td><b>F-01</b></td><td>T-028 · 50 мин · done</td><td>—</td><td>Phase 3 final acceptance ещё не создан.</td></tr>
+      <tr><td><b>D-01</b></td><td>T-012 · pending baseline</td><td>T-040 · pending</td><td>Phase 2 D-01 был waived в T-017; Phase 3 D-01 в scope T-029.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Как читать итог</h3>
+    <p>Нельзя говорить «Phase 3 в 7 раз медленнее всей Phase 2»: Phase 2 total включает T-025..T-028 (I-02/Q-01/Q-02/F-01), которых в Phase 3 ещё нет. Корректная формулировка: <b>на 8 завершённых аналогичных этапах work time вырос в 7.05×</b>, и предпосылки для такого же роста в I-02/Q-01/Q-02 есть (built-frontend, контекст, verification), но их надо измерить после завершения.</p>
+  </div>
+</section>
+
+<section class="section" id="recommendations" aria-labelledby="recommendations-h">
+  <h2 id="recommendations-h">Рекомендации</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Что делать</h3>
+      <ul>
+        <li><b>Дробить cross-cutting S-04-задачи по поверхностям:</b> day view, shared ModelCell, S-01 regression, build/tests — отдельные chunk’и с явными acceptance.</li>
+        <li><b>Context pack на роль:</b> только релевантные фрагменты requirements/UX/contracts/QA; контролировать input/cache/sessions. Phase 3 R/I — основной кандидат.</li>
+        <li><b>Раньше делать build/built-frontend проверки:</b> T-037-подобный DOM smoke — в chunk acceptance, а не в конце.</li>
+        <li><b>Починить chunk-budget:</b> не считать package-lock/сгенерированные SVG как authored output; T-036/T-033 — known check-design gaps.</li>
+        <li><b>Планировать review windows:</b> отделять work time от calendar; не ставить зависимые этапы на overnight review (T-036 13 ч 37 мин).</li>
+        <li><b>Писать per-chunk время в ledger:</b> сейчас у многих chunk’ов <code>usage.min=0</code>; без этого анализ остаётся частично оценочным.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Чего не делать</h3>
+      <ul>
+        <li>Не использовать <b>T-021 / U-02 5 мин</b> как baseline для планирования S-04: это outlier быстрого delta.</li>
+        <li>Не объяснять рост «большим output»: produced и diff в U-02/R-02 не выросли, а время выросло.</li>
+        <li>Не объяснять рост retries: attempts по 1 на chunk в обеих фазах.</li>
+        <li>Не сравнивать полные phase totals до завершения T-037/T-038/T-039.</li>
+        <li>Не оптимизировать только модель/effort: основной рычаг — scope, контекст и verification, а не latency модели.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="caveats" aria-labelledby="caveats-h">
+  <h2 id="caveats-h">Оговорки</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Ограничения данных</h3>
+      <ul>
+        <li>Observational comparison: scope S-04 отличается по дизайну; это не controlled experiment.</li>
+        <li>Phase 2 usage n/a для T-018..T-021, T-023; token-сравнение только там, где данные есть.</li>
+        <li>T-021 5 мин — outlier; U-02 ratio 45.8× чувствителен к нему.</li>
+        <li>T-036 diff stat в checkpoint не записан; используем 8 produced files + package-lock 98 KB.</li>
+        <li>T-033 calendar считается от фактического старта 09:53:50: 4 ч 26 мин (4:26:40); 4 ч 50 мин включало 23 мин inter-task idle. Детали: <a href="2026-11-21-u02-delay-deep-dive.html">U-02 deep dive</a>.</li>
+        <li>Work time — из activity; calendar — из checkpoint; review — из CP requested/reviewed. Метрики не взаимозаменяемы.</li>
+        <li>Calendar/review в таблицах округлены вниз до минут; точные timestamps — в checkpoint files.</li>
+        <li>T-037 in progress, T-038..T-040 pending; I-02/Q-01/Q-02/D-01 не входят в 8 пар.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Как читать цифры</h3>
+      <ul>
+        <li><b>7.05×</b> — отношение sum(work P3) / sum(work P2) по 8 парам.</li>
+        <li><b>10.75×</b> — отношение календарного интервала 8 пар: 4 ч 23 мин → 47 ч 10 мин.</li>
+        <li><b>25.53×</b> — отношение review waits: 1 ч 02 мин → 26 ч 25 мин.</li>
+        <li>Review wait может превышать calendar - work из-за округления и разных источников; не складывайте метрики без оговорок.</li>
+        <li>«Прочее / idle» на phase chart — остаток calendar - work - review; включает паузы, переходы и tool/model overhead.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Источники</h2>
+  <div class="sources">
+    <h3>Данные и артефакты</h3>
+    <ul>
+      <li><code>../diagrams/activity/ai-task-tracker-implementation.puml</code> — work time и статусы задач.</li>
+      <li><code>../diagrams/activity/atomic/phase2-s01-atomic-swimlane.svg</code> — атомарная Phase 2 S-01.</li>
+      <li><code>../diagrams/activity/atomic/phase3-s04-atomic-swimlane.svg</code> — атомарная Phase 3 S-04.</li>
+      <li><code>../tasks/T-030-requirements-s04-model.md</code>, <code>../tasks/T-033-ux-prototype-s04-model.md</code>, <code>../tasks/T-034-architecture-s04-model.md</code>, <code>../tasks/T-035-contracts-s04-model.md</code>, <code>../tasks/T-036-implement-s04-model.md</code> — scope/acceptance.</li>
+      <li><code>../checkpoints/T-029-CP-F.md</code> … <code>../checkpoints/T-036-CP-F.md</code> — timestamps, usage, diff, review waits.</li>
+      <li><code>../chunks/T-030.json</code>, <code>T-031.json</code>, <code>T-033.json</code>, <code>T-034.json</code>, <code>T-035.json</code>, <code>T-036.json</code>, а также Phase 2: <code>T-018.json</code> … <code>T-024.json</code> — chunk titles/produced/attempts.</li>
+      <li><code>../issues/</code> — ISSUE-20261120-113748, ISSUE-20261121-005209, ISSUE-20261118-185907, ISSUE-20261118-153622.</li>
+      <li><code>../plan.md</code> — статусы и usage.</li>
+      <li><code>2026-11-20-local-models-efficiency.html</code> — стиль отчёта.</li>
+      <li><a href="2026-11-21-u02-delay-deep-dive.html">2026-11-21-u02-delay-deep-dive.html</a> — детальный разбор U-02 (T-021/T-033).</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer>
+  <span>Phase 2 S-01 vs Phase 3 S-04 · 21.11.2026</span>
+  <span>Данные read-only; отчёт не меняет задачи, чекпоинты и диаграммы.</span>
+</footer>
+</div>
+</body>
+</html>

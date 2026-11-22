@@ -1,0 +1,10 @@
+﻿python :   File "C:\study\ai\research\ai-task-tracker\scripts\e2e.ps1", line 5
+строка:1 знак:42
++ ... \ai\research\ai-task-tracker; python scripts\e2e.ps1 run 2>&1 | Out-F ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "C:\stud...2e.ps1", line 5:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    Deterministic E2E runner for ai-task-tracker (T-009, stage I-02).
+                                                    ^^
+SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers

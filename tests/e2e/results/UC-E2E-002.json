@@ -23,48 +23,48 @@
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_sessions_are_ingested_to_five_tasks",
       "status": "passed",
-      "duration_ms": 57342,
+      "duration_ms": 150,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-001-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
       "status": "passed",
-      "duration_ms": 15,
+      "duration_ms": 29,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-002-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
       "status": "passed",
-      "duration_ms": 24,
+      "duration_ms": 28,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-003-\\u041f\\u0440\\u0435\\u0440\\u0432\\u0430\\u043d\\u0430]",
       "status": "passed",
-      "duration_ms": 16,
+      "duration_ms": 30,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-004-\\u041d\\u0435 \\u0437\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
       "status": "passed",
-      "duration_ms": 30,
+      "duration_ms": 10,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_task_status_matches_seed[TASK-005-\\u0417\\u0430\\u0432\\u0435\\u0440\\u0448\\u0435\\u043d\\u0430]",
       "status": "passed",
-      "duration_ms": 26,
+      "duration_ms": 33,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_002_ingest.py::test_ingested_detail_has_six_chronological_steps",
       "status": "passed",
-      "duration_ms": 48,
+      "duration_ms": 32,
       "detail": ""
     }
   ],
-  "duration_ms": 57501,
+  "duration_ms": 312,
   "errors": [],
-  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "timestamp": "2026-11-21T23:43:56.852850+00:00",
   "base_url": "http://127.0.0.1:8080"
 }

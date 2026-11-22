@@ -1,0 +1,73 @@
+@startuml
+' Generated from docs/tasks, docs/checkpoints, docs/chunks; do not edit by hand.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 96
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title Bugfix loop - BUG-002 / BUG-003 (T-013..T-016) · work 1 ч 08 мин · date 17 ноя 13:32–15:46
+
+|Lead|
+|Orchestrator|
+|Analyst|
+|UX|
+|Architect|
+|Coder|
+|QA|
+|Doc-writer|
+|Child (d2)|
+|Coder|
+start
+partition "T-013 · Fix BUG-002 (Dockerfile)\nwork 53 мин · date 17 ноя · done" {
+|Coder|
+:C1 · B-01 reproduction/root cause + B-02 minimal fix and regression\nwork 1 мин (ledger); <<#90EE90>>
+|Coder|
+:CP-1 gate · reproduction + root cause\nCP 33 мин; <<#90EE90>>
+|Coder|
+:CP-2 · minimal fix + regression\nCP 1 мин; <<#90EE90>>
+|Coder|
+:CP-F · final acceptance\nCP 2 ч 13 мин; <<#90EE90>>
+}
+partition "T-014 · Verify BUG-002\nwork 7 мин · date 17 ноя · done" {
+|QA|
+:CP-1 · verification plan\nCP 0 мин; <<#90EE90>>
+|QA|
+:CP-F · verdict + review\nCP 5 мин; <<#90EE90>>
+}
+partition "T-015 · Fix BUG-003 (local stack)\nwork 1 мин · date 17 ноя · done" {
+|Coder|
+:C1 · B-01 reproduction/root cause + B-02 minimal fix and regression\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:CP-1 gate · reproduction + root cause\nCP 0 мин; <<#90EE90>>
+|Coder|
+:CP-2 · minimal fix + regression\nCP 1 мин; <<#90EE90>>
+|Coder|
+:CP-F · final acceptance\nCP 9 мин; <<#90EE90>>
+}
+partition "T-016 · Verify BUG-003\nwork 7 мин · date 17 ноя · done" {
+|QA|
+:CP-1 · verification plan\nCP 0 мин; <<#90EE90>>
+|QA|
+:CP-F · verdict + review\nCP 7 мин; <<#90EE90>>
+}
+stop
+legend bottom
+|= Обозначение |= Значение |
+| work | рабочее время: task total / recorded chunk |
+| CP | календарный CP-интервал |
+| rev | ожидание review |
+| date | дата/диапазон |
+| n/a | время chunk не записано; входит в CP |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+|<#87CEFA>| review |
+| Batch | 17 ноя 13:32–15:46; CP intervals overlap; work totals authoritative |
+endlegend
+
+@enduml

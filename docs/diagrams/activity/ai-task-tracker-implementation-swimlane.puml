@@ -1,0 +1,155 @@
+@startuml
+' Generated from docs/tasks, docs/checkpoints, docs/chunks; do not edit by hand.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 72
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title AI Task Tracker - реализация: задачи, роли, время и этапы
+
+|Lead|
+|Orchestrator|
+|Analyst|
+|UX|
+|Architect|
+|Coder|
+|QA|
+|Doc-writer|
+|Child (d2)|
+|Orchestrator|
+start
+partition "Phase 1 - Initial implementation (T-001..T-012)\nwork 113 ч 49 мин done · date 11–17 ноя" {
+|Orchestrator|
+:T-001 · P-00 Планирование\nwork 38 мин · date 11 ноя; <<#90EE90>>
+|Analyst|
+:T-002 · A-01 Требования\nwork 59 мин · date 11 ноя; <<#90EE90>>
+|Analyst|
+:T-003 · A-02 E2E-сценарии и датасет\nwork 4 ч 49 мин · date 11–12 ноя; <<#90EE90>>
+|UX|
+:T-004 · U-01 UX-потоки и экраны\nwork 2 ч 41 мин · date 12 ноя; <<#90EE90>>
+|UX|
+:T-005 · U-02 Прототип и UI-спека\nwork 8 ч 06 мин · date 12–13 ноя; <<#90EE90>>
+|Architect|
+:T-006 · R-01 Проектирование и ADR\nwork 7 ч 12 мин · date 13 ноя; <<#90EE90>>
+|Architect|
+:T-007 · R-02 Контракты и OpenAPI\nwork 2 ч 57 мин · date 13 ноя; <<#90EE90>>
+|Coder|
+:T-008 · I-01 Реализация и unit-тесты\nwork 1 д 23 ч 15 мин · date 14–16 ноя; <<#90EE90>>
+|Coder|
+:T-009 · I-02 E2E-автоматизация\nwork 1 д 15 ч 12 мин · date 16–17 ноя; <<#90EE90>>
+|QA|
+:T-010 · Q-01 План E2E и покрытие\nwork — · date —; <<#D3D3D3>>
+|QA|
+:T-011 · Q-02 QA и вердикт\nwork — · date —; <<#D3D3D3>>
+|Doc-writer|
+:T-012 · D-01 Документация\nwork — · date —; <<#D3D3D3>>
+note right
+  T-010..T-012 pending:
+  после T-009 выполнялись
+  T-013..T-016, затем S-01/S-04.
+end note
+}
+partition "Bugfix loop - BUG-002 / BUG-003 (T-013..T-016)\nwork 1 ч 08 мин · date 17 ноя 13:32–15:46" {
+|Coder|
+:T-013 · Fix BUG-002 (Dockerfile)\nwork 53 мин · date 17 ноя; <<#90EE90>>
+|QA|
+:T-014 · Verify BUG-002\nwork 7 мин · date 17 ноя; <<#90EE90>>
+|Coder|
+:T-015 · Fix BUG-003 (local stack)\nwork 1 мин · date 17 ноя; <<#90EE90>>
+|QA|
+:T-016 · Verify BUG-003\nwork 7 мин · date 17 ноя; <<#90EE90>>
+}
+partition "Phase 2 - S-01 model column (T-017..T-028)\nwork 7 ч 40 мин · date 18 ноя 09:50–23:55" {
+|Orchestrator|
+:T-017 · P-00 Планирование S-01\nwork 5 мин · date 18 ноя; <<#90EE90>>
+|Analyst|
+:T-018 · A-01 Требования S-01\nwork 5 мин · date 18 ноя; <<#90EE90>>
+|Analyst|
+:T-019 · A-02 E2E-сценарии S-01\nwork 3 мин · date 18 ноя; <<#90EE90>>
+|UX|
+:T-020 · U-01 UX-потоки S-01\nwork 4 мин · date 18 ноя; <<#90EE90>>
+|UX|
+:T-021 · U-02 Прототип S-01\nwork 5 мин · date 18 ноя; <<#90EE90>>
+|Architect|
+:T-022 · R-01 Проектирование S-01\nwork 42 мин · date 18 ноя; <<#90EE90>>
+|Architect|
+:T-023 · R-02 Контракты S-01\nwork 18 мин · date 18 ноя; <<#90EE90>>
+|Coder|
+:T-024 · I-01 Реализация S-01\nwork 53 мин · date 18 ноя; <<#90EE90>>
+|Coder|
+:T-025 · I-02 E2E S-01\nwork 1 ч 06 мин · date 18 ноя; <<#90EE90>>
+|QA|
+:T-026 · Q-01 План E2E S-01\nwork 2 ч 45 мин · date 18 ноя; <<#90EE90>>
+|QA|
+:T-027 · Q-02 QA и вердикт S-01\nwork 44 мин · date 18 ноя; <<#90EE90>>
+|Lead|
+:T-028 · F-01 Финальная приёмка S-01\nwork 50 мин · date 18 ноя; <<#90EE90>>
+}
+partition "Phase 3 - S-04 calendar day model column (T-029..T-040)\nwork 15 ч 52 мин done · date 19–21 ноя; T-037 в работе" {
+|Orchestrator|
+:T-029 · P-00 Планирование S-04\nwork 26 мин · date 19 ноя; <<#90EE90>>
+|Analyst|
+:T-030 · A-01 Требования S-04\nwork 58 мин · date 19 ноя; <<#90EE90>>
+|Analyst|
+:T-031 · A-02 E2E-сценарии S-04\nwork 1 ч 35 мин · date 19–20 ноя; <<#90EE90>>
+|UX|
+:T-032 · U-01 UX-потоки S-04\nwork 1 ч 10 мин · date 20 ноя; <<#90EE90>>
+|UX|
+:T-033 · U-02 Прототип S-04\nwork 3 ч 49 мин · date 20 ноя; <<#90EE90>>
+|Architect|
+:T-034 · R-01 Проектирование S-04\nwork 2 ч 41 мин · date 20 ноя; <<#90EE90>>
+|Architect|
+:T-035 · R-02 Контракты S-04\nwork 2 ч 17 мин · date 20 ноя; <<#90EE90>>
+|Coder|
+:T-036 · I-01 Реализация S-04\nwork 2 ч 56 мин · date 20–21 ноя; <<#90EE90>>
+note right
+  CP-1 review 13 ч 37 мин;
+  work 2 ч 56 мин.
+end note
+|Coder|
+:T-037 · I-02 E2E S-04\nwork в работе с 16:02 · date 21 ноя →; <<#FFE082>>
+note right
+  CP-2/CP-F pending;
+  C1 в работе с 16:24.
+end note
+|QA|
+:T-038 · Q-01 План E2E S-04\nwork — · date —; <<#D3D3D3>>
+|QA|
+:T-039 · Q-02 QA и вердикт S-04\nwork — · date —; <<#D3D3D3>>
+|Doc-writer|
+:T-040 · D-01 Документация S-04\nwork — · date —; <<#D3D3D3>>
+note right
+  T-038..T-040 pending
+  после T-037.
+end note
+}
+stop
+partition "d2 subagent sessions (T-006 R1 / T-007 R2, 14 ноя)\nне входят в итоги этапов" {
+|Child (d2)|
+start
+:T-006 R1 · Replay API-004 spec\nwork 27 мин\ndate 14 ноя 20:43–21:11; <<#90EE90>>
+:T-007 R2 · Replay SCN-001 sequence\nwork 44 мин\ndate 14 ноя 21:11–21:56; <<#90EE90>>
+stop
+}
+legend bottom
+|= Обозначение |= Значение |
+| work | рабочее время: task total / recorded chunk |
+| CP | календарный CP-интервал |
+| rev | ожидание review |
+| date | дата/диапазон |
+| n/a | время chunk не записано; входит в CP |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+|<#87CEFA>| review |
+| Итого done | work 138 ч 29 мин · date 11–21 ноя |
+| T-037 | work в работе с 16:02 · date 21 ноя → |
+| Детализация | atomic/*.puml: phase1, bugfix, phase2, phase3 |
+endlegend
+
+@enduml

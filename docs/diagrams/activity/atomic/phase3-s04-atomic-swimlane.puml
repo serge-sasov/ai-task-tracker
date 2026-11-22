@@ -1,0 +1,183 @@
+@startuml
+' Generated from docs/tasks, docs/checkpoints, docs/chunks; do not edit by hand.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 72
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title Phase 3 - S-04 calendar day model column (T-029..T-040) · work 15 ч 52 мин done · date 19–21 ноя, T-037 в работе
+
+|Lead|
+|Orchestrator|
+|Analyst|
+|UX|
+|Architect|
+|Coder|
+|QA|
+|Doc-writer|
+|Child (d2)|
+|Orchestrator|
+start
+partition "T-029 · P-00 Планирование S-04\nwork 26 мин · date 19 ноя · done" {
+|Orchestrator|
+:CP-1 · scope, e2e/ux, task graph\nCP 26 мин; <<#90EE90>>
+|Orchestrator|
+:CP-F · final acceptance\nCP 26 мин · rev 10 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 10 мин; <<#87CEFA>>
+}
+partition "T-030 · A-01 Требования S-04\nwork 58 мин · date 19 ноя · done" {
+|Analyst|
+:A1 · R-015 S-04 day-view model column requirements delta\nwork 15 мин (ledger); <<#90EE90>>
+|Analyst|
+:CP-1 gate · requirements analysis\nCP 58 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 7 мин · rev 1 ч; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 1 ч; <<#87CEFA>>
+}
+partition "T-031 · A-02 E2E-сценарии S-04\nwork 1 ч 35 мин · date 19–20 ноя · done" {
+|Analyst|
+:B1 · UC-E2E-005 S-04 model column markdown extension\nwork 11 мин (ledger); <<#90EE90>>
+|Analyst|
+:B2 · YAML dataset day-view model extensions + validation pass\nwork 26 мин (ledger); <<#90EE90>>
+|Analyst|
+:CP-2 gate · e2e use cases + dataset\nCP 1 ч 35 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 1 мин · rev 28 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 28 мин; <<#87CEFA>>
+}
+partition "T-032 · U-01 UX-потоки S-04\nwork 1 ч 10 мин · date 20 ноя · done" {
+|UX|
+:C1 · S-04 day-view journey in user-flows (R-015, UC-E2E-005)\nwork 3 мин (ledger); <<#90EE90>>
+|UX|
+:C2 · S-04 Модель column + states in screens (R-015, reuse S-01 labels)\nwork 4 мин (ledger); <<#90EE90>>
+|UX|
+:CP-1 gate · ux flows + screens\nCP 1 ч 10 мин; <<#90EE90>>
+|UX|
+:CP-F · final acceptance\nCP 8 мин · rev 8 ч; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 8 ч; <<#87CEFA>>
+}
+partition "T-033 · U-02 Прототип S-04\nwork 3 ч 49 мин · date 20 ноя · done" {
+|UX|
+:T-033-c1 · UI spec S-04 model cell section\nwork 2 мин (ledger); <<#90EE90>>
+|UX|
+:T-033-c2 · Wireframes S-04 day view + SVG re-render\nwork 13 мин (ledger); <<#90EE90>>
+|UX|
+:T-033-c3 · Prototype uc-e2e-005.html day table with model column\nwork 4 мин (ledger); <<#90EE90>>
+|UX|
+:CP-2 gate · wireframes + prototype + UI spec\nCP 3 ч 49 мин · rev 1 мин; <<#90EE90>>
+|Lead|
+:CP-2 review · user\nrev 1 мин; <<#87CEFA>>
+|UX|
+:CP-F · final acceptance\nCP 22 мин · rev 38 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 38 мин; <<#87CEFA>>
+}
+partition "T-034 · R-01 Проектирование S-04\nwork 2 ч 41 мин · date 20 ноя · done" {
+|Architect|
+:T-034-c1 · ADR-0001 S-04 shared model-cell decision + architecture description core extension\nwork 12 мин (ledger); <<#90EE90>>
+|Architect|
+:T-034-c2 · components diagram: shared model-cell element + SVG re-render\nwork 7 мин (ledger); <<#90EE90>>
+|Architect|
+:T-034-c3 · sequence SCN-009: S-04 day-view model column + SVG re-render\nwork 6 мин (ledger); <<#90EE90>>
+|Architect|
+:CP-1 gate · architecture + ADR\nCP 1 ч 58 мин · rev 35 мин; <<#90EE90>>
+|Lead|
+:CP-1 review · user\nrev 35 мин; <<#87CEFA>>
+|Architect|
+:CP-F · final acceptance\nCP 22 мин · rev 50 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 50 мин; <<#87CEFA>>
+}
+partition "T-035 · R-02 Контракты S-04\nwork 2 ч 17 мин · date 20 ноя · done" {
+|Architect|
+:C1 · contracts: S-04 module boundary + module handoff\nwork 6 мин (ledger); <<#90EE90>>
+|Architect|
+:C2 · class diagram: ModelCell CLS-005 + re-render, data model confirmed\nwork 8 мин (ledger); <<#90EE90>>
+|Architect|
+:C3 · architecture description R-02 extension + OpenAPI re-validation\nwork 7 мин (ledger); <<#90EE90>>
+|Architect|
+:CP-2 gate · diagram set\nCP 2 ч 17 мин · rev 37 мин; <<#90EE90>>
+|Lead|
+:CP-2 review · user\nrev 37 мин; <<#87CEFA>>
+|Architect|
+:CP-F · final acceptance\nCP 4 мин · rev 29 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 29 мин; <<#87CEFA>>
+}
+partition "T-036 · I-01 Реализация S-04\nwork 2 ч 56 мин · date 20–21 ноя · done" {
+|Coder|
+:C1 · Shared ModelCell component + S-01/S-04 integration and tests\nwork 126 мин (ledger); <<#90EE90>>
+|Coder|
+:CP-1 gate · implementation + unit tests\nCP 2 ч 56 мин · rev 13 ч 37 мин; <<#90EE90>>
+|Lead|
+:CP-1 review · user\nrev 13 ч 37 мин; <<#87CEFA>>
+|Coder|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+note right
+  CP-1 review wait 13ч37
+  (02:02→15:39), work 2ч56.
+end note
+}
+partition "T-037 · I-02 E2E S-04\nwork в работе с 16:02 · date 21 ноя → · in_progress" {
+|Coder|
+:CC1 · S-04 model-column e2e + built-frontend DOM smoke (UC-E2E-005)\nwork в работе с 16:24; <<#FFE082>>
+note right
+  CP-2/CP-F pending,
+  C1 started 16:24.
+end note
+}
+partition "T-038 · Q-01 План E2E S-04\nwork — · date — · pending" {
+|QA|
+:Coverage matrix: S-04 model column / UC-E2E-005\nwork — (pending); <<#D3D3D3>>
+|QA|
+:Execution approach + dataset validation\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned S-04
+  coverage steps, no time.
+end note
+}
+partition "T-039 · Q-02 QA и вердикт S-04\nwork — · date — · pending" {
+|QA|
+:Code/artifact review + e2e evidence\nwork — (pending); <<#D3D3D3>>
+|QA|
+:Findings and verdict for S-04\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned QA/verdict,
+  no time recorded.
+end note
+}
+partition "T-040 · D-01 Документация S-04\nwork — · date — · pending" {
+|Doc-writer|
+:README + guides for S-04 model column\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned S-04 docs,
+  no time recorded.
+end note
+}
+stop
+legend bottom
+|= Обозначение |= Значение |
+| work | рабочее время: task total / recorded chunk |
+| CP | календарный CP-интервал |
+| rev | ожидание review |
+| date | дата/диапазон |
+| n/a | время chunk не записано; входит в CP |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+|<#87CEFA>| review |
+| T-036 | CP-1 review 13 ч 37 мин; work 2 ч 56 мин |
+| T-037 | in_progress since 16:02; CP-2/CP-F pending |
+| T-038..T-040 | pending after T-037 |
+endlegend
+
+@enduml

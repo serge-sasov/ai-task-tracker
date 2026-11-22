@@ -1,0 +1,97 @@
+@startuml
+' AI Task Tracker - implementation process activity diagram.
+' Each action block = one role working on one task (role, task, execution time).
+' Time metric: task start -> last working role checkpoint (CP-1/CP-2/CP-F),
+' excluding user review wait. T-036 uses CP-1 (CP-F was recorded after review).
+' T-013/T-015 use CP-2 (bugfix batch closure time is excluded).
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 12
+skinparam ranksep 18
+title AI Task Tracker - процесс реализации: роли x задачи x время
+
+start
+
+note right
+  **Task cycle (harness ↔ subagent)**
+  /harness-run -> board/deps -> in_progress -> delegate
+  -> chunk loop (d2/d3) -> CHECKPOINT -> stage-done
+  -> approved? resume : user review -> CP-F? done : fix/failed
+  Детали:
+  docs/diagrams/activity/ai-task-tracker-harness-subagent-loop.puml
+end note
+
+partition "Phase 1 - Initial implementation (T-001..T-012)" {
+  :Роль: Оркестратор\nT-001 · P-00 Планирование\n**⏱ 38 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-002 · A-01 Требования\n**⏱ 59 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-003 · A-02 E2E-сценарии и датасет\n**⏱ 4 ч 49 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-004 · U-01 UX-потоки и экраны\n**⏱ 2 ч 41 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-005 · U-02 Прототип и UI-спека\n**⏱ 8 ч 06 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-006 · R-01 Проектирование и ADR\n**⏱ 7 ч 12 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-007 · R-02 Контракты и OpenAPI\n**⏱ 2 ч 57 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-008 · I-01 Реализация и unit-тесты\n**⏱ 1 д 23 ч 15 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-009 · I-02 E2E-автоматизация\n**⏱ 1 д 15 ч 12 мин**; <<#90EE90>>
+  note right
+    T-010..T-012 остались pending:
+    после T-009 выполнялись bugfix-задачи
+    T-013..T-016, затем этапы S-01 и S-04.
+  end note
+  :Роль: QA\nT-010 · Q-01 План E2E и покрытие\n**⏱ — (pending)**; <<#D3D3D3>>
+  :Роль: QA\nT-011 · Q-02 QA и вердикт\n**⏱ — (pending)**; <<#D3D3D3>>
+  :Роль: Техписатель\nT-012 · D-01 Документация\n**⏱ — (pending)**; <<#D3D3D3>>
+}
+
+partition "Bugfix loop - BUG-002 / BUG-003 (T-013..T-016)" {
+  :Роль: Кодер\nT-013 · Fix BUG-002 (Dockerfile)\n**⏱ 53 мин**; <<#90EE90>>
+  :Роль: QA\nT-014 · Verify BUG-002\n**⏱ 7 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-015 · Fix BUG-003 (local stack)\n**⏱ 1 мин**; <<#90EE90>>
+  :Роль: QA\nT-016 · Verify BUG-003\n**⏱ 7 мин**; <<#90EE90>>
+}
+
+partition "Phase 2 - S-01 model column (T-017..T-028)" {
+  :Роль: Оркестратор\nT-017 · P-00 Планирование S-01\n**⏱ 5 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-018 · A-01 Требования S-01\n**⏱ 5 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-019 · A-02 E2E-сценарии S-01\n**⏱ 3 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-020 · U-01 UX-потоки S-01\n**⏱ 4 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-021 · U-02 Прототип S-01\n**⏱ 5 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-022 · R-01 Проектирование S-01\n**⏱ 42 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-023 · R-02 Контракты S-01\n**⏱ 18 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-024 · I-01 Реализация S-01\n**⏱ 53 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-025 · I-02 E2E S-01\n**⏱ 1 ч 06 мин**; <<#90EE90>>
+  :Роль: QA\nT-026 · Q-01 План E2E S-01\n**⏱ 2 ч 45 мин**; <<#90EE90>>
+  :Роль: QA\nT-027 · Q-02 QA и вердикт S-01\n**⏱ 44 мин**; <<#90EE90>>
+  :Роль: Оркестратор + Lead\nT-028 · F-01 Финальная приёмка S-01\n**⏱ 50 мин**; <<#90EE90>>
+}
+
+partition "Phase 3 - S-04 calendar day model column (T-029..T-040)" {
+  :Роль: Оркестратор\nT-029 · P-00 Планирование S-04\n**⏱ 26 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-030 · A-01 Требования S-04\n**⏱ 58 мин**; <<#90EE90>>
+  :Роль: Аналитик\nT-031 · A-02 E2E-сценарии S-04\n**⏱ 1 ч 35 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-032 · U-01 UX-потоки S-04\n**⏱ 1 ч 10 мин**; <<#90EE90>>
+  :Роль: UX-дизайнер\nT-033 · U-02 Прототип S-04\n**⏱ 3 ч 49 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-034 · R-01 Проектирование S-04\n**⏱ 2 ч 41 мин**; <<#90EE90>>
+  :Роль: Архитектор\nT-035 · R-02 Контракты S-04\n**⏱ 2 ч 17 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-036 · I-01 Реализация S-04\n**⏱ 2 ч 56 мин**; <<#90EE90>>
+  :Роль: Кодер\nT-037 · I-02 E2E S-04\n**⏱ в работе (с 16:02)**; <<#FFE082>>
+  :Роль: QA\nT-038 · Q-01 План E2E S-04\n**⏱ — (pending)**; <<#D3D3D3>>
+  :Роль: QA\nT-039 · Q-02 QA и вердикт S-04\n**⏱ — (pending)**; <<#D3D3D3>>
+  :Роль: Техписатель\nT-040 · D-01 Документация S-04\n**⏱ — (pending)**; <<#D3D3D3>>
+}
+
+stop
+
+legend right
+|= Цвет |= Статус |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+| ⏱ | рабочее время задачи: старт → последний рабочий чекпоинт роли (CP-1/CP-2/CP-F), без ожидания ревью |
+| — | задача не выполнялась / время не зафиксировано |
+endlegend
+
+@enduml

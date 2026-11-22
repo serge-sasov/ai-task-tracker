@@ -1,0 +1,226 @@
+﻿FF...............................FF.FF....FF.................            [100%]
+================================== FAILURES ===================================
+______________________ test_stack_boots_and_empty_state _______________________
+
+stack = 'http://127.0.0.1:8080'
+
+    def test_stack_boots_and_empty_state(stack):
+        """UC-E2E-001 main flow: stack up, health 200 ok, empty list => 200 empty."""
+        # S1 + S2: health endpoint responds 200 with status ok and DB checks.
+        status, health = shared.json_request(shared.HEALTH_PATH)
+        assert status == 200, f"health HTTP {status}"
+        shared.assert_json_path(health, "$.checks.postgres", "ok", "health")
+        shared.assert_json_path(health, "$.checks.redis", "ok", "health")
+        # Contract з4.1: status is "ok" only when Ollama is up; otherwise "degraded"
+        # (Ollama is an external dependency, so accept both consistent states).
+        ollama = health.get("ollamaStatus", health.get("ollama_status"))
+        expected_status = "ok" if ollama == "up" else "degraded"
+        shared.assert_json_path(health, "$.status", expected_status, "health")
+    
+        # S4 (initial state): before ingest, tasks list is empty -> 200, no items.
+        # Contract з4.2: empty state is 200 with empty collections, never 4xx.
+        status, tasks = shared.json_request("/api/tasks")
+        assert status == 200, f"tasks HTTP {status}"
+>       assert tasks.get("total") == 0, f"expected empty list, got {tasks!r}"
+E       AssertionError: expected empty list, got {'total': 5, 'items': [{'task_id': 'TASK-004', 'name': '╨хрышчрЎш  тхъЄюЁэюую шэфхъёр фы  AI-яюшёър', 'started_at': '2026-11-11T11:00:00', 'finished_at': '2026-11-11T12:10:00', 'status': '═х чртхЁ°хэр', 'duration_s': 4200, 'tokens_total': 1670, 'models': ['qwen3.8:27b', 'llama3.1:8b']}, {'task_id': 'TASK-005', 'name': '─юсртыхэшх тшфцхЄр Єюъхэют эр ¤ъЁрэ ёЄрЄшёЄшъш', 'started_at': '2026-11-11T09:00:00', 'finished_at': '2026-11-11T09:40:00', 'status': '╟ртхЁ°хэр', 'duration_s': 2400, 'tokens_total': 990, 'models': ['qwen3.8:27b', 'llama3.1:8b']}, {'task_id': 'TASK-003', 'name': '╚ёёыхфютрэшх чртшёрэш  backend яюф эруЁєчъющ', 'started_at': '2026-11-11T08:30:00', 'finished_at': '2026-11-11T10:45:00', 'status': '╧ЁхЁтрэр', 'duration_s': 8100, 'tokens_total': 3450, 'models': ['qwen3.8:27b', 'llama3.1:8b']}, {'task_id': 'TASK-002', 'name': '┬√сюЁ ёяюёюср ртЄюЁшчрЎшш ыюъры№эюую API', 'started_at': '2026-11-10T13:00:00', 'finished_at': '2026-11-10T15:00:00', 'status': '╟ртхЁ°хэр', 'duration_s': 7200, 'tokens_total': 0, 'models': []}, {'task_id': 'TASK-001', 'name': '═рёЄЁющър CI фы  ЁхяючшЄюЁш  ai-task-tracker', 'started_at': '2026-11-10T09:00:00', 'finished_at': '2026-11-10T11:30:00', 'status': '╟ртхЁ°хэр', 'duration_s': 9000, 'tokens_total': 12150, 'models': ['qwen3.8:27b', 'llama3.1:8b']}]}
+E       assert 5 == 0
+E        +  where 5 = <built-in method get of dict object at 0x000001DFF3DE6B00>('total')
+E        +    where <built-in method get of dict object at 0x000001DFF3DE6B00> = {'total': 5, 'items': [{'task_id': 'TASK-004', 'name': '╨хрышчрЎш  тхъЄюЁэюую шэфхъёр фы  AI-яюшёър', 'started_at': '2... CI фы  ЁхяючшЄюЁш  ai-task-tracker', 'started_at': '2026-11-10T09:00:00', 'finished_at': '2026-11-10T11:30:00', ...}]}.get
+
+tests\e2e\uc_e2e_001_003\test_uc_e2e_001_stack_start.py:66: AssertionError
+____________________ test_initial_state_has_no_tasks_in_db ____________________
+
+stack = 'http://127.0.0.1:8080'
+
+    def test_initial_state_has_no_tasks_in_db(stack):
+        """UC-E2E-001 postcondition: DB empty before ingest (postcondition check)."""
+        status, tasks = shared.json_request("/api/tasks", timeout=shared.HEALTH_TIMEOUT_SECONDS)
+        assert status == 200, f"tasks HTTP {status}"
+>       assert tasks.get("total", 0) == 0, "DB must be empty before UC-E2E-002 ingest"
+E       AssertionError: DB must be empty before UC-E2E-002 ingest
+E       assert 5 == 0
+E        +  where 5 = <built-in method get of dict object at 0x000001DFF3D7DCC0>('total', 0)
+E        +    where <built-in method get of dict object at 0x000001DFF3D7DCC0> = {'total': 5, 'items': [{'task_id': 'TASK-004', 'name': '╨хрышчрЎш  тхъЄюЁэюую шэфхъёр фы  AI-яюшёър', 'started_at': '2... CI фы  ЁхяючшЄюЁш  ai-task-tracker', 'started_at': '2026-11-10T09:00:00', 'finished_at': '2026-11-10T11:30:00', ...}]}.get
+
+tests\e2e\uc_e2e_001_003\test_uc_e2e_001_stack_start.py:74: AssertionError
+__________________________ test_semantic_query_top_k __________________________
+
+stack = 'http://127.0.0.1:8080', ollama = True
+
+    def test_semantic_query_top_k(stack, ollama):
+        """Relevant semantic query returns the expected task in top-K (S1)."""
+        fixtures = shared.dataset()["fixtures"]["ai_search"]
+        term = fixtures["semantic_queries"][0]["query"]
+        expected_ids = fixtures["semantic_queries"][0]["must_be_in_top_k"]
+        body = _post_json("/api/search", {"query": term, "limit": fixtures["top_k_default"]})
+>       assert body["query"] == term, "query echoes the request payload"
+               ^^^^^^^^^^^^^
+E       TypeError: tuple indices must be integers or slices, not str
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_004_ai_search.py:90: TypeError
+_________________________ test_unrelated_query_empty __________________________
+
+stack = 'http://127.0.0.1:8080', ollama = True
+
+    def test_unrelated_query_empty(stack, ollama):
+        """Unrelated query returns an honest empty results list (S4)."""
+        term = shared.dataset()["fixtures"]["ai_search"]["unrelated_query"]["query"]
+        body = _post_json("/api/search", {"query": term, "limit": 5})
+>       assert body.get("results") == [], f"unrelated query returned non-empty: {body}"
+               ^^^^^^^^
+E       AttributeError: 'tuple' object has no attribute 'get'
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_004_ai_search.py:111: AttributeError
+__________________________ test_response_time_bound ___________________________
+
+stack = 'http://127.0.0.1:8080', ollama = True
+
+    def test_response_time_bound(stack, ollama):
+        """A broad search completes under the documented 15 s bound (R-023)."""
+        term = shared.dataset()["fixtures"]["ai_search"]["semantic_queries"][0]["query"]
+        start = time.monotonic()
+        body = _post_json("/api/search", {"query": term, "limit": 5})
+        elapsed = time.monotonic() - start
+        assert elapsed < REQUIRED_TIMEOUT_SECONDS, f"search too slow: {elapsed:.2f}s"
+>       assert isinstance(body.get("results"), list), "results is a list"
+                          ^^^^^^^^
+E       AttributeError: 'tuple' object has no attribute 'get'
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_004_ai_search.py:132: AttributeError
+________________________ test_english_query_valid_200 _________________________
+
+stack = 'http://127.0.0.1:8080', ollama = True
+
+    def test_english_query_valid_200(stack, ollama):
+        """An English query returns 200 with a valid results list (S1)."""
+        status, body = _post_json("/api/search", {"query": "CI setup pipeline", "limit": 5})
+>       assert status == 200, f"English query HTTP {status}: {body.get('_raw')!r}"
+E       AssertionError: English query HTTP 503: None
+E       assert 503 == 200
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_004_ai_search.py:138: AssertionError
+_________________________ test_day_view_model_column __________________________
+
+stack = 'http://127.0.0.1:8080'
+
+    def test_day_view_model_column(stack):
+        """S-04 (R-015): the '╠юфхы№' column shows the primary model, ``+N`` when
+        more than one, the full ordered list in the cell ``title``/``aria-label``,
+        and '═хЄ фрээ√ї' when ``models`` is empty (S-01).
+    
+        Expected values come only from the dataset fixtures
+        (``day_2026-11-11-models`` / ``day_2026-11-10-models``), never hardcoded.
+        Models originate from ``GET /api/tasks`` (contract з4.2); the cell itself
+        (primary, ``+N``, full list, empty state) is rendered by ModelCell in the
+        built SPA, so this test also verifies the built frontend bundle.
+        """
+>       _assert_built_frontend_has_model_cell()
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def _assert_built_frontend_has_model_cell() -> None:
+        """Assert the served SPA bundle contains ModelCell markup (stale guard)."""
+        from tests.e2e import conftest as _c
+    
+        # The frontend is served on its own host port (docker-compose maps it to
+        # 127.0.0.1:${E2E_FRONTEND_PORT:-8081}:80); the runner sets E2E_FRONTEND_URL.
+        frontend_url = os.environ.get(
+            "E2E_FRONTEND_URL", "http://127.0.0.1:8081"
+        ).rstrip("/")
+    
+        status, html = _c._http_request("GET", frontend_url, timeout=15)
+        assert status == 200, f"frontend index.html HTTP {status}"
+        assert html, "frontend index.html is empty"
+        assert "<script" in html and ".js" in html, (
+            "frontend index.html has no module script reference"
+        )
+    
+        bundle_href = _first_js_bundle(html)
+        assert bundle_href, "could not locate a JS bundle in index.html"
+        bundle_url = bundle_href if bundle_href.startswith("http") else (
+            frontend_url.rstrip("/") + "/" + bundle_href.lstrip("/")
+        )
+        bstatus, bundle = _c._http_request("GET", bundle_url, timeout=20)
+        assert bstatus == 200, f"frontend JS bundle HTTP {bstatus} for {bundle_href}"
+        assert bundle, "frontend JS bundle is empty"
+    
+        # ModelCell contract markers: the cell class, the RU label, and the empty
+        # state string. A stale build that predates the '╠юфхы№' column lacks all
+        # three, so the check fails instead of only checking the API.
+        markers = ("model-cell", "╠юфхы№", "═хЄ фрээ√ї")
+        missing = [m for m in markers if m not in bundle]
+>       assert not missing, (
+            f"built frontend lacks ModelCell markup; missing {missing}. "
+            "Rebuild the frontend image so the column lands in the served SPA."
+        )
+E       AssertionError: built frontend lacks ModelCell markup; missing ['model-cell', '╠юфхы№', '═хЄ фрээ√ї']. Rebuild the frontend image so the column lands in the served SPA.
+E       assert not ['model-cell', '╠юфхы№', '═хЄ фрээ√ї']
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:264: AssertionError
+_____________________ test_built_frontend_has_model_cell ______________________
+
+stack = 'http://127.0.0.1:8080'
+
+    def test_built_frontend_has_model_cell(stack):
+        """The actually BUILT frontend (served SPA) contains ModelCell markup.
+    
+        Guards against a stale frontend image (T-027/T-028): reads the served
+        ``index.html`` and its referenced JS bundle over 127.0.0.1 only (stdlib
+        urllib) and fails when the ModelCell markup is absent, instead of only
+        checking the API.
+        """
+>       _assert_built_frontend_has_model_cell()
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:230: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def _assert_built_frontend_has_model_cell() -> None:
+        """Assert the served SPA bundle contains ModelCell markup (stale guard)."""
+        from tests.e2e import conftest as _c
+    
+        # The frontend is served on its own host port (docker-compose maps it to
+        # 127.0.0.1:${E2E_FRONTEND_PORT:-8081}:80); the runner sets E2E_FRONTEND_URL.
+        frontend_url = os.environ.get(
+            "E2E_FRONTEND_URL", "http://127.0.0.1:8081"
+        ).rstrip("/")
+    
+        status, html = _c._http_request("GET", frontend_url, timeout=15)
+        assert status == 200, f"frontend index.html HTTP {status}"
+        assert html, "frontend index.html is empty"
+        assert "<script" in html and ".js" in html, (
+            "frontend index.html has no module script reference"
+        )
+    
+        bundle_href = _first_js_bundle(html)
+        assert bundle_href, "could not locate a JS bundle in index.html"
+        bundle_url = bundle_href if bundle_href.startswith("http") else (
+            frontend_url.rstrip("/") + "/" + bundle_href.lstrip("/")
+        )
+        bstatus, bundle = _c._http_request("GET", bundle_url, timeout=20)
+        assert bstatus == 200, f"frontend JS bundle HTTP {bstatus} for {bundle_href}"
+        assert bundle, "frontend JS bundle is empty"
+    
+        # ModelCell contract markers: the cell class, the RU label, and the empty
+        # state string. A stale build that predates the '╠юфхы№' column lacks all
+        # three, so the check fails instead of only checking the API.
+        markers = ("model-cell", "╠юфхы№", "═хЄ фрээ√ї")
+        missing = [m for m in markers if m not in bundle]
+>       assert not missing, (
+            f"built frontend lacks ModelCell markup; missing {missing}. "
+            "Rebuild the frontend image so the column lands in the served SPA."
+        )
+E       AssertionError: built frontend lacks ModelCell markup; missing ['model-cell', '╠юфхы№', '═хЄ фрээ√ї']. Rebuild the frontend image so the column lands in the served SPA.
+E       assert not ['model-cell', '╠юфхы№', '═хЄ фрээ√ї']
+
+tests\e2e\uc_e2e_004_006\test_uc_e2e_005_calendar.py:264: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_stack_boots_and_empty_state
+FAILED tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_initial_state_has_no_tasks_in_db
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_semantic_query_top_k
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_unrelated_query_empty
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_response_time_bound
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_004_ai_search.py::test_english_query_valid_200
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_day_view_model_column
+FAILED tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py::test_built_frontend_has_model_cell
+8 failed, 53 passed in 269.20s (0:04:29)

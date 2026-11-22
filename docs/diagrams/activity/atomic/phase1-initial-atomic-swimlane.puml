@@ -1,0 +1,269 @@
+@startuml
+' Generated from docs/tasks, docs/checkpoints, docs/chunks; do not edit by hand.
+skinparam defaultFontName Segoe UI
+skinparam defaultFontSize 12
+skinparam dpi 54
+skinparam shadowing false
+skinparam roundCorner 6
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #555555
+skinparam ArrowColor #555555
+skinparam nodesep 6
+skinparam ranksep 10
+title Phase 1 - Initial implementation (T-001..T-012) · work 113 ч 49 мин done · date 11–17 ноя
+
+|Lead|
+|Orchestrator|
+|Analyst|
+|UX|
+|Architect|
+|Coder|
+|QA|
+|Doc-writer|
+|Child (d2)|
+|Orchestrator|
+start
+partition "T-001 · P-00 Планирование\nwork 38 мин · date 11 ноя · done" {
+|Orchestrator|
+:CP-1 · scope, e2e/ux, task graph\nCP 19 мин · rev 19 мин; <<#90EE90>>
+|Lead|
+:CP-1 review · user\nrev 19 мин; <<#87CEFA>>
+|Orchestrator|
+:CP-F · final acceptance\nCP 1 ч 1 мин (work+review); <<#90EE90>>
+note right
+  CP review date-only,
+  CP-F work/review split
+  approximated by commit 16:45.
+end note
+}
+partition "T-002 · A-01 Требования\nwork 59 мин · date 11 ноя · done" {
+|Analyst|
+:CP-1 · requirements analysis\nCP 25 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 33 мин · rev 11 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 11 мин; <<#87CEFA>>
+note right
+  CP review date-only,
+  CP-F interval approximated
+  by commits.
+end note
+}
+partition "T-003 · A-02 E2E-сценарии и датасет\nwork 4 ч 49 мин · date 11–12 ноя · done" {
+|Analyst|
+:CP-2 · e2e use cases + dataset\nCP 4 ч 47 мин; <<#90EE90>>
+|Analyst|
+:CP-F · final acceptance\nCP 13 ч 7 мин (work+review); <<#90EE90>>
+note right
+  CP-2 review date-only,
+  CP-F interval approximated
+  by next task start.
+end note
+}
+partition "T-004 · U-01 UX-потоки и экраны\nwork 2 ч 41 мин · date 12 ноя · done" {
+|UX|
+:CP-1 · ux flows + screens\nCP 1 ч 27 мин · rev 1 ч 14 мин; <<#90EE90>>
+|Lead|
+:CP-1 review · user\nrev 1 ч 14 мин; <<#87CEFA>>
+|UX|
+:CP-F · final acceptance\nCP 0 мин; <<#90EE90>>
+}
+partition "T-005 · U-02 Прототип и UI-спека\nwork 8 ч 06 мин · date 12–13 ноя · done" {
+|UX|
+:CP-2 · wireframes + prototype + UI spec\nCP 2 ч 14 мин · rev 56 мин; <<#90EE90>>
+|UX|
+:CP-F changes_requested · calendar S-04 revision\nCP 3 ч 51 мин; <<#90EE90>>
+|UX|
+:CP-2 rev2 · month/year calendar review\nCP 0 мин · rev 28 мин; <<#90EE90>>
+|UX|
+:CP-F rev2 · final acceptance\nCP 52 мин · rev 11 мин; <<#90EE90>>
+|UX|
+:C1 · Salt wireframes S-01..S-06 + states\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C2 · UI spec sections + traceability\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C3 · Prototype index + shared assets\nwork n/a (входит в CP); <<#90EE90>>
+|UX|
+:C4 · Scenario pages UC-E2E-001..008\nwork n/a (входит в CP); <<#90EE90>>
+note right
+  Work total 8ч06,
+  revision/CP intervals overlap,
+  UX→coder prototype (depth 2),
+  chunk times not recorded.
+end note
+}
+partition "T-006 · R-01 Проектирование и ADR\nwork 7 ч 12 мин · date 13 ноя · done" {
+|Architect|
+:C1 · ADR decision and alternatives\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C2 · Contracts: data model, ingestion, API, AI search, errors\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:CP-1 gate · architecture + ADR\nCP 2 ч 25 мин; <<#90EE90>>
+|Architect|
+:C3 · Architecture description core\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C4 · OpenAPI API-001\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C5 · OpenAPI API-002\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C6 · OpenAPI API-003\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C7 · OpenAPI API-004\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:CP-F gate · final acceptance\nCP 4 ч 47 мин · rev 24 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 24 мин; <<#87CEFA>>
+note right
+  d2 R1 27 мин — см. блок d2,
+  main chunk times n/a.
+end note
+}
+partition "T-007 · R-02 Контракты и OpenAPI\nwork 2 ч 57 мин · date 13 ноя · done" {
+|Architect|
+:C1 · Component diagram\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C2 · Data model diagram\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C3 · Class diagram\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C4 · Sequence SCN-001\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C5 · Sequence SCN-002\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C6 · Sequence SCN-003\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C7 · Sequence SCN-004\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C8 · Sequence SCN-005\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C9 · Sequence SCN-006\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C10 · Sequence SCN-007\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C11 · Sequence SCN-008\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:C12 · Render and link verification\nwork n/a (входит в CP); <<#90EE90>>
+|Architect|
+:CP-2 gate · diagram set\nCP 2 ч 24 мин; <<#90EE90>>
+|Architect|
+:CP-F · final acceptance\nCP 33 мин · rev 2 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 2 мин; <<#87CEFA>>
+note right
+  d2 R2 44 мин — см. блок d2,
+  main chunk times n/a.
+end note
+}
+partition "T-008 · I-01 Реализация и unit-тесты\nwork 1 д 23 ч 15 мин · date 14–16 ноя · done" {
+|Coder|
+:CP-1 · implementation + unit tests\nCP 9 ч 42 мин; <<#90EE90>>
+|Coder|
+:C4fix · Fix API defects A/B/C and add context wiring test\nwork 26 мин; <<#90EE90>>
+|Coder|
+:C5a · API-002 calendar and tokens\nwork 21 мин; <<#90EE90>>
+|Coder|
+:C5b · API-003 search and Ollama client · attempts 2\nwork 172 мин (ledger); <<#90EE90>>
+|Coder|
+:C6a · Vue shell: build config, API client, store, router\nwork 16 мин (ledger); <<#90EE90>>
+|Coder|
+:C6b · Screens S-01..S-03\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C6c · Screens S-04..S-06\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C6d · Frontend build wiring and full verification · attempts 2\nwork 71 мин (ledger); <<#90EE90>>
+|Coder|
+:CP-F gate · final acceptance\nCP 1 д 13 ч 33 мин · rev 15 мин; <<#90EE90>>
+|Lead|
+:CP-F review · user\nrev 15 мин; <<#87CEFA>>
+}
+partition "T-009 · I-02 E2E-автоматизация\nwork 1 д 15 ч 12 мин · date 16–17 ноя · done" {
+|Coder|
+:C1 · Runner skeleton and result schema · attempts 5\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C2 · Dataset validator\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C3 · Use cases UC-E2E-001..003 · attempts 3\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C4 · Use cases UC-E2E-004..006 · attempts 3\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C5 · Use cases UC-E2E-007..008 · attempts 2\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C6 · Fixtures, isolation, cleanup · attempts 2\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:C7 · Full run and result capture · attempts 2\nwork n/a (входит в CP); <<#90EE90>>
+|Coder|
+:CP-1 gate · e2e automation\nCP 1 д 15 ч 9 мин; <<#90EE90>>
+|Coder|
+:CP-2 · UC batches + full run\nCP 0 мин; <<#90EE90>>
+|Coder|
+:CP-F · final acceptance\nCP 3 мин; <<#90EE90>>
+note right
+  Chunk times mostly not
+  recorded, included in CP-1.
+end note
+}
+partition "T-010 · Q-01 План E2E и покрытие\nwork — · date — · pending" {
+|QA|
+:C1 · Coverage matrix: tasks and calendar\nwork — (pending); <<#D3D3D3>>
+|QA|
+:C2 · Coverage matrix: search, tokens, history\nwork — (pending); <<#D3D3D3>>
+|QA|
+:C3 · Execution approach and data validation\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned chunks,
+  task not executed.
+end note
+}
+partition "T-011 · Q-02 QA и вердикт\nwork — · date — · pending" {
+|QA|
+:C1 · Code and artifact review\nwork — (pending); <<#D3D3D3>>
+|QA|
+:C2 · E2E evidence: tasks, search, history\nwork — (pending); <<#D3D3D3>>
+|QA|
+:C3 · Findings and verdict\nwork — (pending); <<#D3D3D3>>
+|QA|
+:C4 · Vision review of screens\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned chunks,
+  task not executed.
+end note
+}
+partition "T-012 · D-01 Документация\nwork — · date — · pending" {
+|Doc-writer|
+:README: overview, quick start, configuration\nwork — (pending); <<#D3D3D3>>
+|Doc-writer|
+:Runbook: local stack, e2e, troubleshooting\nwork — (pending); <<#D3D3D3>>
+|Doc-writer|
+:ADR finalization + documentation index\nwork — (pending); <<#D3D3D3>>
+note right
+  Pending: planned docs,
+  no time recorded.
+end note
+}
+stop
+partition "d2 subagent sessions (T-006 R1 / T-007 R2, 14 ноя)\nне входят в итоги этапов" {
+|Child (d2)|
+start
+:T-006 R1 · Replay API-004 spec\nwork 27 мин\ndate 14 ноя 20:43–21:11; <<#90EE90>>
+:T-007 R2 · Replay SCN-001 sequence\nwork 44 мин\ndate 14 ноя 21:11–21:56; <<#90EE90>>
+stop
+}
+legend bottom
+|= Обозначение |= Значение |
+| work | рабочее время: task total / recorded chunk |
+| CP | календарный CP-интервал |
+| rev | ожидание review |
+| date | дата/диапазон |
+| n/a | время chunk не записано; входит в CP |
+|<#90EE90>| done |
+|<#FFE082>| in_progress |
+|<#D3D3D3>| pending |
+|<#87CEFA>| review |
+| T-001..T-003 | CP review date-only; intervals approximated |
+| T-005 | revision/CP intervals overlap; chunk times n/a |
+| T-009 | chunk times mostly n/a; included in CP-1 |
+| d2 | T-006 R1 27 мин, T-007 R2 44 мин; 14 ноя; not in totals |
+| T-010..T-012 | pending; after T-009 executed T-013..T-016, then S-01/S-04 |
+endlegend
+
+@enduml

@@ -1,0 +1,67 @@
+{
+  "chunks": [
+    {
+      "id": "C1",
+      "parent": null,
+      "stage": "U-01",
+      "role": "ux-designer",
+      "depth": 1,
+      "title": "S-04 day-view journey in user-flows (R-015, UC-E2E-005)",
+      "state": "pending",
+      "owns": ["docs/ux/user-flows-ai-task-tracker.md"],
+      "inputs": [
+        "docs/ux/user-flows-ai-task-tracker.md (F-3 lines 90-102, summary table 172-185, Ревизия line 13)",
+        "docs/analysis/requirements-ai-task-tracker.md (R-015 lines 153-168)",
+        "docs/analysis/e2e-use-cases-ai-task-tracker.md (UC-E2E-005 line 140)",
+        "docs/ux/screens-ai-task-tracker.md (S-01 Модель column lines 30-37)"
+      ],
+      "brief": "docs/chunks/T-032/C1.brief.md",
+      "acceptance": [
+        "F-3 covers /calendar/:date -> day table -> read Модель column (primary model, +N, title/aria full ordered list, Нет данных)",
+        "doc states S-04 day view is read-only and Модель adds no new interactions beyond S-01 tooltip/aria",
+        "F-3 Связь traces UC-E2E-005 + R-015",
+        "section 5 table F-3 row includes R-015"
+      ],
+      "produced": [],
+      "base_commit": "",
+      "attempts": 0,
+      "usage": {"in": 0, "out": 0, "cr": 0, "min": 0},
+      "issues": [],
+      "notes": [],
+      "started": null,
+      "finished": null
+    },
+    {
+      "id": "C2",
+      "parent": null,
+      "stage": "U-01",
+      "role": "ux-designer",
+      "depth": 1,
+      "title": "S-04 Модель column + states in screens (R-015, reuse S-01 labels)",
+      "state": "pending",
+      "owns": ["docs/ux/screens-ai-task-tracker.md"],
+      "inputs": [
+        "docs/ux/screens-ai-task-tracker.md (S-04 row, S-01 Модель 30-37, states 45-58, a11y 60-73, UI copy 75-110, traceability 112-123)",
+        "docs/analysis/requirements-ai-task-tracker.md (R-014 140-151, R-015 153-168)",
+        "src/web/src/views/CalendarDayView.vue (lines 31-56 read-only confirmation)"
+      ],
+      "brief": "docs/chunks/T-032/C2.brief.md",
+      "acceptance": [
+        "S-04 registry lists Модель column after Задача + 4 states (primary only, primary+ N, title/aria full list, Нет данных)",
+        "note: cell rules identical to S-01 (R-014), reuse labels Модель / Нет данных",
+        "states table S-04 mentions Модель column; no conflicting state vs S-01",
+        "a11y: S-04 day-view model cell has title + aria-label full ordered list",
+        "UI copy: Модель header + Нет данных mapped to S-04",
+        "traceability S-04 row gains R-015"
+      ],
+      "produced": [],
+      "base_commit": "",
+      "attempts": 0,
+      "usage": {"in": 0, "out": 0, "cr": 0, "min": 0},
+      "issues": [],
+      "notes": [],
+      "started": null,
+      "finished": null
+    }
+  ]
+}

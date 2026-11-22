@@ -22,36 +22,36 @@
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_all_period_totals",
       "status": "passed",
-      "duration_ms": 107,
+      "duration_ms": 109,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_period_2026_11_10_totals",
       "status": "passed",
-      "duration_ms": 88,
+      "duration_ms": 67,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_range_equals_all",
       "status": "passed",
-      "duration_ms": 45,
+      "duration_ms": 54,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_from_gt_to_400",
       "status": "passed",
-      "duration_ms": 3,
+      "duration_ms": 2,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_004_006/test_uc_e2e_006_token_stats.py::test_has_data_true",
       "status": "passed",
-      "duration_ms": 26,
+      "duration_ms": 27,
       "detail": ""
     }
   ],
-  "duration_ms": 269,
+  "duration_ms": 259,
   "errors": [],
-  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "timestamp": "2026-11-21T23:43:56.852850+00:00",
   "base_url": "http://127.0.0.1:8080"
 }

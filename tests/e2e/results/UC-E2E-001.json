@@ -12,30 +12,33 @@
     "R-030"
   ],
   "expected_postcondition": "стек работает локально, UI доступен, БД пуста, готово для UC-E2E-002",
-  "status": "pass",
+  "status": "fail",
   "counts": {
     "total": 2,
-    "pass": 2,
-    "fail": 0,
+    "pass": 0,
+    "fail": 2,
     "error": 0,
     "skipped": 0
   },
   "tests": [
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_stack_boots_and_empty_state",
-      "status": "passed",
-      "duration_ms": 123,
-      "detail": ""
+      "status": "failed",
+      "duration_ms": 127,
+      "detail": "tests\\e2e\\uc_e2e_001_003\\test_uc_e2e_001_stack_start.py:66: AssertionError"
     },
     {
       "nodeid": "tests/e2e/uc_e2e_001_003/test_uc_e2e_001_stack_start.py::test_initial_state_has_no_tasks_in_db",
-      "status": "passed",
-      "duration_ms": 17,
-      "detail": ""
+      "status": "failed",
+      "duration_ms": 30,
+      "detail": "tests\\e2e\\uc_e2e_001_003\\test_uc_e2e_001_stack_start.py:74: AssertionError"
     }
   ],
-  "duration_ms": 140,
-  "errors": [],
-  "timestamp": "2026-11-18T16:43:05.792573+00:00",
+  "duration_ms": 157,
+  "errors": [
+    "tests\\e2e\\uc_e2e_001_003\\test_uc_e2e_001_stack_start.py:66: AssertionError",
+    "tests\\e2e\\uc_e2e_001_003\\test_uc_e2e_001_stack_start.py:74: AssertionError"
+  ],
+  "timestamp": "2026-11-21T23:43:56.852850+00:00",
   "base_url": "http://127.0.0.1:8080"
 }

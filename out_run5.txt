@@ -1,0 +1,10 @@
+﻿seeded 5 session(s) -> C:\study\ai\research\ai-task-tracker\data\e2e-opencode
+   SES-A.json
+   SES-B.json
+   SES-C.json
+   SES-D.json
+   SES-E.json
+
+
+
+

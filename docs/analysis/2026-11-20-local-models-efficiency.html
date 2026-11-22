@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Эффективность локальных моделей 20.11.2026: сравнение с 16–17.11, графики, роли, задачи и качество.">
+<title>Локальные модели — 20.11.2026: эффективность и сравнение</title>
+<style>
+:root{
+  --font: system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "Courier New", monospace;
+  --bg:#f4f6f8; --surface:#ffffff; --surface-2:#f8fafb;
+  --border:#d8dde4; --border-strong:#b9c2cd;
+  --text:#1c2530; --muted:#5a6675;
+  --primary:#2f6f4f; --primary-weak:#eef4f1;
+  --done:#1e6b34; --done-bg:#e6f4ea;
+  --progress:#8a5b00; --progress-bg:#fff3cd;
+  --pending:#4b5563; --pending-bg:#eceff3;
+  --danger:#b3261e; --danger-bg:#fdecea;
+  --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.55}
+a{color:var(--primary)}
+a:focus-visible, summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--surface);padding:10px 14px;z-index:10}
+.skip:focus{left:12px;top:12px}
+.wrap{max-width:1280px;margin:0 auto;padding:28px 20px 56px}
+header.hero{background:linear-gradient(135deg,#ffffff 0%,#eef4f1 100%);border:1px solid var(--border);border-radius:14px;padding:28px 30px;box-shadow:var(--shadow);margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);font-weight:700;margin:0 0 8px}
+h1{font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin:0 0 10px;letter-spacing:-.02em}
+.lede{max-width:900px;margin:0;color:var(--muted);font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--muted)}
+.chip b{color:var(--text);font-weight:650}
+.section{margin-top:26px}
+.section > h2{font-size:21px;margin:0 0 6px;letter-spacing:-.01em}
+.section > .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .n{font-size:30px;font-weight:750;line-height:1.05;letter-spacing:-.03em}
+.kpi .l{font-size:13px;font-weight:650;margin-top:4px}
+.kpi .d{font-size:12.5px;color:var(--muted);margin-top:3px}
+.kpi.done .n{color:var(--done)} .kpi.progress .n{color:var(--progress)} .kpi.pending .n{color:var(--pending)} .kpi.danger .n{color:var(--danger)}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.callout h3{margin:0 0 8px;font-size:15px}
+.callout ul{margin:0;padding-left:20px}
+.callout li{margin:5px 0}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.panel-head h3{margin:0;font-size:15px}
+.panel-head .hint{font-size:12.5px;color:var(--muted)}
+.graph-scroll{overflow:visible;background:#fff;padding:12px;display:flex;justify-content:center}
+.graph-scroll .plantuml-svg{display:block;width:auto;max-width:100%;height:auto}
+.graph-scroll svg{display:block;width:auto;max-width:100%;height:auto;min-width:0}
+figcaption{padding:12px 16px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;background:var(--surface-2)}
+.table-wrap{overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1040px}
+caption{text-align:left;padding:14px 16px;font-weight:650;border-bottom:1px solid var(--border);background:var(--surface-2)}
+th,td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left}
+th{position:sticky;top:0;z-index:1;background:#eef1f4;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:#3f4b59}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+tbody tr:last-child td{border-bottom:none}
+td.phase{min-width:150px}
+.phase-id{font-weight:750;white-space:nowrap}
+.phase-name{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.role{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:650;white-space:nowrap;border:1px solid transparent}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st-done{color:var(--done);background:var(--done-bg);border-color:#c4e3cd}
+.st-progress{color:var(--progress);background:var(--progress-bg);border-color:#f0d99a}
+.st-pending{color:var(--pending);background:var(--pending-bg);border-color:#d5dbe2}
+.st-open{color:var(--danger);background:var(--danger-bg);border-color:#f3c3bf}
+.artifacts{margin:0;padding:0;list-style:none}
+.artifacts li{margin:0 0 6px;padding-left:17px;position:relative}
+.artifacts li::before{content:"•";position:absolute;left:0;color:var(--primary);font-weight:700}
+.artifacts li:last-child{margin-bottom:0}
+code{font-family:var(--mono);font-size:12.5px;background:#f1f4f7;border:1px solid #e2e7ed;border-radius:4px;padding:1px 5px;white-space:nowrap}
+.muted{color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.swatch{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.18)}
+.sources{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:4px 0}
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){
+  .wrap{padding:16px 12px 40px}
+  header.hero{padding:20px 18px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{max-width:100%}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  header.hero,.panel,.table-wrap,.sources,.callout{box-shadow:none}
+  .graph-scroll{max-height:none;overflow:visible}
+  .graph-scroll .plantuml-svg,.graph-scroll svg{min-width:0;width:100%}
+  th{position:static}
+  a{color:inherit;text-decoration:none}
+}
+
+:root{
+  --series-16:#8a5b00; --series-20:#2f6f4f;
+  --series-64k:#8a5b00; --series-text:#b3261e; --series-mtp2:#2f6f4f;
+  --series-blue:#2b5c8a; --series-gray:#8a94a3;
+}
+.btn{border:1px solid var(--primary);background:var(--primary);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:13px;font-weight:650;cursor:pointer}
+.btn:hover{background:#24583e;border-color:#24583e}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.toc a{font-size:12.5px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 10px;text-decoration:none;color:var(--muted)}
+.toc a:hover{border-color:var(--primary);color:var(--primary)}
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px;margin-top:14px;align-items:start}
+.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.chart-card{margin:0;break-inside:avoid}
+.chart-wide{grid-column:1/-1}
+.chart-card .chart-body{padding:12px 12px 4px;background:#fff}
+.chart-body svg{display:block;width:100%;height:auto}
+.chart-card .legend{border-top:0;padding-top:6px;padding-bottom:10px}
+.chart-card figcaption{border-top:1px solid var(--border);padding:10px 16px;font-size:12.5px;color:var(--muted);background:var(--surface-2)}
+.chart-card .panel-head h3{font-size:15px}
+.chart-card .hint{font-size:12px}
+.legend .swatch{width:13px;height:13px;border-radius:3px;border:1px solid rgba(0,0,0,.15);display:inline-block;margin-right:6px;vertical-align:-2px}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+.highlight-row td{background:var(--primary-weak)!important;font-weight:600}
+.callout.ok{border-left-color:var(--done)}
+.callout.warn{border-left-color:var(--progress)}
+.callout.danger{border-left-color:var(--danger)}
+.callout h3{font-size:15px}
+.callout p:last-child,.callout ul:last-child{margin-bottom:0}
+.json-details{margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.json-details summary{cursor:pointer;font-weight:650}
+.json-details pre{overflow:auto;max-height:520px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;font:12px/1.5 var(--mono);margin:12px 0 0}
+.sources ul{margin:6px 0 0;padding-left:20px}
+.sources li{margin:5px 0;overflow-wrap:anywhere}
+.sources code{white-space:normal;word-break:break-word}
+.mono{font-family:var(--mono);font-size:12.5px}
+.small-note{font-size:12.5px;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px}
+.panel-pad{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.panel-pad h3{margin:0 0 8px;font-size:15px}
+.panel-pad ul{margin:0;padding-left:20px}
+.panel-pad li{margin:5px 0}
+.tag{display:inline-block;border:1px solid var(--border);background:var(--surface-2);border-radius:6px;padding:1px 6px;font-size:12px;white-space:nowrap}
+@media (max-width:720px){
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card .chart-body{padding:8px 6px 2px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media print{
+  .btn,.toc{display:none}
+  .chart-grid{grid-template-columns:1fr}
+  .chart-card{page-break-inside:avoid;break-inside:avoid}
+  .chart-body svg{width:100%;height:auto}
+  details{display:block}
+  details > summary{display:none}
+  .json-details pre{max-height:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">AI Task Tracker · локальные модели · аналитический отчёт</p>
+  <h1>Эффективность локальных моделей: 20.11.2026</h1>
+  <p class="lede">Сравнение 20.11 с 16–17.11: latency, output/request, роли, стоимость задач и качество. Отчёт построен по Prometheus, <code>opencode.db</code>, <code>docs/plan.md</code> и CP-F.</p>
+  <div class="meta">
+    <span class="chip">Данные на <b>21.11.2026 00:08 MSK</b></span>
+    <span class="chip">Модель: <b>qwen3.8:27b-128k-mtp2-text</b></span>
+    <span class="chip">qwen-запросов: <b>613</b></span>
+    <span class="chip">QA на 20.11: <b>0, T-038/T-039 pending</b></span>
+    <button class="btn" type="button" onclick="window.print()">Печать / PDF</button>
+  </div>
+  <nav class="toc" aria-label="Содержание">
+    <a href="#summary">Сводка</a>
+    <a href="#config">Конфигурация</a>
+    <a href="#prometheus">Prometheus</a>
+    <a href="#roles">Роли</a>
+    <a href="#effort">Effort-тест</a>
+    <a href="#tasks">Задачи</a>
+    <a href="#quality">Качество</a>
+    <a href="#conclusions">Выводы</a>
+    <a href="#method">Методика</a>
+    <a href="#appendix">Данные</a>
+  </nav>
+</header>
+<main id="main">
+<section class="section" id="summary" aria-labelledby="summary-h">
+  <h2 id="summary-h">Сводка</h2>
+  <p class="sub">20.11 — первый полный день на 128K MTP2 с политикой low/medium. Запросов вдвое больше, но медиана и средняя latency резко ниже.</p>
+  <div class="kpis"><div class="kpi "><div class="n">613</div><div class="l">qwen-запросов</div><div class="d">+96% к 16.11</div></div><div class="kpi done"><div class="n">36.4 s</div><div class="l">p50 latency</div><div class="d">−62% к 16.11</div></div><div class="kpi done"><div class="n">73.2 s</div><div class="l">avg latency</div><div class="d">−53% к 16.11</div></div><div class="kpi done"><div class="n">866</div><div class="l">output/req</div><div class="d">−56% к 16.11</div></div><div class="kpi done"><div class="n">7.8%</div><div class="l">запросов &gt;204.8 s</div><div class="d">vs 26.0% на 16.11</div></div><div class="kpi "><div class="n">~12.5 h</div><div class="l">model time</div><div class="d">vs ~13.5 h на 16.11</div></div><div class="kpi progress"><div class="n">4 / 1</div><div class="l">задач done / in progress</div><div class="d">T-032…T-035 / T-036</div></div><div class="kpi progress"><div class="n">0</div><div class="l">QA-сессий 20.11</div><div class="d">T-038/T-039 pending</div></div></div>
+  <div class="callout ok" style="margin-top:14px">
+    <h3>Ключевые выводы</h3>
+    <ul>
+      <li><b>Главный выигрыш — модель 128K MTP2, а не только reasoningEffort.</b> 20.11: 613 qwen-запросов, avg 73.2 s, p50 36.4 s, out/req 866; 16.11: 312 запросов, avg 155.5 s, p50 96.0 s, out/req 1964.</li>
+      <li><b>Политика low/medium не дала runaway reasoning.</b> Orchestrator: out/msg −66%, reasoning −74%, avg −70%, p50 −71%. UX — 590/853/44.6 s, architect xhigh — 696/1654/55.4 s. Coder: 476/855/16.2 s, tool errors 2.70% vs 6.29%.</li>
+      <li><b>Лид не «переразмышляет».</b> Его длинные ходы — это <code>task</code>-вызовы субагентов (до 91 мин); собственная генерация ≈3.8 h из ≈12.9 h его ходов. Модельная latency лида ограничена общим p95 ≈205 s.</li>
+      <li><b>Оркестратор — главный потребитель model time по оценке:</b> ≈4.6 h из ≈12.6 h, потому что 258 шагов × 772 out/msg. Per-message он дешёвый; следующий рычаг — число шагов, а не effort.</li>
+      <li><b>QA на 20.11 не запускался:</b> T-038/T-039 ещё впереди. CP-F — пользовательские чекпоинты, не независимый QA. T-035 закрыт с 2 waived FAIL (conditional glob и chunk-budget).</li>
+      <li><b>Поправка к прошлому анализу:</b> orchestrator после изменения <b>запускался</b> — T-017 P-00, 17.11 21:03–18.11 02:24, 102 сообщения на 64k low. Прошлые 26 запросов 17.11 post — неполное окно; за полный день 96 запросов.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="config" aria-labelledby="config-h">
+  <h2 id="config-h">Что сравниваем</h2>
+  <p class="sub">reasoningEffort с 17.11 не менялись. Между 16.11 и 20.11 сменилась модель: 64k → 128k-text → 128k-mtp2. Это главный конфаундер.</p>
+  <div class="table-wrap"><table><caption>Конфигурация основных ролей на 20.11. reasoningEffort не менялись с 17.11; изменилась модель.</caption><thead><tr><th class="">Роль</th><th class="">Модель</th><th class="">reasoningEffort</th></tr></thead><tbody><tr class=""><td class=""><b>lead (harness)</b></td><td class=""><code>qwen3.8:27b-128k-mtp2-text</code></td><td class="">medium</td></tr><tr class=""><td class=""><b>orchestrator</b></td><td class=""><code>qwen3.8:27b-128k-mtp2-text</code></td><td class="">low</td></tr><tr class=""><td class=""><b>QA</b></td><td class=""><code>qwen3.8:27b-128k-mtp2-text</code></td><td class="">medium</td></tr><tr class=""><td class=""><b>UX</b></td><td class=""><code>qwen3.8:27b-128k-mtp2-text</code></td><td class="">medium</td></tr><tr class=""><td class=""><b>architect</b></td><td class=""><code>qwen3.8:27b-128k-mtp2-text</code></td><td class="">xhigh</td></tr><tr class=""><td class=""><b>coder</b></td><td class=""><code>tiel-coder:35b-a3b-mtp-128k-text</code></td><td class="">low</td></tr></tbody></table></div>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="panel-pad">
+      <h3>Таймлайн модели</h3>
+      <ul>
+        <li><b>16–17.11:</b> <code>qwen3.8:27b-64k</code>, effort xhigh → medium/low.</li>
+        <li><b>18.11:</b> <code>qwen3.8:27b-128k-text</code>, low/medium; в этот день ещё был 64k n=50.</li>
+        <li><b>19.11 15:52+ и 20.11:</b> <code>qwen3.8:27b-128k-mtp2-text</code>; tiel не менялся.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Что это значит для сравнения</h3>
+      <ul>
+        <li>20.11 vs 16.11 — совместный эффект модели и effort.</li>
+        <li>Чистый effort-тест: S1 16.11 xhigh vs T-017 17–18.11 low на одной 64k.</li>
+        <li>Чистый model-тест: 18.11 64k low vs 18.11 128k-text low; затем 19–20.11 mtp2.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prometheus" aria-labelledby="prom-h">
+  <h2 id="prom-h">Prometheus: latency и throughput</h2>
+  <p class="sub">p95/p99 упираются в верхний bucket 204.8 s, поэтому tail измеряется долей запросов >204.8 s. Суммарное model time — оценка avg × req.</p>
+  <figure class="panel chart-card chart-wide" id="chart-latency"><div class="panel-head"><h3>Latency qwen: avg и p50</h3><span class="hint">16.11 → 20.11; 7 точек</span></div><div class="chart-body"><svg viewBox="0 0 860 360" role="img" aria-label="Latency qwen по дням и моделям" font-family="Segoe UI, Arial, sans-serif"><title>Latency qwen по дням и моделям</title><desc>Средняя и медианная длительность запроса qwen; 20.11 — 613 запросов.</desc><rect x="725.7" y="36" width="110.3" height="254" fill="#eef4f1" opacity="0.75"/><line x1="64" y1="290.0" x2="836" y2="290.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="294.0" text-anchor="end" font-size="11" fill="#5a6675">0.0</text><line x1="64" y1="226.5" x2="836" y2="226.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="230.5" text-anchor="end" font-size="11" fill="#5a6675">50.0</text><line x1="64" y1="163.0" x2="836" y2="163.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="167.0" text-anchor="end" font-size="11" fill="#5a6675">100.0</text><line x1="64" y1="99.5" x2="836" y2="99.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="103.5" text-anchor="end" font-size="11" fill="#5a6675">150.0</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">200.0</text><line x1="64" y1="36" x2="64" y2="290" stroke="#b9c2cd" stroke-width="1.2"/><text x="119.1" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="119.1" dy="0">16.11</tspan><tspan x="119.1" dy="15">64k</tspan></text><text x="229.4" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="229.4" dy="0">17.11</tspan><tspan x="229.4" dy="15">64k</tspan></text><text x="339.7" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="339.7" dy="0">18.11</tspan><tspan x="339.7" dy="15">64k</tspan></text><text x="450.0" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">18.11</tspan><tspan x="450.0" dy="15">128k-text</tspan></text><text x="560.3" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="560.3" dy="0">19.11</tspan><tspan x="560.3" dy="15">128k-text</tspan></text><text x="670.6" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="670.6" dy="0">19.11</tspan><tspan x="670.6" dy="15">128k-mtp2</tspan></text><text x="780.9" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="780.9" dy="0">20.11</tspan><tspan x="780.9" dy="15">128k-mtp2</tspan></text><path d="M 119.1 92.5 L 229.4 116.4 L 339.7 99.0 L 450.0 145.2 L 560.3 173.9 L 670.6 219.9 L 780.9 197.0" fill="none" stroke="#2b5c8a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" opacity="1"/><circle cx="119.1" cy="92.5" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>16.11 64k: avg 155.5 s</title></circle><text x="119.1" y="84.5" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">155.5</text><circle cx="229.4" cy="116.4" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>17.11 64k: avg 136.7 s</title></circle><text x="229.4" y="108.4" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">136.7</text><circle cx="339.7" cy="99.0" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>18.11 64k: avg 150.4 s</title></circle><text x="339.7" y="91.0" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">150.4</text><circle cx="450.0" cy="145.2" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>18.11 128k-text: avg 114.0 s</title></circle><text x="450.0" y="137.2" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">114.0</text><circle cx="560.3" cy="173.9" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>19.11 128k-text: avg 91.4 s</title></circle><text x="560.3" y="165.9" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">91.4</text><circle cx="670.6" cy="219.9" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>19.11 128k-mtp2: avg 55.2 s</title></circle><text x="670.6" y="211.9" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">55.2</text><circle cx="780.9" cy="197.0" r="5.6" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>20.11 128k-mtp2: avg 73.2 s</title></circle><text x="780.9" y="189.0" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">73.2</text><path d="M 119.1 168.1 L 229.4 165.7 L 339.7 146.0 L 450.0 229.2 L 560.3 222.3 L 670.6 246.4 L 780.9 243.8" fill="none" stroke="#2f6f4f" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" opacity="1"/><circle cx="119.1" cy="168.1" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>16.11 64k: p50 96.0 s</title></circle><text x="119.1" y="184.1" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">96.0</text><circle cx="229.4" cy="165.7" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>17.11 64k: p50 97.9 s</title></circle><text x="229.4" y="181.7" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">97.9</text><circle cx="339.7" cy="146.0" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>18.11 64k: p50 113.4 s</title></circle><text x="339.7" y="162.0" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">113.4</text><circle cx="450.0" cy="229.2" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>18.11 128k-text: p50 47.9 s</title></circle><text x="450.0" y="245.2" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">47.9</text><circle cx="560.3" cy="222.3" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>19.11 128k-text: p50 53.3 s</title></circle><text x="560.3" y="238.3" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">53.3</text><circle cx="670.6" cy="246.4" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>19.11 128k-mtp2: p50 34.3 s</title></circle><text x="670.6" y="262.4" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">34.3</text><circle cx="780.9" cy="243.8" r="5.6" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>20.11 128k-mtp2: p50 36.4 s</title></circle><text x="780.9" y="259.8" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">36.4</text></svg></div><div class="legend"><span><i class="swatch" style="background:#2b5c8a"></i>avg</span><span><i class="swatch" style="background:#2f6f4f"></i>p50</span></div><figcaption>20.11: 613 запросов, avg 73.2 s, p50 36.4 s. p95/p99 упираются в 204.8 s; tail — на следующем графике.</figcaption></figure>
+  <div class="chart-grid">
+    <figure class="panel chart-card" id="chart-out"><div class="panel-head"><h3>Output/request</h3><span class="hint">токенов на запрос</span></div><div class="chart-body"><svg viewBox="0 0 860 360" role="img" aria-label="Output tokens на запрос" font-family="Segoe UI, Arial, sans-serif"><title>Output tokens на запрос</title><desc>Среднее число output-токенов на запрос qwen; падение с 1964 до 866.</desc><rect x="725.7" y="36" width="110.3" height="254" fill="#eef4f1" opacity="0.75"/><line x1="64" y1="290.0" x2="836" y2="290.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="294.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="239.2" x2="836" y2="239.2" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="243.2" text-anchor="end" font-size="11" fill="#5a6675">500</text><line x1="64" y1="188.4" x2="836" y2="188.4" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="192.4" text-anchor="end" font-size="11" fill="#5a6675">1 000</text><line x1="64" y1="137.6" x2="836" y2="137.6" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="141.6" text-anchor="end" font-size="11" fill="#5a6675">1 500</text><line x1="64" y1="86.8" x2="836" y2="86.8" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="90.8" text-anchor="end" font-size="11" fill="#5a6675">2 000</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">2 500</text><line x1="64" y1="36" x2="64" y2="290" stroke="#b9c2cd" stroke-width="1.2"/><text x="119.1" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="119.1" dy="0">16.11</tspan><tspan x="119.1" dy="15">64k</tspan></text><text x="229.4" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="229.4" dy="0">17.11</tspan><tspan x="229.4" dy="15">64k</tspan></text><text x="339.7" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="339.7" dy="0">18.11</tspan><tspan x="339.7" dy="15">64k</tspan></text><text x="450.0" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">18.11</tspan><tspan x="450.0" dy="15">128k-text</tspan></text><text x="560.3" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="560.3" dy="0">19.11</tspan><tspan x="560.3" dy="15">128k-text</tspan></text><text x="670.6" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="670.6" dy="0">19.11</tspan><tspan x="670.6" dy="15">128k-mtp2</tspan></text><text x="780.9" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="780.9" dy="0">20.11</tspan><tspan x="780.9" dy="15">128k-mtp2</tspan></text><rect x="88.3" y="90.4" width="61.8" height="199.6" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>16.11 64k: 1 964 токенов/запрос</title></rect><text x="119.1" y="84.4" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">1 964</text><rect x="198.5" y="153.3" width="61.8" height="136.7" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>17.11 64k: 1 346 токенов/запрос</title></rect><text x="229.4" y="147.3" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">1 346</text><rect x="308.8" y="100.5" width="61.8" height="189.5" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>18.11 64k: 1 865 токенов/запрос</title></rect><text x="339.7" y="94.5" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">1 865</text><rect x="419.1" y="220.0" width="61.8" height="70.0" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>18.11 128k-text: 689 токенов/запрос</title></rect><text x="450.0" y="214.0" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">689</text><rect x="529.4" y="222.9" width="61.8" height="67.1" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>19.11 128k-text: 660 токенов/запрос</title></rect><text x="560.3" y="216.9" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">660</text><rect x="639.7" y="233.7" width="61.8" height="56.3" rx="4" fill="#2f6f4f" stroke="#2f6f4f" stroke-width="1"><title>19.11 128k-mtp2: 555 токенов/запрос</title></rect><text x="670.6" y="227.7" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">555</text><rect x="750.0" y="202.0" width="61.8" height="88.0" rx="4" fill="#2f6f4f" stroke="#1c2530" stroke-width="2.2"><title>20.11 128k-mtp2: 866 токенов/запрос</title></rect><text x="780.9" y="196.0" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">866</text></svg></div><div class="legend"><span><i class="swatch" style="background:#8a5b00"></i>64k</span><span><i class="swatch" style="background:#b3261e"></i>128k-text</span><span><i class="swatch" style="background:#2f6f4f"></i>128k-mtp2</span></div><figcaption>Output/req: 1964 → 866 (−56%). 20.11 выделен.</figcaption></figure>
+    <figure class="panel chart-card" id="chart-in"><div class="panel-head"><h3>Input/request</h3><span class="hint">токенов на запрос</span></div><div class="chart-body"><svg viewBox="0 0 860 360" role="img" aria-label="Input tokens на запрос" font-family="Segoe UI, Arial, sans-serif"><title>Input tokens на запрос</title><desc>Среднее число input-токенов на запрос qwen; пик 128k-text 66.8k, затем mtp2 ~46k.</desc><rect x="725.7" y="36" width="110.3" height="254" fill="#eef4f1" opacity="0.75"/><line x1="64" y1="290.0" x2="836" y2="290.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="294.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="226.5" x2="836" y2="226.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="230.5" text-anchor="end" font-size="11" fill="#5a6675">20k</text><line x1="64" y1="163.0" x2="836" y2="163.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="167.0" text-anchor="end" font-size="11" fill="#5a6675">40k</text><line x1="64" y1="99.5" x2="836" y2="99.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="103.5" text-anchor="end" font-size="11" fill="#5a6675">60k</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">80k</text><line x1="64" y1="36" x2="64" y2="290" stroke="#b9c2cd" stroke-width="1.2"/><text x="119.1" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="119.1" dy="0">16.11</tspan><tspan x="119.1" dy="15">64k</tspan></text><text x="229.4" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="229.4" dy="0">17.11</tspan><tspan x="229.4" dy="15">64k</tspan></text><text x="339.7" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="339.7" dy="0">18.11</tspan><tspan x="339.7" dy="15">64k</tspan></text><text x="450.0" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">18.11</tspan><tspan x="450.0" dy="15">128k-text</tspan></text><text x="560.3" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="560.3" dy="0">19.11</tspan><tspan x="560.3" dy="15">128k-text</tspan></text><text x="670.6" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="670.6" dy="0">19.11</tspan><tspan x="670.6" dy="15">128k-mtp2</tspan></text><text x="780.9" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="780.9" dy="0">20.11</tspan><tspan x="780.9" dy="15">128k-mtp2</tspan></text><rect x="88.3" y="195.9" width="61.8" height="94.1" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>16.11 64k: 29.7k токенов/запрос</title></rect><text x="119.1" y="189.9" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">29.7k</text><rect x="198.5" y="192.1" width="61.8" height="97.9" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>17.11 64k: 30.8k токенов/запрос</title></rect><text x="229.4" y="186.1" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">30.8k</text><rect x="308.8" y="190.0" width="61.8" height="100.0" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>18.11 64k: 31.5k токенов/запрос</title></rect><text x="339.7" y="184.0" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">31.5k</text><rect x="419.1" y="77.8" width="61.8" height="212.2" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>18.11 128k-text: 66.8k токенов/запрос</title></rect><text x="450.0" y="71.8" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">66.8k</text><rect x="529.4" y="151.6" width="61.8" height="138.4" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>19.11 128k-text: 43.6k токенов/запрос</title></rect><text x="560.3" y="145.6" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">43.6k</text><rect x="639.7" y="135.6" width="61.8" height="154.4" rx="4" fill="#2f6f4f" stroke="#2f6f4f" stroke-width="1"><title>19.11 128k-mtp2: 48.6k токенов/запрос</title></rect><text x="670.6" y="129.6" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">48.6k</text><rect x="750.0" y="143.2" width="61.8" height="146.8" rx="4" fill="#2f6f4f" stroke="#1c2530" stroke-width="2.2"><title>20.11 128k-mtp2: 46.2k токенов/запрос</title></rect><text x="780.9" y="137.2" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">46.2k</text></svg></div><div class="legend"><span><i class="swatch" style="background:#8a5b00"></i>64k</span><span><i class="swatch" style="background:#b3261e"></i>128k-text</span><span><i class="swatch" style="background:#2f6f4f"></i>128k-mtp2</span></div><figcaption>Input/req: 29.7k → 46.2k. Пик 128k-text 66.8k; mtp2 ~46k.</figcaption></figure>
+    <figure class="panel chart-card" id="chart-tail"><div class="panel-head"><h3>Доля запросов &gt;204.8 s</h3><span class="hint">tail latency</span></div><div class="chart-body"><svg viewBox="0 0 860 360" role="img" aria-label="Доля запросов &gt;204.8 s" font-family="Segoe UI, Arial, sans-serif"><title>Доля запросов &gt;204.8 s</title><desc>p95/p99 упираются в верхний bucket 204.8 s; доля очень медленных запросов упала с 26.0% до 7.8%.</desc><rect x="725.7" y="36" width="110.3" height="254" fill="#eef4f1" opacity="0.75"/><line x1="64" y1="290.0" x2="836" y2="290.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="294.0" text-anchor="end" font-size="11" fill="#5a6675">0%</text><line x1="64" y1="226.5" x2="836" y2="226.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="230.5" text-anchor="end" font-size="11" fill="#5a6675">10%</text><line x1="64" y1="163.0" x2="836" y2="163.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="167.0" text-anchor="end" font-size="11" fill="#5a6675">20%</text><line x1="64" y1="99.5" x2="836" y2="99.5" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="103.5" text-anchor="end" font-size="11" fill="#5a6675">30%</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">40%</text><line x1="64" y1="36" x2="64" y2="290" stroke="#b9c2cd" stroke-width="1.2"/><text x="119.1" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="119.1" dy="0">16.11</tspan><tspan x="119.1" dy="15">64k</tspan></text><text x="229.4" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="229.4" dy="0">17.11</tspan><tspan x="229.4" dy="15">64k</tspan></text><text x="339.7" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="339.7" dy="0">18.11</tspan><tspan x="339.7" dy="15">64k</tspan></text><text x="450.0" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">18.11</tspan><tspan x="450.0" dy="15">128k-text</tspan></text><text x="560.3" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="560.3" dy="0">19.11</tspan><tspan x="560.3" dy="15">128k-text</tspan></text><text x="670.6" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="670.6" dy="0">19.11</tspan><tspan x="670.6" dy="15">128k-mtp2</tspan></text><text x="780.9" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="780.9" dy="0">20.11</tspan><tspan x="780.9" dy="15">128k-mtp2</tspan></text><rect x="88.3" y="124.9" width="61.8" height="165.1" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>16.11 64k: 26.0% % запросов</title></rect><text x="119.1" y="118.9" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">26.0%</text><rect x="198.5" y="139.5" width="61.8" height="150.5" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>17.11 64k: 23.7% % запросов</title></rect><text x="229.4" y="133.5" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">23.7%</text><rect x="308.8" y="102.7" width="61.8" height="187.3" rx="4" fill="#b3261e" stroke="#b3261e" stroke-width="1"><title>18.11 64k: 29.5% % запросов</title></rect><text x="339.7" y="96.7" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">29.5%</text><rect x="419.1" y="179.5" width="61.8" height="110.5" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>18.11 128k-text: 17.4% % запросов</title></rect><text x="450.0" y="173.5" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">17.4%</text><rect x="529.4" y="203.0" width="61.8" height="87.0" rx="4" fill="#8a5b00" stroke="#8a5b00" stroke-width="1"><title>19.11 128k-text: 13.7% % запросов</title></rect><text x="560.3" y="197.0" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">13.7%</text><rect x="639.7" y="260.2" width="61.8" height="29.8" rx="4" fill="#2f6f4f" stroke="#2f6f4f" stroke-width="1"><title>19.11 128k-mtp2: 4.7% % запросов</title></rect><text x="670.6" y="254.2" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">4.7%</text><rect x="750.0" y="240.5" width="61.8" height="49.5" rx="4" fill="#2f6f4f" stroke="#1c2530" stroke-width="2.2"><title>20.11 128k-mtp2: 7.8% % запросов</title></rect><text x="780.9" y="234.5" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2530">7.8%</text></svg></div><div class="legend"><span><i class="swatch" style="background:#b3261e"></i>64k</span><span><i class="swatch" style="background:#8a5b00"></i>128k-text</span><span><i class="swatch" style="background:#2f6f4f"></i>128k-mtp2</span></div><figcaption>26.0% → 7.8%. p95/p99 не показательны из-за cap 204.8 s.</figcaption></figure>
+    <figure class="panel chart-card" id="chart-tiel"><div class="panel-head"><h3>Tiel control: 16.11 vs 20.11</h3><span class="hint">avg и p50</span></div><div class="chart-body"><svg viewBox="0 0 860 380" role="img" aria-label="Tiel control: 16.11 vs 20.11" font-family="Segoe UI, Arial, sans-serif"><title>Tiel control: 16.11 vs 20.11</title><desc>Tiel не менялся; avg и p50 снизились, но out/req тоже ниже — часть разницы объясняется задачами.</desc><line x1="64" y1="310.0" x2="836" y2="310.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="314.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="218.7" x2="836" y2="218.7" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="222.7" text-anchor="end" font-size="11" fill="#5a6675">10</text><line x1="64" y1="127.3" x2="836" y2="127.3" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="131.3" text-anchor="end" font-size="11" fill="#5a6675">20</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">30</text><line x1="64" y1="36" x2="64" y2="310" stroke="#b9c2cd" stroke-width="1.2"/><text x="257.0" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="257.0" dy="0">avg</tspan></text><text x="643.0" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="643.0" dy="0">p50</tspan></text><rect x="129.6" y="87.1" width="124.4" height="222.9" rx="4" fill="#8a94a3"><title>avg: 16.11 24.4 s</title></rect><text x="191.8" y="82.1" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">24.4</text><rect x="260.0" y="173.0" width="124.4" height="137.0" rx="4" fill="#2b5c8a"><title>avg: 20.11 15.0 s</title></rect><text x="322.2" y="168.0" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">15.0</text><rect x="515.6" y="214.1" width="124.4" height="95.9" rx="4" fill="#8a94a3"><title>p50: 16.11 10.5 s</title></rect><text x="577.8" y="209.1" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">10.5</text><rect x="646.0" y="227.8" width="124.4" height="82.2" rx="4" fill="#2b5c8a"><title>p50: 20.11 9.0 s</title></rect><text x="708.2" y="222.8" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">9.0</text></svg></div><div class="legend"><span><i class="swatch" style="background:#8a94a3"></i>16.11</span><span><i class="swatch" style="background:#2b5c8a"></i>20.11</span></div><figcaption>Tiel не менялся: avg 24.4 → 15.0 s, p50 10.5 → 9.0 s, но out/req 853 → 476; часть разницы — задачи.</figcaption></figure>
+  </div>
+  <div class="table-wrap"><table><caption>Prometheus: qwen и tiel по дням. p95/p99 упираются в 204.8 s; informative tail metric — доля >204.8 s.</caption><thead><tr><th class="">День / модель</th><th class="num">req</th><th class="num">avg, s</th><th class="num">p50, s</th><th class="num">p95, s</th><th class="num">>204.8 s</th><th class="num">out/req</th><th class="num">in/req</th><th class="num">out/s</th><th class="num">model time, h</th></tr></thead><tbody><tr class=""><td class="">16.11 · <code>64k</code></td><td class="num">312</td><td class="num">155.5</td><td class="num">96.0</td><td class="num">204.8</td><td class="num">26.0%</td><td class="num">1 964</td><td class="num">29.7k</td><td class="num">12.6</td><td class="num">13.48</td></tr><tr class=""><td class="">17.11 · <code>64k</code></td><td class="num">96</td><td class="num">136.7</td><td class="num">97.9</td><td class="num">204.8</td><td class="num">23.7%</td><td class="num">1 346</td><td class="num">30.8k</td><td class="num">9.8</td><td class="num">3.65</td></tr><tr class=""><td class="">18.11 · <code>64k</code></td><td class="num">59</td><td class="num">150.4</td><td class="num">113.4</td><td class="num">204.8</td><td class="num">29.5%</td><td class="num">1 865</td><td class="num">31.5k</td><td class="num">12.4</td><td class="num">2.46</td></tr><tr class=""><td class="">18.11 · <code>128k-text</code></td><td class="num">344</td><td class="num">114.0</td><td class="num">47.9</td><td class="num">204.8</td><td class="num">17.4%</td><td class="num">689</td><td class="num">66.8k</td><td class="num">6.0</td><td class="num">10.89</td></tr><tr class=""><td class="">19.11 · <code>128k-text</code></td><td class="num">48</td><td class="num">91.4</td><td class="num">53.3</td><td class="num">204.8</td><td class="num">13.7%</td><td class="num">660</td><td class="num">43.6k</td><td class="num">7.2</td><td class="num">1.22</td></tr><tr class=""><td class="">19.11 · <code>128k-mtp2</code></td><td class="num">320</td><td class="num">55.2</td><td class="num">34.3</td><td class="num">199.2</td><td class="num">4.7%</td><td class="num">555</td><td class="num">48.6k</td><td class="num">10.0</td><td class="num">4.91</td></tr><tr class="highlight-row"><td class="">20.11 · <code>128k-mtp2</code></td><td class="num">613</td><td class="num">73.2</td><td class="num">36.4</td><td class="num">204.8</td><td class="num">7.8%</td><td class="num">866</td><td class="num">46.2k</td><td class="num">11.8</td><td class="num">12.46</td></tr><tr class=""><td class="">16.11 · <code>tiel</code></td><td class="num">377</td><td class="num">24.4</td><td class="num">10.5</td><td class="num">117.8</td><td class="num">1.9%</td><td class="num">853</td><td class="num">59.6k</td><td class="num">34.9</td><td class="num">2.56</td></tr><tr class=""><td class="">20.11 · <code>tiel</code></td><td class="num">91</td><td class="num">15.0</td><td class="num">9.0</td><td class="num">54.8</td><td class="num">0.0%</td><td class="num">476</td><td class="num">78.6k</td><td class="num">31.7</td><td class="num">0.38</td></tr></tbody></table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Tail и данные</h3>
+    <p>Доля запросов >204.8 s упала с <b>26.0%</b> (16.11) до <b>7.8%</b> (20.11), у 19.11 mtp2 было 4.7%. При этом 20.11 avg выше 19.11 (73.2 vs 55.2 s) из-за более тяжёлых S-04 задач; p50 почти не изменился (36.4 vs 34.3 s). Exporter перезапускался 20.11 в 09:11 и 19:48, но <code>increase</code> обработал reset: 613 запросов qwen сходятся с 609 сообщениями в DB.</p>
+  </div>
+</section>
+
+<section class="section" id="roles" aria-labelledby="roles-h">
+  <h2 id="roles-h">По ролям</h2>
+  <p class="sub">Output и reasoning на сообщение: где политика сработала, а где изменилась не модель, а структура работы.</p>
+  <div class="chart-grid">
+    <figure class="panel chart-card" id="chart-role-out"><div class="panel-head"><h3>Output/msg по ролям</h3><span class="hint">16.11 vs 20.11</span></div><div class="chart-body"><svg viewBox="0 0 860 380" role="img" aria-label="Output на сообщение по ролям" font-family="Segoe UI, Arial, sans-serif"><title>Output на сообщение по ролям</title><desc>16.11 vs 20.11: lead почти не изменился, orchestrator и coder резко снизили output; architect и UX — новые роли 20.11.</desc><line x1="64" y1="310.0" x2="836" y2="310.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="314.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="255.2" x2="836" y2="255.2" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="259.2" text-anchor="end" font-size="11" fill="#5a6675">500</text><line x1="64" y1="200.4" x2="836" y2="200.4" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="204.4" text-anchor="end" font-size="11" fill="#5a6675">1 000</text><line x1="64" y1="145.6" x2="836" y2="145.6" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="149.6" text-anchor="end" font-size="11" fill="#5a6675">1 500</text><line x1="64" y1="90.8" x2="836" y2="90.8" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="94.8" text-anchor="end" font-size="11" fill="#5a6675">2 000</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">2 500</text><line x1="64" y1="36" x2="64" y2="310" stroke="#b9c2cd" stroke-width="1.2"/><text x="141.2" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="141.2" dy="0">lead</tspan></text><text x="295.6" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="295.6" dy="0">orchestrator</tspan></text><text x="450.0" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">architect</tspan></text><text x="604.4" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="604.4" dy="0">UX</tspan></text><text x="758.8" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="758.8" dy="0">coder</tspan></text><rect x="90.2" y="136.3" width="48.0" height="173.7" rx="4" fill="#8a5b00"><title>lead: 16.11 1 585 токенов/сообщение</title></rect><text x="114.2" y="131.3" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">1 585</text><rect x="144.2" y="130.6" width="48.0" height="179.4" rx="4" fill="#2f6f4f"><title>lead: 20.11 1 637 токенов/сообщение</title></rect><text x="168.2" y="125.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">1 637</text><rect x="244.6" y="63.5" width="48.0" height="246.5" rx="4" fill="#8a5b00"><title>orchestrator: 16.11 2 249 токенов/сообщение</title></rect><text x="268.6" y="58.5" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">2 249</text><rect x="298.6" y="225.3" width="48.0" height="84.7" rx="4" fill="#2f6f4f"><title>orchestrator: 20.11 772 токенов/сообщение</title></rect><text x="322.6" y="220.3" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">772</text><text x="423.0" y="306" text-anchor="middle" font-size="9" fill="#b9c2cd">n/a</text><rect x="453.0" y="233.8" width="48.0" height="76.2" rx="4" fill="#2f6f4f"><title>architect: 20.11 696 токенов/сообщение</title></rect><text x="477.0" y="228.8" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">696</text><text x="577.4" y="306" text-anchor="middle" font-size="9" fill="#b9c2cd">n/a</text><rect x="607.4" y="245.3" width="48.0" height="64.7" rx="4" fill="#2f6f4f"><title>UX: 20.11 590 токенов/сообщение</title></rect><text x="631.4" y="240.3" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">590</text><rect x="707.8" y="219.4" width="48.0" height="90.6" rx="4" fill="#8a5b00"><title>coder: 16.11 826 токенов/сообщение</title></rect><text x="731.8" y="214.4" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">826</text><rect x="761.8" y="257.9" width="48.0" height="52.1" rx="4" fill="#2f6f4f"><title>coder: 20.11 476 токенов/сообщение</title></rect><text x="785.8" y="252.9" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">476</text></svg></div><div class="legend"><span><i class="swatch" style="background:#8a5b00"></i>16.11</span><span><i class="swatch" style="background:#2f6f4f"></i>20.11</span></div><figcaption>16.11: architect/UX не запускались; QA не включён в график. 20.11: новые роли дали 696 и 590 out/msg.</figcaption></figure>
+    <figure class="panel chart-card" id="chart-role-rchar"><div class="panel-head"><h3>Reasoning chars/msg по ролям</h3><span class="hint">16.11 vs 20.11</span></div><div class="chart-body"><svg viewBox="0 0 860 380" role="img" aria-label="Reasoning chars на сообщение по ролям" font-family="Segoe UI, Arial, sans-serif"><title>Reasoning chars на сообщение по ролям</title><desc>Символы reasoning в сообщении: у orchestrator −74%, у lead −16%, у coder −55%; architect xhigh — 1654, без runaway.</desc><line x1="64" y1="310.0" x2="836" y2="310.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="314.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="255.2" x2="836" y2="255.2" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="259.2" text-anchor="end" font-size="11" fill="#5a6675">2 000</text><line x1="64" y1="200.4" x2="836" y2="200.4" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="204.4" text-anchor="end" font-size="11" fill="#5a6675">4 000</text><line x1="64" y1="145.6" x2="836" y2="145.6" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="149.6" text-anchor="end" font-size="11" fill="#5a6675">6 000</text><line x1="64" y1="90.8" x2="836" y2="90.8" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="94.8" text-anchor="end" font-size="11" fill="#5a6675">8 000</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">10 000</text><line x1="64" y1="36" x2="64" y2="310" stroke="#b9c2cd" stroke-width="1.2"/><text x="141.2" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="141.2" dy="0">lead</tspan></text><text x="295.6" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="295.6" dy="0">orchestrator</tspan></text><text x="450.0" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">architect</tspan></text><text x="604.4" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="604.4" dy="0">UX</tspan></text><text x="758.8" y="330.0" text-anchor="middle" font-size="11" fill="#5a6675" font-weight="400"><tspan x="758.8" dy="0">coder</tspan></text><rect x="90.2" y="164.1" width="48.0" height="145.9" rx="4" fill="#8a5b00"><title>lead: 16.11 5 325 chars/сообщение</title></rect><text x="114.2" y="159.1" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">5 325</text><rect x="144.2" y="187.4" width="48.0" height="122.6" rx="4" fill="#2f6f4f"><title>lead: 20.11 4 476 chars/сообщение</title></rect><text x="168.2" y="182.4" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">4 476</text><rect x="244.6" y="105.8" width="48.0" height="204.2" rx="4" fill="#8a5b00"><title>orchestrator: 16.11 7 451 chars/сообщение</title></rect><text x="268.6" y="100.8" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">7 451</text><rect x="298.6" y="256.5" width="48.0" height="53.5" rx="4" fill="#2f6f4f"><title>orchestrator: 20.11 1 953 chars/сообщение</title></rect><text x="322.6" y="251.5" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">1 953</text><text x="423.0" y="306" text-anchor="middle" font-size="9" fill="#b9c2cd">n/a</text><rect x="453.0" y="264.7" width="48.0" height="45.3" rx="4" fill="#2f6f4f"><title>architect: 20.11 1 654 chars/сообщение</title></rect><text x="477.0" y="259.7" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">1 654</text><text x="577.4" y="306" text-anchor="middle" font-size="9" fill="#b9c2cd">n/a</text><rect x="607.4" y="286.6" width="48.0" height="23.4" rx="4" fill="#2f6f4f"><title>UX: 20.11 853 chars/сообщение</title></rect><text x="631.4" y="281.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">853</text><rect x="707.8" y="257.4" width="48.0" height="52.6" rx="4" fill="#8a5b00"><title>coder: 16.11 1 918 chars/сообщение</title></rect><text x="731.8" y="252.4" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">1 918</text><rect x="761.8" y="286.6" width="48.0" height="23.4" rx="4" fill="#2f6f4f"><title>coder: 20.11 855 chars/сообщение</title></rect><text x="785.8" y="281.6" text-anchor="middle" font-size="10" font-weight="600" fill="#1c2530">855</text></svg></div><div class="legend"><span><i class="swatch" style="background:#8a5b00"></i>16.11</span><span><i class="swatch" style="background:#2f6f4f"></i>20.11</span></div><figcaption>Orchestrator −74%, coder −55%, lead −16%; architect xhigh 1654 — без runaway.</figcaption></figure>
+  </div>
+  <div class="table-wrap"><table><caption>DB по ролям: 16.11 vs 20.11. Duration — end-to-end ход, включая tool/task; у lead топ-ходы — task-субагенты.</caption><thead><tr><th class="">Роль</th><th class="">День</th><th class="num">n</th><th class="num">out/msg</th><th class="num">rchars/msg</th><th class="num">avg, s</th><th class="num">p50, s</th><th class="num">p95, s</th><th class="num">tool errors</th></tr></thead><tbody><tr class=""><td class="">lead</td><td class="">16.11</td><td class="num">182</td><td class="num">1585.0</td><td class="num">5 325</td><td class="num">200.9</td><td class="num">72.3</td><td class="num">541.5</td><td class="num">2.85%</td></tr><tr class="highlight-row"><td class="">lead</td><td class="">20.11</td><td class="num">100</td><td class="num">1637.0</td><td class="num">4 476</td><td class="num">464.3</td><td class="num">132.3</td><td class="num">2076.2</td><td class="num">3.12%</td></tr><tr class=""><td class="">orchestrator</td><td class="">16.11</td><td class="num">108</td><td class="num">2249.4</td><td class="num">7 451</td><td class="num">207.8</td><td class="num">111.8</td><td class="num">856.3</td><td class="num">1.21%</td></tr><tr class="highlight-row"><td class="">orchestrator</td><td class="">20.11</td><td class="num">258</td><td class="num">772.4</td><td class="num">1 953</td><td class="num">61.5</td><td class="num">31.7</td><td class="num">221.6</td><td class="num">0.92%</td></tr><tr class="highlight-row"><td class="">architect</td><td class="">20.11</td><td class="num">162</td><td class="num">695.7</td><td class="num">1 654</td><td class="num">55.4</td><td class="num">33.3</td><td class="num">193.1</td><td class="num">2.72%</td></tr><tr class="highlight-row"><td class="">UX</td><td class="">20.11</td><td class="num">88</td><td class="num">590.4</td><td class="num">853</td><td class="num">44.6</td><td class="num">24.5</td><td class="num">159.6</td><td class="num">1.65%</td></tr><tr class=""><td class="">coder</td><td class="">16.11</td><td class="num">375</td><td class="num">826.5</td><td class="num">1 918</td><td class="num">27.9</td><td class="num">11.1</td><td class="num">119.8</td><td class="num">6.29%</td></tr><tr class="highlight-row"><td class="">coder</td><td class="">20.11</td><td class="num">91</td><td class="num">475.8</td><td class="num">855</td><td class="num">16.2</td><td class="num">8.9</td><td class="num">56.2</td><td class="num">2.70%</td></tr><tr class=""><td class="">QA</td><td class="">17.11</td><td class="num">27</td><td class="num">899.0</td><td class="num">2 207</td><td class="num">68.8</td><td class="num">42.9</td><td class="num"><span class="muted">—</span></td><td class="num">—</td></tr><tr class="highlight-row"><td class="">QA</td><td class="">20.11</td><td class="num">0</td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num"><span class="muted">—</span></td><td class="num">—</td></tr><tr class=""><td class="">compaction</td><td class="">16.11</td><td class="num">25</td><td class="num">3710.6</td><td class="num">3 716</td><td class="num">324.5</td><td class="num">256.8</td><td class="num">483.4</td><td class="num">—</td></tr><tr class="highlight-row"><td class="">compaction</td><td class="">20.11</td><td class="num">1</td><td class="num">3011.0</td><td class="num">1 374</td><td class="num">653.8</td><td class="num">653.8</td><td class="num">653.8</td><td class="num">—</td></tr></tbody></table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Lead: длинные ходы — это не reasoning</h3>
+    <p>Топ-ходы лида на 20.11 — <code>task</code>-вызовы субагентов: 91.1, 75.0, 63.6, 35.7, 34.6, 28.4, 28.0, 26.3 мин. Восемь таких ходов суммарно ≈6.4 h. Собственная генерация лида — ≈3.8 h из ≈12.9 h его ходов; остальное — ожидание task-субагентов. Поэтому его p95 2076 s нельзя читать как latency модели.</p>
+  </div>
+</section>
+
+<section class="section" id="effort" aria-labelledby="effort-h">
+  <h2 id="effort-h">Чистый эффект effort на 64k</h2>
+  <p class="sub">S1 16.11 xhigh vs T-017 17–18.11 low на одной модели qwen 64k. Обе — feature planning P-00.</p>
+  <figure class="panel chart-card chart-wide" id="chart-timeline"><div class="panel-head"><h3>Orchestrator: 64k xhigh → 64k low → 128k-text → mtp2</h3><span class="hint">out/msg и rchars/msg</span></div><div class="chart-body"><svg viewBox="0 0 860 360" role="img" aria-label="Orchestrator: таймлайн модели и effort" font-family="Segoe UI, Arial, sans-serif"><title>Orchestrator: таймлайн модели и effort</title><desc>Output/msg и reasoning chars/msg для orchestrator: 64k xhigh → 64k low → 128k-text → 128k-mtp2.</desc><rect x="681.6" y="36" width="154.4" height="254" fill="#eef4f1" opacity="0.75"/><line x1="64" y1="290.0" x2="836" y2="290.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="294.0" text-anchor="end" font-size="11" fill="#5a6675">0</text><line x1="64" y1="239.2" x2="836" y2="239.2" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="243.2" text-anchor="end" font-size="11" fill="#5a6675">2 000</text><line x1="64" y1="188.4" x2="836" y2="188.4" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="192.4" text-anchor="end" font-size="11" fill="#5a6675">4 000</text><line x1="64" y1="137.6" x2="836" y2="137.6" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="141.6" text-anchor="end" font-size="11" fill="#5a6675">6 000</text><line x1="64" y1="86.8" x2="836" y2="86.8" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="90.8" text-anchor="end" font-size="11" fill="#5a6675">8 000</text><line x1="64" y1="36.0" x2="836" y2="36.0" stroke="#e2e7ed" stroke-width="1"/><text x="54" y="40.0" text-anchor="end" font-size="11" fill="#5a6675">10 000</text><line x1="64" y1="36" x2="64" y2="290" stroke="#b9c2cd" stroke-width="1.2"/><text x="141.2" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="141.2" dy="0">16.11</tspan><tspan x="141.2" dy="15">64k xhigh</tspan></text><text x="295.6" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="295.6" dy="0">17–18.11</tspan><tspan x="295.6" dy="15">64k low</tspan></text><text x="450.0" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="450.0" dy="0">18.11</tspan><tspan x="450.0" dy="15">128k-text</tspan></text><text x="604.4" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="604.4" dy="0">19.11</tspan><tspan x="604.4" dy="15">mtp2</tspan></text><text x="758.8" y="310.0" text-anchor="middle" font-size="12" fill="#5a6675" font-weight="400"><tspan x="758.8" dy="0">20.11</tspan><tspan x="758.8" dy="15">mtp2</tspan></text><path d="M 141.2 232.9 L 295.6 255.3 L 450.0 272.5 L 604.4 274.2 L 758.8 270.4" fill="none" stroke="#2f6f4f" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" opacity="1"/><circle cx="141.2" cy="232.9" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>16.11 64k xhigh: out/msg 2 249 на сообщение</title></circle><text x="141.2" y="248.9" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">2 249</text><circle cx="295.6" cy="255.3" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>17–18.11 64k low: out/msg 1 368 на сообщение</title></circle><text x="295.6" y="271.3" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">1 368</text><circle cx="450.0" cy="272.5" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>18.11 128k-text: out/msg 690 на сообщение</title></circle><text x="450.0" y="286.0" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">690</text><circle cx="604.4" cy="274.2" r="4.2" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>19.11 mtp2: out/msg 621 на сообщение</title></circle><text x="604.4" y="286.0" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">621</text><circle cx="758.8" cy="270.4" r="5.6" fill="#fff" stroke="#2f6f4f" stroke-width="2.2"><title>20.11 mtp2: out/msg 772 на сообщение</title></circle><text x="758.8" y="286.0" text-anchor="middle" font-size="10.5" fill="#2f6f4f" font-weight="600">772</text><path d="M 141.2 100.7 L 295.6 189.8 L 450.0 250.3 L 604.4 259.9 L 758.8 240.4" fill="none" stroke="#2b5c8a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" opacity="1"/><circle cx="141.2" cy="100.7" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>16.11 64k xhigh: rchars/msg 7 451 на сообщение</title></circle><text x="141.2" y="92.7" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">7 451</text><circle cx="295.6" cy="189.8" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>17–18.11 64k low: rchars/msg 3 946 на сообщение</title></circle><text x="295.6" y="181.8" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">3 946</text><circle cx="450.0" cy="250.3" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>18.11 128k-text: rchars/msg 1 562 на сообщение</title></circle><text x="450.0" y="242.3" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">1 562</text><circle cx="604.4" cy="259.9" r="4.2" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>19.11 mtp2: rchars/msg 1 184 на сообщение</title></circle><text x="604.4" y="251.9" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">1 184</text><circle cx="758.8" cy="240.4" r="5.6" fill="#fff" stroke="#2b5c8a" stroke-width="2.2"><title>20.11 mtp2: rchars/msg 1 953 на сообщение</title></circle><text x="758.8" y="232.4" text-anchor="middle" font-size="10.5" fill="#2b5c8a" font-weight="600">1 953</text></svg></div><div class="legend"><span><i class="swatch" style="background:#2f6f4f"></i>out/msg</span><span><i class="swatch" style="background:#2b5c8a"></i>rchars/msg</span></div><figcaption>T-017 (17–18.11) — полный low-сеанс на 64k; 16.11 — все orchestrator-сообщения дня. 20.11 чуть выше 19.11 из-за задач.</figcaption></figure>
+  <div class="table-wrap"><table><caption>Чистый same-model тест effort: S1 (xhigh) vs T-017 (low) на qwen 64k.</caption><thead><tr><th class="">Сессия</th><th class="">Модель · effort</th><th class="num">n</th><th class="num">out/msg</th><th class="num">rchars/msg</th><th class="num">avg, s</th><th class="num">p50, s</th><th class="num">total out + comp.</th><th class="num">wall, h</th><th class="num">input</th><th class="num">cache</th></tr></thead><tbody><tr class=""><td class="">S1, 16.11</td><td class="">64k · xhigh</td><td class="num">72</td><td class="num">2 814</td><td class="num">8 926</td><td class="num">261.1</td><td class="num">157.8</td><td class="num">247 699</td><td class="num">6.40</td><td class="num">469.7k</td><td class="num">1835k</td></tr><tr class=""><td class="">T-017, 17–18.11</td><td class="">64k · low</td><td class="num">102</td><td class="num">1 368</td><td class="num">3 946</td><td class="num">145.6</td><td class="num">110.2</td><td class="num">197 645</td><td class="num">5.35</td><td class="num">996.8k</td><td class="num">2472.2k</td></tr></tbody></table></div>
+  <div class="callout danger" style="margin-top:14px">
+    <h3>Поправка к прошлому анализу</h3>
+    <p>Прошлый вывод «orchestrator после изменения не запускался» неверен. T-017 работал 17.11 21:03–18.11 02:24, 102 сообщения, 64k low. На сообщение: out −51%, reasoning −56%, avg −44%, p50 −30%. Но total output с компакциями −20%, wall-clock −16%, input +68%, cache +33%: агент делает больше шагов и компакций. Прошлые 26 запросов 17.11 post — неполное окно; полный день 17.11: 96 запросов, avg 136.7 s.</p>
+  </div>
+</section>
+
+<section class="section" id="tasks" aria-labelledby="tasks-h">
+  <h2 id="tasks-h">Стоимость и задачи</h2>
+  <p class="sub">Output share по ролям и output/min по задачам. T-036 ещё в работе и в итоги 20.11 не включён.</p>
+  <div class="chart-grid">
+    <figure class="panel chart-card" id="chart-donut"><div class="panel-head"><h3>Output share, 20.11</h3><span class="hint">573.9k output</span></div><div class="chart-body"><svg viewBox="0 0 360 320" role="img" aria-label="Output tokens по ролям, 20.11" font-family="Segoe UI, Arial, sans-serif"><title>Output tokens по ролям, 20.11</title><desc>Доли output-токенов: orchestrator + lead = 63%; coder — tiel, остальные — qwen.</desc><path d="M 180.0 40.0 A 118 118 0 0 1 276.7 225.7 L 239.0 199.3 A 72 72 0 0 0 180.0 86.0 Z" fill="#2f6f4f" stroke="#fff" stroke-width="2"><title>orchestrator: 199 279 (34.7%)</title></path><path d="M 276.7 225.7 A 118 118 0 0 1 92.8 237.5 L 126.8 206.5 A 72 72 0 0 0 239.0 199.3 Z" fill="#2b5c8a" stroke="#fff" stroke-width="2"><title>lead: 163 700 (28.5%)</title></path><path d="M 92.8 237.5 A 118 118 0 0 1 76.2 101.9 L 116.6 123.8 A 72 72 0 0 0 126.8 206.5 Z" fill="#8a5b00" stroke="#fff" stroke-width="2"><title>architect: 112 703 (19.6%)</title></path><path d="M 76.2 101.9 A 118 118 0 0 1 122.7 54.8 L 145.0 95.1 A 72 72 0 0 0 116.6 123.8 Z" fill="#7a4e9e" stroke="#fff" stroke-width="2"><title>UX: 51 955 (9.1%)</title></path><path d="M 122.7 54.8 A 118 118 0 0 1 176.1 40.1 L 177.6 86.0 A 72 72 0 0 0 145.0 95.1 Z" fill="#b3261e" stroke="#fff" stroke-width="2"><title>coder (tiel): 43 298 (7.5%)</title></path><path d="M 176.1 40.1 A 118 118 0 0 1 180.0 40.0 L 180.0 86.0 A 72 72 0 0 0 177.6 86.0 Z" fill="#8a94a3" stroke="#fff" stroke-width="2"><title>compaction: 3 011 (0.5%)</title></path><text x="180" y="154" text-anchor="middle" font-size="26" font-weight="700" fill="#1c2530">573.9k</text><text x="180" y="176" text-anchor="middle" font-size="12" fill="#5a6675">output tokens</text></svg></div><div class="legend"><span><i class="swatch" style="background:#2f6f4f"></i>orchestrator</span><span><i class="swatch" style="background:#2b5c8a"></i>lead</span><span><i class="swatch" style="background:#8a5b00"></i>architect</span><span><i class="swatch" style="background:#7a4e9e"></i>UX</span><span><i class="swatch" style="background:#b3261e"></i>coder (tiel)</span><span><i class="swatch" style="background:#8a94a3"></i>compaction</span></div><figcaption>orchestrator + lead = 63% output. Coder — tiel; остальные — qwen. Доли по токенам, не по времени.</figcaption></figure>
+    <figure class="panel chart-card" id="chart-tasks"><div class="panel-head"><h3>Output/min по задачам</h3><span class="hint">T-032…T-036</span></div><div class="chart-body"><svg viewBox="0 0 860 300" role="img" aria-label="Output tokens в минуту по задачам" font-family="Segoe UI, Arial, sans-serif"><title>Output tokens в минуту по задачам</title><desc>T-032…T-035 — завершённые задачи; T-036 — coder-сессия in progress, не входит в итог 455 ток/мин.</desc><line x1="150.0" y1="34" x2="150.0" y2="260" stroke="#e2e7ed" stroke-width="1"/><text x="150.0" y="24" text-anchor="middle" font-size="10" fill="#5a6675">0</text><line x1="360.0" y1="34" x2="360.0" y2="260" stroke="#e2e7ed" stroke-width="1"/><text x="360.0" y="24" text-anchor="middle" font-size="10" fill="#5a6675">200</text><line x1="570.0" y1="34" x2="570.0" y2="260" stroke="#e2e7ed" stroke-width="1"/><text x="570.0" y="24" text-anchor="middle" font-size="10" fill="#5a6675">400</text><line x1="780.0" y1="34" x2="780.0" y2="260" stroke="#e2e7ed" stroke-width="1"/><text x="780.0" y="24" text-anchor="middle" font-size="10" fill="#5a6675">600</text><text x="140" y="60.6" text-anchor="end" font-size="12" fill="#1c2530" font-weight="600">T-032</text><rect x="150" y="44.8" width="399.4" height="23.5" rx="4" fill="#2f6f4f" opacity="1"><title>T-032: 380 ток/мин</title></rect><text x="557.4" y="60.6" text-anchor="start" font-size="11" font-weight="600" fill="#1c2530">380</text><text x="140" y="105.8" text-anchor="end" font-size="12" fill="#1c2530" font-weight="600">T-033</text><rect x="150" y="90.0" width="557.8" height="23.5" rx="4" fill="#2f6f4f" opacity="1"><title>T-033: 531 ток/мин</title></rect><text x="715.8" y="105.8" text-anchor="start" font-size="11" font-weight="600" fill="#1c2530">531</text><text x="140" y="151.0" text-anchor="end" font-size="12" fill="#1c2530" font-weight="600">T-034</text><rect x="150" y="135.2" width="439.8" height="23.5" rx="4" fill="#2f6f4f" opacity="1"><title>T-034: 419 ток/мин</title></rect><text x="597.8" y="151.0" text-anchor="start" font-size="11" font-weight="600" fill="#1c2530">419</text><text x="140" y="196.2" text-anchor="end" font-size="12" fill="#1c2530" font-weight="600">T-035</text><rect x="150" y="180.4" width="444.5" height="23.5" rx="4" fill="#2f6f4f" opacity="1"><title>T-035: 423 ток/мин</title></rect><text x="602.5" y="196.2" text-anchor="start" font-size="11" font-weight="600" fill="#1c2530">423</text><text x="140" y="241.4" text-anchor="end" font-size="12" fill="#1c2530" font-weight="600">T-036</text><rect x="150" y="225.6" width="306.7" height="23.5" rx="4" fill="#2f6f4f" opacity="0.55" stroke="#8a5b00" stroke-dasharray="5 4" stroke-width="1.4"><title>T-036: 292 ток/мин</title></rect><text x="464.7" y="241.4" text-anchor="start" font-size="11" font-weight="600" fill="#1c2530">292</text><line x1="150" y1="34" x2="150" y2="260" stroke="#b9c2cd" stroke-width="1.2"/></svg></div><div class="legend"><span><i class="swatch" style="background:#2f6f4f"></i>done</span><span><i class="swatch" style="background:#8a5b00"></i>in progress</span></div><figcaption>T-032 380, T-033 531, T-034 419, T-035 423; T-036 292 — coder-сессия, ещё в работе.</figcaption></figure>
+  </div>
+  <div class="table-wrap"><table><caption>Usage задач из docs/plan.md. T-036 — сессия coder, не task usage; задача ещё в работе и в итог не включена.</caption><thead><tr><th class="">ID</th><th class="">Роль</th><th class="num">in</th><th class="num">out</th><th class="num">cache</th><th class="num">min</th><th class="num">out/min</th><th class="">Статус</th></tr></thead><tbody><tr class=""><td class="">T-032</td><td class="">UX</td><td class="num">240 623</td><td class="num">35 379</td><td class="num">2 662 219</td><td class="num">93.0</td><td class="num">380</td><td class=""><span class="badge st-done">done</span></td></tr><tr class=""><td class="">T-033</td><td class="">UX</td><td class="num">644 320</td><td class="num">163 073</td><td class="num">4 571 594</td><td class="num">307.0</td><td class="num">531</td><td class=""><span class="badge st-done">done</span></td></tr><tr class=""><td class="">T-034</td><td class="">architect</td><td class="num">377 315</td><td class="num">104 320</td><td class="num">8 246 608</td><td class="num">249.0</td><td class="num">419</td><td class=""><span class="badge st-done">done</span></td></tr><tr class=""><td class="">T-035</td><td class="">architect</td><td class="num">307 266</td><td class="num">99 054</td><td class="num">5 519 740</td><td class="num">234.0</td><td class="num">423</td><td class=""><span class="badge st-done">done</span></td></tr><tr class="highlight-row"><td class="">T-036</td><td class="">coder</td><td class="num">1 562 988</td><td class="num">45 392</td><td class="num">9 916 040</td><td class="num">155.4</td><td class="num">292</td><td class=""><span class="badge st-progress">in progress</span></td></tr><tr class="highlight-row"><td class="">Итого T-032…T-035</td><td class="">—</td><td class="num">1 569 524</td><td class="num">401 826</td><td class="num">21 000 161</td><td class="num">883</td><td class="num">455</td><td class=""><span class="badge st-done">4 done</span></td></tr></tbody></table></div>
+  <div class="grid-2" style="margin-top:16px">
+    <div class="panel-pad">
+      <h3>Оценка model time</h3>
+      <ul>
+        <li>orchestrator: ≈4.6 h (199k out)</li>
+        <li>lead: ≈3.8 h (164k out)</li>
+        <li>architect: ≈2.6 h (113k out)</li>
+        <li>UX: ≈1.2 h (52k out)</li>
+        <li>coder (tiel): ≈0.4 h (43k out)</li>
+        <li>Итого: ≈12.6 h, сходится с ≈12.5 h Prometheus</li>
+      </ul>
+      <p class="small-note">Оценка по 12 ток/с для qwen и 30 ток/с для tiel; это приближение, не биллинг.</p>
+    </div>
+    <div class="panel-pad">
+      <h3>Производительность</h3>
+      <ul>
+        <li>T-032…T-035: 401.8k out за 883 min → <b>455 out/min</b>.</li>
+        <li>Записанные задачи 18.11: ≈449 out/min (без T-027 QA usage).</li>
+        <li>То есть производительность в минуту не упала; просто работы было больше.</li>
+        <li>T-035 chunk-budget: contracts 28.8 KB &gt; 12 KB, SVG 90.6 KB &gt; 12 KB, session 117.9 KB &gt; 40 KB — waived, но это процессный риск.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quality" aria-labelledby="quality-h">
+  <h2 id="quality-h">Качество и статусы</h2>
+  <p class="sub">CP-F approved для T-032…T-035; T-036 in progress. Независимый QA S-04 (T-038/T-039) ещё не запускался.</p>
+  <div class="table-wrap"><table><caption>Статусы S-04. Независимый QA S-04 (T-038/T-039) ещё впереди; CP-F — это пользовательские чекпоинты.</caption><thead><tr><th class="">ID</th><th class="">Роль</th><th class="">Статус</th><th class="">CP-F</th><th class="">QA</th><th class="">Комментарий</th></tr></thead><tbody><tr class=""><td class=""><code>T-032</code></td><td class="">UX</td><td class=""><span class="badge st-done">done</span></td><td class="">approved, 10 PASS</td><td class="">S-04 QA pending</td><td class="">Флоу и экраны S-04</td></tr><tr class=""><td class=""><code>T-033</code></td><td class="">UX</td><td class=""><span class="badge st-done">done</span></td><td class="">approved, 19 PASS, 1 MANUAL</td><td class="">S-04 QA pending</td><td class="">Wireframes, прототип, UI spec; ISSUE-20261120-113748</td></tr><tr class=""><td class=""><code>T-034</code></td><td class="">architect</td><td class=""><span class="badge st-done">done</span></td><td class="">approved, 23 PASS, 1 MANUAL</td><td class="">S-04 QA pending</td><td class="">ADR, architecture, sequence-009</td></tr><tr class=""><td class=""><code>T-035</code></td><td class="">architect</td><td class=""><span class="badge st-done">done</span></td><td class="">approved, 2 FAIL waived, 1 MANUAL</td><td class="">S-04 QA pending</td><td class="">Contracts, data/class, swimlane; ISSUE-20261120-203629</td></tr><tr class=""><td class=""><code>T-036</code></td><td class="">coder</td><td class=""><span class="badge st-progress">in progress</span></td><td class="">CP-1 closed 00:03</td><td class="">T-037…T-039 pending</td><td class="">Implementation S-04; в итоги 20.11 не включён</td></tr></tbody></table></div>
+  <div class="callout warn" style="margin-top:14px">
+    <h3>Что важно не перепутать</h3>
+    <ul>
+      <li><b>0 QA-сессий на 20.11 — это не провал, а порядок работ:</b> QA S-04 идёт после T-036/T-037; T-038/T-039 pending.</li>
+      <li><b>T-035 approved с 2 waived FAIL:</b> artifacts-exist (conditional glob swimlane) и chunk-budget. Пользователь принял CP-2 с этими waiver; записаны ISSUE-20261120-113748 и ISSUE-20261120-203629.</li>
+      <li><b>Новых BUG/REOPEN на 20.11 нет.</b> Но качество модели на MTP2 независимым QA ещё не подтверждено.</li>
+      <li><b>T-036 не входит в итоги:</b> CP-1 закрыт в 00:03, но задача ещё в работе; её coder-сессия дала 45.4k out, lead-сессия — 15.1k.</li>
+    </ul>
+  </div>
+  <div class="table-wrap"><table><caption>Поправки к прошлому анализу от 17.11.</caption><thead><tr><th class="">Пункт</th><th class="">Прошлый вывод</th><th class="">Уточнение</th></tr></thead><tbody><tr class=""><td class=""><b>Orchestrator после изменения</b></td><td class="">не запускался</td><td class="">T-017 P-00: 17.11 21:03–18.11 02:24, 102 сообщения, 64k low</td></tr><tr class=""><td class=""><b>17.11 post qwen</b></td><td class="">26 req, avg 61.8 s</td><td class="">Неполное окно; полный день 17.11: 96 req, avg 136.7 s</td></tr><tr class=""><td class=""><b>p95 / p99</b></td><td class="">204.8 s, «не изменился»</td><td class="">Гистограмма упирается в 204.8 s; доля &gt;204.8 s: 26.0% → 7.8%</td></tr><tr class=""><td class=""><b>Главный фактор</b></td><td class="">reasoningEffort</td><td class="">20.11: основной вклад — 128K MTP2; effort-эффект виден на 64k S1 vs T-017</td></tr></tbody></table></div>
+</section>
+
+<section class="section" id="conclusions" aria-labelledby="conclusions-h">
+  <h2 id="conclusions-h">Выводы и рекомендации</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Что подтвердилось</h3>
+      <ul>
+        <li>Orchestrator low, UX medium, coder low и architect xhigh не дают runaway reasoning.</li>
+        <li>Architect xhigh — 696 out/msg и 1654 rchars/msg; это не «дорогая» роль на сообщение, хотя общий output большой из-за объёма задач.</li>
+        <li>128K MTP2 — главный источник ускорения: p50 36.4 s, avg 73.2 s, >204.8 s 7.8%.</li>
+        <li>Лид ждёт task-субагентов; его длинные ходы — оркестрация, не медленная модель.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Что делать дальше</h3>
+      <ul>
+        <li>Сохранить текущую политику: orchestrator low, lead/QA/UX medium, architect xhigh, coder low.</li>
+        <li>Следующий рычаг — число шагов и размер task-субагентов: orchestrator 258 сообщений, ≈4.6 h model time; lead ≈3.8 h.</li>
+        <li>Не снижать architect xhigh без QA-данных: per-message reasoning умеренный.</li>
+        <li>Проверить QA medium на MTP2 в T-038/T-039; без этого качество не закрыто.</li>
+        <li>Расширить histogram buckets за 204.8 s и починить chunk-budget; иначе tail и крупные артефакты будут недооценены.</li>
+        <li>Если тестировать lead low — только на контролируемой задаче; выигрыш по wall-clock, вероятно, небольшой из-за ожидания субагентов.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method" aria-labelledby="method-h">
+  <h2 id="method-h">Методика и оговорки</h2>
+  <div class="grid-2">
+    <div class="panel-pad">
+      <h3>Как считали</h3>
+      <ul>
+        <li><b>Prometheus:</b> <code>increase(metric[24h] @ end)</code>, end — конец локального дня (21:00Z). avg = sum/count; p50 = histogram_quantile; >204.8 s = 1 − bucket(le=204.8)/+Inf.</li>
+        <li><b>DB:</b> assistant-сообщения, reasoning parts, длительность end-to-end, tool errors по tool parts. DB duration включает tool/task-ожидание; Prometheus — latency модели.</li>
+        <li><b>Tasks:</b> usage из <code>docs/plan.md</code>; T-036 — сессия coder, не task usage.</li>
+      </ul>
+    </div>
+    <div class="panel-pad">
+      <h3>Оговорки</h3>
+      <ul>
+        <li>20.11 — design/UX/architecture-день S-04; 16.11 — bugfix/QA/coder. Дневные суммы сравнивать нельзя, только per-request и per-role.</li>
+        <li>p95/p99 capped at 204.8 s; используйте долю >204.8 s.</li>
+        <li>Model change confounds effort: 64k → 128k-text → 128k-mtp2.</li>
+        <li>T-036 in progress; total 20.11 не включает его финальную стоимость.</li>
+        <li>Нет независимого QA на 20.11; CP-F — пользовательские чекпоинты.</li>
+        <li>Exporter restarts 09:11/19:48; resets обработаны, 613 qwen req vs 609 DB messages.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="appendix" aria-labelledby="appendix-h">
+  <h2 id="appendix-h">Приложение: данные и источники</h2>
+  <div class="sources">
+    <h3>Источники</h3>
+    <ul><li><code>Prometheus</code> <span class="muted">127.0.0.1:9090</span> — <code>ollama_requests_total</code>, <code>ollama_request_duration_seconds_*</code>, <code>ollama_compatibility_*_tokens_sum</code>; запросы <code>increase(...[24h] @ end)</code>.</li><li><code>opencode.db</code> <span class="muted">C:\Users\sergey\.local\share\opencode\opencode.db</span> — сообщения, роли, reasoning parts, tool errors; чтение read-only.</li><li><code>docs/plan.md</code> — usage T-032…T-036 и статусы; <code>docs/checkpoints/T-032…T-035</code> — CP-F; <code>docs/issues/</code> — ISSUE-20261120-113748, ISSUE-20261120-203629.</li><li><code>agents/*.md</code>, <code>opencode.jsonc</code> — модель и reasoningEffort; <code>docs/analysis/phase-artifacts-ai-task-tracker.html</code> — стиль отчёта.</li></ul>
+  </div>
+  <details class="json-details"><summary>JSON с исходными данными</summary><pre>{
+  &quot;generated_at&quot;: &quot;2026-11-21T00:08:00+03:00&quot;,
+  &quot;prometheus&quot;: [
+    {
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;model&quot;: &quot;64k&quot;,
+      &quot;key&quot;: &quot;64k&quot;,
+      &quot;req&quot;: 312,
+      &quot;avg&quot;: 155.5,
+      &quot;p50&quot;: 96.0,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 26.0,
+      &quot;out&quot;: 1964.1,
+      &quot;inp&quot;: 29651,
+      &quot;hours&quot;: 13.48
+    },
+    {
+      &quot;day&quot;: &quot;17.11&quot;,
+      &quot;model&quot;: &quot;64k&quot;,
+      &quot;key&quot;: &quot;64k&quot;,
+      &quot;req&quot;: 96,
+      &quot;avg&quot;: 136.7,
+      &quot;p50&quot;: 97.9,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 23.7,
+      &quot;out&quot;: 1345.7,
+      &quot;inp&quot;: 30824,
+      &quot;hours&quot;: 3.65
+    },
+    {
+      &quot;day&quot;: &quot;18.11&quot;,
+      &quot;model&quot;: &quot;64k&quot;,
+      &quot;key&quot;: &quot;64k&quot;,
+      &quot;req&quot;: 59,
+      &quot;avg&quot;: 150.4,
+      &quot;p50&quot;: 113.4,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 29.5,
+      &quot;out&quot;: 1865.2,
+      &quot;inp&quot;: 31487,
+      &quot;hours&quot;: 2.46
+    },
+    {
+      &quot;day&quot;: &quot;18.11&quot;,
+      &quot;model&quot;: &quot;128k-text&quot;,
+      &quot;key&quot;: &quot;text&quot;,
+      &quot;req&quot;: 344,
+      &quot;avg&quot;: 114.0,
+      &quot;p50&quot;: 47.9,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 17.4,
+      &quot;out&quot;: 689.2,
+      &quot;inp&quot;: 66847,
+      &quot;hours&quot;: 10.89
+    },
+    {
+      &quot;day&quot;: &quot;19.11&quot;,
+      &quot;model&quot;: &quot;128k-text&quot;,
+      &quot;key&quot;: &quot;text&quot;,
+      &quot;req&quot;: 48,
+      &quot;avg&quot;: 91.4,
+      &quot;p50&quot;: 53.3,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 13.7,
+      &quot;out&quot;: 660.3,
+      &quot;inp&quot;: 43589,
+      &quot;hours&quot;: 1.22
+    },
+    {
+      &quot;day&quot;: &quot;19.11&quot;,
+      &quot;model&quot;: &quot;128k-mtp2&quot;,
+      &quot;key&quot;: &quot;mtp2&quot;,
+      &quot;req&quot;: 320,
+      &quot;avg&quot;: 55.2,
+      &quot;p50&quot;: 34.3,
+      &quot;p95&quot;: 199.2,
+      &quot;over&quot;: 4.7,
+      &quot;out&quot;: 554.6,
+      &quot;inp&quot;: 48636,
+      &quot;hours&quot;: 4.91
+    },
+    {
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;model&quot;: &quot;128k-mtp2&quot;,
+      &quot;key&quot;: &quot;mtp2&quot;,
+      &quot;req&quot;: 613,
+      &quot;avg&quot;: 73.2,
+      &quot;p50&quot;: 36.4,
+      &quot;p95&quot;: 204.8,
+      &quot;over&quot;: 7.8,
+      &quot;out&quot;: 866.0,
+      &quot;inp&quot;: 46235,
+      &quot;hours&quot;: 12.46
+    },
+    {
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;model&quot;: &quot;tiel&quot;,
+      &quot;key&quot;: &quot;tiel&quot;,
+      &quot;req&quot;: 377,
+      &quot;avg&quot;: 24.4,
+      &quot;p50&quot;: 10.5,
+      &quot;p95&quot;: 117.8,
+      &quot;over&quot;: 1.9,
+      &quot;out&quot;: 852.7,
+      &quot;inp&quot;: 59615,
+      &quot;hours&quot;: 2.56
+    },
+    {
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;model&quot;: &quot;tiel&quot;,
+      &quot;key&quot;: &quot;tiel&quot;,
+      &quot;req&quot;: 91,
+      &quot;avg&quot;: 15.0,
+      &quot;p50&quot;: 9.0,
+      &quot;p95&quot;: 54.8,
+      &quot;over&quot;: 0.0,
+      &quot;out&quot;: 475.8,
+      &quot;inp&quot;: 78617,
+      &quot;hours&quot;: 0.38
+    }
+  ],
+  &quot;roles&quot;: [
+    {
+      &quot;role&quot;: &quot;lead&quot;,
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;n&quot;: 182,
+      &quot;out&quot;: 1585.0,
+      &quot;rchars&quot;: 5325,
+      &quot;avg&quot;: 200.9,
+      &quot;p50&quot;: 72.3,
+      &quot;p95&quot;: 541.5,
+      &quot;errors&quot;: &quot;2.85%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;lead&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 100,
+      &quot;out&quot;: 1637.0,
+      &quot;rchars&quot;: 4476,
+      &quot;avg&quot;: 464.3,
+      &quot;p50&quot;: 132.3,
+      &quot;p95&quot;: 2076.2,
+      &quot;errors&quot;: &quot;3.12%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;orchestrator&quot;,
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;n&quot;: 108,
+      &quot;out&quot;: 2249.4,
+      &quot;rchars&quot;: 7451,
+      &quot;avg&quot;: 207.8,
+      &quot;p50&quot;: 111.8,
+      &quot;p95&quot;: 856.3,
+      &quot;errors&quot;: &quot;1.21%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;orchestrator&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 258,
+      &quot;out&quot;: 772.4,
+      &quot;rchars&quot;: 1953,
+      &quot;avg&quot;: 61.5,
+      &quot;p50&quot;: 31.7,
+      &quot;p95&quot;: 221.6,
+      &quot;errors&quot;: &quot;0.92%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 162,
+      &quot;out&quot;: 695.7,
+      &quot;rchars&quot;: 1654,
+      &quot;avg&quot;: 55.4,
+      &quot;p50&quot;: 33.3,
+      &quot;p95&quot;: 193.1,
+      &quot;errors&quot;: &quot;2.72%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 88,
+      &quot;out&quot;: 590.4,
+      &quot;rchars&quot;: 853,
+      &quot;avg&quot;: 44.6,
+      &quot;p50&quot;: 24.5,
+      &quot;p95&quot;: 159.6,
+      &quot;errors&quot;: &quot;1.65%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;coder&quot;,
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;n&quot;: 375,
+      &quot;out&quot;: 826.5,
+      &quot;rchars&quot;: 1918,
+      &quot;avg&quot;: 27.9,
+      &quot;p50&quot;: 11.1,
+      &quot;p95&quot;: 119.8,
+      &quot;errors&quot;: &quot;6.29%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;coder&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 91,
+      &quot;out&quot;: 475.8,
+      &quot;rchars&quot;: 855,
+      &quot;avg&quot;: 16.2,
+      &quot;p50&quot;: 8.9,
+      &quot;p95&quot;: 56.2,
+      &quot;errors&quot;: &quot;2.70%&quot;
+    },
+    {
+      &quot;role&quot;: &quot;QA&quot;,
+      &quot;day&quot;: &quot;17.11&quot;,
+      &quot;n&quot;: 27,
+      &quot;out&quot;: 899.0,
+      &quot;rchars&quot;: 2207,
+      &quot;avg&quot;: 68.8,
+      &quot;p50&quot;: 42.9,
+      &quot;p95&quot;: null,
+      &quot;errors&quot;: &quot;—&quot;
+    },
+    {
+      &quot;role&quot;: &quot;QA&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 0,
+      &quot;out&quot;: null,
+      &quot;rchars&quot;: null,
+      &quot;avg&quot;: null,
+      &quot;p50&quot;: null,
+      &quot;p95&quot;: null,
+      &quot;errors&quot;: &quot;—&quot;
+    },
+    {
+      &quot;role&quot;: &quot;compaction&quot;,
+      &quot;day&quot;: &quot;16.11&quot;,
+      &quot;n&quot;: 25,
+      &quot;out&quot;: 3710.6,
+      &quot;rchars&quot;: 3716,
+      &quot;avg&quot;: 324.5,
+      &quot;p50&quot;: 256.8,
+      &quot;p95&quot;: 483.4,
+      &quot;errors&quot;: &quot;—&quot;
+    },
+    {
+      &quot;role&quot;: &quot;compaction&quot;,
+      &quot;day&quot;: &quot;20.11&quot;,
+      &quot;n&quot;: 1,
+      &quot;out&quot;: 3011.0,
+      &quot;rchars&quot;: 1374,
+      &quot;avg&quot;: 653.8,
+      &quot;p50&quot;: 653.8,
+      &quot;p95&quot;: 653.8,
+      &quot;errors&quot;: &quot;—&quot;
+    }
+  ],
+  &quot;timeline&quot;: [
+    {
+      &quot;label&quot;: &quot;16.11\n64k xhigh&quot;,
+      &quot;n&quot;: 108,
+      &quot;out&quot;: 2249,
+      &quot;rchars&quot;: 7451,
+      &quot;avg&quot;: 208,
+      &quot;p50&quot;: 112
+    },
+    {
+      &quot;label&quot;: &quot;17–18.11\n64k low&quot;,
+      &quot;n&quot;: 102,
+      &quot;out&quot;: 1368,
+      &quot;rchars&quot;: 3946,
+      &quot;avg&quot;: 146,
+      &quot;p50&quot;: 110
+    },
+    {
+      &quot;label&quot;: &quot;18.11\n128k-text&quot;,
+      &quot;n&quot;: 307,
+      &quot;out&quot;: 690,
+      &quot;rchars&quot;: 1562,
+      &quot;avg&quot;: 99,
+      &quot;p50&quot;: 48
+    },
+    {
+      &quot;label&quot;: &quot;19.11\nmtp2&quot;,
+      &quot;n&quot;: 147,
+      &quot;out&quot;: 621,
+      &quot;rchars&quot;: 1184,
+      &quot;avg&quot;: 55,
+      &quot;p50&quot;: 36
+    },
+    {
+      &quot;label&quot;: &quot;20.11\nmtp2&quot;,
+      &quot;n&quot;: 258,
+      &quot;out&quot;: 772,
+      &quot;rchars&quot;: 1953,
+      &quot;avg&quot;: 62,
+      &quot;p50&quot;: 32
+    }
+  ],
+  &quot;effort&quot;: [
+    {
+      &quot;name&quot;: &quot;S1, 16.11&quot;,
+      &quot;model&quot;: &quot;64k&quot;,
+      &quot;effort&quot;: &quot;xhigh&quot;,
+      &quot;n&quot;: 72,
+      &quot;out&quot;: 2814,
+      &quot;rchars&quot;: 8926,
+      &quot;avg&quot;: 261.1,
+      &quot;p50&quot;: 157.8,
+      &quot;total_out&quot;: 202577,
+      &quot;wall&quot;: 6.4,
+      &quot;input&quot;: 469688,
+      &quot;cache&quot;: 1835028,
+      &quot;compaction&quot;: 45122
+    },
+    {
+      &quot;name&quot;: &quot;T-017, 17–18.11&quot;,
+      &quot;model&quot;: &quot;64k&quot;,
+      &quot;effort&quot;: &quot;low&quot;,
+      &quot;n&quot;: 102,
+      &quot;out&quot;: 1368,
+      &quot;rchars&quot;: 3946,
+      &quot;avg&quot;: 145.6,
+      &quot;p50&quot;: 110.2,
+      &quot;total_out&quot;: 139562,
+      &quot;wall&quot;: 5.35,
+      &quot;input&quot;: 996778,
+      &quot;cache&quot;: 2472192,
+      &quot;compaction&quot;: 58083
+    }
+  ],
+  &quot;tasks&quot;: [
+    {
+      &quot;id&quot;: &quot;T-032&quot;,
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;inp&quot;: 240623,
+      &quot;out&quot;: 35379,
+      &quot;cache&quot;: 2662219,
+      &quot;min&quot;: 93,
+      &quot;rate&quot;: 380.4,
+      &quot;status&quot;: &quot;done&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-033&quot;,
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;inp&quot;: 644320,
+      &quot;out&quot;: 163073,
+      &quot;cache&quot;: 4571594,
+      &quot;min&quot;: 307,
+      &quot;rate&quot;: 531.2,
+      &quot;status&quot;: &quot;done&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-034&quot;,
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;inp&quot;: 377315,
+      &quot;out&quot;: 104320,
+      &quot;cache&quot;: 8246608,
+      &quot;min&quot;: 249,
+      &quot;rate&quot;: 418.9,
+      &quot;status&quot;: &quot;done&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-035&quot;,
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;inp&quot;: 307266,
+      &quot;out&quot;: 99054,
+      &quot;cache&quot;: 5519740,
+      &quot;min&quot;: 234,
+      &quot;rate&quot;: 423.3,
+      &quot;status&quot;: &quot;done&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-036&quot;,
+      &quot;role&quot;: &quot;coder&quot;,
+      &quot;inp&quot;: 1562988,
+      &quot;out&quot;: 45392,
+      &quot;cache&quot;: 9916040,
+      &quot;min&quot;: 155.4,
+      &quot;rate&quot;: 292.1,
+      &quot;status&quot;: &quot;in_progress&quot;
+    }
+  ],
+  &quot;quality&quot;: [
+    {
+      &quot;id&quot;: &quot;T-032&quot;,
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;status&quot;: &quot;done&quot;,
+      &quot;cpf&quot;: &quot;approved, 10 PASS&quot;,
+      &quot;qa&quot;: &quot;S-04 QA pending&quot;,
+      &quot;note&quot;: &quot;Флоу и экраны S-04&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-033&quot;,
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;status&quot;: &quot;done&quot;,
+      &quot;cpf&quot;: &quot;approved, 19 PASS, 1 MANUAL&quot;,
+      &quot;qa&quot;: &quot;S-04 QA pending&quot;,
+      &quot;note&quot;: &quot;Wireframes, прототип, UI spec; ISSUE-20261120-113748&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-034&quot;,
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;status&quot;: &quot;done&quot;,
+      &quot;cpf&quot;: &quot;approved, 23 PASS, 1 MANUAL&quot;,
+      &quot;qa&quot;: &quot;S-04 QA pending&quot;,
+      &quot;note&quot;: &quot;ADR, architecture, sequence-009&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-035&quot;,
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;status&quot;: &quot;done&quot;,
+      &quot;cpf&quot;: &quot;approved, 2 FAIL waived, 1 MANUAL&quot;,
+      &quot;qa&quot;: &quot;S-04 QA pending&quot;,
+      &quot;note&quot;: &quot;Contracts, data/class, swimlane; ISSUE-20261120-203629&quot;
+    },
+    {
+      &quot;id&quot;: &quot;T-036&quot;,
+      &quot;role&quot;: &quot;coder&quot;,
+      &quot;status&quot;: &quot;in_progress&quot;,
+      &quot;cpf&quot;: &quot;CP-1 closed 00:03&quot;,
+      &quot;qa&quot;: &quot;T-037…T-039 pending&quot;,
+      &quot;note&quot;: &quot;Implementation S-04; в итоги 20.11 не включён&quot;
+    }
+  ],
+  &quot;corrections&quot;: [
+    {
+      &quot;point&quot;: &quot;Orchestrator после изменения&quot;,
+      &quot;old&quot;: &quot;не запускался&quot;,
+      &quot;new&quot;: &quot;T-017 P-00: 17.11 21:03–18.11 02:24, 102 сообщения, 64k low&quot;
+    },
+    {
+      &quot;point&quot;: &quot;17.11 post qwen&quot;,
+      &quot;old&quot;: &quot;26 req, avg 61.8 s&quot;,
+      &quot;new&quot;: &quot;Неполное окно; полный день 17.11: 96 req, avg 136.7 s&quot;
+    },
+    {
+      &quot;point&quot;: &quot;p95 / p99&quot;,
+      &quot;old&quot;: &quot;204.8 s, «не изменился»&quot;,
+      &quot;new&quot;: &quot;Гистограмма упирается в 204.8 s; доля &gt;204.8 s: 26.0% → 7.8%&quot;
+    },
+    {
+      &quot;point&quot;: &quot;Главный фактор&quot;,
+      &quot;old&quot;: &quot;reasoningEffort&quot;,
+      &quot;new&quot;: &quot;20.11: основной вклад — 128K MTP2; effort-эффект виден на 64k S1 vs T-017&quot;
+    }
+  ],
+  &quot;config&quot;: [
+    {
+      &quot;role&quot;: &quot;lead (harness)&quot;,
+      &quot;model&quot;: &quot;qwen3.8:27b-128k-mtp2-text&quot;,
+      &quot;effort&quot;: &quot;medium&quot;
+    },
+    {
+      &quot;role&quot;: &quot;orchestrator&quot;,
+      &quot;model&quot;: &quot;qwen3.8:27b-128k-mtp2-text&quot;,
+      &quot;effort&quot;: &quot;low&quot;
+    },
+    {
+      &quot;role&quot;: &quot;QA&quot;,
+      &quot;model&quot;: &quot;qwen3.8:27b-128k-mtp2-text&quot;,
+      &quot;effort&quot;: &quot;medium&quot;
+    },
+    {
+      &quot;role&quot;: &quot;UX&quot;,
+      &quot;model&quot;: &quot;qwen3.8:27b-128k-mtp2-text&quot;,
+      &quot;effort&quot;: &quot;medium&quot;
+    },
+    {
+      &quot;role&quot;: &quot;architect&quot;,
+      &quot;model&quot;: &quot;qwen3.8:27b-128k-mtp2-text&quot;,
+      &quot;effort&quot;: &quot;xhigh&quot;
+    },
+    {
+      &quot;role&quot;: &quot;coder&quot;,
+      &quot;model&quot;: &quot;tiel-coder:35b-a3b-mtp-128k-text&quot;,
+      &quot;effort&quot;: &quot;low&quot;
+    }
+  ],
+  &quot;note&quot;: &quot;p95/p99 capped at 204.8 s; DB duration is end-to-end; T-036 in progress; model change confounds effort comparison.&quot;
+}</pre></details>
+</section>
+</main>
+<footer>
+  <span>Данные на 21.11.2026 00:08 MSK · только анализ, файлы проекта не менялись.</span>
+  <span>Источники: Prometheus, opencode.db, docs/plan.md, CP-F.</span>
+</footer>
+</div>
+</body>
+</html>

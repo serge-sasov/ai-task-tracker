@@ -21,42 +21,42 @@
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_requires_confirmation",
       "status": "passed",
-      "duration_ms": 129,
+      "duration_ms": 168,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_cancel_confirmation_leaves_data",
       "status": "passed",
-      "duration_ms": 76,
+      "duration_ms": 93,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_confirmed_empties_all_sections",
       "status": "passed",
-      "duration_ms": 60332,
+      "duration_ms": 60313,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_opencode_source_not_deleted",
       "status": "passed",
-      "duration_ms": 60234,
+      "duration_ms": 60208,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_delete_again_empty_db_is_noop",
       "status": "passed",
-      "duration_ms": 60236,
+      "duration_ms": 60194,
       "detail": ""
     },
     {
       "nodeid": "tests/e2e/uc_e2e_007_008/test_uc_e2e_008_manual_deletion.py::test_reimport_after_delete_resets_data",
       "status": "passed",
-      "duration_ms": 60321,
+      "duration_ms": 60344,
       "detail": ""
     }
   ],
-  "duration_ms": 241328,
+  "duration_ms": 241320,
   "errors": [],
-  "timestamp": "2026-11-18T16:43:05.793573+00:00",
+  "timestamp": "2026-11-21T23:43:56.852850+00:00",
   "base_url": "http://127.0.0.1:8080"
 }
