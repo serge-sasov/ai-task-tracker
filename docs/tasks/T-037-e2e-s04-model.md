@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=2005232 out=526224 cr=47324955 ratio=23.6x min=574 |
 | issues | - |
-| commit | - |
+| commit | eeda0f6 |
 
 ## Acceptance
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-21: Launch protocol updated with process.md 11.4 command guard (run-monitored, detached e2e, status/abort, no Start-Process -Wait/Out-File/dot-source). Scope and chunk ledger unchanged; see ISSUE-20261121-224809.
 - 2026-11-22: Card `artifacts` corrected from the T-009 copy-paste glob `tests/e2e/**` to the 4 precise T-037 files (S-04 e2e test, `e2e.ps1`, `validate-e2e-data.py`, `generate-e2e-seed.py`), matching the delta-I-02 precedent T-025; this removes the spurious `E_COVERAGE` demand to own ~30 pre-existing e2e files T-037 never authored. Ledger C1/C2 `owns` made disjoint and matching; budget raised to the I-02 profile (80/200).
 - 2026-11-22: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2005232 out=526224 cr=47324955 ratio=23.6x min=574; reviewer auto (P2)
+- eeda0f6: CP-2 snapshot
