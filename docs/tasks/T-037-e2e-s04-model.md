@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | I-02 |
 | role | coder |
-| status | in_progress |
+| status | awaiting_review |
 | hold | false |
 | depends_on | T-036, T-031, T-035 |
 | inputs | `tests/e2e/**`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue` |
@@ -17,7 +17,7 @@
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | in=2005232 out=526224 cr=47324955 ratio=23.6x min=574 |
+| usage | in=2066546 out=534892 cr=47453944 ratio=23x min=587 |
 | issues | - |
 | commit | eeda0f6 |
 
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | I-02 e2e automation and local run | `tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `scripts/generate-e2e-seed.py` | 9P/0F/0M | approved | docs/checkpoints/T-037-CP-2.md |
-| CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-037-CP-F.md` |
+| CP-F | final acceptance | all task artifacts | 10P/0F/0M | awaiting_review | docs/checkpoints/T-037-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -62,3 +62,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: Card `artifacts` corrected from the T-009 copy-paste glob `tests/e2e/**` to the 4 precise T-037 files (S-04 e2e test, `e2e.ps1`, `validate-e2e-data.py`, `generate-e2e-seed.py`), matching the delta-I-02 precedent T-025; this removes the spurious `E_COVERAGE` demand to own ~30 pre-existing e2e files T-037 never authored. Ledger C1/C2 `owns` made disjoint and matching; budget raised to the I-02 profile (80/200).
 - 2026-11-22: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2005232 out=526224 cr=47324955 ratio=23.6x min=574; reviewer auto (P2)
 - eeda0f6: CP-2 snapshot
+- 2026-11-22: CP-F awaiting_review (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2066546 out=534892 cr=47453944 ratio=23x min=587; reviewer user
