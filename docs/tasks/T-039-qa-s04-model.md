@@ -14,21 +14,23 @@
 | artifacts | `docs/qa/e2e-report-s04-model.md`, `docs/qa/review-T-039.md` |
 | e2e | required - the S-04 e2e results and verdict are the acceptance evidence |
 | ux | required - the UX spec cell states and accessibility text are part of the review |
-| chunks | - (to be planned at start) |
-| budget | - |
-| base_commit | - |
+| chunks | C1 (d1, qa, done) C2 (d1, qa, done) `docs/chunks/T-039.json` |
+| scope_class | delta |
+| budget_profile | Q-02/default (Markdown 8 KB/write, 20 KB/session, stop 65% context) |
+| budget | mode=authored-delta scope=delta max_write_kb=40 max_session_kb=100 (per_type md 8/20 KB) |
+| base_commit | e18ca65 |
 | usage | in=330376 out=68713 cr=5301010 ratio=16x min=162 |
 | issues | - |
 | commit | 5df9205 |
 
 ## Acceptance
 
-- [ ] `docs/qa/e2e-report-s04-model.md` records the execution of the S-04 e2e test(s) against the built frontend (rebuilt image or DOM smoke), with PASS/FAIL per assertion and the actual observed cell states (primary, `+N`, full list, "Нет данных").
-- [ ] `docs/qa/review-T-039.md` contains a text/code review of the shared model-cell component and its use in both `DashboardView.vue` and `CalendarDayView.vue`, confirming the S-01 behavior is unchanged and the S-04 column matches the UX spec and `R-015`.
-- [ ] The S-01 regression (UC-E2E-003 and the S-01 unit/component tests) is re-run and reported green; any regression is recorded as a defect with severity.
-- [ ] A final verdict (accept / reject) is stated with the evidence references; if accepted, the acceptance criteria of T-029 are confirmed met.
-- [ ] Any defect found is recorded with a linked `BUG-XXX` (created by the orchestrator) and is not silently absorbed into the feature.
-- [ ] `CP-2` (e2e report and verdict) and `CP-F` (final acceptance) are declared.
+- [x] `docs/qa/e2e-report-s04-model.md` records the execution of the S-04 e2e test(s) against the built frontend (rebuilt image or DOM smoke), with PASS/FAIL per assertion and the actual observed cell states (primary, `+N`, full list, "Нет данных").
+- [x] `docs/qa/review-T-039.md` contains a text/code review of the shared model-cell component and its use in both `DashboardView.vue` and `CalendarDayView.vue`, confirming the S-01 behavior is unchanged and the S-04 column matches the UX spec and `R-015`.
+- [x] The S-01 regression (UC-E2E-003 and the S-01 unit/component tests) is re-run and reported green; any regression is recorded as a defect with severity.
+- [x] A final verdict (accept / reject) is stated with the evidence references; if accepted, the acceptance criteria of T-029 are confirmed met.
+- [x] Any defect found is recorded with a linked `BUG-XXX` (created by the orchestrator) and is not silently absorbed into the feature.
+- [x] `CP-2` (e2e report and verdict) and `CP-F` (final acceptance) are declared.
 
 ## Checkpoints
 
@@ -65,3 +67,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: CP-F awaiting_review (Q-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=330376 out=68713 cr=5301010 ratio=16x min=162; reviewer user
 - 5df9205: CP-F snapshot
 - 2026-11-22: CP-F decision=approved by user; task done
+- 2026-11-22: Closure (process §5.11): CP-2 auto-approved (P2, 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED); CP-F approved by user via `checkpoint-decision.ps1` (9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED); acceptance 6/6 met; verdict ACCEPT (`docs/qa/review-T-039.md` §6); no product defects -> no BUG-XXX created (bug index untouched); scope_class=delta, budget_profile=Q-02/default; activity T-039 -> done (#90EE90); **task closed done**.
