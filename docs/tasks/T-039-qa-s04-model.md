@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=312905 out=64703 cr=5106899 ratio=16.3x min=156 |
 | issues | - |
-| commit | - |
+| commit | ea827b5 |
 
 ## Acceptance
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: Q-02 chunk plan done (`chunk.ps1 init` + C1/C2 added with briefs). **C1 done**: S-04 e2e 7/7 PASS, S-01 regression e2e 24/24 PASS, S-01 unit/component 8/8 PASS (final combined run with `E2E_KEEP_STACK=1`; evidence `tests/e2e/results/UC-E2E-005.json`, `UC-E2E-003.json`); report `docs/qa/e2e-report-s04-model.md` written; no defects. CP-2 reported; C2 (code review + verdict) pending next session.
 - 2026-11-22: **C2 done**: code/text review of `ModelCell.vue`, `DashboardView.vue` (S-01 unchanged), `CalendarDayView.vue` (S-04, R-015) + cross-view consistency; no product defects (2 informational notes); **verdict ACCEPT**; `docs/qa/review-T-039.md` written; `verify-stage.ps1 -Stage Q-02` = 8 PASS/0 FAIL; chunk ledger 2/2 done. **CHECKPOINT CP-2 reached** — ready for lead preflight + stage-done.
 - 2026-11-22: CP-2 approved (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=312905 out=64703 cr=5106899 ratio=16.3x min=156; reviewer auto (P2)
+- ea827b5: CP-2 snapshot
