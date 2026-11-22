@@ -1,0 +1,68 @@
+{
+    "task":  "T-038",
+    "workflow":  "feature",
+    "stage":  "Q-01",
+    "root":  "C:\\study\\ai\\research\\ai-task-tracker",
+    "base_commit":  "d8b3de2",
+    "generated_at":  "2026-11-22T14:36:36",
+    "results":  [
+                    {
+                        "id":  "artifacts-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "1 file(s)"
+                    },
+                    {
+                        "id":  "artifact-hashes",
+                        "check":  "hash-match",
+                        "result":  "NOT_APPLICABLE",
+                        "detail":  "no ledger docs/evidence/T-038.md"
+                    },
+                    {
+                        "id":  "e2e-plan-exist",
+                        "check":  "file-exists",
+                        "result":  "PASS",
+                        "detail":  "2 file(s)"
+                    },
+                    {
+                        "id":  "e2e-plan-matrix",
+                        "check":  "pattern-present",
+                        "result":  "PASS",
+                        "detail":  "2 pattern(s) in 1 file(s)"
+                    },
+                    {
+                        "id":  "e2e-plan-uc-coverage",
+                        "check":  "id-coverage",
+                        "result":  "PASS",
+                        "detail":  "8 id(s) covered by 2 file(s)"
+                    },
+                    {
+                        "id":  "chunk-ownership-no-overlap",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "1 chunk(s), rule ownership"
+                    },
+                    {
+                        "id":  "chunk-coverage",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "1 chunk(s), rule coverage"
+                    },
+                    {
+                        "id":  "chunk-budget",
+                        "check":  "chunk-ledger",
+                        "result":  "PASS",
+                        "detail":  "1 chunk(s), authored-delta"
+                    }
+                ],
+    "summary":  {
+                    "pass":  7,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "unchecked":  [
+
+                  ]
+}

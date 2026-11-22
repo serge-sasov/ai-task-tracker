@@ -9,10 +9,10 @@
                    "profile":  "Q-01/default",
                    "scope_class":  "delta",
                    "per_type":  {
-                                    "md":  {
-                                               "max_write_kb":  8,
-                                               "max_session_kb":  20
-                                           },
+                                     "md":  {
+                                                "max_write_kb":  12,
+                                                "max_session_kb":  20
+                                            },
                                     "puml":  {
                                                  "max_write_kb":  8,
                                                  "max_session_kb":  20
@@ -57,7 +57,7 @@
                        "role":  "qa",
                        "depth":  1,
                        "title":  "Q-01 e2e plan + coverage matrix for S-04 model column (R-015/UC-E2E-005)",
-                       "state":  "in_progress",
+                       "state":  "done",
                        "owns":  [
                                     "docs/qa/e2e-plan-s04-model.md"
                                 ],
@@ -74,7 +74,10 @@
                                           "R-015 -\u003e UC-E2E-005 -\u003e S-04 test(s) matrix with expected result per cell state (primary, +N, full list, Нет данных); data validated by validate-e2e-data.py incl. multi-model + empty-model day-view tasks; execution against built frontend with T-027/T-028 stale-frontend risk covered; every R-015 acceptance item traced to \u003e=1 test with gaps as open items; reuse S-01 (T-026) plan structure, S-04 is the delta (no S-01 duplication); CP-1 + CP-F declared"
                                       ],
                        "produced":  [
-
+                                        {
+                                            "path":  "docs/qa/e2e-plan-s04-model.md",
+                                            "sha256":  "8c2f3c28664a0396773b23bc27d067fefc19752cd21c874cf4f90a1d0344b108"
+                                        }
                                     ],
                        "base_commit":  "d8b3de2",
                        "attempts":  1,
@@ -91,12 +94,12 @@
 
                                  ],
                        "started":  "2026-11-22T13:49:06",
-                       "finished":  null,
+                       "finished":  "2026-11-22T14:05:44",
                        "sessions":  0,
                        "compactions":  0,
                        "handoff":  "",
-                       "elapsed_min":  0
+                       "elapsed_min":  17
                    }
                ],
-    "updated":  "2026-11-22T13:49:06"
+    "updated":  "2026-11-22T14:05:44"
 }
