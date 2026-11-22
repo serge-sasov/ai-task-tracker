@@ -9,11 +9,11 @@
 | role | coder |
 | stage | I-02 |
 | artifacts | tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py, scripts/e2e.ps1, scripts/validate-e2e-data.py, scripts/generate-e2e-seed.py |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-22T12:39:30 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-22T12:39:57 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 84f9c1a |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-037-CP-F.checks.json |
@@ -71,7 +71,7 @@ docs/checkpoints/T-037-CP-2.md    | 2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- approve CP-F
 
 ## User edits
 
