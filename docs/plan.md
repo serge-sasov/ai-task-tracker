@@ -64,4 +64,4 @@ Task graph (feature workflow): `P-00 РІвЂ вЂ™ A-01 РІвЂ вЂ™ A-
 | T-037 | feature | I-02 E2E automation and built-frontend check for S-04 | coder | T-036, T-031, T-035 | done | - | tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py, scripts/e2e.ps1, scripts/validate-e2e-data.py, scripts/generate-e2e-seed.py | in=2066546 out=534892 cr=47453944 ratio=23x min=587 | 84f9c1a |
 | T-038 | feature | Q-01 E2E plan and coverage for S-04 model column | qa | T-031, T-037 | done | - | docs/qa/e2e-plan-s04-model.md | in=166571 out=24297 cr=1283572 ratio=7.7x min=35 | 2afad08 |
 | T-039 | feature | Q-02 QA, acceptance and verdict for S-04 | qa | T-038, T-037, T-036, T-035, T-033 | done | - | docs/qa/e2e-report-s04-model.md, docs/qa/review-T-039.md | in=330376 out=68713 cr=5301010 ratio=16x min=162 | 5df9205 |
-| T-040 | feature | D-01 Documentation for S-04 model column | doc-writer | T-039, T-036, T-035, T-033 | pending | - | README.md, docs/guides/* | - | - |
+| T-040 | feature | D-01 Documentation for S-04 model column | doc-writer | T-039, T-036, T-035, T-033 | in_progress | - | README.md, docs/guides/* | - | - |

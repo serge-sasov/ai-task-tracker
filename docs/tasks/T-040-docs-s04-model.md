@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | D-01 |
 | role | doc-writer |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-039, T-036, T-035, T-033 |
 | inputs | `README.md`, `docs/guides/*`, `docs/architecture/architecture-ai-task-tracker.md`, `docs/architecture/adr-ai-task-tracker.md`, `docs/qa/e2e-report-s04-model.md`, `docs/ux/ui-spec-ai-task-tracker.md` |
@@ -16,7 +16,9 @@
 | ux | not applicable (reason: documentation only; the UX spec is owned by U-02/T-033) |
 | chunks | - (to be planned at start) |
 | budget | - |
-| base_commit | - |
+| scope_class | delta |
+| budget_profile | D-01/default (mode authored-delta; 40 KB/write; 100 KB/session; Markdown per-type limits 8 KB/write, 20 KB/session; stop at 60% of limit.context) |
+| base_commit | 9738bda |
 | usage | n/a |
 | issues | - |
 | commit | - |
@@ -56,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-040 registered as a pending D-01 successor of T-039/T-036/T-035/T-033 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-22: T-040 started (in_progress); scope_class=delta, budget_profile=D-01/default; base_commit=9738bda; lead verified board clean and deps done.

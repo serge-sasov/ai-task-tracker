@@ -1,0 +1,56 @@
+{
+    "task":  "T-040",
+    "version":  1,
+    "updated":  "2026-11-22T18:03:20",
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "mode":  "authored-delta",
+                   "profile":  "D-01/default",
+                   "scope_class":  "delta",
+                   "per_type":  {
+                                    "md":  {
+                                               "max_write_kb":  8,
+                                               "max_session_kb":  20
+                                           },
+                                    "puml":  {
+                                                 "max_write_kb":  8,
+                                                 "max_session_kb":  20
+                                             },
+                                    "openapi":  {
+                                                    "max_write_kb":  6,
+                                                    "max_session_kb":  15
+                                                },
+                                    "yaml":  {
+                                                 "max_write_kb":  6,
+                                                 "max_session_kb":  15
+                                             },
+                                    "code":  {
+                                                 "max_write_kb":  12,
+                                                 "max_session_kb":  40
+                                             },
+                                    "html":  {
+                                                 "max_write_kb":  12,
+                                                 "max_session_kb":  40
+                                             }
+                                },
+                   "exclude":  [
+                                   "**/*.svg",
+                                   "**/package-lock.json",
+                                   "**/*.lock",
+                                   "**/node_modules/**",
+                                   "**/dist/**",
+                                   "**/target/**"
+                               ],
+                   "max_write_kb":  40,
+                   "max_session_kb":  100,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+
+               ]
+}
