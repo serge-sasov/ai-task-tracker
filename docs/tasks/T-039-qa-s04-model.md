@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=330376 out=68713 cr=5301010 ratio=16x min=162 |
 | issues | - |
-| commit | ea827b5 |
+| commit | 5df9205 |
 
 ## Acceptance
 
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: CP-2 approved (Q-02); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=312905 out=64703 cr=5106899 ratio=16.3x min=156; reviewer auto (P2)
 - ea827b5: CP-2 snapshot
 - 2026-11-22: CP-F awaiting_review (Q-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=330376 out=68713 cr=5301010 ratio=16x min=162; reviewer user
+- 5df9205: CP-F snapshot
