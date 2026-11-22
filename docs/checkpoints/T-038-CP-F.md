@@ -9,11 +9,11 @@
 | role | qa |
 | stage | Q-01 |
 | artifacts | docs/qa/e2e-plan-s04-model.md |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-22T14:59:00 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-22T14:59:24 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 2afad08 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-038-CP-F.checks.json |
@@ -76,7 +76,7 @@ docs/activity.puml                         |   2 +-
 
 ## User remarks
 
-- (user fills; may be empty if artifacts were edited directly)
+- approve CP-F
 
 ## User edits
 

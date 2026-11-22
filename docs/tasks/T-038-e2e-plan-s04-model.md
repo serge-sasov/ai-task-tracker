@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-01 |
 | role | qa |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-031, T-037 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `tests/e2e/**`, `docs/qa/e2e-plan-task-list-model.md` |
@@ -37,7 +37,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-1 | Q-01 e2e plan and coverage | `docs/qa/e2e-plan-s04-model.md` | 7P/0F/0M | approved | docs/checkpoints/T-038-CP-1.md |
-| CP-F | final acceptance | all task artifacts | 8P/0F/0M | awaiting_review | docs/checkpoints/T-038-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 8P/0F/0M | approved | docs/checkpoints/T-038-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -64,3 +64,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 564a328: CP-1 snapshot
 - 2026-11-22: CP-F awaiting_review (Q-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=166571 out=24297 cr=1283572 ratio=7.7x min=35; reviewer user
 - 2afad08: CP-F snapshot
+- 2026-11-22: CP-F decision=approved by user; task done; remark: approve CP-F
