@@ -7,16 +7,18 @@
 | workflow | feature |
 | stage | Q-01 |
 | role | qa |
-| status | pending |
+| status | in_progress |
 | hold | false |
 | depends_on | T-031, T-037 |
 | inputs | `docs/analysis/requirements-ai-task-tracker.md`, `docs/analysis/e2e-use-cases-ai-task-tracker.md`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `tests/e2e/**`, `docs/qa/e2e-plan-task-list-model.md` |
 | artifacts | `docs/qa/e2e-plan-s04-model.md` |
 | e2e | required - the S-04 model column must have an explicit requirement -> UC -> test coverage matrix |
 | ux | required - the matrix must include the UX cell states and accessibility assertions |
-| chunks | - (to be planned at start) |
-| budget | - |
-| base_commit | - |
+| chunks | C1 (d1, qa, in_progress) `docs/chunks/T-038.json` |
+| scope_class | delta |
+| budget_profile | Q-01/default (Markdown 8 KB/write, 20 KB/session, stop 60% context) |
+| budget | mode=authored-delta scope=delta max_write_kb=40 max_session_kb=100 (per_type md 8/20 KB) |
+| base_commit | d8b3de2 |
 | usage | n/a |
 | issues | - |
 | commit | - |
@@ -56,3 +58,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 ## Log
 
 - 2026-11-19: T-038 registered as a pending Q-01 successor of T-031/T-037 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
+- 2026-11-22: T-038 started by orchestrator on user "start T-038". Preconditions PASS (T-031/T-037 done, no other active task). base_commit d8b3de2. Chunk ledger initialized for Q-01 (C1, role qa); QA role to be dispatched separately (not run by orchestrator).
