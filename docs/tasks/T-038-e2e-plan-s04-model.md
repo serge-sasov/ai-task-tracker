@@ -21,7 +21,7 @@
 | base_commit | d8b3de2 |
 | usage | in=113955 out=19669 cr=1086588 ratio=9.5x min=27 |
 | issues | - |
-| commit | - |
+| commit | 564a328 |
 
 ## Acceptance
 
@@ -61,3 +61,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: T-038 started by orchestrator on user "start T-038". Preconditions PASS (T-031/T-037 done, no other active task). base_commit d8b3de2. Chunk ledger initialized for Q-01 (C1, role qa); QA role to be dispatched separately (not run by orchestrator).
 - 2026-11-22: CP-1 budget md max_write_kb raised 8→12 KB to accommodate the single QA e2e plan document (9.75 KB); T-037 precedent.
 - 2026-11-22: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=113955 out=19669 cr=1086588 ratio=9.5x min=27; reviewer auto (P2)
+- 564a328: CP-1 snapshot
