@@ -98,7 +98,10 @@ report that the project is not initialized (`/harness-init`).
    chunked by default (2-3 use cases per Markdown/YAML chunk). For R-01/R-02,
    `card.artifacts` lists only unconditional architecture files; conditional
    `openapi-api-*` and `swimlane-svc-*` outputs are governed by the architecture
-   description's `Scope and applicability` section and stage checks.
+   description's `Scope and applicability` section and stage checks. When
+   acceptance or a checkpoint requires a rendered diagram, list both the source
+   (`.puml`) and the render (`.svg`) in `card.artifacts` so chunk `owns` covers
+   the render (`E_OWN_OUTSIDE_CARD`).
 5. Manage checkpoints with `harness/scripts/stage-done.ps1`: it runs the checks,
    writes the checks JSON/evidence ledger/checkpoint, applies P2, updates
    plan/card/activity, and commits the snapshot. When reviewing a chunk, compare

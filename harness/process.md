@@ -684,6 +684,10 @@ roles never edit them.
 - Blocking command patterns: `Start-Process -Wait`, `Out-File`/`Tee-Object` for
   progress, dot-sourcing a dispatching script without `-NoExit`, or raising the
   bash timeout above 120 seconds to wait for a long job. Use section 11.4.
+- Creating scratch/helper scripts inside the repository to work around a shell
+  permission deny; use the OS temp directory for one-off probes and never add
+  throwaway scripts to `scripts/` or `docs/`. The `Remove-Item` deny is
+  intentional, so leftovers are removed by the user, not by broadening `allow`.
 - Mixing product bugs (`docs/bugs/`) with harness problems (`docs/issues/`).
 - Access outside drive `C:` (see agent permissions).
 

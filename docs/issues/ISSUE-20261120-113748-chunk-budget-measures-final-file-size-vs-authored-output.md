@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | id | ISSUE-20261120-113748 |
-| status | open |
+| status | resolved |
 | severity | major |
 | type | process |
 | detected_at | 2026-11-20T11:37:48.4360867+03:00 |
@@ -35,37 +35,21 @@ FAIL detail:
 
 ## Cause
 
-`chunk-budget` (verify-artifacts.ps1 Check-ChunkLedger, `rule=budget`, and the parallel `chunk-validate.py`) measures each produced file's FINAL SIZE ON DISK (Get-Item Length) and compares it to the per-write/per-session budget, summing it toward the session budget.
-
-harness/process.md 11.1 defines those limits as "Max per write/edit" and "Max new content per role session" -- i.e. a cap on AUTHORED model output, not on the resulting file size.
-
-Git evidence (base_commit 4e3f839, the ledger base, vs HEAD after the 3 chunks):
-- ui-spec-ai-task-tracker.md: base 20946 B -> head 22304 B, delta = +1358 B (1.3 KB) authored
-- wireframes-ai-task-tracker.puml: base 9062 B -> head 9880 B, delta = +818 B (0.8 KB) authored
-- wireframes-ai-task-tracker.svg: base 63099 B -> head 71879 B, delta = +8780 B (8.6 KB) -- DERIVED artifact rendered by the plantuml MCP, not authored text
-- uc-e2e-005.html: base 16089 B -> head 18442 B, delta = +2353 B (2.3 KB) authored
-Every authored delta is far under the 12 KB/write and 40 KB/session limits; the FAIL is driven by pre-existing file size (ui-spec already >12 KB before this task) and by counting the rendered SVG toward authored output.
-
-Consequence: any task that EXTENDS an existing artifact already larger than the flat budget, or that produces a rendered diagram (SVG) as a declared artifact, will `chunk-budget: FAIL` regardless of actual authored volume. This is a check-design / registry gap, not a role budget breach.
-
-Cause: mismatch between the measurement (final file size on disk) and the intended budget (authored output per write / per session) in the `chunk-budget` check (verify-artifacts.ps1 `Check-ChunkLedger` rule=budget + chunk-validate.py). The ledger also stores a single flat budget (max_write_kb=12, max_session_kb=40) that does not reflect 11.1's per-type budgets (md/puml 8/20; html 12/40; code 12/40), and the budget cannot distinguish authored text from a rendered/derived artifact.
+Fixed in commit `bd2b736` (harness: reduce process overhead, H-01..H-09). `harness/budgets.json` now defines `default_mode: authored-delta`, excludes derived paths (`**/*.svg`, lockfiles, build outputs), and provides per-type limits and profiles. `chunk-validate.py` supports `mode=authored-delta`, `verify-artifacts.ps1` `Check-ChunkLedger` delegates to the authored-delta rule when the ledger requests it, and `harness/process.md` 11.1 documents both modes (`authored-delta` for new ledgers, `legacy-final-size` for historical ledgers).
 
 ## Solution / workaround
 
-PROPOSED -- do not implement; this is for the user's ruling on T-033 CP-2 and a follow-up:
-- Measure authored delta (git diff base_commit..HEAD bytes added for files owned by the chunk) instead of final file size, OR exclude rendered/derived artifacts (*.svg) from the budget, OR make the budget per-artifact-type.
-- Until fixed, the lead treats this specific FAIL as a check-design gap (evidence above) rather than a role breach, and defers the CP-2 approval decision to the user.
-- Related prior issue ISSUE-20261113-115617 (R-01 contracts exceeded session budget) was the same class of "total size vs session budget" tension and was resolved by splitting/accepting; this issue generalises it and adds the derived-SVG and pre-existing-file-size dimensions.
+Implemented by `bd2b736`: measure authored delta instead of final file size, exclude derived artifacts (`*.svg`), and apply per-type budgets from `harness/budgets.json`. The flat 12/40 KB defaults remain only as a fallback for old ledgers. New ledgers (T-038, T-039, T-040) record `mode=authored-delta`.
 
 ## Verification
 
-- docs/checkpoints/T-033-CP-2.checks.json (chunk-budget FAIL; other 17 PASS / 1 MANUAL / 1 NOT_APPLICABLE)
-- docs/chunks/T-033.json (3 chunks done, attempts=1, usage 0)
-- git diff 4e3f839..HEAD shows the authored deltas above
+- `docs/checkpoints/T-038-CP-1.checks.json`, `T-038-CP-F.checks.json`, `T-039-CP-2.checks.json`, and `T-039-CP-F.checks.json`: `chunk-budget` PASS with detail `authored-delta`.
+- `python harness/scripts/chunk-validate.py docs/chunks/T-035.json --root . --json --no-hash`: `valid: true`, only `W_BUDGET_WRITE` warnings from the legacy ledger (final-size mode), no errors.
+- T-035, T-038, and T-039 checkpoints closed without a budget FAIL.
 
 ## Prevention / follow-up
 
-Add a follow-up task (type process, owner orchestrator/lead) to fix the `chunk-budget` rule to measure authored output and/or exclude derived artifacts; until then, log the disposition of any `chunk-budget: FAIL` in the affected card. Do NOT mark resolved until the check is fixed.
+Implemented: new ledgers use `authored-delta` and `harness/budgets.json`; keep derived renders out of authored budgets via the `exclude` list. Historical ledgers keep `legacy-final-size`; do not reinterpret their warnings as authored-output breaches.
 
 ## Links
 
@@ -79,3 +63,5 @@ Add a follow-up task (type process, owner orchestrator/lead) to fix the `chunk-b
 ## Timeline
 
 - 2026-11-20T11:37:48.4360867+03:00: detected
+- 2026-11-20: fixed by `bd2b736` (authored-delta, `harness/budgets.json`, `*.svg` exclusion, per-type budgets)
+- 2026-11-22T18:48:30+03:00: resolved - T-038/T-039 checkpoints report `chunk-budget` PASS `authored-delta`; T-035 validator returns `valid: true` with legacy warnings only

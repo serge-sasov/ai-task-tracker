@@ -27,6 +27,10 @@
 .PARAMETER Wait
     Run pytest in the foreground; intended for CI/QA short checks only.
 
+.PARAMETER DryRun
+    Print the foreground and detached pytest command lines without starting
+    the stack or running tests.
+
 .PARAMETER Reset
     Tear down the stack with `docker compose down -v` before starting it.
 
@@ -46,6 +50,7 @@
     .\scripts\e2e.ps1 status
     .\scripts\e2e.ps1 abort
     .\scripts\e2e.ps1 run -Wait -UC UC-E2E-007
+    .\scripts\e2e.ps1 run -DryRun -UC UC-E2E-003
 #>
 [CmdletBinding()]
 param(
@@ -59,6 +64,7 @@ param(
 
     [switch]$Force,
     [switch]$Wait,
+    [switch]$DryRun,
     [switch]$Reset,
     [switch]$Build,
     [int]$StackTimeoutSec = 90,
@@ -319,6 +325,22 @@ function Invoke-Run {
     }
     else { $ucArgs = @() }
     $resultArgs = New-ResultArg
+    $pytestArgs = @('tests/e2e', '-q', '--rootdir=.')
+    $pytestArgs += @('-p', 'no:cacheprovider')
+    $pytestArgs += $ucArgs + $resultArgs
+    # The detached path runs python.exe directly, so it must receive
+    # `-m pytest` explicitly; the foreground path passes it separately below.
+    $detachedArgs = @('-m', 'pytest') + $pytestArgs
+    if ($detachedArgs[0] -ne '-m' -or $detachedArgs[1] -ne 'pytest') {
+        throw 'detached pytest arguments must start with -m pytest'
+    }
+    if ($DryRun) {
+        Write-Host ("[e2e] wait:     {0} -m pytest {1}" -f $PY, ($pytestArgs -join ' '))
+        Write-Host ("[e2e] detached: {0} {1}" -f $PY, ($detachedArgs -join ' '))
+        Write-Host '[e2e] dry run: stack not started, pytest not executed'
+        return 0
+    }
+
     $env:E2E_OPPENCODE_DATA_DIR = $SeedDir
     $env:E2E_BASE_URL = $BaseUrl
     $env:E2E_FRONTEND_URL = $FrontendBase
@@ -334,10 +356,6 @@ function Invoke-Run {
     else {
         Write-Host '[e2e] stack already up'
     }
-
-    $pytestArgs = @('tests/e2e', '-q', '--rootdir=.')
-    $pytestArgs += @('-p', 'no:cacheprovider')
-    $pytestArgs += $ucArgs + $resultArgs
 
     if ($Wait) {
         & $PY -m pytest $pytestArgs
@@ -366,7 +384,7 @@ function Invoke-Run {
         New-Item -ItemType Directory -Path $Results -Force | Out-Null
     }
     $logPath = Join-Path $Results 'e2e-run.log'
-    & $Monitor start -Name $RunName -FilePath $PY -Arguments $pytestArgs -WorkDir $RepoRoot -TimeoutSec $RunTimeoutSec -LogPath $logPath -StateDir $RunStateDir
+    & $Monitor start -Name $RunName -FilePath $PY -Arguments $detachedArgs -WorkDir $RepoRoot -TimeoutSec $RunTimeoutSec -LogPath $logPath -StateDir $RunStateDir
     if ($LASTEXITCODE -ne 0) {
         throw 'failed to start the detached e2e run'
     }

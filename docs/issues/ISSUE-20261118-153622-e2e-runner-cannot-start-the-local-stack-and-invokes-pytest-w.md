@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | id | ISSUE-20261118-153622 |
-| status | workaround |
+| status | resolved |
 | severity | major |
 | type | e2e |
 | detected_at | 2026-11-18T15:36:22.2525251+03:00 |
@@ -30,19 +30,21 @@ Two failures in scripts/e2e.ps1 run -UC UC-E2E-003 (and the runner in general) b
 
 ## Cause
 
-Not fixed. Two independent problems. (1) Environment: the Docker CLI does not expose the docker compose subcommand as a plugin, so the runner docker compose up step fails. (2) Runner: the pytest target is passed with a Windows backslash path, which Python reads as an escaped module name and raises No module named tests\e2e. The runner should pass pytest a forward-slash module or directory path.
+Fixed in `scripts/e2e.ps1`: `Get-ComposeCommand` probes `docker compose version` and falls back to standalone `docker-compose`, and `Invoke-Run` passes the pytest target as forward-slash `tests/e2e`. Both original root causes (no compose-form detection and the backslash module path) are addressed.
 
 ## Solution / workaround
 
-Workaround (no change to scripts/e2e.ps1 or the test __init__ files in T-025): run the use-case tests directly with a forward-slash path: python -m pytest tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py -v. Offline this yields 1 passed (the aggregation-math test) and 23 skipped (stack-dependent tests skip cleanly). A live run still requires fixing the Docker Compose plugin and the runner pytest path; root cause not fixed in this task.
+Implemented in `scripts/e2e.ps1` (T-037/T-039): `Get-ComposeCommand` detects the available Compose form (`docker compose` plugin or standalone `docker-compose`), and `Invoke-Run` passes `tests/e2e` with a forward slash to pytest. Live runs on 2026-11-22 completed against the isolated local stack: T-039 S-04 7/7 PASS and S-01 regression 24/24 PASS.
 
 ## Verification
 
-Direct pytest collected and ran the UC-E2E-003 suite: test_models_by_task_aggregation_math_offline passed; the five live test_list_models_field_order_and_empty_state cases (TASK-001..005) and other list/detail tests were skipped with the reason local stack unhealthy (live E2E requires docker compose up). python -m py_compile passed for both changed files; the YAML validator reported 0 errors.
+- 2026-11-22: T-039 live e2e against the built frontend: S-04 7/7 PASS, S-01 regression 24/24 PASS, unit 8/8 PASS (`docs/qa/e2e-report-s04-model.md`).
+- T-037 `-Wait` run: 31 passed with the seeded stack (see ISSUE-20261122-022225).
+- `docs/checkpoints/T-039-CP-2.checks.json` and `T-039-CP-F.checks.json` are green.
 
 ## Prevention / follow-up
 
-Follow-up task (not created in T-025): fix scripts/e2e.ps1 to (1) detect the available Compose form (docker compose plugin vs standalone docker-compose) and (2) pass pytest a forward-slash module or directory path. Record the Compose-plugin environment requirement in the e2e runbook. Q-02 live e2e may be blocked until both are resolved.
+Implemented: compose-form detection is permanent in `Get-ComposeCommand`; the runner uses a forward-slash pytest target. The foreground/detached argument divergence is covered by ISSUE-20261122-022225 (`-DryRun` plus a `-m pytest` invariant).
 
 ## Links
 
@@ -51,3 +53,4 @@ T-025 (I-02); tests/e2e/uc_e2e_001_003/shared.py; tests/e2e/uc_e2e_001_003/test_
 ## Timeline
 
 - 2026-11-18T15:36:22.2525251+03:00: detected
+- 2026-11-22T18:48:30+03:00: resolved - compose detection and forward-slash target verified by T-037/T-039 live runs

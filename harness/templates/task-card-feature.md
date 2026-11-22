@@ -14,7 +14,7 @@
 | budget_profile | `default` / `U-02/new-screen` / `U-02/delta` / ... (from `harness/budgets.json`) |
 | depends_on | T-YYY, T-ZZZ |
 | inputs | comma-separated input artifact paths |
-| artifacts | comma-separated output artifact paths |
+| artifacts | comma-separated output artifact paths; include derived renders required by acceptance (for example both `.puml` and `.svg`) |
 | e2e | required / not applicable (reason) |
 | ux | required / not applicable (reason) |
 | chunks | ledger path and granularity: `docs/chunks/T-XXX.json` (single source of truth for per-chunk state, `owns`, and usage); the plan is written with `harness/scripts/chunk.ps1` before authoring |

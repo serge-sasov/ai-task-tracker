@@ -321,6 +321,24 @@ def pytest_addoption(parser):
                      help="Restrict to a UC id (repeatable). Default: all.")
 
 
+def pytest_collection_modifyitems(config, items):
+    """Apply --uc as an execution filter, not only a results filter."""
+    wanted = config.getoption("--uc") or []
+    if not wanted:
+        return
+    wanted_nums = {str(uc).upper().split("-")[-1] for uc in wanted}
+    kept, deselected = [], []
+    for item in items:
+        match = re.search(r"test_uc_e2e_(\d{3})_", item.nodeid)
+        if match and match.group(1) in wanted_nums:
+            kept.append(item)
+        else:
+            deselected.append(item)
+    if deselected:
+        config.hook.pytest_deselected(items=deselected)
+        items[:] = kept
+
+
 @pytest.fixture(scope="session")
 def e2e_env():
     """Expose base URLs and timeouts to tests (optional convenience fixture)."""

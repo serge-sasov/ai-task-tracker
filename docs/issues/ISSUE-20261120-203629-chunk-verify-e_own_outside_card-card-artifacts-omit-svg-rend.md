@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | id | ISSUE-20261120-203629 |
-| status | workaround |
+| status | resolved |
 | severity | minor |
 | type | process |
 | detected_at | 2026-11-20T20:36:29.2264141+03:00 |
@@ -39,47 +39,21 @@ against the card's `artifacts` row.
 
 ## Cause
 
-The card's `artifacts` row enumerates the `.puml` sources (and the `swimlane-svc-*.puml`
-waived diagram) but not their `.svg` render outputs. The chunk validator's ownership
-check compares `owns` against the literal `artifacts` glob set, so the legitimate `.svg`
-deliverables are reported as "outside the card". This is a card-authoring gap, not an
-ownership violation: the SVGs are required deliverables and are inside the role write
-area (`docs/architecture/**`).
+Fixed at card level: `docs/tasks/T-035-contracts-s04-model.md` `artifacts` now lists `docs/architecture/data-model-*.svg` and `docs/architecture/class-*.svg` next to their `.puml` sources (card log 2026-11-20). The chunk validator now sees the SVG deliverables inside the card artifacts, so the truthful `owns` no longer triggers `E_OWN_OUTSIDE_CARD`.
 
 ## Solution / workaround
 
-Workaround (recorded, not a code fix): the `.svg` globs are kept in `C2.owns` because the
-card's own acceptance mandates them; the `E_OWN_OUTSIDE_CARD` failures are recognized as
-false positives against an incomplete `artifacts` row. All substantive checks (syntax,
-render, references, traceability) pass. The orchestrator should treat these two lines as
-a known card-artifact defect for T-035 and not block the checkpoint on them.
-
-Note on alternatives: removing the `.svg` from `owns` to satisfy `E_OWN_OUTSIDE_CARD`
-instead triggers `E_PRODUCED_OUTSIDE` (the re-rendered `.svg` is a required deliverable
-recorded in `produced`, and `produced` must stay inside `owns`). The two checks are
-mutually exclusive while the card's `artifacts` row omits the `.svg`, so the ledger keeps
-the truthful ownership (own the SVG it renders) and reports the card's under-listing as
-the single defect.
+Implemented: the T-035 card `artifacts` row was corrected to include the `.svg` renders it mandates. `chunk-validate.py docs/chunks/T-035.json` now returns `valid: true` with only legacy `W_BUDGET_WRITE` warnings. No validator change was needed; the ownership check was correct.
 
 ## Verification
 
-- `check_syntax` (plantuml-render) passes for `class-ai-task-tracker.puml` and
-  `data-model-ai-task-tracker.puml`; both render to fresh `.svg` via `render_file`.
-- `class-ai-task-tracker.svg` (90.6 KB) and `data-model-ai-task-tracker.svg` (19.5 KB)
-  exist next to their `.puml`; both referenced in the architecture description.
-- Card acceptance items 1–6 are satisfied (see C1/C2/C3 briefs and produced files).
-- `chunk.ps1 verify -Task T-035`: with the truthful `owns` (includes `.svg`) the only
-  residual error is the documented `E_OWN_OUTSIDE_CARD` (card omits `.svg`); all other
-  checks (schema, hash, role area, coverage, no overlap) pass. This is the expected
-  signature of this card defect, not a chunk error.
+- `python harness/scripts/chunk-validate.py docs/chunks/T-035.json --root . --json --no-hash`: `valid: true`, `errors: []`, warnings are legacy final-size budget only.
+- `docs/tasks/T-035-contracts-s04-model.md` line 14 lists `data-model-*.svg` and `class-*.svg`; card log 2026-11-20 records the fix and the re-run.
+- `class-ai-task-tracker.svg` (90.6 KB) and `data-model-ai-task-tracker.svg` (19.5 KB) exist next to their `.puml` and are referenced in the architecture description.
 
 ## Prevention / follow-up
 
-When authoring an R-02 card that requires re-rendered diagrams, include the `*.svg`
-renders in the `artifacts` row (e.g. `docs/architecture/class-*.puml/.svg`,
-`docs/architecture/data-model-*.puml/.svg`) so the chunk-ownership check matches the
-required deliverables. Suggest updating the card template / `harness-orchestrator`
-card-authoring guidance accordingly.
+Implemented: `harness/templates/task-card-feature.md` now requires derived renders in `artifacts`, and `harness/agents/harness-orchestrator.md` tells the orchestrator to list both `.puml` and `.svg` when acceptance requires a render. This prevents the card-authoring gap from recurring.
 
 ## Links
 
@@ -91,3 +65,5 @@ card-authoring guidance accordingly.
 ## Timeline
 
 - 2026-11-20T20:36:29.2264141+03:00: detected
+- 2026-11-20: T-035 card `artifacts` fixed to include the `.svg` renders; CP-2 re-verified
+- 2026-11-22T18:48:30+03:00: resolved - `chunk-validate.py` T-035 returns `valid: true`; template and orchestrator prevention added

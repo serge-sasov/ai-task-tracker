@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | id | ISSUE-20261119-184132 |
-| status | open |
+| status | wontfix |
 | severity | minor |
 | type | permission |
 | detected_at | 2026-11-19T18:41:32.5173997+03:00 |
@@ -30,19 +30,21 @@ Analyst role (and then orchestrator) could not delete an inert helper file left 
 
 ## Cause
 
-opencode bash permission rules deny the shell file-removal cmdlet and recursive shell deletion globally; no dedicated tool exists for deleting a single file, so any stray helper a role creates cannot be cleaned up in-session.
+The deny is intentional policy: `harness/process.md` 13 forbids broadening `allow` to `Remove-Item`, and there is no single-file delete tool. The actionable defect is the role creating a scratch helper inside the repository instead of using the OS temp directory.
 
 ## Solution / workaround
 
-Workaround: record the file as residue in the task card log and the chunk notes; verify it is inert (untracked, not in owns/produced, not referenced by any check) before closing the checkpoint. In this case docs/chunks/T-030/complete-A1.ps1 breaks no A-01 check and is not committed.
+Wontfix (2026-11-22): the `Remove-Item` deny stays and no allow-listed deletion path will be added. Prevention is procedural: scratch/probe files go to the OS temp directory, never to `scripts/` or `docs/` (`harness/process.md` 13). The existing residue `docs/chunks/T-030/complete-A1.ps1` is inert and untracked; the user removes it manually outside the agent session.
 
 ## Verification
 
-Not yet verified - status open; to be confirmed by a future run where the file is absent or by an explicit user deletion.
+- Residue verified inert: untracked, not in T-030 `owns`/`produced`, not referenced by A-01 checks.
+- `harness/process.md` 13 now contains the scratch-file prohibition and states that leftovers are removed by the user.
+- Manual deletion of the residue remains the only cleanup and is not required by any check.
 
 ## Prevention / follow-up
 
-Add an orchestrator-only, allow-listed single-file deletion path (or an explicit user deletion), and instruct roles not to drop helper scripts into docs/chunks/<task>/ - use the temp dir for scratch files.
+Implemented: process rule "Creating scratch/helper scripts inside the repository to work around a shell permission deny" is prohibited; one-off probes use the OS temp directory. No code or allow-pattern change.
 
 ## Links
 
@@ -51,3 +53,4 @@ Task card docs/tasks/T-030-requirements-s04-model.md; chunk ledger docs/chunks/T
 ## Timeline
 
 - 2026-11-19T18:41:32.5173997+03:00: detected
+- 2026-11-22T18:48:30+03:00: closed as wontfix - deny is intentional; scratch-file prohibition added to process.md; residue left for manual user deletion
