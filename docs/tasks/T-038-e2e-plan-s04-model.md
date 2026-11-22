@@ -21,7 +21,7 @@
 | base_commit | d8b3de2 |
 | usage | in=166571 out=24297 cr=1283572 ratio=7.7x min=35 |
 | issues | - |
-| commit | 564a328 |
+| commit | 2afad08 |
 
 ## Acceptance
 
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: CP-1 approved (Q-01); checks 7 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=113955 out=19669 cr=1086588 ratio=9.5x min=27; reviewer auto (P2)
 - 564a328: CP-1 snapshot
 - 2026-11-22: CP-F awaiting_review (Q-01); checks 8 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=166571 out=24297 cr=1283572 ratio=7.7x min=35; reviewer user
+- 2afad08: CP-F snapshot
