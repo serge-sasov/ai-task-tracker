@@ -9,11 +9,11 @@
 | role | qa |
 | stage | Q-02 |
 | artifacts | docs/qa/e2e-report-s04-model.md, docs/qa/review-T-039.md |
-| status | awaiting_review |
+| status | approved |
 | requested_at | 2026-11-22T16:48:21 |
-| reviewed_at | - |
+| reviewed_at | 2026-11-22T17:28:09 |
 | reviewer | user |
-| decision | - |
+| decision | approved |
 | snapshot_commit | 5df9205 |
 | generated_by | stage-done/1 |
 | checks_file | docs/checkpoints/T-039-CP-F.checks.json |

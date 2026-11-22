@@ -7,7 +7,7 @@
 | workflow | feature |
 | stage | Q-02 |
 | role | qa |
-| status | awaiting_review |
+| status | done |
 | hold | false |
 | depends_on | T-038, T-037, T-036, T-035, T-033 |
 | inputs | `docs/qa/e2e-plan-s04-model.md`, `tests/e2e/**`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue`, `docs/ux/ui-spec-ai-task-tracker.md`, `docs/analysis/requirements-ai-task-tracker.md` |
@@ -35,7 +35,7 @@
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
 | CP-2 | Q-02 e2e report and verdict | `docs/qa/e2e-report-s04-model.md`, `docs/qa/review-T-039.md` | 8P/0F/0M | approved | docs/checkpoints/T-039-CP-2.md |
-| CP-F | final acceptance | all task artifacts | 9P/0F/0M | awaiting_review | docs/checkpoints/T-039-CP-F.md |
+| CP-F | final acceptance | all task artifacts | 9P/0F/0M | approved | docs/checkpoints/T-039-CP-F.md |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 `Checks` is a machine summary `nP/nF/nM` written by `stage-done.ps1`.
@@ -64,3 +64,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - ea827b5: CP-2 snapshot
 - 2026-11-22: CP-F awaiting_review (Q-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=330376 out=68713 cr=5301010 ratio=16x min=162; reviewer user
 - 5df9205: CP-F snapshot
+- 2026-11-22: CP-F decision=approved by user; task done
