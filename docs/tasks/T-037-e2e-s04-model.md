@@ -19,7 +19,7 @@
 | base_commit | - |
 | usage | in=2066546 out=534892 cr=47453944 ratio=23x min=587 |
 | issues | - |
-| commit | eeda0f6 |
+| commit | 84f9c1a |
 
 ## Acceptance
 
@@ -63,3 +63,4 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-22: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2005232 out=526224 cr=47324955 ratio=23.6x min=574; reviewer auto (P2)
 - eeda0f6: CP-2 snapshot
 - 2026-11-22: CP-F awaiting_review (I-02); checks 10 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2066546 out=534892 cr=47453944 ratio=23x min=587; reviewer user
+- 84f9c1a: CP-F snapshot
