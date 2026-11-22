@@ -38,12 +38,17 @@ def collect_strings(value):
 
 def main():
     parser = argparse.ArgumentParser(description="Validate a harness-e2e/1 dataset.")
-    parser.add_argument("yaml_path")
+    parser.add_argument("yaml_path", nargs="?",
+                        help="Path to the harness-e2e/1 dataset YAML.")
     parser.add_argument("--use-cases-md", default=None,
                         help="Markdown use-cases document for id/requirement cross-check.")
     parser.add_argument("--strict", action="store_true",
                         help="Treat requirement-id cross-check gaps as errors.")
     args = parser.parse_args()
+
+    if not args.yaml_path:
+        args.yaml_path = str(Path(__file__).resolve().parent.parent /
+                             "docs" / "analysis" / "e2e-test-data-ai-task-tracker.yaml")
 
     errors = []
     warnings = []

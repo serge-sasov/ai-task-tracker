@@ -1,0 +1,16 @@
+{
+    "task":  "T-037",
+    "stage":  "I-02",
+    "checkpoint":  "CP-2",
+    "generated_at":  "2026-11-22T11:40:28",
+    "summary":  {
+                    "pass":  9,
+                    "fail":  0,
+                    "manual":  0,
+                    "not_applicable":  1,
+                    "unchecked":  0
+                },
+    "problems":  [
+
+                 ]
+}

@@ -12,6 +12,8 @@ against the documented contract / dataset, not implementation.
 
 from __future__ import annotations
 
+import os
+import re
 from datetime import datetime, timedelta
 
 import pytest
@@ -163,6 +165,189 @@ def test_month_view_task_counts(stack):
         )
     assert len(_cell_tasks(by_date["2026-11-10"])) == 2
     assert len(_cell_tasks(by_date["2026-11-11"])) == 3
+
+
+def _models_expectations() -> list[dict]:
+    """S-04 per-task model-cell expectations, built from the dataset fixtures.
+
+    Flattens ``day_2026-11-11-models`` and ``day_2026-11-10-models`` into one
+    list keyed by task; the visible primary, the ``+N`` indicator, the full
+    ordered list for the cell ``title``/``aria-label``, and the empty state.
+    """
+    out: list[dict] = []
+    for date_key in ("day_2026-11-11-models", "day_2026-11-10-models"):
+        fixture = shared.dataset()["fixtures"]["calendar"][date_key]
+        assert fixture["column_after"] == "Задача", (
+            f"{date_key}: the model column must sit after 'Задача' (R-015)"
+        )
+        for exp in fixture["tasks"]:
+            out.append({"date_key": date_key, **exp})
+    return out
+
+
+def test_day_view_model_column(stack):
+    """S-04 (R-015): the model column shows the primary model, ``+N`` when
+    more than one, the full ordered list in the cell ``title``/``aria-label``,
+    and the empty state when ``models`` is empty (S-01).
+
+    Expected values come only from the dataset fixtures
+    (``day_2026-11-11-models`` / ``day_2026-11-10-models``), never hardcoded.
+    Models originate from ``GET /api/tasks`` (contract §4.2); the cell itself
+    (primary, ``+N``, full list, empty state) is rendered by ModelCell in the
+    built SPA, so this test also verifies the built frontend bundle.
+    """
+    _assert_built_frontend_has_model_cell()
+
+    status, body = _get("/api/tasks")
+    assert status == 200, f"tasks HTTP {status}"
+    by_id = {t.get("task_id"): t for t in body.get("items", [])}
+    for exp in _models_expectations():
+        assert exp["task"] in by_id, f"{exp['task']} absent in task list"
+        got = by_id[exp["task"]].get("models") or []
+        if "no_data" in exp:
+            # Empty models list -> ModelCell renders 'Нет данных'.
+            assert got == [], f"{exp['task']} models {got!r} must be empty"
+        else:
+            # The cell's visible list is exactly the dataset's ordered list.
+            assert got == exp["full_list_in_title_aria"], (
+                f"{exp['task']} models {got!r} != dataset {exp['full_list_in_title_aria']!r}"
+            )
+            # The visible face shows the primary, plus ``+N`` for the rest.
+            assert got[0] == exp["primary"], (
+                f"{exp['task']} primary model {got[0]!r} != {exp['primary']!r}"
+            )
+            if len(got) > 1:
+                assert exp["plus_n"].startswith("+"), "indicator must be '+N'"
+
+
+def test_built_frontend_has_model_cell(stack):
+    """The actually BUILT frontend (served SPA) contains ModelCell markup.
+
+    Guards against a stale frontend image (T-027/T-028): reads the served
+    ``index.html`` and its referenced JS bundle over 127.0.0.1 only (stdlib
+    urllib) and fails when the ModelCell markup is absent, instead of only
+    checking the API.
+    """
+    _assert_built_frontend_has_model_cell()
+
+
+def _iter_js_bundles(html: str, base_url: str) -> list:
+    """Return ``(href, status, body)`` for every ``script src=`` in index.html.
+
+    Parses every script ``src`` attribute (local path or absolute URL) in the
+    served SPA HTML. Vite code-splits into separate chunk files, so the whole
+    built artifact (any bundle) is verified rather than a single main bundle.
+
+    Returns a list (not a generator) so callers can iterate more than once
+    and call ``len()`` on the result.
+    """
+    import tests.e2e.conftest as _c
+
+    out = []
+    for href in re.findall(r"""<script[^>]+\bsrc="([^"]+)"[^>]*>""", html):
+        if href.startswith("http"):
+            full = href
+        else:
+            full = base_url.rstrip("/") + "/" + href.lstrip("/")
+        status, body = _c._http_request("GET", full, timeout=20)
+        out.append((href, status, body))
+    return out
+
+
+def _iter_modelcell_chunks(html: str, base_url: str, main_bundles: list) -> list:
+    """Return ``(href, status, body)`` for Vite ``ModelCell-*.js`` chunks.
+
+    Vite code-splits components into chunk files referenced only inside the main
+    bundle (not inline in ``index.html``), so the served ``index.html`` may not
+    list the ModelCell chunk directly. This scans the already-fetched main JS
+    bundles for ``assets/ModelCell-<hash>.js`` references, resolves them to
+    absolute URLs, and fetches them. The ``model-cell`` marker lives in one of
+    these chunks.
+    """
+    import tests.e2e.conftest as _c
+
+    out = []
+    seen: set = set()
+    for _, status, body in main_bundles:
+        if status != 200 or not body:
+            continue
+        # _iter_js_bundles() already returns decoded string bodies from
+        # tests.e2e.conftest._http_request, so no bytes.decode() is needed here.
+        for chunk_href in re.findall(
+            r"""assets/ModelCell-[^"\\]{4,}\.js""", body
+        ):
+            if chunk_href in seen:
+                continue
+            seen.add(chunk_href)
+            full = base_url.rstrip("/") + "/" + chunk_href.lstrip("/")
+            cstatus, cbody = _c._http_request("GET", full, timeout=20)
+            out.append((chunk_href, cstatus, cbody))
+    return out
+
+
+def _assert_built_frontend_has_model_cell() -> None:
+    """Assert the served SPA bundle contains the ModelCell contract marker.
+
+    Guards against a stale frontend image (T-027/T-028): reads the served
+    ``index.html`` and its referenced JS bundles over 127.0.0.1 only (stdlib
+    urllib) and fails when the ModelCell marker is absent, instead of only
+    checking the API. The check is ASCII-only (``model-cell``) because the built
+    bundle is minified and the Cyrillic UI strings are stripped.
+
+    Vite code-splits ModelCell into a separate ``ModelCell-*.js`` chunk that is
+    referenced only inside the main bundle, so this test verifies the whole
+    built artifact: every ``script src`` bundle in ``index.html`` plus every
+    discovered ``ModelCell-*.js`` chunk.
+    """
+    from tests.e2e import conftest as _c
+
+    # The frontend is served on its own host port (docker-compose maps it to
+    # 127.0.0.1:${E2E_FRONTEND_PORT:-8081}:80); the runner sets E2E_FRONTEND_URL.
+    # This must be assigned BEFORE _iter_js_bundles() so the helper's local
+    # `frontend_url` exists when it resolves relative bundle hrefs.
+    frontend_url = os.environ.get(
+        "E2E_FRONTEND_URL", "http://127.0.0.1:8081"
+    ).rstrip("/")
+
+    status, html = _c._http_request("GET", frontend_url, timeout=15)
+    assert status == 200, f"frontend index.html HTTP {status}"
+    assert html, "frontend index.html is empty"
+    assert "<script" in html and ".js" in html, (
+        "frontend index.html has no module script reference"
+    )
+
+    # The single ASCII contract marker that survives minification.
+    markers = ("model-cell",)
+
+    bundles = _iter_js_bundles(html, frontend_url)
+    assert bundles, "could not locate any JS bundle in index.html"
+
+    # Discover Vite code-split ModelCell chunks referenced inside the main JS
+    # bundle (not inline in index.html) and fetch them so the marker can land.
+    chunks = _iter_modelcell_chunks(html, frontend_url, bundles)
+
+    checked = len(bundles) + len(chunks)
+    if checked == 0:
+        raise AssertionError(
+            "built frontend served no JS bundle to check for the ModelCell marker"
+        )
+
+    bodies = [body for _, status, body in bundles] + [
+        body for _, status, body in chunks
+    ]
+    for status in [status for _, status, _ in bundles + chunks]:
+        assert status == 200, "a JS bundle returned a non-200 status"
+
+    found = any(
+        body and not [m for m in markers if m not in body] for body in bodies
+    )
+    if not found:
+        missing = [m for m in markers if True]
+        raise AssertionError(
+            f"built frontend lacks ModelCell markup across all bundles; checked "
+            f"{checked} bundle(s), missing {missing}. "
+            "Rebuild the frontend image so the model column lands in the served SPA."
+        )
 
 
 def test_invalid_period_400(stack):

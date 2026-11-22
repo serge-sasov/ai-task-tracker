@@ -256,6 +256,12 @@ function Invoke-Up {
     }
     Get-ChildItem -LiteralPath $SeedDir -Filter '*.json' -File -ErrorAction SilentlyContinue |
         Remove-Item -Force -ErrorAction SilentlyContinue
+    # Regenerate the deterministic seed corpus (5 opencode sessions) from the
+    # dataset so the backend has data to ingest on this run. Stdlib only.
+    $SeedGen = Join-Path $RepoRoot 'scripts\generate-e2e-seed.py'
+    if (Test-Path -LiteralPath $SeedGen) {
+        & $PY $SeedGen --target-dir $SeedDir *> $null
+    }
     $env:OPENCODE_DATA_DIR = $SeedDir
     $env:E2E_OPPENCODE_DATA_DIR = $SeedDir
     $env:E2E_FRONTEND_URL = $FrontendBase
@@ -316,6 +322,10 @@ function Invoke-Run {
     $env:E2E_OPPENCODE_DATA_DIR = $SeedDir
     $env:E2E_BASE_URL = $BaseUrl
     $env:E2E_FRONTEND_URL = $FrontendBase
+    # Keep the isolated local stack (with its seeded data) alive after the
+    # test run so subsequent runner invocations reuse the same seeded stack.
+    # The stack is torn down only by the explicit `down` command.
+    $env:E2E_KEEP_STACK = '1'
 
     if (-not (Test-Health "$BaseUrl/api/health") -or -not (Test-Health $FrontendBase)) {
         Write-Host '[e2e] stack not healthy -> starting it'

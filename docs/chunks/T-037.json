@@ -1,0 +1,129 @@
+{
+    "task":  "T-037",
+    "version":  1,
+    "baseline":  [
+
+                 ],
+    "budget":  {
+                   "max_write_kb":  80,
+                   "max_session_kb":  200,
+                   "context_stop_pct":  65,
+                   "max_turns":  40,
+                   "max_input_tokens":  60000,
+                   "max_wall_min":  45
+               },
+    "chunks":  [
+                   {
+                       "id":  "C1",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "S-04 model-column e2e + built-frontend DOM smoke (UC-E2E-005)",
+                       "state":  "done",
+                       "owns":  [
+                                    "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py",
+                                    "scripts/e2e.ps1",
+                                    "scripts/validate-e2e-data.py"
+                                ],
+                       "inputs":  [
+                                      "docs/tasks/T-037-e2e-s04-model.md:all",
+                                      "docs/analysis/e2e-use-cases-ai-task-tracker.md:133-151",
+                                      "docs/analysis/e2e-test-data-ai-task-tracker.yaml:243-269",
+                                      "src/web/src/components/ModelCell.vue:1-10",
+                                      "src/web/src/views/CalendarDayView.vue:31-61",
+                                      "tests/e2e/conftest.py:46-86",
+                                      "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py:1-60",
+                                      "tests/e2e/uc_e2e_001_003/test_uc_e2e_003_task_list_detail.py:126-145",
+                                      "scripts/e2e.ps1:111-199",
+                                      "docker-compose.yml:64-77"
+                                  ],
+                       "brief":  "docs/chunks/T-037/C1.brief.md",
+                       "acceptance":  [
+                                          "S-04 model column assertion (primary+plus_n+title_aria+Нет данных)",
+                                          "built-frontend DOM smoke on :8081 contains ModelCell markup",
+                                          "UC-E2E-003 S-01 test stays green",
+                                          "validate-e2e-data.py passes",
+                                          "Invoke-Up builds+starts frontend"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py",
+                                            "sha256":  "6d934a12b92e1689a74cfa991cd5234c71fbdb09cfb85520e387a6045f593c93"
+                                        },
+                                        {
+                                            "path":  "scripts/e2e.ps1",
+                                            "sha256":  "16d9a60e455e3a4b57fe0200f369d33e7be4c9e17f5d110ee5430e4b15b38bba"
+                                        },
+                                        {
+                                            "path":  "scripts/validate-e2e-data.py",
+                                            "sha256":  "8b2e88a9184c66026b3e9da460814bb84680ea2e9adea74888db4a549843c216"
+                                        }
+                                    ],
+                       "base_commit":  "b840a10",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "S-04 model-column e2e + built-frontend DOM smoke + validator updated; UC-E2E-005 7/7 and UC-E2E-003 S-01 24/24 pass"
+                                 ],
+                       "started":  "2026-11-21T16:24:51",
+                       "finished":  "2026-11-22T11:39:22",
+                       "elapsed_min":  1155
+                   },
+                   {
+                       "id":  "C2",
+                       "parent":  null,
+                       "stage":  "I-02",
+                       "role":  "coder",
+                       "depth":  1,
+                       "title":  "Seed generator + ModelCell marker guard for S-04 model column (CP-2)",
+                       "state":  "done",
+                       "owns":  [
+                                    "scripts/generate-e2e-seed.py"
+                                ],
+                       "inputs":  [
+
+                                  ],
+                       "brief":  "docs/chunks/T-037/C2.brief.md",
+                       "acceptance":  [
+                                          "generate-e2e-seed.py emits 5 ingest-compatible *.json from fixtures.sessions; e2e.ps1 up calls it before docker compose up; guard checks only model-cell via script-src + ModelCell-* chunk discovery; UC-E2E-005 data-dependent tests pass against seeded stack; validate-e2e-data.py passes"
+                                      ],
+                       "produced":  [
+                                        {
+                                            "path":  "scripts/generate-e2e-seed.py",
+                                            "sha256":  "7f7116a50ba080f832c0a671fd83f728b6ac8e09bdb808edb133d3dbc9d66c84"
+                                        }
+                                    ],
+                       "base_commit":  "d308836",
+                       "attempts":  1,
+                       "usage":  {
+                                     "in":  0,
+                                     "out":  0,
+                                     "cr":  0,
+                                     "min":  0
+                                 },
+                       "issues":  [
+
+                                  ],
+                       "notes":  [
+                                     "Testing seed generator + guard against a fresh seeded stack",
+                                     "Seed generator emits 5 ingest-compatible *.json from fixtures.sessions; e2e.ps1 up calls it before compose up; guard checks model-cell via script-src + ModelCell-* discovery; UC-E2E-005 data-dependent tests pass against seeded stack; detached-runner path bug ISSUE-20261122-022225 recorded separately"
+                                 ],
+                       "started":  "2026-11-22T00:01:40",
+                       "finished":  "2026-11-22T11:40:03",
+                       "sessions":  0,
+                       "compactions":  0,
+                       "handoff":  "",
+                       "elapsed_min":  698
+                   }
+               ],
+    "updated":  "2026-11-22T11:40:03"
+}

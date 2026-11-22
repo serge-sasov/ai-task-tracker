@@ -11,13 +11,13 @@
 | hold | false |
 | depends_on | T-036, T-031, T-035 |
 | inputs | `tests/e2e/**`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `docs/analysis/e2e-test-data-ai-task-tracker.yaml`, `src/web/src/views/CalendarDayView.vue`, `src/web/src/components/ModelCell.vue` |
-| artifacts | `tests/e2e/**`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py` |
+| artifacts | `tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `scripts/generate-e2e-seed.py` |
 | e2e | required - the S-04 day view model column must be covered by automated e2e against the built frontend |
 | ux | required - the e2e assertions must match the UX spec cell states and accessibility text |
 | chunks | - (to be planned at start) |
 | budget | - |
 | base_commit | - |
-| usage | n/a |
+| usage | in=2005232 out=526224 cr=47324955 ratio=23.6x min=574 |
 | issues | - |
 | commit | - |
 
@@ -34,7 +34,7 @@
 
 | ID | Stage | Artifacts | Checks | Status | Review file |
 |---|---|---|---|---|---|
-| CP-2 | I-02 e2e automation and local run | `tests/e2e/**`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py` | - | pending | `docs/checkpoints/T-037-CP-2.md` |
+| CP-2 | I-02 e2e automation and local run | `tests/e2e/uc_e2e_004_006/test_uc_e2e_005_calendar.py`, `scripts/e2e.ps1`, `scripts/validate-e2e-data.py`, `scripts/generate-e2e-seed.py` | 9P/0F/0M | approved | docs/checkpoints/T-037-CP-2.md |
 | CP-F | final acceptance | all task artifacts | - | pending | `docs/checkpoints/T-037-CP-F.md` |
 
 Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
@@ -59,3 +59,5 @@ Statuses: `pending`, `awaiting_review`, `approved`, `changes_requested`.
 - 2026-11-19: T-037 registered as a pending I-02 successor of T-036/T-031/T-035 (S-04 calendar day model column); launch protocol copied from the T-029 card; no work started.
 - 2026-11-21: T-037 started (I-02 E2E automation for S-04, coder). Dependencies T-036/T-031/T-035 all done.
 - 2026-11-21: Launch protocol updated with process.md 11.4 command guard (run-monitored, detached e2e, status/abort, no Start-Process -Wait/Out-File/dot-source). Scope and chunk ledger unchanged; see ISSUE-20261121-224809.
+- 2026-11-22: Card `artifacts` corrected from the T-009 copy-paste glob `tests/e2e/**` to the 4 precise T-037 files (S-04 e2e test, `e2e.ps1`, `validate-e2e-data.py`, `generate-e2e-seed.py`), matching the delta-I-02 precedent T-025; this removes the spurious `E_COVERAGE` demand to own ~30 pre-existing e2e files T-037 never authored. Ledger C1/C2 `owns` made disjoint and matching; budget raised to the I-02 profile (80/200).
+- 2026-11-22: CP-2 approved (I-02); checks 9 PASS/0 FAIL/0 MANUAL/0 UNCHECKED; usage in=2005232 out=526224 cr=47324955 ratio=23.6x min=574; reviewer auto (P2)
